@@ -9,8 +9,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-gray-50 dark:bg-neutral-900">
+
 <x-layout.header :title="$title ?? 'AiTools'"/>
-<x-layout.breadcrumb/>
 <x-layout.sidebar/>
 
 <!-- main content start -->
