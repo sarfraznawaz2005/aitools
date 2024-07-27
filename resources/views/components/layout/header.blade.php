@@ -1,31 +1,40 @@
 <!-- header start -->
 <div>
-    <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
+    <header
+        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
         <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="me-5 lg:me-0 lg:hidden">
-                <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80 dark:text-white" href="#">
-                    AiTools
-                </a>
+                <span
+                    class="flex-none rounded-md text-xl inline-block font-semibold text-gray-600 focus:outline-none focus:opacity-80 dark:text-white">
+                    {{ $title }}
+                </span>
             </div>
             <div class="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
                 <div class="hidden md:block">
-                    <h2 class="text-3xl dark:text-white">{{ $title ?? 'AiTools' }}</h2>
+                    <h2 class="text-2xl text-gray-600 font-semibold dark:text-white">{{ $title }}</h2>
                 </div>
                 <div class="flex flex-row items-center justify-end gap-1">
 
-                    <button type="button" class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="dark">
+                    <button type="button"
+                            class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                            data-hs-theme-click-value="dark">
                       <span class="group inline-flex shrink-0 justify-center items-center size-9">
                         <x-icons.moon/>
                       </span>
                     </button>
 
-                    <button type="button" class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="light">
+                    <button type="button"
+                            class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                            data-hs-theme-click-value="light">
                       <span class="group inline-flex shrink-0 justify-center items-center size-9">
                         <x-icons.sun/>
                       </span>
                     </button>
 
-                    <button type="button" class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#general-modal">
+                    <button type="button"
+                            class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                            aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
+                            data-hs-overlay="#general-modal">
                         <x-icons.settings/>
                         <span class="sr-only">Settings</span>
                     </button>
@@ -71,27 +80,97 @@
 </div>
 <!-- header end -->
 
+<div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
+
 <x-modal>
     <x-slot name="title">
         <div class="flex gap-x-2">
-            <x-icons.settings class="shrink-0 size-6" />
+            <x-icons.settings class="shrink-0 size-6"/>
             Settings
         </div>
 
     </x-slot>
 
     <x-slot name="body">
-        <p class="mt-1 text-gray-800 dark:text-neutral-400">
-            This is a wider card with supporting text below as a natural lead-in to additional content.
-        </p>
+        <form action="#">
+
+            <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
+                <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">LLM</legend>
+
+                <!-- Select -->
+                <select
+                    class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600">
+                    <option>Choose LLM</option>
+                    <option>OpenAi</option>
+                    <option>Gemini</option>
+                    <option>Ollama</option>
+                </select>
+                <!-- End Select -->
+
+                <br>
+
+                <!-- Floating Input -->
+                <div class="relative">
+                    <input type="email" id="hs-floating-gray-input-email" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
+    focus:pt-6
+    focus:pb-2
+    [&:not(:placeholder-shown)]:pt-6
+    [&:not(:placeholder-shown)]:pb-2
+    autofill:pt-6
+    autofill:pb-2" placeholder="you@email.com">
+                    <label for="hs-floating-gray-input-email" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none
+      peer-focus:scale-90
+      peer-focus:translate-x-0.5
+      peer-focus:-translate-y-1.5
+      peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+      peer-[:not(:placeholder-shown)]:scale-90
+      peer-[:not(:placeholder-shown)]:translate-x-0.5
+      peer-[:not(:placeholder-shown)]:-translate-y-1.5
+      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">API
+                        Key</label>
+                </div>
+                <!-- End Floating Input -->
+
+                <br>
+
+                <!-- Floating Input -->
+                <div class="relative">
+                    <input type="text" id="hs-floating-gray-input-email" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
+    focus:pt-6
+    focus:pb-2
+    [&:not(:placeholder-shown)]:pt-6
+    [&:not(:placeholder-shown)]:pb-2
+    autofill:pt-6
+    autofill:pb-2" placeholder="you@email.com">
+                    <label for="hs-floating-gray-input-email" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none
+      peer-focus:scale-90
+      peer-focus:translate-x-0.5
+      peer-focus:-translate-y-1.5
+      peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+      peer-[:not(:placeholder-shown)]:scale-90
+      peer-[:not(:placeholder-shown)]:translate-x-0.5
+      peer-[:not(:placeholder-shown)]:-translate-y-1.5
+      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">Model
+                        Name</label>
+                    <p class="mt-2 text-sm text-gray-400 dark:text-neutral-500" id="hs-input-helper-text">&nbsp;Based on
+                        your selected LLM</p>
+                </div>
+                <!-- End Floating Input -->
+
+            </fieldset>
+        </form>
     </x-slot>
 
     <x-slot name="buttons">
-        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#general-modal">
+        <button type="button"
+                class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                data-hs-overlay="#general-modal">
             Close
         </button>
-        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-            Save changes
+        <button type="button"
+                class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            <x-icons.ok class="shrink-0 size-6"/>
+            Save
         </button>
     </x-slot>
 </x-modal>
