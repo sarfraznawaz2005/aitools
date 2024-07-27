@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* custom css */
+
+/* misc */
+[x-cloak] {
+    display: none !important;
+}
+
+.font-ubuntu {
+    font-family: 'Ubuntu', sans-serif;
+}
