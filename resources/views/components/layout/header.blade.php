@@ -1,11 +1,9 @@
 <!-- header start -->
 <div>
-    <header
-        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
+    <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
         <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="me-5 lg:me-0 lg:hidden">
-                <span
-                    class="flex-none rounded-md text-xl inline-block font-semibold text-gray-600 focus:outline-none focus:opacity-80 dark:text-white">
+                <span class="flex-none rounded-md text-xl inline-block font-semibold text-gray-600 focus:outline-none focus:opacity-80 dark:text-white">
                     {{ $title }}
                 </span>
             </div>
@@ -15,27 +13,20 @@
                 </div>
                 <div class="flex flex-row items-center justify-end gap-1">
 
-                    <button type="button"
-                            class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                            data-hs-theme-click-value="dark">
-                      <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                        <x-icons.moon/>
-                      </span>
+                    <button type="button" class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="dark">
+                        <span class="group inline-flex shrink-0 justify-center items-center size-9">
+                            <x-icons.moon />
+                        </span>
                     </button>
 
-                    <button type="button"
-                            class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                            data-hs-theme-click-value="light">
-                      <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                        <x-icons.sun color="#FF8C33"/>
-                      </span>
+                    <button type="button" class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="light">
+                        <span class="group inline-flex shrink-0 justify-center items-center size-9">
+                            <x-icons.sun color="#FF8C33" />
+                        </span>
                     </button>
 
-                    <button type="button"
-                            class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                            aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
-                            data-hs-overlay="#general-modal">
-                        <x-icons.settings/>
+                    <button type="button" class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#general-modal">
+                        <x-icons.settings />
                         <span class="sr-only">Settings</span>
                     </button>
 
@@ -82,12 +73,12 @@
 
 <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
 
-<x-layout.breadcrumb/>
+<x-layout.breadcrumb />
 
 <x-modal>
     <x-slot name="title">
         <div class="flex gap-x-2">
-            <x-icons.settings class="shrink-0 size-6"/>
+            <x-icons.settings class="shrink-0 size-6" />
             Settings
         </div>
 
@@ -100,27 +91,49 @@
                 <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">LLM</legend>
 
                 <!-- Select -->
-                <select
-                    class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600">
-                    <option>Choose LLM</option>
-                    <option>OpenAi</option>
-                    <option>Gemini</option>
-                    <option>Ollama</option>
+                <select name="llm_type" id="llm_type" class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600">
+                    <option value="">Choose LLM</option>
+                    <option value="openai">OpenAi</option>
+                    <option value="gemini">Gemini</option>
+                    <option value="ollama">Ollama</option>
                 </select>
                 <!-- End Select -->
 
                 <br>
 
                 <!-- Floating Input -->
-                <div class="relative">
-                    <input type="email" id="hs-floating-gray-input-email" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
+                <div class="relative hidden" id="base_url_container">
+
+                    <input type="text" name="base_url" id="base_url" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
     focus:pt-6
     focus:pb-2
     [&:not(:placeholder-shown)]:pt-6
     [&:not(:placeholder-shown)]:pb-2
     autofill:pt-6
-    autofill:pb-2" placeholder="you@email.com">
-                    <label for="hs-floating-gray-input-email" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none
+    autofill:pb-2">
+                    <label for="base_url" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none
+      peer-focus:scale-90
+      peer-focus:translate-x-0.5
+      peer-focus:-translate-y-1.5
+      peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+      peer-[:not(:placeholder-shown)]:scale-90
+      peer-[:not(:placeholder-shown)]:translate-x-0.5
+      peer-[:not(:placeholder-shown)]:-translate-y-1.5
+      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">Base URL</label>
+                    <br>
+                </div>
+                <!-- End Floating Input -->
+
+                <!-- Floating Input -->
+                <div class="relative">
+                    <input type="text" name="api_key" id="api_key" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
+    focus:pt-6
+    focus:pb-2
+    [&:not(:placeholder-shown)]:pt-6
+    [&:not(:placeholder-shown)]:pb-2
+    autofill:pt-6
+    autofill:pb-2">
+                    <label for="api_key" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none
       peer-focus:scale-90
       peer-focus:translate-x-0.5
       peer-focus:-translate-y-1.5
@@ -137,14 +150,14 @@
 
                 <!-- Floating Input -->
                 <div class="relative">
-                    <input type="text" id="hs-floating-gray-input-email" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
+                    <input type="text" name="name" id="name" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
     focus:pt-6
     focus:pb-2
     [&:not(:placeholder-shown)]:pt-6
     [&:not(:placeholder-shown)]:pb-2
     autofill:pt-6
-    autofill:pb-2" placeholder="you@email.com">
-                    <label for="hs-floating-gray-input-email" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none
+    autofill:pb-2">
+                    <label for="name" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none
       peer-focus:scale-90
       peer-focus:translate-x-0.5
       peer-focus:-translate-y-1.5
@@ -160,20 +173,31 @@
                 <!-- End Floating Input -->
 
             </fieldset>
+
+
         </form>
     </x-slot>
 
     <x-slot name="buttons">
-        <button type="button"
-                class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                data-hs-overlay="#general-modal">
+        <button type="button" class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#general-modal">
             Close
         </button>
-        <button type="button"
-                class="gap-x-1 py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-            <x-icons.ok class="size-5"/>
+        <button type="button" class="gap-x-1 py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            <x-icons.ok class="size-5" />
             Save
         </button>
     </x-slot>
 </x-modal>
 
+<script>
+    const llmTypeSelect = document.getElementById('llm_type');
+    const baseUrlInput = document.getElementById('base_url_container');
+
+    llmTypeSelect.addEventListener('change', () => {
+        if (llmTypeSelect.value === 'ollama') {
+            baseUrlInput.style.display = 'block';
+        } else {
+            baseUrlInput.style.display = 'none';
+        }
+    });
+</script>

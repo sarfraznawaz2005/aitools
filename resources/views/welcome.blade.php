@@ -15,7 +15,7 @@
 
             <div class="mt-5 max-w-3xl text-center mx-auto">
                 <p class="text-lg text-gray-600 dark:text-neutral-400">
-                    Please select a tool from the left sidebar.
+                    Please click a tool from the left sidebar.
                 </p>
             </div>
         </div>
