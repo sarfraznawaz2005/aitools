@@ -27,7 +27,7 @@ class SettingController extends Controller
                 'success' => false,
                 'message' => 'Validation failed!',
                 'errors' => $validator->errors(),
-            ], 422);
+            ]);
         }
 
         // Save the form data to the database

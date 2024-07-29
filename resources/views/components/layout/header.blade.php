@@ -98,7 +98,8 @@
         <form
             hx-post="{{ route('submit.form.api_keys_form') }}"
             hx-target="#form-response"
-            hx-on::after-request="if(event.detail.successful) this.reset()">
+            hx-on::after-request="resetForm(this)"
+        >
             @csrf
 
             <div id="form-response">
@@ -213,6 +214,13 @@
 
 
 <script>
+
+    function resetForm(form) {
+        if (form.querySelector('#form-response').textContent.includes('success')) {
+            form.reset();
+        }
+    }
+
     const llmTypeSelect = document.getElementById('llm_type');
     const baseUrlInput = document.getElementById('base_url_container');
 
