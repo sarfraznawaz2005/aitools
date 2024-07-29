@@ -18,9 +18,6 @@ class SettingController extends Controller
         // Process the form data
         // ...
 
-        // Flash a success message
-        session()->flash('success', 'Form submitted successfully!');
-
         // Redirect or return a response
         return response()->view('partials.form-response', [
             'success' => true,
