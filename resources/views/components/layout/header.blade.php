@@ -107,7 +107,7 @@
             </div>
 
             <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
-                <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">LLM</legend>
+                <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">ADD API KEY</legend>
 
                 <!-- Select -->
                 <select name="llm_type" id="llm_type"
@@ -192,20 +192,20 @@
                 </div>
                 <!-- End Floating Input -->
 
-            </fieldset>
+                <div class="flex justify-end items-center gap-x-4 pt-4 border-t-2 mt-4">
+                    <button type="button"
+                            class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                            data-hs-overlay="#general-modal">
+                        Close
+                    </button>
+                    <button type="submit"
+                            class="gap-x-1 py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                        <x-icons.ok class="size-5"/>
+                        Save
+                    </button>
+                </div>
 
-            <div class="flex justify-end items-center gap-x-4 pt-4">
-                <button type="button"
-                        class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                        data-hs-overlay="#general-modal">
-                    Close
-                </button>
-                <button type="submit"
-                        class="gap-x-1 py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                    <x-icons.ok class="size-5"/>
-                    Save
-                </button>
-            </div>
+            </fieldset>
         </form>
     </x-slot>
 
