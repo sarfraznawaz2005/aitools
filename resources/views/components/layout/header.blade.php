@@ -212,23 +212,17 @@
 
 </x-modal>
 
-
 <script>
+    const llmTypeSelect = document.getElementById('llm_type');
+    const baseUrlInput = document.getElementById('base_url_container');
+
+    llmTypeSelect.addEventListener('change', () => {
+        baseUrlInput.style.display = llmTypeSelect.value === 'ollama' ? 'block' : 'none';
+    });
 
     function resetForm(form) {
         if (form.querySelector('#form-response').textContent.includes('success')) {
             form.reset();
         }
     }
-
-    const llmTypeSelect = document.getElementById('llm_type');
-    const baseUrlInput = document.getElementById('base_url_container');
-
-    llmTypeSelect.addEventListener('change', () => {
-        if (llmTypeSelect.value === 'ollama') {
-            baseUrlInput.style.display = 'block';
-        } else {
-            baseUrlInput.style.display = 'none';
-        }
-    });
 </script>
