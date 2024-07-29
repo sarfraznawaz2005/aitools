@@ -13,7 +13,7 @@ class SettingController extends Controller
     /**
      * @throws ValidationException
      */
-    public function submitApiKeysForm(Request $request): Response
+    public function store(Request $request): Response
     {
         $validator = Validator::make($request->all(), [
             'llm_type' => 'required',

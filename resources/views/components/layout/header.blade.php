@@ -96,7 +96,7 @@
 
     <x-slot name="body">
         <form
-            hx-post="{{ route('submit.form.api_keys_form') }}"
+            hx-post="{{ route('settings.store') }}"
             hx-target="#form-response"
             hx-on::after-request="resetForm(this)"
         >

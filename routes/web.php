@@ -7,5 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::post('api_keys_form', [SettingController::class, 'submitApiKeysForm'])->name('submit.form.api_keys_form');
+Route::post('store', [SettingController::class, 'store'])->name('settings.store');
 
