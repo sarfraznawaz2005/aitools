@@ -4,7 +4,7 @@
         <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
             <!-- Title -->
             <div class="mt-5 max-w-2xl text-center mx-auto">
-                <h1 class="block font-bold text-gray-800 text-4xl md:text-5xl lg:text-6xl dark:text-neutral-200">
+                <h1 class="block font-bold text-gray-600 text-4xl md:text-5xl lg:text-6xl dark:text-neutral-200">
                     AI
                     <span class="bg-clip-text bg-gradient-to-tl from-blue-600 to-violet-600 text-transparent">Tools</span>
                 </h1>
