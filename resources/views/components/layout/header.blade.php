@@ -95,7 +95,10 @@
     </x-slot>
 
     <x-slot name="body">
-        <form hx-post="{{ route('submit.form.api_keys_form') }}" hx-target="#form-response">
+        <form
+            hx-post="{{ route('submit.form.api_keys_form') }}"
+            hx-target="#form-response"
+            hx-on::after-request="if(event.detail.successful) this.reset()">
             @csrf
 
             <div id="form-response">
@@ -120,7 +123,7 @@
                 <!-- Floating Input -->
                 <div class="relative hidden" id="base_url_container">
 
-                    <input type="text" name="base_url" id="base_url" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
+                    <input type="url" name="base_url" id="base_url" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
     focus:pt-6
     focus:pb-2
     [&:not(:placeholder-shown)]:pt-6
