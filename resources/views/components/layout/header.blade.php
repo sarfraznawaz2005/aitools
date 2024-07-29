@@ -3,13 +3,13 @@
     <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
         <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="me-5 lg:me-0 lg:hidden">
-                <span class="flex-none rounded-md text-xl inline-block font-semibold text-gray-600 focus:outline-none focus:opacity-80 dark:text-white">
+                <span class="flex-none rounded-md text-xl inline-block font-semibold text-gray-500 focus:outline-none focus:opacity-80 dark:text-white">
                     {{ $title }}
                 </span>
             </div>
             <div class="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
                 <div class="hidden md:block">
-                    <h2 class="text-2xl text-gray-600 font-semibold dark:text-white">{{ $title }}</h2>
+                    <h2 class="text-2xl text-gray-500 font-semibold dark:text-white">{{ $title }}</h2>
                 </div>
                 <div class="flex flex-row items-center justify-end gap-1">
                     <button type="button" class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="dark">

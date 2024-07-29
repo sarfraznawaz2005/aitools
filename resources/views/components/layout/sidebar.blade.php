@@ -5,25 +5,25 @@
             <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                 <ul class="flex flex-col space-y-1">
                     <li>
-                        <a class="flex items-center gap-x-3 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" href="#">
+                        <a class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 bg-gray-100 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" href="#">
                             <x-icons.home color="#3357FF" />
                             Home
                         </a>
                     </li>
                     <li>
-                        <a class="w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700" href="#">
+                        <a class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700" href="#">
                             <x-icons.chat color="#8C33FF" />
                             Chat Buddy
                         </a>
                     </li>
                     <li>
-                        <a class="w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700" href="#">
+                        <a class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700" href="#">
                             <x-icons.magic color="#14B8A6" />
                             Text Styler
                         </a>
                     </li>
                     <li>
-                        <a class="w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700" href="#">
+                        <a class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700" href="#">
                             <x-icons.bulb color="#FF33A1" />
                             Tips Notifier
                         </a>

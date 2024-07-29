@@ -12,7 +12,7 @@
             <!-- End Title -->
 
             <div class="mt-5 max-w-3xl text-center mx-auto">
-                <p class="text-lg text-gray-600 dark:text-neutral-400">
+                <p class="text-gray-400 dark:text-neutral-400">
                     Please click a tool from the left sidebar.
                 </p>
             </div>
