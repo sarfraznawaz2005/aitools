@@ -8,6 +8,11 @@ class SettingController extends Controller
 {
     public function submitApiKeysForm(Request $request)
     {
+        return response()->view('partials.form-response', [
+            'success' => true,
+            'message' => 'Form submitted successfully!',
+        ]);
+        
         // Validate the form data
         $validatedData = $request->validate([
             'field1' => 'required',
@@ -15,13 +20,11 @@ class SettingController extends Controller
             // Add more validation rules as needed
         ]);
 
-        // Process the form data
-        // ...
 
-        // Redirect or return a response
+
         return response()->view('partials.form-response', [
             'success' => true,
             'message' => 'Form submitted successfully!',
-        ])->httpResponse();
+        ]);
     }
 }
