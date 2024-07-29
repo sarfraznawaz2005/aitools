@@ -1,9 +1,11 @@
 <!-- header start -->
 <div>
-    <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
+    <header
+        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
         <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="me-5 lg:me-0 lg:hidden">
-                <span class="flex-none rounded-md text-xl inline-block font-semibold text-gray-600 focus:outline-none focus:opacity-80 dark:text-white">
+                <span
+                    class="flex-none rounded-md text-xl inline-block font-semibold text-gray-600 focus:outline-none focus:opacity-80 dark:text-white">
                     {{ $title }}
                 </span>
             </div>
@@ -13,20 +15,27 @@
                 </div>
                 <div class="flex flex-row items-center justify-end gap-1">
 
-                    <button type="button" class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="dark">
+                    <button type="button"
+                            class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                            data-hs-theme-click-value="dark">
                         <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                            <x-icons.moon />
+                            <x-icons.moon/>
                         </span>
                     </button>
 
-                    <button type="button" class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" data-hs-theme-click-value="light">
+                    <button type="button"
+                            class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                            data-hs-theme-click-value="light">
                         <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                            <x-icons.sun color="#FF8C33" />
+                            <x-icons.sun color="#FF8C33"/>
                         </span>
                     </button>
 
-                    <button type="button" class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#general-modal">
-                        <x-icons.settings />
+                    <button type="button"
+                            class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                            aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
+                            data-hs-overlay="#general-modal">
+                        <x-icons.settings/>
                         <span class="sr-only">Settings</span>
                     </button>
 
@@ -73,25 +82,32 @@
 
 <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
 
-<x-layout.breadcrumb />
+<x-layout.breadcrumb/>
 
 <x-modal>
+
     <x-slot name="title">
         <div class="flex gap-x-2">
-            <x-icons.settings class="shrink-0 size-6" />
+            <x-icons.settings class="shrink-0 size-6"/>
             Settings
         </div>
 
     </x-slot>
 
     <x-slot name="body">
-        <form action="#">
+        <form hx-post="{{ route('submit.form.api_keys_form') }}" hx-target="#form-response">
+            @csrf
+
+            <div id="form-response">
+                <!-- This div will be updated with the response from the server -->
+            </div>
 
             <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
                 <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">LLM</legend>
 
                 <!-- Select -->
-                <select name="llm_type" id="llm_type" class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600">
+                <select name="llm_type" id="llm_type"
+                        class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600">
                     <option value="">Choose LLM</option>
                     <option value="openai">OpenAi</option>
                     <option value="gemini">Gemini</option>
@@ -119,7 +135,8 @@
       peer-[:not(:placeholder-shown)]:scale-90
       peer-[:not(:placeholder-shown)]:translate-x-0.5
       peer-[:not(:placeholder-shown)]:-translate-y-1.5
-      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">Base URL</label>
+      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">Base
+                        URL</label>
                     <br>
                 </div>
                 <!-- End Floating Input -->
@@ -167,27 +184,29 @@
       peer-[:not(:placeholder-shown)]:-translate-y-1.5
       peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">Model
                         Name</label>
-                    <p class="mt-2 text-sm text-gray-400 dark:text-neutral-500" id="hs-input-helper-text">&nbsp;Based on
-                        your selected LLM</p>
+                    <p class="mt-2 text-sm text-gray-400 dark:text-neutral-500">&nbsp;Based on your selected LLM</p>
                 </div>
                 <!-- End Floating Input -->
 
             </fieldset>
-
-
         </form>
     </x-slot>
 
     <x-slot name="buttons">
-        <button type="button" class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#general-modal">
+        <button type="button"
+                class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                data-hs-overlay="#general-modal">
             Close
         </button>
-        <button type="button" class="gap-x-1 py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-            <x-icons.ok class="size-5" />
+        <button type="submit"
+                class="gap-x-1 py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            <x-icons.ok class="size-5"/>
             Save
         </button>
     </x-slot>
+
 </x-modal>
+
 
 <script>
     const llmTypeSelect = document.getElementById('llm_type');
