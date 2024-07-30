@@ -1,12 +1,68 @@
 <div x-data="{ llm_type: '' }">
 
+    <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
+        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">SAVED API KEYS</legend>
+
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+            <thead class="bg-gray-50 dark:bg-neutral-800">
+            <tr>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                    Name
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                    LLM Type
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300 text-center">
+                    Actions
+                </th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
+            @foreach($apiKeys as $apiKey)
+                <tr>
+                    <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                        {{ $apiKey->name }}
+                    </td>
+                    <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                        {{ strtoupper($apiKey->llm_type) }}
+                    </td>
+                    <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                        <button wire:click="$dispatch('onEditApiKey', {id: {{$apiKey->id}}})" title="Edit"
+                                class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
+                            <x-icons.edit class="size-4 mx-auto"/>
+                        </button>
+
+                        @if ($apiKey->active === 1)
+                            <button title="This is currently default"
+                                    class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded">
+                                <x-icons.ok class="size-4 mx-auto"/>
+                            </button>
+                        @else
+                            <button wire:click="$dispatch('onMarkDefaultApiKey', {{$apiKey->id}})" title="Make Default"
+                                    class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded">
+                                <x-icons.ok class="size-4 mx-auto"/>
+                            </button>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+
+    </fieldset>
+
+    <br>
+
     <x-flash/>
 
     <form wire:submit.prevent="save">
         @csrf
 
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
-            <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">ADD API KEY</legend>
+            <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">ADD NEW API KEY</legend>
 
             <!-- Select -->
             <select x-model="llm_type" wire:model="llm_type" id="llm_type"
@@ -69,4 +125,5 @@
             </div>
         </fieldset>
     </form>
+
 </div>

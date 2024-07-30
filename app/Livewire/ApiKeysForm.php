@@ -26,17 +26,25 @@ class ApiKeysForm extends Component
     #[On('onCreateApiKey')]
     public function create(): void
     {
-        Log::info('Opening API Key form for creation');
+        Log::info('Opening API Key form for creation.');
 
         $this->model = new ApiKey();
     }
 
-    public function edit(ApiKey $model): void
+    #[On('onEditApiKey')]
+    public function edit($id): void
     {
-        $this->model = $model;
+        Log::info('Opening API Key form for editing.');
+
+        $this->model = ApiKey::find($id);
+
+        $this->llm_type = $this->model->llm_type;
+        $this->base_url = $this->model->base_url;
+        $this->api_key = $this->model->api_key;
+        $this->name = $this->model->name;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
 
@@ -54,19 +62,25 @@ class ApiKeysForm extends Component
             return;
         }
 
-        session()->flash('message', 'API key saved successfully!');
+        if ($isCreate) {
+            session()->flash('message', 'API key created successfully!');
+        } else {
+            session()->flash('message', 'API key saved successfully!');
+        }
 
         $this->resetForm();
-    }
-
-    public function render()
-    {
-        return view('livewire.api-keys-form');
     }
 
     protected function resetForm()
     {
         $this->reset();
         $this->model = new ApiKey();
+    }
+
+    public function render()
+    {
+        $apiKeys = ApiKey::all()->sortBy('name');
+
+        return view('livewire.api-keys-form', compact('apiKeys'));
     }
 }
