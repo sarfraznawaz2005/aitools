@@ -3,6 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\ApiKey;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -16,12 +19,15 @@ class ApiKeysForm extends Component
     public $api_key;
     public $name;
 
-    protected array $rules = [
-        'llm_type' => 'required',
-        'base_url' => 'required_if:llm_type,ollama',
-        'api_key' => 'required|unique:api_keys',
-        'name' => 'required|unique:api_keys',
-    ];
+    protected function rules(): array
+    {
+        return [
+            'llm_type' => 'required',
+            'base_url' => 'required_if:llm_type,ollama',
+            'api_key' => 'required|unique:api_keys,api_key,' . ($this->model->id ?? 'NULL') . ',id',
+            'name' => 'required|unique:api_keys,name,' . ($this->model->id ?? 'NULL') . ',id',
+        ];
+    }
 
     #[On('onCreateApiKey')]
     public function create(): void
@@ -71,13 +77,13 @@ class ApiKeysForm extends Component
         $this->resetForm();
     }
 
-    protected function resetForm()
+    protected function resetForm(): void
     {
         $this->reset();
         $this->model = new ApiKey();
     }
 
-    public function render()
+    public function render(): Application|View|Factory
     {
         $apiKeys = ApiKey::all()->sortBy('name');
 
