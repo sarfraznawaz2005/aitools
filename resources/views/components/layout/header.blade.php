@@ -81,7 +81,7 @@
     </x-slot>
 
     <x-slot name="body">
-        <form hx-post="{{ route('settings.store') }}">
+        <form action="{{ route('settings.store') }}" method="post">
             @csrf
 
             <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
@@ -132,7 +132,8 @@
                 </div>
                 <!-- End Floating Input -->
 
-                <div class="flex justify-end items-center gap-x-4 pt-4 border-t-2 border-gray-100 dark:border-neutral-700 mt-4">
+                <div
+                    class="flex justify-end items-center gap-x-4 pt-4 border-t-2 border-gray-100 dark:border-neutral-700 mt-4">
                     <button type="button"
                             class="py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                             data-hs-overlay="#general-modal">
