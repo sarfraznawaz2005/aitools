@@ -45,6 +45,7 @@ class ApiKeysForm extends Component
         ApiKey::whereActive()->update(['active' => false]);
 
         $this->model->active = true;
+        $this->model->save();
 
         session()->flash('message', 'API key made default successfully!');
 
