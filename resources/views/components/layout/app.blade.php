@@ -21,14 +21,8 @@
     <div class="flex-1 pt-5 px-4 sm:px-6 md:px-8 text-gray-600 dark:text-neutral-200">
         {{ $slot }}
     </div>
+    <!-- main content end -->
 </div>
-<!-- main content end -->
-
-<script>
-    document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRF-Token'] = '{{ csrf_token() }}';
-    })
-</script>
 
 </body>
 

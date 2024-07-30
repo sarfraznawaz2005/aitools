@@ -8,4 +8,3 @@ Route::get('/', function () {
 })->name('home');
 
 Route::post('store', [SettingController::class, 'store'])->name('settings.store');
-

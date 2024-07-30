@@ -81,11 +81,8 @@
     </x-slot>
 
     <x-slot name="body">
-        <form hx-post="{{ route('settings.store') }}" hx-target="#form-response" hx-on::after-request="resetForm(this)">
+        <form hx-post="{{ route('settings.store') }}">
             @csrf
-            <div id="form-response">
-                <!-- This div will be updated with the response from the server -->
-            </div>
 
             <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
                 <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">ADD API KEY</legend>
@@ -151,18 +148,3 @@
         </form>
     </x-slot>
 </x-modal>
-
-<script>
-    const llmTypeSelect = document.getElementById('llm_type');
-    const baseUrlInput = document.getElementById('base_url_container');
-
-    llmTypeSelect.addEventListener('change', () => {
-        baseUrlInput.style.display = llmTypeSelect.value === 'ollama' ? 'block' : 'none';
-    });
-
-    function resetForm(form) {
-        if (form.querySelector('#form-response').textContent.includes('success')) {
-            form.reset();
-        }
-    }
-</script>
