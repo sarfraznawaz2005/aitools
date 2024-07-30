@@ -6,18 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ? $title . ' - AiTools' : 'AiTools' }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=ubuntu:300,400,500,700" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=ubuntu:300,400,500,700" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="antialiased bg-gray-50 dark:bg-neutral-900">
 
-<x-layout.header :title="$title ?? 'AiTools'" />
-<x-layout.sidebar />
+<x-layout.header :title="$title ?? 'AiTools'"/>
 
-<!-- main content start -->
-<div class="w-full pt-5 px-4 sm:px-6 md:px-8 lg:ps-56 text-gray-600 dark:text-neutral-200">
-    {{ $slot }}
+<div class="flex">
+    <x-layout.sidebar :title="$title ?? 'AiTools'"/>
+
+    <!-- main content start -->
+    <div class="flex-1 pt-5 px-4 sm:px-6 md:px-8 text-gray-600 dark:text-neutral-200">
+        {{ $slot }}
+    </div>
 </div>
 <!-- main content end -->
 

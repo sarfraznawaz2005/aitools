@@ -1,14 +1,9 @@
 <!-- header start -->
 <div>
-    <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[200px] dark:bg-neutral-900 dark:border-neutral-700">
+    <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 dark:bg-neutral-900 dark:border-neutral-700">
         <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
-            <div class="me-5 lg:me-0 lg:hidden">
-                <span class="flex-none rounded-md text-xl inline-block font-semibold text-gray-500 focus:outline-none focus:opacity-80 dark:text-white">
-                    {{ $title }}
-                </span>
-            </div>
-            <div class="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
-                <div class="hidden md:block">
+            <div class="w-full flex items-center ms-auto justify-between gap-x-1 md:gap-x-3">
+                <div class="md:block">
                     <h2 class="text-2xl text-gray-500 font-semibold dark:text-white">{{ $title }}</h2>
                 </div>
                 <div class="flex flex-row items-center justify-end gap-1">
@@ -71,8 +66,6 @@
 <!-- header end -->
 
 <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
-
-<x-layout.breadcrumb />
 
 <x-modal>
     <x-slot name="title">
