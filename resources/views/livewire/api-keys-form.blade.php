@@ -73,7 +73,7 @@
         @csrf
 
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
-            <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">ADD NEW API KEY</legend>
+            <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">API KEY</legend>
 
             <!-- Select -->
             <select x-model="llm_type" wire:model="llm_type" id="llm_type"
