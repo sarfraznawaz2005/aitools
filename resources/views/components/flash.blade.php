@@ -1,4 +1,4 @@
-@if ($success)
+@if (session('message'))
     <div class="mt-2 mb-4 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert"
          tabindex="-1"
          aria-labelledby="hs-bordered-success-style-label">
@@ -13,17 +13,21 @@
           </svg>
         </span>
             </div>
+
             <div class="ms-3">
                 <h3 id="hs-bordered-success-style-label" class="text-gray-800 font-semibold dark:text-white">
                     Success!
                 </h3>
                 <p class="text-sm text-gray-700 dark:text-neutral-400">
-                    {{ $message }}
+                    {{ session('message') }}
                 </p>
             </div>
+
         </div>
     </div>
-@else
+@endif
+
+@if (isset($errors) && $errors->any())
     <div class="mt-2 mb-4 bg-red-50 border-s-4 border-red-500 p-4 dark:bg-red-800/30" role="alert" tabindex="-1"
          aria-labelledby="hs-bordered-red-style-label">
         <div class="flex">
@@ -37,21 +41,19 @@
           </svg>
         </span>
             </div>
+
             <div class="ms-3">
-                <h3 id="hs-bordered-red-style-label" class="text-gray-800 font-semibold dark:text-white">
-                    Error!
+                <h3 id="hs-bordered-red-style-label" class="text-gray-600 font-semibold dark:text-white">
+                    Oops!
                 </h3>
-                <p class="text-sm text-gray-700 dark:text-neutral-400">
-                    {{ $message }}
-                </p>
-                @if (isset($errors) && $errors->any())
-                    <ul class="mt-3 list-disc list-inside text-sm text-red-600 dark:text-red-400">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                @endif
+
+                <ul class="mt-3 list-disc list-inside text-sm text-red-600 dark:text-red-400">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+
         </div>
     </div>
 @endif

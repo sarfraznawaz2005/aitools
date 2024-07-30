@@ -21,9 +21,15 @@ class ApiKey extends Model
         parent::boot();
 
         static::creating(function ($model) {
+
+            $model->created_at = now();
+            $model->updated_at = now();
+
             // Check if this is the first key being created
             if (static::count() === 0) {
                 $model->active = true;
+            } else {
+                $model->active = false;
             }
 
             if ($model->isActive()) {
