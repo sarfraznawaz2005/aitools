@@ -36,7 +36,8 @@
                                 <x-icons.ok class="size-4 mx-auto"/>
                             </button>
                         @else
-                            <button wire:click="$dispatch('onMarkDefaultApiKey', {id: {{$apiKey->id}}})" title="Make Default"
+                            <button title="Make Default"
+                                    wire:click="$dispatch('onMarkDefaultApiKey', {id: {{$apiKey->id}}})"
                                     class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
                                 <x-icons.ok class="size-4 mx-auto"/>
                             </button>
