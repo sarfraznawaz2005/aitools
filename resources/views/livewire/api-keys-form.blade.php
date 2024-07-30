@@ -1,71 +1,72 @@
 <div x-data="{ llm_type: '' }">
 
-    <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
-        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">SAVED API KEYS</legend>
+    @if ($apiKeys && count($apiKeys))
+        <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
+            <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">SAVED API KEYS</legend>
 
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-            <thead class="bg-gray-50 dark:bg-neutral-800">
-            <tr>
-                <th scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                    Name
-                </th>
-                <th scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                    Type
-                </th>
-                <th scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300 text-center">
-                    Action
-                </th>
-            </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
-            @foreach($apiKeys as $apiKey)
-                <tr wire:key="{{$apiKey->id}}">
-                    <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                        {{ $apiKey->name }}
-                    </td>
-                    <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                        {{ strtoupper($apiKey->llm_type) }}
-                    </td>
-                    <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                        @if ($apiKey->active === 1)
-                            <button title="This is currently default"
-                                    class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded mr-2">
-                                <x-icons.ok class="size-4 mx-auto"/>
-                            </button>
-                        @else
-                            <button title="Make Default"
-                                    wire:click="$dispatch('onMarkDefaultApiKey', {id: {{$apiKey->id}}})"
-                                    class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
-                                <x-icons.ok class="size-4 mx-auto"/>
-                            </button>
-                        @endif
-
-                        <button
-                            title="Edit"
-                            wire:click="$dispatch('onEditApiKey', {id: {{$apiKey->id}}})"
-                            class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
-                            <x-icons.edit class="size-4 mx-auto"/>
-                        </button>
-
-                        <button
-                            title="Delete"
-                            wire:click="$dispatch('onDeleteApiKey', {id: {{$apiKey->id}}})"
-                            wire:confirm="Are you sure you want to delete this?"
-                            class="items-center px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
-                            <x-icons.delete class="size-4 mx-auto"/>
-                        </button>
-                    </td>
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                <thead class="bg-gray-50 dark:bg-neutral-800">
+                <tr>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                        Name
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                        Type
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-neutral-300 text-center">
+                        Action
+                    </th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
+                @foreach($apiKeys as $apiKey)
+                    <tr wire:key="{{$apiKey->id}}">
+                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                            {{ $apiKey->name }}
+                        </td>
+                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                            {{ strtoupper($apiKey->llm_type) }}
+                        </td>
+                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                            @if ($apiKey->active === 1)
+                                <button title="This is currently default"
+                                        class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded mr-2">
+                                    <x-icons.ok class="size-4 mx-auto"/>
+                                </button>
+                            @else
+                                <button title="Make Default"
+                                        wire:click="$dispatch('onMarkDefaultApiKey', {id: {{$apiKey->id}}})"
+                                        class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
+                                    <x-icons.ok class="size-4 mx-auto"/>
+                                </button>
+                            @endif
 
-    </fieldset>
+                            <button
+                                title="Edit"
+                                wire:click="$dispatch('onEditApiKey', {id: {{$apiKey->id}}})"
+                                class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
+                                <x-icons.edit class="size-4 mx-auto"/>
+                            </button>
 
-    <br>
+                            <button
+                                title="Delete"
+                                wire:click="$dispatch('onDeleteApiKey', {id: {{$apiKey->id}}})"
+                                wire:confirm="Are you sure you want to delete this?"
+                                class="items-center px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
+                                <x-icons.delete class="size-4 mx-auto"/>
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+
+        </fieldset>
+        <br>
+    @endif
 
     <x-flash/>
 
