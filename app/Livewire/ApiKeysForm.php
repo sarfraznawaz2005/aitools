@@ -37,6 +37,20 @@ class ApiKeysForm extends Component
         $this->model = new ApiKey();
     }
 
+    #[On('onMarkDefaultApiKey')]
+    public function markDefault($id): void
+    {
+        $this->model = ApiKey::find($id);
+
+        ApiKey::whereActive()->update(['active' => false]);
+
+        $this->model->active = true;
+
+        session()->flash('message', 'API key made default successfully!');
+
+        $this->resetForm();
+    }
+
     #[On('onEditApiKey')]
     public function edit($id): void
     {
@@ -48,6 +62,16 @@ class ApiKeysForm extends Component
         $this->base_url = $this->model->base_url;
         $this->api_key = $this->model->api_key;
         $this->name = $this->model->name;
+    }
+
+    #[On('onDeleteApiKey')]
+    public function deleteApiKey($id): void
+    {
+        ApiKey::find($id)->delete();
+
+        session()->flash('message', 'API key deleted successfully!');
+
+        $this->resetForm();
     }
 
     public function save(): void
