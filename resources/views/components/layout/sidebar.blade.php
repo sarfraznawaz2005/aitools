@@ -1,5 +1,3 @@
-
-
 <!-- sidebar start -->
 <div id="hs-application-sidebar" class="transition-all pr-2 duration-300 transform h-full min-h-screen inset-y-0 start-0 z-[60] bg-white border-e border-gray-200 dark:bg-neutral-900 dark:border-neutral-700 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0" role="dialog" tabindex="-1" aria-label="Sidebar">
     <div class="relative flex flex-col h-full max-h-full">
