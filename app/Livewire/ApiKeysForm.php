@@ -47,8 +47,6 @@ class ApiKeysForm extends Component
         $this->model->active = true;
         $this->model->save();
 
-        session()->flash('message', 'API key made default successfully!');
-
         $this->resetForm();
     }
 
@@ -69,8 +67,6 @@ class ApiKeysForm extends Component
     public function deleteApiKey($id): void
     {
         ApiKey::find($id)->delete();
-
-        session()->flash('message', 'API key deleted successfully!');
 
         $this->resetForm();
     }
