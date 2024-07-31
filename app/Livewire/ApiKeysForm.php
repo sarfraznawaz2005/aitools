@@ -21,7 +21,7 @@ class ApiKeysForm extends Component
     {
         return [
             'llm_type' => 'required',
-            'base_url' => 'required_if:llm_type,ollama',
+            'base_url' => 'required_if:llm_type,Ollama',
             'api_key' => 'required|unique:api_keys,api_key,' . ($this->model->id ?? 'NULL') . ',id',
             'name' => 'required|unique:api_keys,name,' . ($this->model->id ?? 'NULL') . ',id',
         ];
@@ -53,6 +53,7 @@ class ApiKeysForm extends Component
     public function deleteApiKey(ApiKey $apiKey): void
     {
         if ($apiKey->active) {
+            $this->resetForm();
             $this->addError('error', 'Cannot delete the default API key!');
             return;
         }

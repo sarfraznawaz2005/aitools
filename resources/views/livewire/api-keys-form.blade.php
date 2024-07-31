@@ -28,7 +28,7 @@
                             {{ $apiKey->name }}
                         </td>
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                            {{ strtoupper($apiKey->llm_type) }}
+                            {{ $apiKey->llm_type }}
                         </td>
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
                             @if ($apiKey->active)
@@ -76,15 +76,15 @@
                 <select x-model="llm_type" wire:model="llm_type" id="llm_type"
                         class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600">
                     <option value="">Choose LLM</option>
-                    <option value="openai">OpenAi</option>
-                    <option value="gemini">Gemini</option>
-                    <option value="ollama">Ollama</option>
+                    <option value="OpenAI">OpenAI</option>
+                    <option value="Gemini">Gemini</option>
+                    <option value="Ollama">Ollama</option>
                 </select>
             </div>
             <!-- End Select -->
 
             <!-- Floating Input -->
-            <div class="relative mb-3" x-show="llm_type === 'ollama'">
+            <div class="relative mb-3" x-show="llm_type === 'Ollama'">
                 <input type="url" wire:model="base_url" id="base_url"
                        class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2">
                 <label for="base_url"
