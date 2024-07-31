@@ -1,5 +1,11 @@
-<div x-data="{ open: false }" @keydown.escape.window="open = false" class="inline" @click.away="open = false">
-    <button @click="open = true" {{ $attributes->merge(['class' => 'items-center px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded']) }}>
+<div
+    class="inline"
+    x-data="{ open: false }"
+    @keydown.escape.window="open = false"
+    @click.away="open = false">
+
+    <button
+        @click="open = true" {{ $attributes->merge(['class' => 'items-center px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded']) }}>
         {{ $slot }}
     </button>
 
@@ -9,8 +15,13 @@
             <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-300 mb-4">Confirm Deletion</h2>
             <p class="text-sm text-gray-600 dark:text-neutral-400 mb-6">Are you sure you want to delete this item?</p>
             <div class="flex justify-end gap-4">
-                <button @click="open = false" class="py-2 px-4 bg-gray-200 dark:bg-neutral-700 text-gray-800 dark:text-neutral-300 rounded-lg hover:bg-gray-300 dark:hover:bg-neutral-600">Cancel</button>
-                <button @click="$dispatch('{{ $deleteEvent }}', {id: {{ $id }}}); open = false" class="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
+                <button @click="open = false"
+                        class="py-2 px-4 bg-gray-200 dark:bg-neutral-700 text-gray-800 dark:text-neutral-300 rounded-lg hover:bg-gray-300 dark:hover:bg-neutral-600">
+                    Cancel
+                </button>
+                <button @click="$dispatch('{{ $deleteEvent }}', {id: {{ $id }}}); open = false"
+                        class="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete
+                </button>
             </div>
         </div>
     </div>
