@@ -66,7 +66,14 @@ class ApiKeysForm extends Component
     #[On('onDeleteApiKey')]
     public function deleteApiKey($id): void
     {
-        ApiKey::find($id)->delete();
+        $apiKey = ApiKey::find($id);
+
+        if ($apiKey->isActive()) {
+            $this->addError('error', 'Cannot delete the default API key!');
+            return;
+        }
+
+        $apiKey->delete();
 
         $this->resetForm();
     }

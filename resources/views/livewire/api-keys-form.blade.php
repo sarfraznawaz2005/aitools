@@ -51,13 +51,9 @@
                                 <x-icons.edit class="size-4 mx-auto"/>
                             </button>
 
-                            <button
-                                title="Delete"
-                                wire:click="$dispatch('onDeleteApiKey', {id: {{$apiKey->id}}})"
-                                wire:confirm="Are you sure you want to delete this?"
-                                class="items-center px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
+                            <x-confirm-dialog :id="$apiKey->id" delete-event="onDeleteApiKey">
                                 <x-icons.delete class="size-4 mx-auto"/>
-                            </button>
+                            </x-confirm-dialog>
                         </td>
                     </tr>
                 @endforeach

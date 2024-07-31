@@ -1,7 +1,7 @@
 <div>
     <!-- header start -->
     <header
-        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white text-sm py-2.5 dark:bg-neutral-900">
+        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap w-full bg-white text-sm py-2.5 dark:bg-neutral-900">
         <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="w-full flex items-center ms-auto justify-between gap-x-1 md:gap-x-3">
                 <div class="md:block">
