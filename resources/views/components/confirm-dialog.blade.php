@@ -12,7 +12,7 @@
 
     <div x-show="open" class="fixed inset-0 flex items-center justify-center z-[80]">
         <div class="fixed inset-0 bg-black opacity-50 z-[70]" @click="open = false"></div>
-        <div class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-4 w-full max-w-sm mx-auto z-[80]" @click.stop>
+        <div class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-4 mx-auto z-[80]" @click.stop>
             <p class="text-lg text-gray-600 dark:text-neutral-400 mb-6 border-b border-gray-100 dark:border-neutral-700 pb-2">
                 Are you sure you want to delete?
             </p>
