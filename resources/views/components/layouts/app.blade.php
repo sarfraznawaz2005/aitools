@@ -18,7 +18,7 @@
     <x-layouts.sidebar/>
 
     <!-- main content start -->
-    <div class="flex-1 pt-5 px-4 sm:px-6 md:px-8 text-gray-600 dark:text-neutral-200">
+    <div class="flex-1 pt-5 px-4 text-gray-600 dark:text-neutral-200">
 
         <x-flash />
 
