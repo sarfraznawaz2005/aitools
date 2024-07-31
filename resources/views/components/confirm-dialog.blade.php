@@ -23,7 +23,8 @@
                 <button
                     wire:click="{{$using}}({{ $id }})"
                     @click="open = false"
-                        class="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete
+                        class="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    <x-icons.ok class="size-4 inline-block"/> Delete
                 </button>
             </div>
         </div>

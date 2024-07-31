@@ -34,13 +34,13 @@
                             @if ($apiKey->active)
                                 <button title="This is currently default"
                                         class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded mr-2">
-                                    <x-icons.ok class="size-4 mx-auto"/>
+                                    <x-icons.ok class="w-4 h-4 mx-auto"/>
                                 </button>
                             @else
                                 <button title="Make Default"
                                         wire:click="markDefault({{ $apiKey->id }})"
                                         class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
-                                    <x-icons.ok class="size-4 mx-auto"/>
+                                    <x-icons.ok class="w-4 h-4 mx-auto"/>
                                 </button>
                             @endif
 
@@ -48,11 +48,11 @@
                                 title="Edit"
                                 wire:click="edit({{ $apiKey->id }})"
                                 class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
-                                <x-icons.edit class="size-4 mx-auto"/>
+                                <x-icons.edit class="w-4 h-4 mx-auto"/>
                             </button>
 
                             <x-confirm-dialog :id="$apiKey->id" using="deleteApiKey" title="Delete">
-                                <x-icons.delete class="size-4 mx-auto"/>
+                                <x-icons.delete class="w-4 h-4 mx-auto"/>
                             </x-confirm-dialog>
                         </td>
                     </tr>

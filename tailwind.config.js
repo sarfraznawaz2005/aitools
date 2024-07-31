@@ -10,7 +10,7 @@ export default {
     ],
     theme: {
         fontFamily: {
-            sans: ['Ubuntu', 'sans-serif'],
+            sans: ['Nunito', 'sans-serif'],
         },
         extend: {
             colors: {
