@@ -12,6 +12,7 @@ use Livewire\Component;
 class ApiKeysForm extends Component
 {
     public ApiKey $model;
+
     public $llm_type;
     public $base_url;
     public $api_key;
@@ -30,25 +31,23 @@ class ApiKeysForm extends Component
     public function mount(ApiKey $apiKey = null): void
     {
         $this->model = $apiKey ?? new ApiKey();
-        $this->fill($this->model->toArray());
-    }
 
-    public function create(): void
-    {
-        $this->resetForm();
-        $this->model = new ApiKey();
+        $this->fill($this->model->toArray());
     }
 
     public function markDefault(ApiKey $apiKey): void
     {
         ApiKey::where('active', true)->update(['active' => false]);
+
         $apiKey->update(['active' => true]);
+
         $this->resetForm();
     }
 
     public function edit(ApiKey $apiKey): void
     {
         $this->model = $apiKey;
+
         $this->fill($apiKey->toArray());
     }
 
@@ -86,6 +85,9 @@ class ApiKeysForm extends Component
     protected function resetForm(): void
     {
         $this->reset();
+        $this->resetErrorBag();
+        $this->resetValidation();
+
         $this->model = new ApiKey();
     }
 
