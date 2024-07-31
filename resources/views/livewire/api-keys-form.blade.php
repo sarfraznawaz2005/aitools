@@ -31,14 +31,14 @@
                             {{ strtoupper($apiKey->llm_type) }}
                         </td>
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                            @if ($apiKey->active === 1)
+                            @if ($apiKey->active)
                                 <button title="This is currently default"
                                         class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded mr-2">
                                     <x-icons.ok class="size-4 mx-auto"/>
                                 </button>
                             @else
                                 <button title="Make Default"
-                                        wire:click="$dispatch('onMarkDefaultApiKey', {id: {{$apiKey->id}}})"
+                                        wire:click="markDefault({{ $apiKey->id }})"
                                         class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
                                     <x-icons.ok class="size-4 mx-auto"/>
                                 </button>
@@ -46,7 +46,7 @@
 
                             <button
                                 title="Edit"
-                                wire:click="$dispatch('onEditApiKey', {id: {{$apiKey->id}}})"
+                                wire:click="edit({{ $apiKey->id }})"
                                 class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
                                 <x-icons.edit class="size-4 mx-auto"/>
                             </button>

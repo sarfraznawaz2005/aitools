@@ -6,14 +6,12 @@ use App\Models\ApiKey;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ApiKeysForm extends Component
 {
-    public ?ApiKey $model;
-
+    public ApiKey $model;
     public $llm_type;
     public $base_url;
     public $api_key;
@@ -29,38 +27,29 @@ class ApiKeysForm extends Component
         ];
     }
 
-    #[On('onCreateApiKey')]
+    public function mount(ApiKey $apiKey = null): void
+    {
+        $this->model = $apiKey ?? new ApiKey();
+        $this->fill($this->model->toArray());
+    }
+
     public function create(): void
     {
-        Log::info('Opening API Key form for creation.');
-
+        $this->resetForm();
         $this->model = new ApiKey();
     }
 
-    #[On('onMarkDefaultApiKey')]
-    public function markDefault($id): void
+    public function markDefault(ApiKey $apiKey): void
     {
-        $this->model = ApiKey::find($id);
-
-        ApiKey::whereActive()->update(['active' => false]);
-
-        $this->model->active = true;
-        $this->model->save();
-
+        ApiKey::where('active', true)->update(['active' => false]);
+        $apiKey->update(['active' => true]);
         $this->resetForm();
     }
 
-    #[On('onEditApiKey')]
-    public function edit($id): void
+    public function edit(ApiKey $apiKey): void
     {
-        Log::info('Opening API Key form for editing.');
-
-        $this->model = ApiKey::find($id);
-
-        $this->llm_type = $this->model->llm_type;
-        $this->base_url = $this->model->base_url;
-        $this->api_key = $this->model->api_key;
-        $this->name = $this->model->name;
+        $this->model = $apiKey;
+        $this->fill($apiKey->toArray());
     }
 
     #[On('onDeleteApiKey')]
@@ -82,25 +71,14 @@ class ApiKeysForm extends Component
     {
         $this->validate();
 
-        $isCreate = is_null($this->model->id);
-
         $this->model->fill([
             'llm_type' => $this->llm_type,
             'base_url' => $this->base_url,
             'api_key' => $this->api_key,
-            'name' => $this->name
-        ]);
+            'name' => $this->name,
+        ])->save();
 
-        if (!$this->model->save()) {
-            $this->addError('error', 'Unable to save API Key!');
-            return;
-        }
-
-        if ($isCreate) {
-            session()->flash('message', 'API key created successfully!');
-        } else {
-            session()->flash('message', 'API key saved successfully!');
-        }
+        session()->flash('message', $this->model->wasRecentlyCreated ? 'API key created successfully!' : 'API key saved successfully!');
 
         $this->resetForm();
     }
@@ -111,10 +89,10 @@ class ApiKeysForm extends Component
         $this->model = new ApiKey();
     }
 
-    public function render(): Application|View|Factory
+    public function render(): View|Application|Factory
     {
-        $apiKeys = ApiKey::all()->sortBy('name');
-
-        return view('livewire.api-keys-form', compact('apiKeys'));
+        return view('livewire.api-keys-form', [
+            'apiKeys' => ApiKey::all()->sortBy('name'),
+        ]);
     }
 }
