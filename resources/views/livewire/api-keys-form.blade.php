@@ -51,7 +51,7 @@
                                 <x-icons.edit class="size-4 mx-auto"/>
                             </button>
 
-                            <x-confirm-dialog :id="$apiKey->id" delete-event="onDeleteApiKey">
+                            <x-confirm-dialog :id="$apiKey->id" using="deleteApiKey" title="Delete">
                                 <x-icons.delete class="size-4 mx-auto"/>
                             </x-confirm-dialog>
                         </td>

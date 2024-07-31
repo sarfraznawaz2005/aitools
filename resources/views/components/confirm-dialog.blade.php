@@ -20,7 +20,9 @@
                         class="py-2 px-4 bg-gray-200 dark:bg-neutral-700 text-gray-800 dark:text-neutral-300 rounded-lg hover:bg-gray-300 dark:hover:bg-neutral-600">
                     Cancel
                 </button>
-                <button @click="$dispatch('{{ $deleteEvent }}', {id: {{ $id }}}); open = false"
+                <button
+                    wire:click="{{$using}}({{ $id }})"
+                    @click="open = false"
                         class="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete
                 </button>
             </div>

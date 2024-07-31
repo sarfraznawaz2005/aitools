@@ -6,7 +6,6 @@ use App\Models\ApiKey;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ApiKeysForm extends Component
@@ -51,12 +50,9 @@ class ApiKeysForm extends Component
         $this->fill($apiKey->toArray());
     }
 
-    #[On('onDeleteApiKey')]
-    public function deleteApiKey($id): void
+    public function deleteApiKey(ApiKey $apiKey): void
     {
-        $apiKey = ApiKey::find($id);
-
-        if ($apiKey->isActive()) {
+        if ($apiKey->active) {
             $this->addError('error', 'Cannot delete the default API key!');
             return;
         }
