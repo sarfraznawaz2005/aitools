@@ -1,4 +1,4 @@
-<div x-data="{ llm_type: '' }">
+<div x-data="{ llm_type: @entangle('llm_type') }">
 
     @if ($apiKeys && count($apiKeys))
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
@@ -65,7 +65,7 @@
 
     <x-flash/>
 
-    <form wire:submit.prevent="save" wire:key="apikey-form-{{ uniqid() }}">
+    <form wire:submit.prevent="save">
         @csrf
 
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
