@@ -20,7 +20,7 @@
     <!-- main content start -->
     <div class="flex-1 pt-5 px-4 text-gray-600 dark:text-neutral-200">
 
-        <x-flash />
+        <x-flash/>
 
         {{ $slot }}
     </div>
@@ -28,5 +28,4 @@
 </div>
 
 </body>
-
 </html>
