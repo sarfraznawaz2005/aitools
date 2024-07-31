@@ -23,7 +23,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
                 @foreach($apiKeys as $apiKey)
-                    <tr wire:key="apkkey-row-{{$apiKey->id}}">
+                    <tr>
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
                             {{ $apiKey->name }}
                         </td>
@@ -65,7 +65,7 @@
 
     <x-flash/>
 
-    <form wire:submit.prevent="save">
+    <form wire:submit.prevent="save" wire:key="apikey-form-{{ uniqid() }}">
         @csrf
 
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">

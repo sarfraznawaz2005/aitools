@@ -1,6 +1,5 @@
 <div
     class="inline"
-    wire:key="confirm-dialog-{{$id}}"
     x-data="{ open: false }"
     @keydown.escape.window="open = false"
     @click.away="open = false"
