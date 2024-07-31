@@ -23,7 +23,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
                 @foreach($apiKeys as $apiKey)
-                    <tr wire:key="{{$apiKey->id}}">
+                    <tr wire:key="apkkey-row-{{$apiKey->id}}">
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
                             {{ $apiKey->name }}
                         </td>

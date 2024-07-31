@@ -1,8 +1,10 @@
 <div
     class="inline"
+    wire:key="confirm-dialog-{{$id}}"
     x-data="{ open: false }"
     @keydown.escape.window="open = false"
-    @click.away="open = false">
+    @click.away="open = false"
+>
 
     <button
         @click="open = true" {{ $attributes->merge(['class' => 'items-center px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded']) }}>
