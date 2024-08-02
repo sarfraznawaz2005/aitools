@@ -9,13 +9,13 @@
         <nav class="px-4 flex basis-full items-center w-full mx-auto">
             <div class="w-full flex items-center ms-auto justify-between">
 
-                <div class="inline-flex gap-4 items-center py-1.5 w-1/12">
+                <div class="inline-flex gap-4 items-center">
 
                     <a href="{{route('home')}}">
                         <x-icons.home class="shrink-0 size-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
                     </a>
 
-                    <div class="border-r py-3 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
+                    <div class="border-r py-4 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
 
                     <!-- Dropdown -->
                     <div class="hs-dropdown [--placement:center] relative inline-flex">
