@@ -60,7 +60,7 @@
 
 
                 <div class="md:block">
-                    <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300">{{ $title }}</h2>
+                    <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24">{{ $title }}</h2>
                 </div>
 
                 <div class="flex flex-row items-center justify-end gap-1">
