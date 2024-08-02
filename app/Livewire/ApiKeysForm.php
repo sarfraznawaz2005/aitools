@@ -22,8 +22,8 @@ class ApiKeysForm extends Component
         return [
             'llm_type' => 'required',
             'base_url' => 'required_if:llm_type,Ollama',
-            'api_key' => 'required|unique:api_keys,api_key,' . ($this->model->id ?? 'NULL') . ',id',
-            'name' => 'required|unique:api_keys,name,' . ($this->model->id ?? 'NULL') . ',id',
+            'api_key' => 'required|min:3|unique:api_keys,api_key,' . ($this->model->id ?? 'NULL') . ',id',
+            'name' => 'required|min:3|unique:api_keys,name,' . ($this->model->id ?? 'NULL') . ',id',
         ];
     }
 
