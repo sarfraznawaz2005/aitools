@@ -12,17 +12,17 @@
                 <div class="inline-flex gap-4 items-center">
 
                     <a href="{{route('home')}}">
-                        <x-icons.home class="shrink-0 size-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
+                        <x-icons.home class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
                     </a>
 
                     <div class="border-r py-4 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
 
                     <!-- Dropdown -->
-                    <div class="hs-dropdown [--placement:center] relative inline-flex">
+                    <div class="hs-dropdown [--placement:center] relative inline-flex items-center">
                         <button id="hs-dropdown-account" title="Menu" type="button"
                                 class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
                                 aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
                             </svg>
                         </button>
