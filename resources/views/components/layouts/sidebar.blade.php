@@ -3,7 +3,7 @@
 @endphp
 
 <!-- sidebar start -->
-<div id="hs-application-sidebar" class="transition-all pr-2 min-h-screen duration-300 transform inset-y-0 start-0 bg-white border-e border-gray-200 dark:bg-neutral-900 dark:border-neutral-700 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0" role="dialog" tabindex="-1" aria-label="Sidebar" style="min-height: 91vh;">
+<div id="hs-application-sidebar" class="transition-all pr-2 min-h-screen duration-300 transform inset-y-0 start-0 bg-white border-e border-gray-200 dark:bg-neutral-900 dark:border-neutral-700 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0" role="dialog" tabindex="-1" aria-label="Sidebar" style="min-height: 92vh;">
     <div class="relative flex flex-col h-full max-h-full">
         <div class="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-800 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-600">
             <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
