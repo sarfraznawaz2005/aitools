@@ -5,57 +5,62 @@
 <div>
     <!-- header start -->
     <header
-        class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap w-full bg-white text-sm py-2.5 dark:bg-neutral-900">
-        <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
-            <div class="w-full flex items-center ms-auto justify-between gap-x-1 md:gap-x-3">
+        class="sticky top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm dark:bg-neutral-900">
+        <nav class="px-4 flex basis-full items-center w-full mx-auto">
+            <div class="w-full flex items-center ms-auto justify-between">
 
-                <!-- Dropdown -->
-                <div class="hs-dropdown [--placement:center] relative inline-flex">
-                    <button id="hs-dropdown-account" title="Menu" type="button"
-                            class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
-                            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                        </svg>
-                    </button>
+                <div class="inline-flex gap-4 items-center py-1.5 w-1/12">
 
-                    <div
-                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-gray-200 dark:bg-neutral-900 shadow-md rounded-lg border dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
-                        role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
-                        <div class="p-1.5 space-y-0.5">
-                            <ul class="flex flex-col space-y-1">
-                                <li>
-                                    <a href="{{ route('home') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'home' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                        <x-icons.home color="#3357FF" />
-                                        Home
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('chat-buddy') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'chat-buddy' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                        <x-icons.chat color="#8C33FF" />
-                                        Chat Buddy
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('text-styler') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'text-styler' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                        <x-icons.magic color="#14B8A6" />
-                                        Text Styler
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('tips-notifier') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'tips-notifier' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                        <x-icons.bulb color="#FF33A1" />
-                                        Tips Notifier
-                                    </a>
-                                </li>
-                            </ul>
+                    <a href="{{route('home')}}">
+                        <x-icons.home class="shrink-0 size-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
+                    </a>
+
+                    <div class="border-r py-3 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
+
+                    <!-- Dropdown -->
+                    <div class="hs-dropdown [--placement:center] relative inline-flex">
+                        <button id="hs-dropdown-account" title="Menu" type="button"
+                                class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
+                                aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                            </svg>
+                        </button>
+
+                        <div
+                            class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-gray-200 dark:bg-neutral-900 shadow-md rounded-lg border dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+                            role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
+                            <div class="p-1.5 space-y-0.5">
+                                <ul class="flex flex-col space-y-1">
+                                    <li>
+                                        <a href="{{ route('chat-buddy') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'chat-buddy' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
+                                            <x-icons.chat color="#8C33FF" />
+                                            Chat Buddy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('text-styler') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'text-styler' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
+                                            <x-icons.magic color="#14B8A6" />
+                                            Text Styler
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('tips-notifier') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'tips-notifier' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
+                                            <x-icons.bulb color="#FF33A1" />
+                                            Tips Notifier
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <!-- End Dropdown -->
                 </div>
-                <!-- End Dropdown -->
+
+
 
                 <div class="md:block">
-                    <h2 class="text-2xl text-gray-500 font-semibold dark:text-white">{{ $title }}</h2>
+                    <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300">{{ $title }}</h2>
                 </div>
 
                 <div class="flex flex-row items-center justify-end gap-1">
