@@ -15,8 +15,6 @@
 @livewire('header', ['title' => $title ?? 'AiTools'])
 
 <div class="flex">
-    <x-layouts.sidebar/>
-
     <!-- main content start -->
     <div class="flex-1 pt-5 px-4 text-gray-600 dark:text-neutral-200">
 
