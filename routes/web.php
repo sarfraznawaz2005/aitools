@@ -9,6 +9,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('test', function () {
+    return view('test');
+});
+
 Route::get('chat-buddy', ChatBuddy::class)->name('chat-buddy');
 Route::get('text-styler', TextStyler::class)->name('text-styler');
 Route::get('tips-notifier', TipsNotifier::class)->name('tips-notifier');
