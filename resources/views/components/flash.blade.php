@@ -1,9 +1,10 @@
 @if (session('message'))
-    <div class="mt-2 mb-4 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert"
-         tabindex="-1"
-         aria-labelledby="hs-bordered-success-style-label">
-        <div class="flex">
-            <div class="shrink-0">
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100 max-h-screen" x-transition:leave-end="opacity-0 max-h-0" class="flash-message" wire:key="flash-{{ uniqid() }}">
+        <div class="mt-2 mb-4 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert"
+             tabindex="-1"
+             aria-labelledby="hs-bordered-success-style-label">
+            <div class="flex">
+                <div class="shrink-0">
                 <span
                     class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -12,17 +13,18 @@
             <path d="m9 12 2 2 4-4"></path>
           </svg>
         </span>
-            </div>
+                </div>
 
-            <div class="ms-3">
-                <h3 id="hs-bordered-success-style-label" class="text-gray-800 font-semibold dark:text-white">
-                    Success!
-                </h3>
-                <p class="text-sm text-gray-700 dark:text-neutral-400">
-                    {{ session('message') }}
-                </p>
-            </div>
+                <div class="ms-3">
+                    <h3 id="hs-bordered-success-style-label" class="text-gray-800 font-semibold dark:text-white">
+                        Success!
+                    </h3>
+                    <p class="text-sm text-gray-700 dark:text-neutral-400">
+                        {{ session('message') }}
+                    </p>
+                </div>
 
+            </div>
         </div>
     </div>
 @endif

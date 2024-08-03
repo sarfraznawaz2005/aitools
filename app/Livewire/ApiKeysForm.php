@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Sticky header
+ *
+ * */
+
 namespace App\Livewire;
 
 use App\Models\ApiKey;
@@ -63,9 +68,11 @@ class ApiKeysForm extends Component
         $this->resetForm();
     }
 
-    public function save(): void
+    public function save()
     {
         $this->validate();
+
+        $isFirstApiKey = ApiKey::count() === 0;
 
         $this->model->fill([
             'llm_type' => $this->llm_type,
@@ -75,6 +82,10 @@ class ApiKeysForm extends Component
         ])->save();
 
         session()->flash('message', $this->model->wasRecentlyCreated ? 'API key created successfully!' : 'API key saved successfully!');
+
+        if ($isFirstApiKey) {
+            return $this->redirect(route('home'), true);
+        }
 
         $this->resetForm();
     }

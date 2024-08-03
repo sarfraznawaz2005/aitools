@@ -8,6 +8,16 @@ export default {
         "./storage/framework/views/*.php",
         "node_modules/preline/dist/*.js",
     ],
+    safelist: [
+        'from-blue-400',
+        'to-blue-600',
+        'from-green-400',
+        'to-green-600',
+        'from-yellow-400',
+        'to-yellow-600',
+        'from-gray-400',
+        'to-gray-600',
+    ],
     theme: {
         fontFamily: {
             sans: ['Nunito', 'sans-serif'],

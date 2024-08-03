@@ -11,9 +11,9 @@ class ApiKey extends Model
 
     public $guarded = [];
 
-    public function isActive()
+    public static function hasApiKeys()
     {
-        return $this->active;
+        return self::exists();
     }
 
     public static function boot(): void

@@ -1,3 +1,6 @@
+@php
+    use App\Models\ApiKey;
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -20,6 +23,10 @@
 
     <!-- main content start -->
     <div class="flex-1 pt-5 px-4 text-gray-600 dark:text-neutral-200">
+
+        @if(!ApiKey::hasApiKeys())
+            <x-banner type="info" title="Important" message="You don't have API key saved, please click on the button to create one." buttonText="Create API Key" buttonAttributes="data-hs-overlay=#general-modal" />
+        @endif
 
         <x-flash/>
 
