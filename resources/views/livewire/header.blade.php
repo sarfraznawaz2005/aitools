@@ -32,24 +32,14 @@
                             role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
                             <div class="p-1.5 space-y-0.5">
                                 <ul class="flex flex-col space-y-1">
-                                    <li>
-                                        <a href="{{ route('chat-buddy') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'chat-buddy' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                            <x-icons.chat color="#8C33FF" />
-                                            Chat Buddy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('text-styler') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'text-styler' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                            <x-icons.magic color="#14B8A6" />
-                                            Text Styler
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('tips-notifier') }}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === 'tips-notifier' ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                            <x-icons.bulb color="#FF33A1" />
-                                            Tips Notifier
-                                        </a>
-                                    </li>
+                                    @foreach(config('tools') as $tool)
+                                        <li>
+                                            <a href="{{route($tool['route'])}}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === $tool['route'] ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
+                                                <x-dynamic-component :component="'icons.' . $tool['icon']['name']" :color="$tool['icon']['color']"/>
+                                                {{$tool['name']}}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -64,6 +54,7 @@
                 </div>
 
                 <div class="flex flex-row items-center justify-end gap-1">
+                    {{--
                     <button type="button"
                             title="Change Theme"
                             class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
@@ -81,6 +72,7 @@
                             <x-icons.sun color="#FF8C33"/>
                         </span>
                     </button>
+                    --}}
 
                     <button type="button"
                             title="Settings"
