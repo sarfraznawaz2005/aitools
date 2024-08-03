@@ -5,14 +5,16 @@
 <div>
     <!-- header start -->
     <header
-        class="sticky top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm dark:bg-neutral-900">
+        class="top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm dark:bg-neutral-900 z-[80]"
+        style="position: fixed;">
         <nav class="px-4 flex basis-full items-center w-full mx-auto">
             <div class="w-full flex items-center ms-auto justify-between">
 
                 <div class="inline-flex gap-4 items-center">
 
                     <a href="{{route('home')}}">
-                        <x-icons.home class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
+                        <x-icons.home
+                            class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
                     </a>
 
                     <div class="border-r py-4 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
@@ -22,8 +24,11 @@
                         <button id="hs-dropdown-account" title="Menu" type="button"
                                 class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
                                 aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
                             </svg>
                         </button>
 
@@ -34,8 +39,10 @@
                                 <ul class="flex flex-col space-y-1">
                                     @foreach(config('tools') as $tool)
                                         <li>
-                                            <a href="{{route($tool['route'])}}"  wire:navigate class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === $tool['route'] ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
-                                                <x-dynamic-component :component="'icons.' . $tool['icon']['name']" :color="$tool['icon']['color']"/>
+                                            <a href="{{route($tool['route'])}}" wire:navigate
+                                               class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === $tool['route'] ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
+                                                <x-dynamic-component :component="'icons.' . $tool['icon']['name']"
+                                                                     :color="$tool['icon']['color']"/>
                                                 {{$tool['name']}}
                                             </a>
                                         </li>
@@ -46,7 +53,6 @@
                     </div>
                     <!-- End Dropdown -->
                 </div>
-
 
 
                 <div class="md:block">
@@ -86,8 +92,9 @@
                 </div>
             </div>
         </nav>
+
+        <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
     </header>
-    <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
     <!-- header end -->
 
     <x-modal>
