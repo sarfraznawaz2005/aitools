@@ -54,9 +54,14 @@
                     <!-- End Dropdown -->
                 </div>
 
-
                 <div class="md:block">
-                    <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24">{{ $title }}</h2>
+                    @if($currentRoute === 'home')
+                        <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24">{{ $title }}</h2>
+                    @else
+                        <a href="{{route('home')}}">
+                            <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24 hover:text-gray-700 dark:hover:text-gray-500">{{ $title }}</h2>
+                        </a>
+                    @endif
                 </div>
 
                 <div class="flex flex-row items-center justify-end gap-1">
