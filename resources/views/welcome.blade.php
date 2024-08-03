@@ -7,7 +7,7 @@
                 <a href="{{route($tool['route'])}}">
                     <div class="size-full bg-white shadow-lg rounded-lg p-2 dark:bg-neutral-900 text-center hover:bg-gray-200">
                         <div class="inline-flex justify-center items-center">
-                            <x-dynamic-component :component="'icons.' . $tool['icon']['name']" :color="$tool['icon']['color']" class="shrink-0 size-16"/>
+                            <x-dynamic-component :component="'icons.' . $tool['icon']['name']" :color="$tool['icon']['color']" class="shrink-0 size-14"/>
                         </div>
                         <h3 class="block text-lg font-bold text-gray-800 dark:text-white">{{$tool['name']}}</h3>
                         <p class="text-gray-600 dark:text-neutral-400">{{$tool['description']}}</p>
