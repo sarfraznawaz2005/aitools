@@ -5,7 +5,7 @@
 
             @foreach(config('tools') as $tool)
                 <a href="{{route($tool['route'])}}">
-                    <div class="size-full bg-white shadow-lg rounded-lg p-2 dark:bg-neutral-900 text-center hover:bg-gray-200">
+                    <div class="size-full bg-white shadow-lg rounded-lg p-4 dark:bg-neutral-900 text-center hover:bg-gray-200">
                         <div class="inline-flex justify-center items-center">
                             <x-dynamic-component :component="'icons.' . $tool['icon']['name']" :color="$tool['icon']['color']" class="shrink-0 size-14"/>
                         </div>
