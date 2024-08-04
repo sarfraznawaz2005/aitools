@@ -5,14 +5,14 @@
 <div>
     <!-- header start -->
     <header
-        class="top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm dark:bg-neutral-900 z-[80]"
+        class="top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm dark:bg-neutral-900 z-[60]"
         style="position: fixed;">
         <nav class="px-4 flex basis-full items-center w-full mx-auto">
             <div class="w-full flex items-center ms-auto justify-between">
 
                 <div class="inline-flex gap-4 items-center">
 
-                    <a href="{{route('home')}}">
+                    <a href="{{route('home')}}" wire:navigate>
                         <x-icons.home
                             class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
                     </a>
@@ -58,7 +58,7 @@
                     @if($currentRoute === 'home')
                         <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24">{{ $title }}</h2>
                     @else
-                        <a href="{{route('home')}}">
+                        <a href="{{route('home')}}" wire:navigate>
                             <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24 hover:text-gray-700 dark:hover:text-gray-500">{{ $title }}</h2>
                         </a>
                     @endif

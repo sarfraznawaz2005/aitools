@@ -4,7 +4,7 @@
         <div class="grid sm:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-10">
 
             @foreach(config('tools') as $tool)
-                <a href="{{route($tool['route'])}}">
+                <a href="{{route($tool['route'])}}" wire:navigate>
                     <div class="size-full bg-white shadow-lg rounded-lg p-4 dark:bg-neutral-900 text-center hover:bg-gray-200">
                         <div class="inline-flex justify-center items-center">
                             <x-dynamic-component :component="'icons.' . $tool['icon']['name']" :color="$tool['icon']['color']" class="shrink-0 size-14"/>
