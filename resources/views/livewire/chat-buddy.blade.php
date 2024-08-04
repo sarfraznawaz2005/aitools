@@ -78,7 +78,7 @@
                     <div class="grow space-y-3">
                         <!-- Card -->
                         <div class="inline-block bg-gray-300 rounded-lg p-4 shadow-sm">
-                            <p class="text-sm leading-loose text-gray-800" style="font-size: 98%;">
+                            <p class="text-sm leading-loose text-gray-950" style="font-size: 98%;">
                                 Preline UI is an open-source set of prebuilt UI components based on the utility-first Tailwind CSS framework.
                             </p>
                         </div>
