@@ -24,12 +24,7 @@
                         <button id="hs-dropdown-account" title="Menu" type="button"
                                 class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
                                 aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"
-                                 viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                            </svg>
+                            <x-icons.dots class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
                         </button>
 
                         <div
@@ -90,7 +85,7 @@
                             class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                             aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
                             data-hs-overlay="#general-modal">
-                        <x-icons.settings/>
+                        <x-icons.settings class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
                         <span class="sr-only">Settings</span>
                     </button>
 
@@ -105,7 +100,7 @@
     <x-modal>
         <x-slot name="title">
             <div class="flex gap-x-2">
-                <x-icons.settings class="shrink-0 size-6"/>
+                <x-icons.settings class="shrink-0 size-6 "/>
                 Settings
             </div>
         </x-slot>

@@ -32,7 +32,7 @@ class ApiKey extends Model
                 $model->active = false;
             }
 
-            if ($model->isActive()) {
+            if ($model->active) {
                 static::whereActive()->update(['active' => false]);
             }
         });

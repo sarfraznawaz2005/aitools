@@ -123,11 +123,12 @@
                         data-hs-overlay="#general-modal">
                     Close
                 </button>
-                <button type="submit"
-                        class="gap-x-1 py-2 px-3 inline-flex items-center text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+
+                <x-gradient-button>
                     <x-icons.ok class="size-5"/>
                     Save
-                </button>
+                </x-gradient-button>
+
             </div>
         </fieldset>
     </form>
