@@ -7,6 +7,8 @@ use Livewire\Component;
 
 class TextStyler extends Component
 {
+    protected $listeners = ['apiKeysUpdated' => '$refresh'];
+
     #[Title('Text Styler')]
     public function render()
     {

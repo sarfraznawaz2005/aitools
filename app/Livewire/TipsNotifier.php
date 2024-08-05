@@ -7,6 +7,8 @@ use Livewire\Component;
 
 class TipsNotifier extends Component
 {
+    protected $listeners = ['apiKeysUpdated' => '$refresh'];
+
     #[Title('Tips Notifier')]
     public function render()
     {

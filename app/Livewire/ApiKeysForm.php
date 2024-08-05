@@ -21,15 +21,15 @@ class ApiKeysForm extends Component
     public $llm_type;
     public $base_url;
     public $api_key;
-    public $name;
+    public $model_name;
 
     protected function rules(): array
     {
         return [
-            'llm_type' => 'required',
+            'llm_type' => 'required|regex:/^\S*$/u',
             'base_url' => 'required_if:llm_type,Ollama',
-            'api_key' => 'required|min:3|unique:api_keys,api_key,' . ($this->model->id ?? 'NULL') . ',id',
-            'name' => 'required|min:3|unique:api_keys,name,' . ($this->model->id ?? 'NULL') . ',id',
+            'api_key' => 'required|min:3|unique:api_keys,api_key,' . ($this->model->id ?? 'NULL') . ',id|regex:/^\S*$/u',
+            'model_name' => 'required|min:3|unique:api_keys,model_name,' . ($this->model->id ?? 'NULL') . ',id|regex:/^\S*$/u',
         ];
     }
 
@@ -79,7 +79,7 @@ class ApiKeysForm extends Component
             'llm_type' => $this->llm_type,
             'base_url' => $this->base_url,
             'api_key' => $this->api_key,
-            'name' => $this->name,
+            'model_name' => $this->model_name,
         ])->save();
 
         session()->flash('message', $this->model->wasRecentlyCreated ? 'API key created successfully!' : 'API key saved successfully!');
@@ -98,12 +98,14 @@ class ApiKeysForm extends Component
         $this->resetValidation();
 
         $this->model = new ApiKey();
+
+        $this->dispatch('apiKeysUpdated');
     }
 
     public function render(): View|Application|Factory
     {
         return view('livewire.api-keys-form', [
-            'apiKeys' => ApiKey::all()->sortBy('name'),
+            'apiKeys' => ApiKey::all()->sortBy('model_name'),
         ]);
     }
 }

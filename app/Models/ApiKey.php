@@ -16,6 +16,11 @@ class ApiKey extends Model
         return self::exists();
     }
 
+    public static function getDefaultModel()
+    {
+        return self::whereActive()->first();
+    }
+
     public static function boot(): void
     {
         parent::boot();
