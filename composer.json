@@ -10,6 +10,7 @@
         "laravel/framework": "^11.9",
         "livewire/livewire": "^3.5",
         "nativephp/electron": "^0.6.5",
+        "sajadsdi/laravel-setting-pro": "^2.0",
         "spatie/laravel-markdown": "^2.5"
     },
     "require-dev": {
