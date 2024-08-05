@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('api_keys', function (Blueprint $table) {
             $table->id();
             $table->string('api_key')->unique();
-            $table->string('model_name');
+            $table->string('model_name')->unique();
             $table->string('base_url')->nullable();
             $table->enum('llm_type', ApiKeyTypeEnum::values())->default('openai');
             $table->boolean('active')->default(false);
