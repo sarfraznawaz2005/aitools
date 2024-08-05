@@ -63,13 +63,7 @@
             <!-- Footer -->
             <div class="mt-auto">
                 <div class="border-t border-gray-200 dark:border-neutral-700">
-                    <select
-                        wire:model="selectedModel"
-                        class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent text-sm outline-0 focus:outline-none focus:ring-0 focus-visible:ring-0 focus:border-gray-400">
-                        @foreach($apiKeys as $apiKey)
-                            <option wire:key="{{ $apiKey->id }}" value="{{ $apiKey->model_name }}">{{ $apiKey->model_name }}</option>
-                        @endforeach
-                    </select>
+                    <livewire:model-selector />
                 </div>
             </div>
             <!-- End Footer -->

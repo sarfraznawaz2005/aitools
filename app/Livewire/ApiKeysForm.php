@@ -99,7 +99,7 @@ class ApiKeysForm extends Component
 
         $this->model = new ApiKey();
 
-        $this->dispatch('apikeys-updated');
+        $this->dispatch('apiKeysUpdated');
     }
 
     public function render(): View|Application|Factory
