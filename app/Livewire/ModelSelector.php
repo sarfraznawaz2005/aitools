@@ -24,9 +24,11 @@ class ModelSelector extends Component
         ) {
             $this->selectedModel = session('selectedModel');
         } else {
-            $this->selectedModel = ApiKey::where('active', true)->first()->model_name;
+            if (ApiKey::hasApiKeys()) {
+                $this->selectedModel = ApiKey::where('active', true)->first()->model_name;
 
-            session()->put('selectedModel', $this->selectedModel);
+                session()->put('selectedModel', $this->selectedModel);
+            }
         }
     }
 
