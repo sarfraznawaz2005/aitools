@@ -63,7 +63,7 @@
             <!-- Footer -->
             <div class="mt-auto">
                 <div class="border-t border-gray-200 dark:border-neutral-700">
-                    <livewire:model-selector for="chatBuddy" />
+                    <livewire:model-selector for="ChatBuddy" />
                 </div>
             </div>
             <!-- End Footer -->
