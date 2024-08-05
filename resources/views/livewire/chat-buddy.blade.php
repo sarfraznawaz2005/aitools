@@ -1,3 +1,7 @@
+@php
+    use App\Models\ApiKey;
+@endphp
+
 <style>
     .group:hover .group-hover\:inline-block {
         display: inline-block;
@@ -12,8 +16,10 @@
         <nav class="size-full flex flex-col">
 
             <div class="h-full">
+
                 <!-- List -->
                 <ul class="space-y-1.5 p-4">
+
                     <li class="mb-5">
                         <x-gradient-button class="w-full">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -75,6 +81,12 @@
         <div class="py-1">
 
             <ul class="space-y-5">
+
+                @if(!ApiKey::hasApiKeys())
+                    <li class="mb-5">
+                        <livewire:api-key-banner />
+                    </li>
+                @endif
 
                 <!-- Chat Bubble -->
                 <li class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
@@ -140,7 +152,7 @@
 
             <!-- Input -->
             <div class="flex w-full items-center" x-data="{
-        content: '',
+        query: '',
         adjustHeight() {
             this.$refs.textarea.style.height = 'auto';
             const lines = this.$refs.textarea.value.split('\n').length;
@@ -155,10 +167,9 @@
                         <div class="flex min-w-0 flex-1 flex-col">
                             <textarea
                                 x-ref="textarea"
-                                x-model="content"
+                                x-model="query"
                                 x-on:input="adjustHeight()"
                                 x-on:paste="setTimeout(() => adjustHeight(), 0)"
-                                id="prompt-textarea"
                                 tabindex="0"
                                 autofocus
                                 dir="auto"
@@ -168,11 +179,20 @@
                                 style="height: 40px;"></textarea>
                         </div>
 
-                        <button :disabled="!content.trim()" class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32" class="icon-2xl">
-                                <path fill="currentColor" fill-rule="evenodd" d="M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
+                        @if(!ApiKey::hasApiKeys())
+                            <button disabled class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32" class="icon-2xl">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        @else
+                            <button :disabled="!query.trim()" class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32" class="icon-2xl">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        @endif
+
 
                     </div>
                 </div>

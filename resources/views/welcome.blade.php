@@ -1,4 +1,7 @@
 <x-layouts.app :title="'Home'">
+
+    <livewire:api-key-banner />
+
     <!-- Icon Blocks -->
     <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <div class="grid sm:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-10">

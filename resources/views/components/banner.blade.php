@@ -21,7 +21,7 @@
     }
 @endphp
 
-<div class="bg-gradient-to-r from-{{ $colorStart }} to-{{ $colorEnd }} p-4 mb-2 rounded">
+<div class="bg-gradient-to-r from-{{ $colorStart }} to-{{ $colorEnd }} p-4 mb-6 rounded">
     <div class="px-4 mx-auto">
         <div class="grid justify-center md:grid-cols-2 md:justify-between md:items-center gap-2">
             <div class="text-center md:text-start">
