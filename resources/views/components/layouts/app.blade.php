@@ -20,6 +20,8 @@
 
     <!-- main content start -->
     <div class="flex-1 pt-20 px-4 text-gray-600 dark:text-neutral-200">
+        @livewire('offline')
+
         <x-flash/>
 
         {{ $slot }}

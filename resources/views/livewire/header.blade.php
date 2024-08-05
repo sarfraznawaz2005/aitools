@@ -33,7 +33,7 @@
                             <div class="p-1.5 space-y-0.5">
                                 <ul class="flex flex-col space-y-1">
                                     @foreach(config('tools') as $tool)
-                                        <li>
+                                        <li wire:key="{{ $tool['name'] }}">
                                             <a href="{{route($tool['route'])}}" wire:navigate
                                                class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === $tool['route'] ? 'bg-gray-100 dark:bg-neutral-800' : '' }}">
                                                 <x-dynamic-component :component="'icons.' . $tool['icon']['name']"
