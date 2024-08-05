@@ -3,7 +3,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * expand textarea when content is pasted
  *
  * */
 
