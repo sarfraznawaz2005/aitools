@@ -15,25 +15,6 @@ class Message extends Model
         'is_ai',
     ];
 
-    /**
-     * Return true if the message is from the user.
-     */
-    public function getFromUserAttribute(): bool
-    {
-        return $this->is_ai == true;
-    }
-
-    /**
-     * Return true if the message is from the AI.
-     */
-    public function getFromAiAttribute(): bool
-    {
-        return !$this->from_user;
-    }
-
-    /**
-     * Return the conversation that the message belongs to.
-     */
     public function conversation(): BelongsTo
     {
         return $this->belongsTo(Conversation::class);

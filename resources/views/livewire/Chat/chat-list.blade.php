@@ -1,4 +1,4 @@
-<div class="pt-20 px-8">
+<div class="py-20 px-8">
 
     <ul class="space-y-5">
 
@@ -11,21 +11,21 @@
             @forelse($messages as $message)
                 <div wire:key="{{$message->id}}">
 
-                    @if($message->from_ai)
-                        <li class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
-                            <div class="grow">
+                    @if(!$message->is_ai)
+                        <li class="my-4">
+                            <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                 <div class="inline-block bg-gray-300 rounded-lg p-4 shadow-sm">
-                                    <p class="text-sm leading-loose text-gray-950" style="font-size: 98%;">
+                                    <p class="text-sm leading-loose text-gray-950" style="font-size: 99%; line-height: 1.8rem;">
                                         {{$message->body}}
                                     </p>
                                 </div>
-                                <div class="text-gray-500 flex justify-end text-sm">
-                                    {{isset($message->created_at) ? $message->created_at->diffForHumans() : ''}}
-                                </div>
+                            </div>
+                            <div class="text-gray-500 flex justify-end text-sm">
+                                {{isset($message->created_at) ? $message->created_at->diffForHumans() : ''}}
                             </div>
                         </li>
                     @else
-                        <li class="flex gap-x-2 sm:gap-x-4" x-data="{
+                        <li class="flex gap-x-2 sm:gap-x-4 my-8" x-data="{
                             copied: false,
                             copy () {
                               $clipboard($refs.content.innerText)
@@ -40,7 +40,7 @@
                                 <div
                                     class="bg-white border border-gray-200 rounded-lg p-4 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                     <p class="text-sm leading-loose text-gray-800 dark:text-white"
-                                       style="font-size: 98%;">
+                                       style="font-size: 99%; line-height: 1.8rem;">
                                         <x-markdown x-ref="content">{!! $message->body !!}</x-markdown>
                                     </p>
                                 </div>
@@ -48,6 +48,9 @@
 
                                 <!-- Button Group -->
                                 <div class="sm:flex sm:justify-between">
+                                    <div class="text-gray-500 flex justify-end text-sm mt-[-5px]">
+                                        {{isset($message->created_at) ? $message->created_at->diffForHumans() : ''}}
+                                    </div>
                                     <div class="mt-[-5px]">
                                         <button type="button"
                                                 @click="copy"
@@ -60,9 +63,6 @@
                                             <x-icons.refresh/>
                                             Regenerate
                                         </button>
-                                    </div>
-                                    <div class="text-gray-500 flex justify-end text-sm mt-[-5px]">
-                                        {{isset($message->created_at) ? $message->created_at->diffForHumans() : ''}}
                                     </div>
                                 </div>
                                 <!-- End Button Group -->
