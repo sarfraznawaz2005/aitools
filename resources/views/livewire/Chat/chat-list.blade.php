@@ -1,4 +1,4 @@
-<div>
+<div class="relative">
 
     <ul class="space-y-5">
 
@@ -73,8 +73,8 @@
                 </div>
             @empty
 
-                <div class="flex items-center justify-center h-screen text-gray-300 text-3xl font-bold">
-                    Start new conversation!
+                <div class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
+                    Start a fresh conversation!
                 </div>
 
             @endforelse
