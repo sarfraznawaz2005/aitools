@@ -42,7 +42,7 @@ class ApiKeysForm extends Component
 
     public function markDefault(ApiKey $apiKey): void
     {
-        ApiKey::where('active', true)->update(['active' => false]);
+        ApiKey::whereActive()->update(['active' => false]);
 
         $apiKey->update(['active' => true]);
 
