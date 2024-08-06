@@ -25,14 +25,14 @@
                             </div>
                         </li>
                     @else
-                        <li class="flex gap-x-2 sm:gap-x-4">
+                        <li class="flex gap-x-2 sm:gap-x-4" x-data>
                             <div class="grow w-full space-y-3">
                                 <!-- Card -->
                                 <div
                                     class="bg-white border border-gray-200 rounded-lg p-4 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                     <p class="text-sm leading-loose text-gray-800 dark:text-white"
                                        style="font-size: 98%;">
-                                        <x-markdown>{!! $message->body !!}</x-markdown>
+                                        <x-markdown x-ref="content">{!! $message->body !!}</x-markdown>
                                     </p>
                                 </div>
                                 <!-- End Card -->
@@ -41,6 +41,7 @@
                                 <div class="sm:flex sm:justify-between">
                                     <div class="mt-[-5px]">
                                         <button type="button"
+                                                @click="$clipboard($refs.content.innerText)"
                                                 class="hover:text-gray-800 px-3 inline-flex items-center gap-x-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                                             <x-icons.copy/>
                                             Copy

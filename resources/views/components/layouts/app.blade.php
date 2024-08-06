@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito:300,400,500,700" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
 <body class="antialiased bg-gray-50 dark:bg-neutral-900">
@@ -29,5 +30,6 @@
     <!-- main content end -->
 </div>
 
+@livewireScriptConfig
 </body>
 </html>
