@@ -26,15 +26,15 @@
                         </li>
                     @else
                         <li class="flex gap-x-2 sm:gap-x-4" x-data="{
-    copied: false,
-    copy () {
-      $clipboard($refs.content.innerText)
-      this.copied = true
-      setTimeout(() => {
-        this.copied = false
-      }, 1000)
-    }
-  }">
+                            copied: false,
+                            copy () {
+                              $clipboard($refs.content.innerText)
+                              this.copied = true
+                              setTimeout(() => {
+                                this.copied = false
+                              }, 1000)
+                            }
+                          }">
                             <div class="grow w-full space-y-3">
                                 <!-- Card -->
                                 <div
