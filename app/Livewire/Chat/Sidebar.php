@@ -12,7 +12,7 @@ class Sidebar extends Component
 
     public function boot(): void
     {
-        $this->conversations = Conversation::all()->sortByDesc('updated_at');
+        $this->conversations = Conversation::all()->sortByDesc('id');
     }
 
     public function render()
