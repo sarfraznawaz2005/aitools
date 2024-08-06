@@ -29,6 +29,7 @@
                 <div class="flex min-w-0 flex-1 flex-col">
                                 <textarea
                                     x-ref="textarea"
+                                    wire:model="query"
                                     x-model="query"
                                     x-on:input="adjustHeight()"
                                     x-on:paste="setTimeout(() => adjustHeight(), 0)"

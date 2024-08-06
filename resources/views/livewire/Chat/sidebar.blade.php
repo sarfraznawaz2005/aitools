@@ -21,36 +21,44 @@
                     </x-gradient-button>
                 </li>
 
-                <li class="relative group" x-data="{ open: false }">
-                    <a class="flex items-center gap-x-3 py-2 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-300 dark:focus:bg-neutral-900 dark:focus:text-neutral-300"
-                       href="#">
-                        Hello World
-                        <button @click.prevent.stop="open = !open"
-                                class="ml-auto cursor-pointer hidden group-hover:inline-block">
-                            <x-icons.dots class="inline-block"/>
-                        </button>
-                    </a>
+                @foreach($conversations as $conversation)
+                    <li wire:key="conv-{{$conversation->id}}" class="relative group" x-data="{ open: false }">
+                        <a wire:click="$dispatch('loadConversation', [{{$conversation->id}}])" class="flex items-center gap-x-3 py-2 px-3 flex-nowrap text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-300 dark:focus:bg-neutral-900 dark:focus:text-neutral-300"
+                           href="#">
 
-                    <div x-cloak x-show="open" @click.away="open = false"
-                         class="absolute right-[-10px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700">
-                        <ul class="py-1">
-                            <li>
-                                <a href="#"
-                                   class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
-                                    <x-icons.edit class="inline-block mr-2 text-gray-500"/>
-                                    Rename
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   class="block px-4 py-2 text-xs text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-neutral-800">
-                                    <x-icons.delete class="inline-block mr-2 text-red-500"/>
-                                    Delete
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                            @if($conversation->title)
+                                {{Str::limit($conversation->title, 20)}}
+                            @else
+                                <em>{{__('Conversation #: ') . $conversation->id}}</em>
+                            @endif
+
+                            <button @click.prevent.stop="open = !open"
+                                    class="ml-auto cursor-pointer hidden group-hover:inline-block">
+                                <x-icons.dots class="inline-block"/>
+                            </button>
+                        </a>
+
+                        <div x-cloak x-show="open" @click.away="open = false"
+                             class="absolute right-[-10px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700">
+                            <ul class="py-1">
+                                <li>
+                                    <a href="#"
+                                       class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                                        <x-icons.edit class="inline-block mr-2 text-gray-500"/>
+                                        Rename
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="block px-4 py-2 text-xs text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-neutral-800">
+                                        <x-icons.delete class="inline-block mr-2 text-red-500"/>
+                                        Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endforeach
 
             </ul>
             <!-- End List -->
@@ -59,7 +67,7 @@
         <!-- Footer -->
         <div class="mt-auto">
             <div class="border-t border-gray-200 dark:border-neutral-700">
-                <livewire:general.model-selector for="ChatBuddy"/>
+                <livewire:general.model-selector for="ChatBuddy" />
             </div>
         </div>
         <!-- End Footer -->
