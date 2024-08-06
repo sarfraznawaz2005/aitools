@@ -1,9 +1,3 @@
-<style>
-    .group:hover .group-hover\:inline-block {
-        display: inline-block;
-    }
-</style>
-
 <div>
     <livewire:chat.sidebar/>
 
