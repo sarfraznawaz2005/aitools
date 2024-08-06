@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Pages;
 
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class TipsNotifier extends Component
+class TextStyler extends Component
 {
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
-    #[Title('Tips Notifier')]
+    #[Title('Text Styler')]
     public function render()
     {
-        return view('livewire.tips-notifier');
+        return view('livewire.pages.text-styler');
     }
 }

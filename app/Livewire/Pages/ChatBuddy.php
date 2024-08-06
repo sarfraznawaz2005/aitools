@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Pages;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +13,6 @@ class ChatBuddy extends Component
     #[Title('Chat Buddy')]
     public function render(): Application|View|Factory
     {
-        return view('livewire.chat-buddy');
+        return view('livewire.pages.chat-buddy');
     }
 }

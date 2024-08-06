@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\ApiKeys;
 
 use App\Models\ApiKey;
 use Illuminate\Contracts\View\Factory;
@@ -98,7 +98,7 @@ class ApiKeysForm extends Component
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.api-keys-form', [
+        return view('livewire.apikeys.api-keys-form', [
             'apiKeys' => ApiKey::all()->sortBy('model_name'),
         ]);
     }

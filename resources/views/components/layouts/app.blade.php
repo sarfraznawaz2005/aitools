@@ -12,7 +12,7 @@
 
 <body class="antialiased bg-gray-50 dark:bg-neutral-900">
 
-@livewire('header', ['title' => $title ?? 'AiTools'])
+@livewire('general.header', ['title' => $title ?? 'AiTools'])
 
 <div class="flex">
 
@@ -20,7 +20,7 @@
 
     <!-- main content start -->
     <div class="flex-1 pt-20 px-4 text-gray-600 dark:text-neutral-200">
-        @livewire('offline')
+        @livewire('general.offline')
 
         <x-flash/>
 

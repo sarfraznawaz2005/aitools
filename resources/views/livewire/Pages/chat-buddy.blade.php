@@ -63,7 +63,7 @@
             <!-- Footer -->
             <div class="mt-auto">
                 <div class="border-t border-gray-200 dark:border-neutral-700">
-                    <livewire:model-selector for="ChatBuddy" />
+                    <livewire:general.model-selector for="ChatBuddy" />
                 </div>
             </div>
             <!-- End Footer -->
@@ -79,7 +79,7 @@
 
                 @if(!ApiKey::hasApiKeys())
                     <li class="mb-5">
-                        <livewire:api-key-banner />
+                        <livewire:apikeys.api-key-banner />
                     </li>
                 @endif
 

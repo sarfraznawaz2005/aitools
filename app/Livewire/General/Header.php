@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\General;
 
 use Livewire\Component;
 
@@ -15,6 +15,6 @@ class Header extends Component
 
     public function render()
     {
-        return view('livewire.header');
+        return view('livewire.general.header');
     }
 }

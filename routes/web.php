@@ -1,8 +1,8 @@
 <?php
 
-use App\Livewire\ChatBuddy;
-use App\Livewire\TextStyler;
-use App\Livewire\TipsNotifier;
+use App\Livewire\Pages\ChatBuddy;
+use App\Livewire\Pages\TextStyler;
+use App\Livewire\Pages\TipsNotifier;
 use Illuminate\Support\Facades\Route;
 
 $tools = config('tools');

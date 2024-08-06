@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\ApiKeys;
 
 use App\Models\ApiKey;
 use Livewire\Component;
@@ -11,6 +11,6 @@ class ApiKeyBanner extends Component
     {
         $hasApiKeys = ApiKey::hasApiKeys();
 
-        return view('livewire.api-key-banner', compact('hasApiKeys'));
+        return view('livewire.apikeys.api-key-banner', compact('hasApiKeys'));
     }
 }

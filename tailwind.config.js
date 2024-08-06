@@ -17,6 +17,7 @@ export default {
         'to-yellow-600',
         'from-gray-400',
         'to-gray-600',
+        'size-16',
     ],
     theme: {
         fontFamily: {

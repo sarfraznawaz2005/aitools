@@ -106,7 +106,7 @@
         </x-slot>
 
         <x-slot name="body">
-            @livewire('api-keys-form')
+            @livewire('apikeys.api-keys-form')
         </x-slot>
     </x-modal>
 

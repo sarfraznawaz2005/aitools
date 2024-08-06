@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\General;
 
 use App\Models\ApiKey;
 use Illuminate\Contracts\View\Factory;
@@ -40,7 +40,7 @@ class ModelSelector extends Component
 
     public function render(): Application|View|Factory
     {
-        return view('livewire.model-selector', [
+        return view('livewire.general.model-selector', [
             'apiKeys' => ApiKey::all()->sortBy('model_name'),
         ]);
     }
