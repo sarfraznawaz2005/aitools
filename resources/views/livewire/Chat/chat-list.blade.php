@@ -25,7 +25,16 @@
                             </div>
                         </li>
                     @else
-                        <li class="flex gap-x-2 sm:gap-x-4" x-data>
+                        <li class="flex gap-x-2 sm:gap-x-4" x-data="{
+    copied: false,
+    copy () {
+      $clipboard($refs.content.innerText)
+      this.copied = true
+      setTimeout(() => {
+        this.copied = false
+      }, 1000)
+    }
+  }">
                             <div class="grow w-full space-y-3">
                                 <!-- Card -->
                                 <div
@@ -41,10 +50,10 @@
                                 <div class="sm:flex sm:justify-between">
                                     <div class="mt-[-5px]">
                                         <button type="button"
-                                                @click="$clipboard($refs.content.innerText)"
+                                                @click="copy"
                                                 class="hover:text-gray-800 px-3 inline-flex items-center gap-x-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                                             <x-icons.copy/>
-                                            Copy
+                                            <span x-text="copied ? 'Copied' : 'Copy'"></span>
                                         </button>
                                         <button type="button"
                                                 class="hover:text-gray-800 px-3 inline-flex items-center gap-x-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
