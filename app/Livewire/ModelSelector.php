@@ -11,13 +11,11 @@ use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 class ModelSelector extends Component
 {
-    public $for;
+    public string $for;
 
-    public $selectedModel;
+    public string $selectedModel;
 
-    protected $listeners = [
-        'apiKeysUpdated' => '$refresh'
-    ];
+    protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
     public function mount(): void
     {
