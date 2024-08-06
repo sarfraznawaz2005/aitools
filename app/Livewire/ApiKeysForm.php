@@ -1,11 +1,5 @@
 <?php
 
-/*
- * TODO
- * global disabler until api key is saved
- *
- * */
-
 namespace App\Livewire;
 
 use App\Models\ApiKey;

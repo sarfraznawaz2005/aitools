@@ -1,4 +1,9 @@
 <?php
+/*
+ * TODO
+ * global disabler until api key is saved
+ * chat with pdf
+ * */
 
 use App\Models\ApiKey;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
