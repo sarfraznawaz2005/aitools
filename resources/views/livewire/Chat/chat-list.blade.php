@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="pt-20 px-8">
 
     <ul class="space-y-5">
 

@@ -3,7 +3,7 @@
     <livewire:apikeys.api-key-banner />
 
     <!-- Icon Blocks -->
-    <div class="px-4 py-10 sm:px-6 mx-auto mt-12">
+    <div class="mx-auto pt-24 px-8">
         <div class="grid sm:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-10">
 
             @foreach(config('tools') as $tool)
