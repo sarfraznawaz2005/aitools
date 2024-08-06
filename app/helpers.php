@@ -12,5 +12,5 @@ function getChatBuddySelectedModel(): string
         return ApiKey::where('model_name', Setting::select('ChatBuddy')->get('selectedModel'))->first();
     }
 
-    return ApiKey::where('active', true)->first();
+    return ApiKey::whereActive()->first();
 }

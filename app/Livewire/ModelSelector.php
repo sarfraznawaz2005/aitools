@@ -26,7 +26,7 @@ class ModelSelector extends Component
             $this->selectedModel = Setting::select($this->for)->get('selectedModel');
         } else {
             if (ApiKey::hasApiKeys()) {
-                $this->selectedModel = ApiKey::where('active', true)->first()->model_name;
+                $this->selectedModel = ApiKey::whereActive()->first()->model_name;
 
                 Setting::select($this->for)->set('selectedModel', $this->selectedModel);
             }
