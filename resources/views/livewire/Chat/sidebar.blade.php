@@ -65,8 +65,8 @@
         </div>
 
         <!-- Footer -->
-        <div class="mt-auto">
-            <div class="border-t border-gray-200 dark:border-neutral-700">
+        <div class="relative">
+            <div class="border-t border-gray-200 dark:border-neutral-700 fixed bottom-0 w-full">
                 <livewire:general.model-selector for="ChatBuddy" />
             </div>
         </div>
