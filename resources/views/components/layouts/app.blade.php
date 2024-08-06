@@ -11,16 +11,14 @@
     @livewireStyles
 </head>
 
-<body class="antialiased bg-gray-50 dark:bg-neutral-900">
+<body class="antialiased bg-gray-50 dark:bg-neutral-900 h-screen">
 
 <livewire:general.header title="{{$title ?? 'AiTools'}}"/>
 
-<div class="flex">
-
-    @yield('sidebar')
+<div class="flex h-screen">
 
     <!-- main content start -->
-    <div class="flex-1 pt-20 px-4 text-gray-600 dark:text-neutral-200">
+    <div class="flex-1 text-gray-600 dark:text-neutral-200">
         <livewire:general.offline/>
 
         <x-flash/>
