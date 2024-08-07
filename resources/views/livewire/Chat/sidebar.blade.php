@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <div id="hs-application-sidebar"
      class="hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full duration-300 transform hidden fixed top-14 start-0 bottom-0 z-[60] w-64 bg-white border-e border-gray-200 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700"
-     role="dialog" tabindex="-1" aria-label="Sidebar" x-data="{ openDropdown: null }">
+     role="dialog" tabindex="-1" aria-label="Sidebar" x-data="{ clickedId: null, openDropdown: null }">
     <nav class="size-full flex flex-col h-full">
 
         <div class="h-full overflow-y-auto flex-1">
@@ -22,8 +22,8 @@
                 </li>
 
                 @foreach($conversations as $conversation)
-                    <li wire:key="conv-{{$conversation->id}}" class="relative group" x-data="{ id: {{$conversation->id}} }">
-                        <a wire:click="$dispatch('loadConversation', [{{$conversation->id}}])" class="flex items-center gap-x-3 py-2 px-3 flex-nowrap text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-300 dark:focus:bg-neutral-900 dark:focus:text-neutral-300"
+                    <li wire:key="conv-{{$conversation->id}}" class="relative group">
+                        <a x-on:click="clickedId = {{$conversation->id}}" :class="{'bg-yellow-100': clickedId === {{$conversation->id}}}" wire:click="$dispatch('loadConversation', [{{$conversation->id}}])" class="flex items-center gap-x-3 py-2 px-3 flex-nowrap text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-300"
                            href="#">
 
                             @if($conversation->title)
@@ -32,13 +32,13 @@
                                 <em>{{__('Conversation #: ') . $conversation->id}}</em>
                             @endif
 
-                            <button @click.prevent.stop="openDropdown = openDropdown === id ? null : id"
+                            <button @click.prevent.stop="openDropdown = openDropdown === {{$conversation->id}} ? null : {{$conversation->id}}"
                                     class="ml-auto cursor-pointer hidden group-hover:inline-block">
                                 <x-icons.dots class="inline-block"/>
                             </button>
                         </a>
 
-                        <div x-cloak x-show="openDropdown === id" @click.away="openDropdown = null"
+                        <div x-cloak x-show="openDropdown === {{$conversation->id}}" @click.away="openDropdown = null"
                              class="absolute right-[-10px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
                             <ul class="py-1">
                                 <li>
