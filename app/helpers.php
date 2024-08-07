@@ -2,6 +2,8 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * loading indicator for chat list and sidebar and other components
+ * download conversation as pdf
  * chat with pdf
  * */
 

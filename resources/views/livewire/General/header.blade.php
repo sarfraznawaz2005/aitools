@@ -35,7 +35,7 @@
                                     @foreach(config('tools') as $tool)
                                         <li wire:key="{{ $tool['name'] }}">
                                             <a href="{{route($tool['route'])}}" wire:navigate
-                                               class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ $currentRoute === $tool['route'] ? 'bg-gray-100' : '' }}">
+                                               class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-100' : '' }}">
                                                 <x-dynamic-component :component="'icons.' . $tool['icon']['name']"
                                                                      :color="$tool['icon']['color']"/>
                                                 {{$tool['name']}}

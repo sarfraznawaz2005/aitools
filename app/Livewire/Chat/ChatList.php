@@ -4,13 +4,15 @@ namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\On;
+use Illuminate\Foundation\Application;
 use Livewire\Component;
 
 class ChatList extends Component
 {
-    public Conversation $conversation;
+    public ?Conversation $conversation;
     public Collection $messages;
     public ?Message $lastMessage = null;
 
@@ -27,12 +29,6 @@ class ChatList extends Component
         }
     }
 
-    #[On('loadConversation')]
-    public function loadConversation($conversationId): void
-    {
-        $this->loadMessages(Conversation::find($conversationId));
-    }
-
     public function placeholder(): string
     {
         return <<<'HTML'
@@ -43,7 +39,7 @@ class ChatList extends Component
         HTML;
     }
 
-    public function render()
+    public function render(): View|Application|Factory
     {
         return view('livewire.chat.chat-list');
     }

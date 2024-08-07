@@ -10,37 +10,41 @@
             <ul class="space-y-1.5 p-4">
 
                 @if(hasApiKeysCreated())
-                <li class="mb-5">
-                    <x-gradient-button class="w-full">
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14"/>
-                            <path d="M12 5v14"/>
-                        </svg>
-                        New Conversation
-                    </x-gradient-button>
-                </li>
+                    <li class="mb-5">
+                        <x-gradient-button class="w-full">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5v14"/>
+                            </svg>
+                            New Conversation
+                        </x-gradient-button>
+                    </li>
                 @endif
 
-                @foreach($conversations as $conversation)
-                    <li wire:key="conv-{{$conversation->id}}" class="relative group">
-                        <a @click.prevent x-on:click="clickedId = {{$conversation->id}}" :class="{'bg-yellow-100': clickedId === {{$conversation->id}}}" wire:click="$dispatch('loadConversation', [{{$conversation->id}}])" class="flex items-center gap-x-3 py-2 px-3 flex-nowrap text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-300"
-                           href="#">
+                @foreach($conversations as $conversationItem)
+                    <li wire:key="conv-{{$conversationItem->id}}" class="relative group">
+                        <a wire:navigate
+                           :class="{'bg-yellow-100': {{$conversation->id}} === {{$conversationItem->id}}}"
+                           class="flex items-center gap-x-3 py-2 px-3 flex-nowrap text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-300"
+                           href="{{route('chat-buddy-load-conversation', $conversationItem)}}">
 
-                            @if($conversation->title)
-                                {{Str::limit($conversation->title, 20)}}
+                            @if($conversationItem->title)
+                                {{Str::limit($conversationItem->title, 20)}}
                             @else
-                                <em>{{__('Conversation #: ') . $conversation->id}}</em>
+                                <em>{{__('Conversation #: ') . $conversationItem->id}}</em>
                             @endif
 
-                            <button @click.prevent.stop="openDropdown = openDropdown === {{$conversation->id}} ? null : {{$conversation->id}}"
-                                    class="ml-auto cursor-pointer hidden group-hover:inline-block">
+                            <button
+                                @click.prevent.stop="openDropdown = openDropdown === {{$conversationItem->id}} ? null : {{$conversationItem->id}}"
+                                class="ml-auto cursor-pointer hidden group-hover:inline-block">
                                 <x-icons.dots class="inline-block"/>
                             </button>
                         </a>
 
-                        <div x-cloak x-show="openDropdown === {{$conversation->id}}" @click.away="openDropdown = null"
+                        <div x-cloak x-show="openDropdown === {{$conversationItem->id}}"
+                             @click.away="openDropdown = null"
                              class="absolute right-[-10px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
                             <ul class="py-1">
                                 <li>
@@ -67,8 +71,9 @@
         </div>
 
         @if (hasApiKeysCreated())
-            <div class="sticky bottom-0 border-t-2 border-gray-200 dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 p-1">
-                <livewire:general.model-selector for="ChatBuddy" />
+            <div
+                class="sticky bottom-0 border-t-2 border-gray-200 dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 p-1">
+                <livewire:general.model-selector for="ChatBuddy"/>
             </div>
         @endif
 
