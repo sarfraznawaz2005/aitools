@@ -9,6 +9,7 @@
             <!-- List -->
             <ul class="space-y-1.5 p-4">
 
+                @if(hasApiKeysCreated())
                 <li class="mb-5">
                     <x-gradient-button class="w-full">
                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -20,6 +21,7 @@
                         New Conversation
                     </x-gradient-button>
                 </li>
+                @endif
 
                 @foreach($conversations as $conversation)
                     <li wire:key="conv-{{$conversation->id}}" class="relative group">
@@ -64,11 +66,12 @@
             <!-- End List -->
         </div>
 
-        <!-- Footer -->
-        <div class="sticky bottom-0 border-t-2 border-gray-200 dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 p-1">
-            <livewire:general.model-selector for="ChatBuddy" />
-        </div>
-        <!-- End Footer -->
+        @if (hasApiKeysCreated())
+            <div class="sticky bottom-0 border-t-2 border-gray-200 dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 p-1">
+                <livewire:general.model-selector for="ChatBuddy" />
+            </div>
+        @endif
+
     </nav>
 </div>
 <!-- End Sidebar -->

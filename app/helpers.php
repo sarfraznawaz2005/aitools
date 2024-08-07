@@ -8,6 +8,11 @@
 use App\Models\ApiKey;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
 
+function hasApiKeysCreated()
+{
+    return ApiKey::hasApiKeys();
+}
+
 function getChatBuddySelectedModel(): string
 {
     if (

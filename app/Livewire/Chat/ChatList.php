@@ -20,9 +20,11 @@ class ChatList extends Component
         $this->messages = $conversation->messages->sortBy('id');
     }
 
-    public function mount($conversation): void
+    public function mount($conversation = null): void
     {
-        $this->loadMessages($conversation);
+        if ($conversation) {
+            $this->loadMessages($conversation);
+        }
     }
 
     #[On('loadConversation')]
