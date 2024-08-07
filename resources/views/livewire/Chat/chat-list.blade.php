@@ -15,8 +15,8 @@
                         @if(!$message->is_ai)
                             <li class="my-4">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
-                                    <div class="inline-block bg-gray-300 rounded-lg p-4 shadow-sm">
-                                        <p class="text-sm leading-loose text-gray-950" style="font-size: 99%; line-height: 1.8rem;">
+                                    <div class="inline-block bg-gray-200 rounded-lg p-4 shadow-sm">
+                                        <p class="text-gray-800" style="font-size: 99%; line-height: 1.8rem;">
                                             {{$message->body}}
                                         </p>
                                     </div>
@@ -40,9 +40,10 @@
                                     <!-- Card -->
                                     <div
                                         class="bg-white border border-gray-200 rounded-lg p-4 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
-                                        <p class="text-sm leading-loose text-gray-800 dark:text-white"
-                                           style="font-size: 99%; line-height: 1.8rem;">
-                                            <x-markdown x-ref="content">{!! $message->body !!}</x-markdown>
+                                        <p>
+                                            <x-markdown x-ref="content" class="text-gray-800" style="font-size: 99%; line-height: 1.8rem;">
+                                                {!! $message->body !!}
+                                            </x-markdown>
                                         </p>
                                     </div>
                                     <!-- End Card -->
