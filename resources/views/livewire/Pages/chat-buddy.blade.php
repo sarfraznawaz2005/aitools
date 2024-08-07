@@ -7,5 +7,3 @@
         <livewire:chat.chatinput :conversation="$conversation"/>
     </div>
 </div>
-
-
