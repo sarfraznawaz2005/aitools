@@ -1,4 +1,4 @@
-<div class="w-full lg:left-64 lg:w-[calc(100%-16rem)] mx-auto fixed bottom-0 z-10 p-3 sm:py-6">
+<div class="w-full lg:left-64 lg:w-[calc(100%-16rem)] mx-auto fixed bottom-0 z-10 p-1 bg-gray-200">
     <div class="lg:hidden flex justify-end mb-2 sm:mb-3">
         <!-- Sidebar Toggle -->
         <button type="button" class="p-2 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar" aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
