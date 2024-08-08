@@ -35,7 +35,7 @@
                                href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
                                 @if($conversationItem->title)
-                                    {{Str::limit($conversationItem->title, 20)}}
+                                    {{Str::limit($conversationItem->title, 25)}}
                                 @else
                                     Conversation #{{$conversationItem->id}}
                                 @endif
