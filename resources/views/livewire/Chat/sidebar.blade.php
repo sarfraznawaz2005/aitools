@@ -59,17 +59,17 @@
                             <ul class="py-1">
                                 <li>
                                     <a href="#"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                                       class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Rename
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-neutral-800">
+                                    <x-confirm-dialog :id="$conversationItem->id" using="delete" title="Delete"
+                                                      class="pr-4 block py-2 text-sm bg-white hover:bg-gray-100 w-full">
                                         <x-icons.delete class="inline-block mr-2 text-red-500"/>
                                         Delete
-                                    </a>
+                                    </x-confirm-dialog>
                                 </li>
                             </ul>
                         </div>

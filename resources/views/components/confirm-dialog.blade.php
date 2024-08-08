@@ -6,7 +6,7 @@
 >
 
     <button
-        @click="open = true" {{ $attributes->merge(['class' => 'items-center px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded']) }}>
+        @click="open = true" {{ $attributes->merge(['class' => '']) }}>
         {{ $slot }}
     </button>
 

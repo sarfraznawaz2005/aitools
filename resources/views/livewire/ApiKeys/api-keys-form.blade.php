@@ -51,7 +51,7 @@
                                 <x-icons.edit class="w-4 h-4 mx-auto"/>
                             </button>
 
-                            <x-confirm-dialog :id="$apiKey->id" using="deleteApiKey" title="Delete">
+                            <x-confirm-dialog :id="$apiKey->id" using="deleteApiKey" title="Delete" class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
                                 <x-icons.delete class="w-4 h-4 mx-auto"/>
                             </x-confirm-dialog>
                         </td>
