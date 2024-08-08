@@ -18,7 +18,6 @@
     <!-- main content start -->
     <div class="flex-1 text-gray-600 dark:text-neutral-200">
         <livewire:general.offline/>
-        <livewire:general.toast/>
 
         <x-flash/>
 
@@ -28,5 +27,20 @@
 </div>
 
 @livewireScriptConfig
+
+<script>
+    window.addEventListener('toast-message', function (event) {
+        const style = event.detail[0].style;
+        const message = event.detail[0].message;
+
+        const notificationType = (style === 'success' || style === 'error' || style === 'warning') ? style : 'info';
+
+        window.notyf.open({
+            type: notificationType,
+            message: message
+        });
+    });
+</script>
+
 </body>
 </html>

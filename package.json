@@ -22,6 +22,7 @@
         "@ryangjchandler/alpine-tooltip": "^2.0.0",
         "@tailwindcss/typography": "^0.5.13",
         "cross-env": "^7.0.3",
+        "notyf": "^3.10.0",
         "preline": "^2.4.1",
         "shiki": "^1.11.2"
     }

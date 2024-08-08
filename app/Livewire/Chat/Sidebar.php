@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Chat;
 
+use App\Livewire\General\Toast;
 use App\Models\Conversation;
+use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -11,8 +13,12 @@ use Livewire\Component;
 
 class Sidebar extends Component
 {
+    use InteractsWithToast;
+
     public ?Conversation $conversation = null;
     public Collection $conversations;
+
+    protected $listeners = ['conversationsUpdated' => '$refresh'];
 
     public function boot(): void
     {
@@ -22,5 +28,14 @@ class Sidebar extends Component
     public function render(): View|Application|Factory
     {
         return view('livewire.chat.sidebar');
+    }
+
+    public function delete(Conversation $conversation): void
+    {
+        $conversation->delete();
+
+        $this->success('Conversation deleted successfully.');
+
+        $this->dispatch('conversationsUpdated');
     }
 }

@@ -9,6 +9,6 @@
     display: none !important;
 }
 
-.font-ubuntu {
-    font-family: 'Ubuntu', sans-serif;
+.conversation:last-child {
+    margin-bottom: 20px !important;
 }
