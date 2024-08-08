@@ -18,17 +18,7 @@ class ChatInput extends Component
 
     public function save(): void
     {
-        if (!$this->validate()) {
-
-//            $this->dispatch(
-//                'toast',
-//                'danger',
-//                'This field is required and must be at least 3 characters long.')
-//                ->to(ChatBuddy::class);
-
-            $this->addError('error', 'This field must be at least 3 characters long.');
-            return;
-        }
+        $this->validate();
 
         // create new conversation if not exists
         if (!$this->conversation) {

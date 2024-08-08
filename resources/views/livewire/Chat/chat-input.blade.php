@@ -28,6 +28,10 @@
                 <div class="flex items-end gap-1.5 md:gap-2">
                         <div class="flex min-w-0 flex-1 flex-col">
 
+                            @error('query')
+                            <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
+                            @enderror
+
                             <textarea
                                 x-ref="textarea"
                                 name="query"

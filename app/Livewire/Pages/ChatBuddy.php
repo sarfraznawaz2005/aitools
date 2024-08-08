@@ -21,6 +21,12 @@ class ChatBuddy extends Component
     #[On('toast')]
     public function sendToast($type, $message)
     {
+//            $this->dispatch(
+//                'toast',
+//                'danger',
+//                'This field is required and must be at least 3 characters long.')
+//                ->to(ChatBuddy::class);
+//
         $this->$type($message);
     }
 
