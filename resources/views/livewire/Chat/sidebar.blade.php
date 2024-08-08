@@ -27,48 +27,79 @@
                 @endif
 
                 @foreach($conversations as $conversationItem)
-                    <li wire:key="conv-{{$conversationItem->id}}" class="conversation relative group hover:bg-gray-200 focus:outline-none {{$conversation && $conversation->id === $conversationItem->id ? 'bg-gray-200' : ''}}">
+                        <li wire:key="conv-{{$conversationItem->id}}"
+                            x-data="{
+                            editable: false,
+                            startEdit() {
+                                this.editable = true;
+                                this.$nextTick(() => this.$refs.titleEditable.focus());
+                            },
+                            stopEdit() {
+                                this.editable = false;
+                            },
+                            handleKeyDown(event) {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    this.$wire.rename({{$conversationItem->id}}, this.$refs.titleEditable.innerText);
+                                    this.stopEdit();
+                                }
+                            }
+                        }"
+                            class="conversation relative group hover:bg-gray-200 focus:outline-none {{$conversation && $conversation->id === $conversationItem->id ? 'bg-gray-200' : ''}}">
 
-                        <div class="flex justify-between">
-                            <a wire:navigate
-                               class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full"
-                               href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
+                            <div class="flex justify-between">
+                                <a wire:navigate
+                                   x-show="!editable"
+                                   class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full"
+                                   href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
-                                @if($conversationItem->title)
-                                    {{Str::limit($conversationItem->title, 25)}}
-                                @else
-                                    Conversation #{{$conversationItem->id}}
-                                @endif
-                            </a>
+                                    <span x-ref="titleDisplay">
+                                        @if($conversationItem->title)
+                                            {{Str::limit($conversationItem->title, 25)}}
+                                        @else
+                                            Conversation #{{$conversationItem->id}}
+                                        @endif
+                                    </span>
+                                </a>
 
-                            <button
-                                @click.prevent.stop="openDropdown = openDropdown === {{$conversationItem->id}} ? null : {{$conversationItem->id}}"
-                                class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
-                                <x-icons.dots class="inline-block"/>
-                            </button>
-                        </div>
+                                <div x-show="editable"
+                                     x-ref="titleEditable"
+                                     @blur="stopEdit"
+                                     @keydown="handleKeyDown"
+                                     contenteditable="true"
+                                     class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full outline-none">
+                                    {{$conversationItem->title ?? "Conversation #" . $conversationItem->id}}
+                                </div>
 
-                        <div x-cloak x-show="openDropdown === {{$conversationItem->id}}"
-                             @click.away="openDropdown = null"
-                             class="absolute right-[4px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
-                            <ul class="py-1">
-                                <li>
-                                    <a href="#"
-                                       class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
-                                        <x-icons.edit class="inline-block mr-2 text-gray-500"/>
-                                        Rename
-                                    </a>
-                                </li>
-                                <li>
-                                    <x-confirm-dialog :id="$conversationItem->id" using="delete" title="Delete"
-                                                      class="pr-4 block py-2 text-sm bg-white hover:bg-gray-100 w-full">
-                                        <x-icons.delete class="inline-block mr-2 text-red-500"/>
-                                        Delete
-                                    </x-confirm-dialog>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                                <button
+                                    @click.prevent.stop="openDropdown = openDropdown === {{$conversationItem->id}} ? null : {{$conversationItem->id}}"
+                                    class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
+                                    <x-icons.dots class="inline-block"/>
+                                </button>
+                            </div>
+
+                            <div x-cloak x-show="openDropdown === {{$conversationItem->id}}"
+                                 @click.away="openDropdown = null"
+                                 class="absolute right-[4px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
+                                <ul class="py-1">
+                                    <li>
+                                        <a href="#"
+                                           @click.prevent="startEdit(); openDropdown = null;"
+                                           class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                                            <x-icons.edit class="inline-block mr-2 text-gray-500"/>
+                                            Rename
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <x-confirm-dialog :id="$conversationItem->id" using="delete" title="Delete"
+                                                          class="pr-4 block py-2 text-sm bg-white hover:bg-gray-100 w-full">
+                                            <x-icons.delete class="inline-block mr-2 text-red-500"/>
+                                            Delete
+                                        </x-confirm-dialog>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                 @endforeach
 
             </ul>

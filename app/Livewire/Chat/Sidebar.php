@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Chat;
 
-use App\Livewire\General\Toast;
 use App\Models\Conversation;
 use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
@@ -28,6 +27,15 @@ class Sidebar extends Component
     public function render(): View|Application|Factory
     {
         return view('livewire.chat.sidebar');
+    }
+
+    public function rename(Conversation $conversation, $title): void
+    {
+        $conversation->update(['title' => $title]);
+
+        $this->success('Conversation re-named successfully.');
+
+        $this->dispatch('conversationsUpdated');
     }
 
     public function delete(Conversation $conversation): void
