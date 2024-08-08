@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Pages;
 
-use App\Livewire\General\Toast;
 use App\Models\Conversation;
 use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
@@ -34,5 +33,14 @@ class ChatBuddy extends Component
     public function render(): Application|View|Factory
     {
         return view('livewire.pages.chat-buddy');
+    }
+
+    public function delete(Conversation $conversation): void
+    {
+        $conversation->delete();
+
+        session()->flash('message', 'Conversation deleted successfully.');
+
+        $this->redirect(route(config('tools.chat-buddy.route')));
     }
 }
