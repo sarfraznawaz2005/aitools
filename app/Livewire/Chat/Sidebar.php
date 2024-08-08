@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class Sidebar extends Component
 {
-    public ?Conversation $conversation;
+    public ?Conversation $conversation = null;
     public Collection $conversations;
 
     public function boot(): void

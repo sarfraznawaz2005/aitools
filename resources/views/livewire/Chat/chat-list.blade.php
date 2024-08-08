@@ -16,7 +16,7 @@
                             <li class="my-4">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg p-4 shadow-sm">
-                                        <p class="text-gray-800" style="font-size: 99%; line-height: 1.8rem;">
+                                        <p class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;">
                                             {{$message->body}}
                                         </p>
                                     </div>
@@ -41,7 +41,7 @@
                                     <div
                                         class="bg-white border border-gray-200 rounded-lg p-4 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                         <p>
-                                            <x-markdown x-ref="content" class="text-gray-800" style="font-size: 99%; line-height: 1.8rem;">
+                                            <x-markdown x-ref="content" class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;">
                                                 {!! $message->body !!}
                                             </x-markdown>
                                         </p>

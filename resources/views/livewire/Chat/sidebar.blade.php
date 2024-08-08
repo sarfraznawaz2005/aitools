@@ -32,7 +32,7 @@
                 @endif
 
                 @foreach($conversations as $conversationItem)
-                    <li wire:key="conv-{{$conversationItem->id}}" class="conversation relative group hover:bg-gray-200 focus:outline-none" :class="{'bg-gray-200': {{$conversation->id ?? ''}} === {{$conversationItem->id}}}">
+                    <li wire:key="conv-{{$conversationItem->id}}" class="conversation relative group hover:bg-gray-200 focus:outline-none {{$conversation && $conversation->id === $conversationItem->id ? 'bg-gray-200' : ''}}">
 
                         <div class="flex justify-between">
                             <a wire:navigate
@@ -42,7 +42,7 @@
                                 @if($conversationItem->title)
                                     {{Str::limit($conversationItem->title, 20)}}
                                 @else
-                                    <em>{{__('Conversation #: ') . $conversationItem->id}}</em>
+                                    Conversation #{{$conversationItem->id}}
                                 @endif
                             </a>
 

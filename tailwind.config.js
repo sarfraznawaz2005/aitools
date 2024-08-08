@@ -18,10 +18,14 @@ export default {
         'from-gray-400',
         'to-gray-600',
         'size-16',
+        'bg-blue-500',
+        'bg-green-500',
+        'bg-yellow-500',
+        'bg-red-500',
     ],
     theme: {
         fontFamily: {
-            sans: ['Nunito', 'sans-serif'],
+            sans: ['sans-serif'],
         },
         extend: {
             colors: {

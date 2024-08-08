@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ? $title . ' - AiTools' : 'AiTools' }}</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito:300,400,500,700" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -20,6 +18,7 @@
     <!-- main content start -->
     <div class="flex-1 text-gray-600 dark:text-neutral-200">
         <livewire:general.offline/>
+        <livewire:general.toast/>
 
         <x-flash/>
 
