@@ -27,7 +27,7 @@
                 @endif
 
                 @foreach($conversations as $conversationItem)
-                        <li wire:key="conv-{{$conversationItem->id}}"
+                        <li x-cloak wire:key="conv-{{$conversationItem->id}}"
                             x-data="{
                                 editable: false,
                                 startEdit() {
