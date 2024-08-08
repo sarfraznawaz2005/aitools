@@ -3,7 +3,6 @@
 namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
-use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -12,8 +11,6 @@ use Livewire\Component;
 
 class ChatInput extends Component
 {
-    use InteractsWithToast;
-
     #[Validate('required|min:3')]
     public string $query;
 
@@ -22,8 +19,14 @@ class ChatInput extends Component
     public function save(): void
     {
         if (!$this->validate()) {
-            $this->danger('This field is required and must be at least 3 characters long.');
-            //$this->addError('error', 'Cannot delete the default API key!');
+
+//            $this->dispatch(
+//                'toast',
+//                'danger',
+//                'This field is required and must be at least 3 characters long.')
+//                ->to(ChatBuddy::class);
+
+            $this->addError('error', 'This field must be at least 3 characters long.');
             return;
         }
 
@@ -41,7 +44,6 @@ class ChatInput extends Component
 
     public function render(): Application|View|Factory
     {
-        $this->success('This field is required and must be at least 3 characters long.');
         return view('livewire.chat.chat-input');
     }
 }
