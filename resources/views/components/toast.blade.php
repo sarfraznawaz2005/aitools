@@ -1,4 +1,4 @@
-<script>
+<script data-navigate-once>
     function handleToastMessage(event) {
         const style = event.detail[0]?.style || event.detail.style || 'info';
         const message = event.detail[0]?.message || event.detail.message || '';
@@ -14,12 +14,4 @@
     }
 
     window.addEventListener('toast-message', (event) => handleToastMessage(event));
-
-    Livewire.hook('message.processed', () => {
-        window.addEventListener('toast-message', (event) => handleToastMessage(event));
-    });
-
-    window.addEventListener('livewire:navigated', () => {
-        window.addEventListener('toast-message', (event) => handleToastMessage(event));
-    });
 </script>
