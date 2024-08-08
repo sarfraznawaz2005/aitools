@@ -20,6 +20,7 @@
         <livewire:general.offline/>
 
         <x-flash/>
+        <x-toast/>
 
         {{ $slot }}
     </div>
@@ -27,20 +28,6 @@
 </div>
 
 @livewireScriptConfig
-
-<script>
-    window.addEventListener('toast-message', function (event) {
-        const style = event.detail[0].style;
-        const message = event.detail[0].message;
-
-        const notificationType = (style === 'success' || style === 'error' || style === 'warning') ? style : 'info';
-
-        window.notyf.open({
-            type: notificationType,
-            message: message
-        });
-    });
-</script>
 
 </body>
 </html>

@@ -94,7 +94,7 @@
                                     </li>
                                     <li>
                                         <x-confirm-dialog :id="$conversationItem->id" using="delete" title="Delete"
-                                                          class="pr-4 block py-2 text-sm bg-white hover:bg-gray-100 w-full">
+                                                          class="pr-3 block py-2 text-sm bg-white hover:bg-gray-100 w-full">
                                             <x-icons.delete class="inline-block mr-2 text-red-500"/>
                                             Delete
                                         </x-confirm-dialog>
