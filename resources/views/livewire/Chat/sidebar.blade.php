@@ -29,22 +29,24 @@
                 @foreach($conversations as $conversationItem)
                         <li wire:key="conv-{{$conversationItem->id}}"
                             x-data="{
-                            editable: false,
-                            startEdit() {
-                                this.editable = true;
-                                this.$nextTick(() => this.$refs.titleEditable.focus());
-                            },
-                            stopEdit() {
-                                this.editable = false;
-                            },
-                            handleKeyDown(event) {
-                                if (event.key === 'Enter') {
-                                    event.preventDefault();
-                                    this.$wire.rename({{$conversationItem->id}}, this.$refs.titleEditable.innerText);
-                                    this.stopEdit();
+                                editable: false,
+                                startEdit() {
+                                    this.editable = true;
+                                    this.$nextTick(() => this.$refs.titleEditable.focus());
+                                },
+                                stopEdit() {
+                                    if (this.editable) {
+                                        this.$wire.rename({{$conversationItem->id}}, this.$refs.titleEditable.innerText);
+                                        this.editable = false;
+                                    }
+                                },
+                                handleKeyDown(event) {
+                                    if (event.key === 'Enter') {
+                                        event.preventDefault();
+                                        this.stopEdit();
+                                    }
                                 }
-                            }
-                        }"
+                            }"
                             class="conversation relative group hover:bg-gray-200 focus:outline-none {{$conversation && $conversation->id === $conversationItem->id ? 'bg-gray-200' : ''}}">
 
                             <div class="flex justify-between">
@@ -67,7 +69,7 @@
                                      @blur="stopEdit"
                                      @keydown="handleKeyDown"
                                      contenteditable="true"
-                                     class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full outline-none">
+                                     class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full outline-none bg-yellow-50 rounded">
                                     {{$conversationItem->title ?? "Conversation #" . $conversationItem->id}}
                                 </div>
 

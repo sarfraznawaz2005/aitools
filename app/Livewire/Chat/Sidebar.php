@@ -42,8 +42,13 @@ class Sidebar extends Component
     {
         $conversation->delete();
 
-        $this->success('Conversation deleted successfully.');
+        // if it is active conversation, we redirect instead to avoid 404
+        if ($this->conversation && $this->conversation->id === $conversation->id) {
+            $this->redirect(route(config('tools.chat-buddy.route')));
+        } else {
+            $this->success('Conversation deleted successfully.');
 
-        $this->dispatch('conversationsUpdated');
+            $this->dispatch('conversationsUpdated');
+        }
     }
 }
