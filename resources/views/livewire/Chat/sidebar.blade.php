@@ -1,3 +1,5 @@
+@php($tools = config('tools'))
+
 <style>
     .conversation:last-child {
         margin-bottom: 20px !important;
@@ -17,7 +19,7 @@
 
                 @if(hasApiKeysCreated())
                     <li class="p-4">
-                        <x-gradient-button class="w-full">
+                        <x-gradient-link class="w-full" href="/{{$tools['chat-buddy']['route']}}" wire:navigate>
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -25,7 +27,7 @@
                                 <path d="M12 5v14"/>
                             </svg>
                             New Conversation
-                        </x-gradient-button>
+                        </x-gradient-link>
                     </li>
                 @endif
 
@@ -35,7 +37,7 @@
                         <div class="flex justify-between">
                             <a wire:navigate
                                class="flex items-center py-2 px-3 flex-nowrap text-sm text-gray-700"
-                               href="{{route('chat-buddy-load-conversation', $conversationItem)}}">
+                               href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
                                 @if($conversationItem->title)
                                     {{Str::limit($conversationItem->title, 20)}}
