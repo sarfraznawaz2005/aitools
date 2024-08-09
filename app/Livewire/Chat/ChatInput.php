@@ -33,12 +33,14 @@ class ChatInput extends Component
             // for new conversation, we need to generate a title
             $this->conversation->generateTitle($this->query);
 
+            $this->conversation->addInput($this->query);
+
             $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $this->conversation), true);
         } else {
             $this->conversation->addInput($this->query);
-
-            $this->dispatch('userQueryReceived')->to(ChatList::class);
         }
+
+        $this->dispatch('inputSaved')->to(ChatList::class);
 
         $this->reset('query');
     }

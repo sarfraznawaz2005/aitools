@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * send message on enter
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
  * download conversation as pdf

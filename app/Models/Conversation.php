@@ -83,8 +83,7 @@ class Conversation extends Model
 
         $title = $llm->chat($prompt);
 
-        //Log::info($prompt);
-        //Log::info('Title generated: ' . $title);
+        $title = preg_replace('/[^A-Za-z0-9] /', '', $title);
 
         $this->title = $title;
         $this->save();
