@@ -32,9 +32,9 @@ class ChatInput extends Component
             $this->conversation->addInput($this->query);
 
             $this->dispatch('userQueryReceived')->to(ChatList::class);
-
-            $this->reset();
         }
+
+        $this->reset(); // clear input
     }
 
     public function render(): Application|View|Factory
