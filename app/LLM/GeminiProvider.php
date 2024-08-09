@@ -117,12 +117,4 @@ class GeminiProvider extends BaseLLMProvider
             }
         }
     }
-
-    protected function fixJson($json): string
-    {
-        $json = ltrim($json, '[,');
-        $json = rtrim($json, '],');
-
-        return trim($json);
-    }
 }

@@ -72,5 +72,18 @@ abstract class BaseLLMProvider implements LlmProvider
                 throw new Exception("Failed to get a successful response after $this->retries attempts. Error: $errorMessage");
             }
         }
+
+        return 'Unknow Error';
+    }
+
+    protected function fixJson($json): string
+    {
+        $json = ltrim($json, '[,');
+        $json = rtrim($json, '],');
+        $json = rtrim($json, '],');
+
+        $json = str_ireplace('data:', '', $json);
+
+        return trim($json);
     }
 }

@@ -88,15 +88,4 @@ class OpenAiProvider extends BaseLLMProvider
             }
         }
     }
-
-    protected function fixJson($json): string
-    {
-        $json = ltrim($json, '[,');
-        $json = rtrim($json, '],');
-        $json = rtrim($json, '],');
-
-        $json = str_ireplace('data:', '', $json);
-
-        return trim($json);
-    }
 }
