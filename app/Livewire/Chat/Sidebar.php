@@ -46,9 +46,9 @@ class Sidebar extends Component
 
         $conversation->update(['title' => $title]);
 
-        $this->success('Conversation re-named successfully.');
-
         $this->dispatch('conversationsUpdated');
+
+        $this->success('Conversation re-named successfully.');
     }
 
     public function delete(Conversation $conversation): void
@@ -59,9 +59,9 @@ class Sidebar extends Component
         if ($this->conversation && $this->conversation->id === $conversation->id) {
             $this->redirect(route(config('tools.chat-buddy.route')), true);
         } else {
-            $this->success('Conversation deleted successfully.');
-
             $this->dispatch('conversationsUpdated');
+
+            $this->success('Conversation deleted successfully.');
         }
     }
 }
