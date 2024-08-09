@@ -54,16 +54,15 @@ class OpenAiProvider extends BaseLLMProvider
     {
         // openai also has batch embed content which should be used instead for multiple texts
 
+        $url = $this->baseUrl . 'embeddings';
+
         try {
-            $response = $this->makeRequest('/embeddings', [
+            $response = $this->makeRequest($url, [
                 'input' => $text,
-                'model' => $this->options['embedding_model'] ?? 'text-embedding-ada-002'
-            ]);
+                'model' => $embeddingModel
+            ], false, true);
 
-            $result = json_decode($response, true);
-
-            return $result['data'][0]['embedding'];
-
+            return $response['data'][0]['embedding'];
         } catch (Exception $e) {
             return $e->getMessage();
         }
