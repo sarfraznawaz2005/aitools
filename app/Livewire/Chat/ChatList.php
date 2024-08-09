@@ -23,6 +23,25 @@ class ChatList extends Component
         $this->lastMessage = $this->conversation->messages->last();
 
         $this->messages = $this->conversation->messages->sortBy('id');
+
+        $this->dispatch('createTempAImessage')->self();
+    }
+
+    #[On('createTempAImessage')]
+    public function createTempAImessage()
+    {
+        // Create temp answer to show the user that the AI is typing
+        $this->conversation->messages()->create([
+            'body' => '...',
+            'conversation_id' => $this->conversation->id,
+            'is_ai' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $this->messages = $this->conversation->messages->sortBy('id');
+
+        $this->dispatch('getAiResponse', $this->conversation->id);
     }
 
     public function mount($conversation = null): void
