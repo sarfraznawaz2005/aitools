@@ -11,32 +11,6 @@ class GeminiProvider extends BaseLLMProvider
         parent::__construct($apiKey, 'https://generativelanguage.googleapis.com/v1/', $model, $options, $retries);
     }
 
-    public function embed(string $text, string $embeddingModel): array|string
-    {
-        // google also has batch embed content which should be used instead for multiple texts
-
-        $url = $this->baseUrl . 'models/' . $embeddingModel . ":embedContent?key=" . $this->apiKey;
-
-        $body = [
-            "model" => "models/$embeddingModel",
-            "content" => [
-                "parts" => [
-                    [
-                        "text" => $text
-                    ]
-                ]
-            ]
-        ];
-
-        try {
-            $response = $this->makeRequest($url, $body);
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-
-        return $response['embedding']['values'] ?? [];
-    }
-
     public function chat(string $message, bool $stream = false): mixed
     {
         $responseType = $stream ? 'streamGenerateContent' : 'generateContent';
@@ -100,6 +74,30 @@ class GeminiProvider extends BaseLLMProvider
     {
         return $this->chat($prompt, $stream);
     }
+
+    public function embed(string $text, string $embeddingModel): array|string
+    {
+        // google also has batch embed content which should be used instead for multiple texts
+
+        $url = $this->baseUrl . 'models/' . $embeddingModel . ":embedContent?key=" . $this->apiKey;
+
+        $body = [
+            "model" => "models/$embeddingModel",
+            "content" => [
+                "parts" => [
+                    [
+                        "text" => $text
+                    ]
+                ]
+            ]
+        ];
+
+        try {
+            $response = $this->makeRequest($url, $body);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $response['embedding']['values'] ?? [];
+    }
 }
-
-

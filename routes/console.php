@@ -1,6 +1,6 @@
 <?php
 
-use App\LLM\GeminiProvider;
+use App\LLM\OpenAiProvider;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -9,11 +9,11 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Artisan::command('test', function () {
-    $gemini = new GeminiProvider(
-        'AIzaSyCNZB_8GOXr8Vx9Y_Xn93PKzZ52F8DqbsY',
-        'gemini-1.5-flash',
-        ['maxOutputTokens' => 8192, 'temperature' => 2.0]
+    $gemini = new OpenAiProvider(
+        'sk-proj-B1O2oQox3DVJqdRrmDADT3BlbkFJgfuv6sxQvXr45eSBVZEY',
+        'gpt-3.5-turbo',
+        //['maxOutputTokens' => 8192, 'temperature' => 2.0]
     );
 
-    echo $gemini->complete('Pakistan is a country in');
+    echo $gemini->chat('Pakistan is a country in');
 });

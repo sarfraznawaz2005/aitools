@@ -2,39 +2,43 @@
 
 namespace App\LLM;
 
-class OpenAIProvider extends BaseLLMProvider
+use Exception;
+
+class OpenAiProvider extends BaseLLMProvider
 {
-    public function __construct(array $options = [])
+    public function __construct(string $apiKey, string $model, array $options = [], int $retries = 1)
     {
-        parent::__construct('https://api.openai.com/v1', $options);
+        parent::__construct($apiKey, 'https://api.openai.com/v1/', $model, $options, $retries);
     }
 
-    public function embed(string $text): array
+    public function chat(string $message, bool $stream = false): mixed
     {
-        $response = $this->sendRequest('/embeddings', [
-            'input' => $text,
-            'model' => $this->options['embedding_model'] ?? 'text-embedding-ada-002'
-        ]);
-        $result = json_decode($response, true);
-        return $result['data'][0]['embedding'];
-    }
+        $url = $this->baseUrl . 'chat/completions';
 
-    public function chat(array $messages, bool $stream = false): string
-    {
-        $data = [
-            'messages' => $messages,
-            'model' => $this->options['chat_model'] ?? 'gpt-3.5-turbo',
-            'stream' => $stream
+        $body = [
+            'model' => $this->model,
+            'messages' => [[
+                'role' => 'user',
+                'content' => $message,
+            ]],
+            'stream' => $stream,
+            'max_tokens' => $this->options['max_tokens'] ?? 4096,
+            'temperature' => $this->options['temperature'] ?? 1.0,
         ];
 
-        if ($stream) {
-            $this->sendRequest('/chat/completions', $data, true);
-            return;
-        }
+        try {
+            $response = $this->makeRequest($url, $body, $stream, true);
 
-        $response = $this->sendRequest('/chat/completions', $data);
-        $result = json_decode($response, true);
-        return $result['choices'][0]['message']['content'];
+            if ($stream) return '';
+
+            dd($response);
+            $result = json_decode($response, true);
+
+            return $result['choices'][0]['message']['content'];
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function complete(string $prompt, bool $stream = false): string
@@ -46,14 +50,38 @@ class OpenAIProvider extends BaseLLMProvider
         ];
 
         if ($stream) {
-            return $this->sendRequest('/completions', $data, true);
+            try {
+                return $this->makeRequest('/completions', $data, true);
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
         }
 
-        $response = $this->sendRequest('/completions', $data);
-        $result = json_decode($response, true);
-        return $result['choices'][0]['text'];
+        try {
+            $response = $this->makeRequest('/completions', $data);
+            $result = json_decode($response, true);
+
+            return $result['choices'][0]['text'];
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function embed(string $text, string $embeddingModel): array|string
+    {
+        try {
+            $response = $this->makeRequest('/embeddings', [
+                'input' => $text,
+                'model' => $this->options['embedding_model'] ?? 'text-embedding-ada-002'
+            ]);
+
+            $result = json_decode($response, true);
+
+            return $result['data'][0]['embedding'];
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
-
-
-

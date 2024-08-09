@@ -24,12 +24,15 @@ abstract class BaseLLMProvider implements LlmProvider
     /**
      * @throws Exception
      */
-    protected function makeRequest(string $url, array $body, bool $stream = false): mixed
+    protected function makeRequest(string $url, array $body, bool $stream = false, $useBearer = false): mixed
     {
         $headers = [
             'Content-Type: application/json',
-            //'Authorization: Bearer ' . $this->apiKey,
         ];
+
+        if ($useBearer) {
+            $headers[] = 'Authorization: Bearer ' . $this->apiKey;
+        }
 
         for ($attempt = 0; $attempt < $this->retries; $attempt++) {
             $ch = curl_init($url);
@@ -96,5 +99,3 @@ abstract class BaseLLMProvider implements LlmProvider
         return trim($json);
     }
 }
-
-

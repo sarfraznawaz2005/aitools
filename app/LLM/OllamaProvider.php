@@ -112,4 +112,3 @@ class OllamaProvider implements LlmProvider
         return $formattedHeaders;
     }
 }
-
