@@ -36,11 +36,13 @@ class ChatInput extends Component
             $this->conversation->addInput($this->query);
 
             $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $this->conversation), true);
-        } else {
-            $this->conversation->addInput($this->query);
+
+            return;
         }
 
-        $this->dispatch('inputSaved')->to(ChatList::class);
+        $this->conversation->addInput($this->query);
+
+        $this->dispatch('inputSaved');
 
         $this->reset('query');
     }

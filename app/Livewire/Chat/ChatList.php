@@ -15,19 +15,11 @@ class ChatList extends Component
 {
     public ?Conversation $conversation = null;
     public Collection $messages;
-    public ?Message $lastMessage = null;
-
-    protected $listeners = ['inputSaved' => '$refresh'];
 
     #[On('inputSaved')]
     public function refreshMessagesByInput(): void
     {
         $this->messages = $this->conversation->messages->sortBy('id');
-        $this->lastMessage = $this->conversation->messages->last();
-
-        $this->addToChatUi($this->lastMessage);
-
-        //$this->dispatch('message-refreshed-by-input')->self();
     }
 
     /**
