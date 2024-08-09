@@ -1,5 +1,5 @@
 <div class="w-full lg:left-64 lg:w-[calc(100%-16rem)] mx-auto fixed bottom-0 z-10 p-4 px-12 bg-gray-200 sm:bg-gray-50">
-    <div class="lg:hidden flex justify-end mb-2 sm:mb-3">
+    <div class="lg:hidden flex mb-2 sm:mb-3">
         <!-- Sidebar Toggle -->
         <button type="button" class="p-2 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar" aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
             <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
