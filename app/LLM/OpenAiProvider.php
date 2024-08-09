@@ -78,7 +78,6 @@ class OpenAiProvider extends BaseLLMProvider
 
         foreach ($parts as $part) {
             $json = json_decode($part, true);
-            //dump($json);
 
             if (isset($json['choices'])) {
                 foreach ($json['choices'] as $choice) {
