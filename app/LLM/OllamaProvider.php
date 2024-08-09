@@ -2,113 +2,89 @@
 
 namespace App\LLM;
 
-class OllamaProvider implements LlmProvider
+use Exception;
+
+class OllamaProvider extends BaseLLMProvider
 {
-    protected string $apiKey;
-    protected string $baseUrl = 'https://api.ollama.com/v1';
-    protected string $model;
-
-    public function __construct(string $apiKey)
+    public function __construct(string $apiKey, string $model, array $options = [], int $retries = 1)
     {
-        $this->apiKey = $apiKey;
+        parent::__construct($apiKey, 'http://127.0.0.1:11434/v1/', $model, $options, $retries);
     }
 
-    public function url(): string
+    public function chat(string $message, bool $stream = false): string
     {
-        return $this->baseUrl;
-    }
+        $url = $this->baseUrl . 'chat/completions';
 
-    public function options(): array
-    {
-        return [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type' => 'application/json',
-            ],
+        $body = [
+            'model' => $this->model,
+            'messages' => [[
+                'role' => 'user',
+                'content' => $message,
+            ]],
+            'stream' => $stream,
+            'max_tokens' => $this->options['max_tokens'] ?? 4096,
+            'temperature' => $this->options['temperature'] ?? 1.0,
         ];
-    }
 
-    public function setModel(string $model): void
-    {
-        $this->model = $model;
-    }
+        try {
+            $response = $this->makeRequest($url, $body, $stream, true);
 
-    public function embed(string $text, int $retries = 3, int $sleepInterval = 1): array
-    {
-        $endpoint = $this->url() . '/embeddings';
-        $payload = json_encode(['input' => $text, 'model' => $this->model]);
+            if ($stream) return '';
 
-        return $this->retryRequest($endpoint, $payload, $retries
-            , $sleepInterval);
-    }
+            $text = '';
 
-    public function chat(string $prompt, bool $stream = false, int $retries = 3, int $sleepInterval = 1): string
-    {
-        $endpoint = $this->url() . '/chat/completions';
-        $payload = json_encode([
-            'model' => $this->model,
-            'messages' => [['role' => 'user', 'content' => $prompt]],
-            'stream' => $stream,
-        ]);
+            if (isset($response['choices'])) {
+                foreach ($response['choices'] as $choice) {
+                    if (!isset($choice['message'])) {
+                        return "No response, please try again!";
+                    }
 
-        return $this->retryRequest($endpoint, $payload, $retries, $sleepInterval);
-    }
-
-    public function complete(string $prompt, bool $stream = false, int $retries = 3, int $sleepInterval = 1): string
-    {
-        $endpoint = $this->url() . '/completions';
-        $payload = json_encode([
-            'model' => $this->model,
-            'prompt' => $prompt,
-            'stream' => $stream,
-        ]);
-
-        return $this->retryRequest($endpoint, $payload, $retries, $sleepInterval);
-    }
-
-    protected function retryRequest(string $url, string $payload, int $retries, int $sleepInterval): array|string
-    {
-        while ($retries > 0) {
-            $response = $this->makeRequest($url, $payload);
-            if (!str_starts_with($response, 'Error')) {
-                return $response;
+                    $text .= $choice['message']['content'] . (php_sapi_name() === 'cli' ? "\n" : PHP_EOL);
+                }
             }
 
-            $retries--;
-            if ($retries > 0) {
-                sleep($sleepInterval);
+            return $text;
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function embed(string $text, string $embeddingModel): array|string
+    {
+        // openai also has batch embed content which should be used instead for multiple texts
+
+        $url = $this->baseUrl . 'embeddings';
+
+        try {
+            $response = $this->makeRequest($url, [
+                'input' => $text,
+                'model' => $embeddingModel
+            ], false, true);
+
+            return $response['data'][0]['embedding'];
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    protected function getStreamingResponse($data): void
+    {
+        $data = $this->fixJson($data);
+
+        $parts = explode("\n", $data);
+        $parts = array_filter($parts);
+
+        foreach ($parts as $part) {
+            $json = json_decode($part, true);
+
+            if (isset($json['choices'])) {
+                foreach ($json['choices'] as $choice) {
+                    if (isset($choice['delta'])) {
+                        echo $choice['delta']['content'] ?? '';
+                    }
+                }
             }
         }
-
-        return "Error: Failed after multiple attempts";
-    }
-
-    protected function makeRequest(string $url, string $payload): array|string
-    {
-        $ch = curl_init($url);
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->formatHeaders($this->options()['headers']));
-
-        $response = curl_exec($ch);
-        $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpStatus >= 200 && $httpStatus < 300) {
-            return json_decode($response, true);
-        } else {
-            return "Error: Received status code $httpStatus";
-        }
-    }
-
-    protected function formatHeaders(array $headers): array
-    {
-        $formattedHeaders = [];
-        foreach ($headers as $key => $value) {
-            $formattedHeaders[] = "$key: $value";
-        }
-        return $formattedHeaders;
     }
 }
