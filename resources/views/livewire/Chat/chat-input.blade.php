@@ -62,6 +62,7 @@
                             @keydown="handleKeyDown"
                             tabindex="0"
                             autofocus
+                            wire:loading.attr="disabled"
                             autocomplete="off"
                             dir="auto"
                             rows="1"
@@ -81,6 +82,7 @@
                             type="submit"
                             @click="lastQuery = $wire.query"
                             :disabled="!$wire.query.trim()"
+                            wire:loading.attr="disabled"
                             class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
                             <x-icons.upload />
                         </button>
