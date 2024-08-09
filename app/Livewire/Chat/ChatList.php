@@ -15,22 +15,14 @@ class ChatList extends Component
 {
     public ?Conversation $conversation = null;
     public Collection $messages;
+    public ?Message $lastMessage = null;
 
     #[On('inputSaved')]
     public function refreshMessagesByInput(): void
     {
-        $this->messages = $this->conversation->messages->sortBy('id');
-    }
+        $this->lastMessage = $this->conversation->messages->last();
 
-    /**
-     * Method for adding a new message to the chat.
-     *
-     * @param Message $message
-     * @return void
-     */
-    public function addToChatUi(Message $message): void
-    {
-        $this->messages->prepend($message);
+        $this->messages = $this->conversation->messages->sortBy('id');
     }
 
     public function mount($conversation = null): void

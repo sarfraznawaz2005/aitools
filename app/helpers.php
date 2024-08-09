@@ -2,6 +2,7 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * send conversation history to ai for output
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
  * download conversation as pdf
