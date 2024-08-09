@@ -15,5 +15,5 @@ Artisan::command('test', function () {
         //['maxOutputTokens' => 8192, 'temperature' => 2.0]
     );
 
-    echo $gemini->chat('Pakistan is a country in');
+    echo $gemini->chat('tell me a story', true);
 });

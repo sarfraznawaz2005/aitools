@@ -42,24 +42,7 @@ abstract class BaseLLMProvider implements LlmProvider
 
             if ($stream) {
                 curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($ch, $data) {
-                    $data = $this->fixJson($data);
-                    $json = json_decode("[$data]", true);
-
-                    if ($json) {
-                        foreach ($json as $jsonItem) {
-                            foreach ($jsonItem['candidates'] as $candidate) {
-                                if (!isset($candidate['content'])) {
-                                    return "No response, please try again!";
-                                }
-
-                                foreach ($candidate['content']['parts'] as $part) {
-                                    echo $part['text'];
-                                }
-                            }
-                        }
-                    }
-
-                    return strlen($data);
+                    static::getStreamingResponse($data);
                 });
             }
 
@@ -89,13 +72,5 @@ abstract class BaseLLMProvider implements LlmProvider
                 throw new Exception("Failed to get a successful response after $this->retries attempts. Error: $errorMessage");
             }
         }
-    }
-
-    protected function fixJson($json): string
-    {
-        $json = ltrim($json, '[,');
-        $json = rtrim($json, '],');
-
-        return trim($json);
     }
 }

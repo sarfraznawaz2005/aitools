@@ -11,7 +11,7 @@ class GeminiProvider extends BaseLLMProvider
         parent::__construct($apiKey, 'https://generativelanguage.googleapis.com/v1/', $model, $options, $retries);
     }
 
-    public function chat(string $message, bool $stream = false): mixed
+    public function chat(string $message, bool $stream = false): string
     {
         $responseType = $stream ? 'streamGenerateContent' : 'generateContent';
 
@@ -53,13 +53,15 @@ class GeminiProvider extends BaseLLMProvider
 
             $text = '';
 
-            foreach ($response['candidates'] as $candidate) {
-                if (!isset($candidate['content'])) {
-                    return "No response, please try again!";
-                }
+            if (isset($response['candidates'])) {
+                foreach ($response['candidates'] as $candidate) {
+                    if (!isset($candidate['content'])) {
+                        return "No response, please try again!";
+                    }
 
-                foreach ($candidate['content']['parts'] as $part) {
-                    $text .= $part['text'] . "\n";
+                    foreach ($candidate['content']['parts'] as $part) {
+                        $text .= $part['text'] . (php_sapi_name() === 'cli' ? "\n" : PHP_EOL);
+                    }
                 }
             }
 
@@ -68,11 +70,6 @@ class GeminiProvider extends BaseLLMProvider
         } catch (Exception $e) {
             return $e->getMessage();
         }
-    }
-
-    public function complete(string $prompt, bool $stream = false): mixed
-    {
-        return $this->chat($prompt, $stream);
     }
 
     public function embed(string $text, string $embeddingModel): array|string
@@ -99,5 +96,33 @@ class GeminiProvider extends BaseLLMProvider
         }
 
         return $response['embedding']['values'] ?? [];
+    }
+
+    protected function getStreamingResponse($data): void
+    {
+        $data = $this->fixJson($data);
+        $json = json_decode("[$data]", true);
+
+        if ($json) {
+            foreach ($json as $jsonItem) {
+                if (isset($jsonItem['candidates'])) {
+                    foreach ($jsonItem['candidates'] as $candidate) {
+                        if (isset($candidate['content'])) {
+                            foreach ($candidate['content']['parts'] ?? [] as $part) {
+                                echo $part['text'] ?? '';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected function fixJson($json): string
+    {
+        $json = ltrim($json, '[,');
+        $json = rtrim($json, '],');
+
+        return trim($json);
     }
 }

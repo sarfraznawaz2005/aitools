@@ -11,7 +11,7 @@ class OpenAiProvider extends BaseLLMProvider
         parent::__construct($apiKey, 'https://api.openai.com/v1/', $model, $options, $retries);
     }
 
-    public function chat(string $message, bool $stream = false): mixed
+    public function chat(string $message, bool $stream = false): string
     {
         $url = $this->baseUrl . 'chat/completions';
 
@@ -31,37 +31,19 @@ class OpenAiProvider extends BaseLLMProvider
 
             if ($stream) return '';
 
-            dd($response);
-            $result = json_decode($response, true);
+            $text = '';
 
-            return $result['choices'][0]['message']['content'];
+            if (isset($response['choices'])) {
+                foreach ($response['choices'] as $choice) {
+                    if (!isset($choice['message'])) {
+                        return "No response, please try again!";
+                    }
 
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-    public function complete(string $prompt, bool $stream = false): string
-    {
-        $data = [
-            'prompt' => $prompt,
-            'model' => $this->options['completion_model'] ?? 'text-davinci-003',
-            'stream' => $stream
-        ];
-
-        if ($stream) {
-            try {
-                return $this->makeRequest('/completions', $data, true);
-            } catch (Exception $e) {
-                return $e->getMessage();
+                    $text .= $choice['message']['content'] . (php_sapi_name() === 'cli' ? "\n" : PHP_EOL);
+                }
             }
-        }
 
-        try {
-            $response = $this->makeRequest('/completions', $data);
-            $result = json_decode($response, true);
-
-            return $result['choices'][0]['text'];
+            return $text;
 
         } catch (Exception $e) {
             return $e->getMessage();
@@ -70,6 +52,8 @@ class OpenAiProvider extends BaseLLMProvider
 
     public function embed(string $text, string $embeddingModel): array|string
     {
+        // openai also has batch embed content which should be used instead for multiple texts
+
         try {
             $response = $this->makeRequest('/embeddings', [
                 'input' => $text,
@@ -83,5 +67,37 @@ class OpenAiProvider extends BaseLLMProvider
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    protected function getStreamingResponse($data): void
+    {
+        $data = $this->fixJson($data);
+
+        $parts = explode("\n", $data);
+        $parts = array_filter($parts);
+
+        foreach ($parts as $part) {
+            $json = json_decode($part, true);
+            //dump($json);
+
+            if (isset($json['choices'])) {
+                foreach ($json['choices'] as $choice) {
+                    if (isset($choice['delta'])) {
+                        echo $choice['delta']['content'] ?? '';
+                    }
+                }
+            }
+        }
+    }
+
+    protected function fixJson($json): string
+    {
+        $json = ltrim($json, '[,');
+        $json = rtrim($json, '],');
+        $json = rtrim($json, '],');
+
+        $json = str_ireplace('data:', '', $json);
+
+        return trim($json);
     }
 }
