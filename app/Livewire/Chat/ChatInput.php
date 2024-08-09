@@ -11,14 +11,18 @@ use Livewire\Component;
 
 class ChatInput extends Component
 {
-    #[Validate('required|min:3')]
-    public string $query;
+    #[Validate('min:3')]
+    public string $query = '';
 
     public ?Conversation $conversation = null;
 
     public function save(): void
     {
         $this->validate();
+
+        if (!$this->query) {
+            return;
+        }
 
         // create new conversation if not exists
         if (!$this->conversation) {
@@ -34,7 +38,7 @@ class ChatInput extends Component
             $this->dispatch('userQueryReceived')->to(ChatList::class);
         }
 
-        $this->reset(); // clear input
+        $this->reset('query');
     }
 
     public function render(): Application|View|Factory
