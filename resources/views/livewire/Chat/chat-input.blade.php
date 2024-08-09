@@ -40,13 +40,13 @@
         init() {
             this.$watch('$wire.query', (value) => {
                 this.adjustHeight();
-         });
+            });
 
-          $wire.on('submit-success', () => {
+            Livewire.on('querySubmitted', () => {
                 this.$nextTick(() => {
                     this.$refs.textarea.focus();
                 });
-           });
+            });
         }
     }"
          @submit-success="lastQuery = $wire.query">
@@ -87,6 +87,7 @@
                         type="submit"
                         @click="lastQuery = $wire.query"
                         :disabled="!$wire.query.trim()"
+                        wire:loading.attr="disabled"
                         wire:click="save"
                         class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
                         <x-icons.upload />

@@ -39,6 +39,8 @@ class ChatInput extends Component
         }
 
         $this->reset('query');
+
+        $this->dispatch('querySubmitted');
     }
 
     public function render(): Application|View|Factory
