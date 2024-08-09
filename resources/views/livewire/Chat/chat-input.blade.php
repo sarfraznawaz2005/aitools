@@ -40,55 +40,59 @@
         init() {
             this.$watch('$wire.query', (value) => {
                 this.adjustHeight();
-            });
+         });
+
+          $wire.on('submit-success', () => {
+                this.$nextTick(() => {
+                    this.$refs.textarea.focus();
+                });
+           });
         }
     }"
          @submit-success="lastQuery = $wire.query">
         <div class="flex w-full flex-col gap-1.5 rounded p-1 transition-colors bg-gray-200 dark:bg-token-main-surface-secondary">
-            <form wire:submit.prevent="save" autocomplete="off">
-                <div class="flex items-end gap-1.5 md:gap-2">
-                    <div class="flex min-w-0 flex-1 flex-col">
-                        @error('query')
-                        <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
-                        @enderror
+            <div class="flex items-end gap-1.5 md:gap-2">
+                <div class="flex min-w-0 flex-1 flex-col">
+                    @error('query')
+                    <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
+                    @enderror
 
-                        <textarea
-                            x-ref="textarea"
-                            name="query"
-                            id="query"
-                            wire:model="query"
-                            @input="adjustHeight"
-                            @paste="setTimeout(() => adjustHeight(), 0)"
-                            @keydown="handleKeyDown"
-                            tabindex="0"
-                            autofocus
-                            wire:loading.attr="disabled"
-                            autocomplete="off"
-                            dir="auto"
-                            rows="1"
-                            {{!hasApiKeysCreated() ? 'disabled' : ''}}
-                            placeholder="Ask me anything..."
-                            class="m-0 resize-none border-0 rounded px-4 focus:ring-0 focus-visible:ring-0"
-                            style="height: 40px;"
-                        ></textarea>
-                    </div>
-
-                    @if(!hasApiKeysCreated())
-                        <button disabled class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
-                            <x-icons.upload />
-                        </button>
-                    @else
-                        <button
-                            type="submit"
-                            @click="lastQuery = $wire.query"
-                            :disabled="!$wire.query.trim()"
-                            wire:loading.attr="disabled"
-                            class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
-                            <x-icons.upload />
-                        </button>
-                    @endif
+                    <textarea
+                        x-ref="textarea"
+                        name="query"
+                        id="query"
+                        wire:model="query"
+                        @input="adjustHeight"
+                        @paste="setTimeout(() => adjustHeight(), 0)"
+                        @keydown="handleKeyDown"
+                        tabindex="0"
+                        autofocus
+                        wire:loading.attr="disabled"
+                        autocomplete="off"
+                        dir="auto"
+                        rows="1"
+                        {{!hasApiKeysCreated() ? 'disabled' : ''}}
+                        placeholder="Ask me anything..."
+                        class="m-0 resize-none border-0 rounded px-4 focus:ring-0 focus-visible:ring-0"
+                        style="height: 40px;"
+                    ></textarea>
                 </div>
-            </form>
+
+                @if(!hasApiKeysCreated())
+                    <button disabled class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
+                        <x-icons.upload />
+                    </button>
+                @else
+                    <button
+                        type="submit"
+                        @click="lastQuery = $wire.query"
+                        :disabled="!$wire.query.trim()"
+                        wire:click="save"
+                        class="mb-1 me-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:outline-black disabled:bg-gray-400 disabled:text-[#f4f4f4] disabled:hover:opacity-100">
+                        <x-icons.upload />
+                    </button>
+                @endif
+            </div>
         </div>
     </div>
 </div>

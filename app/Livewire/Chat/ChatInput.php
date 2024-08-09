@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class ChatInput extends Component
 {
-    #[Validate('min:3')]
+    #[Validate('min:2')]
     public string $query = '';
 
     public ?Conversation $conversation = null;
