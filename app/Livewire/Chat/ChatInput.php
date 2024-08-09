@@ -28,13 +28,13 @@ class ChatInput extends Component
             $this->conversation->generateTitle($this->query);
 
             $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $this->conversation), true);
+        } else {
+            $this->conversation->addInput($this->query);
+
+            $this->dispatch('userQueryReceived')->to(ChatList::class);
+
+            $this->reset();
         }
-
-        $this->conversation->addInput($this->query);
-
-        $this->dispatch('userQueryReceived')->to(ChatList::class);
-
-        $this->reset();
     }
 
     public function render(): Application|View|Factory
