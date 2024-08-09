@@ -15,22 +15,13 @@ class Conversation extends Model
 
     public function addInput(string $message, bool $isAi = false): Message
     {
-        $message = $this->messages()->create(
-            [
-                'body' => $message,
-                'conversation_id' => $this->id,
-                'is_ai' => $isAi,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-        // if is first message, generate title
-        if ($this->messages()->count() == 1) {
-            $this->title = $this->generateTitle();
-            $this->save();
-        }
-
-        return $message;
+        return $this->messages()->create([
+            'body' => $message,
+            'conversation_id' => $this->id,
+            'is_ai' => $isAi,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -84,21 +75,19 @@ class Conversation extends Model
     /**
      * Generate title for the chat
      */
-    public function generateTitle(): string
+    public function generateTitle($message): void
     {
-        $firstMessage = $this->messages()->first();
+        $llm = getChatBuddyLLMProvider();
 
-        if (!$firstMessage) {
-            return '';
-        }
+        $prompt = "Create only a single title from the text, it must not be more than 25 characters, keep the language spoken, here is the text: '$message'";
 
-        $result = OpenAI::completions()->create([
-            'model' => 'text-davinci-003',
-            'prompt' => 'Create a title from the text, keep the language spoken: ' . $firstMessage->body,
-        ]);
+        $title = $llm->chat($prompt);
 
-        return trim($result->choices[0]->text);
+        //Log::info($prompt);
+        //Log::info('Title generated: ' . $title);
 
+        $this->title = $title;
+        $this->save();
     }
 
     /* -----------------------------------------------------------------

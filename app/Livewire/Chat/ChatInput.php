@@ -23,6 +23,11 @@ class ChatInput extends Component
         // create new conversation if not exists
         if (!$this->conversation) {
             $this->conversation = Conversation::create();
+
+            // for new conversation, we need to generate a title
+            $this->conversation->generateTitle($this->query);
+
+            $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $this->conversation), true);
         }
 
         $this->conversation->addInput($this->query);

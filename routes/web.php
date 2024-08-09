@@ -1,6 +1,5 @@
 <?php
 
-use App\Livewire\Chat\LoadConversation;
 use App\Livewire\Pages\ChatBuddy;
 use App\Livewire\Pages\TextStyler;
 use App\Livewire\Pages\TipsNotifier;

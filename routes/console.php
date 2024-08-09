@@ -1,6 +1,5 @@
 <?php
 
-use App\LLM\OllamaProvider;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -9,11 +8,11 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Artisan::command('test', function () {
-    $llm = new OllamaProvider(
-        'whatever',
-        'qwen:latest',
-    //['maxOutputTokens' => 8192, 'temperature' => 2.0]
+    $llm = getChatBuddyLLMProvider();
+
+    $title = $llm->chat(
+        'Create only a single title from the text, it should not be more than 25 characters, keep the language spoken: Hello World'
     );
 
-    echo $llm->chat('tell me a story');
+    echo $title;
 });
