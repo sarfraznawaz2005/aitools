@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "ext-curl": "*",
         "archtechx/enums": "^1.1",
         "laravel/framework": "^11.9",
         "livewire/livewire": "^3.5",
