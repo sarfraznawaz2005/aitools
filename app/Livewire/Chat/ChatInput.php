@@ -18,6 +18,8 @@ class ChatInput extends Component
 
     public function save(): void
     {
+        $this->dispatch('focusInput');
+
         $this->validate();
 
         if (!$this->query) {
@@ -39,8 +41,6 @@ class ChatInput extends Component
         }
 
         $this->reset('query');
-
-        $this->dispatch('querySubmitted');
     }
 
     public function render(): Application|View|Factory

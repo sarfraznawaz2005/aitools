@@ -42,7 +42,7 @@
                 this.adjustHeight();
             });
 
-            Livewire.on('querySubmitted', () => {
+            Livewire.on('focusInput', () => {
                 this.$nextTick(() => {
                     this.$refs.textarea.focus();
                 });
