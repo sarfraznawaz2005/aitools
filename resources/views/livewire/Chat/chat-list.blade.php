@@ -99,12 +99,23 @@
             });
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        // make all links inside any .aibot-message-content open in default browser
+        function openLinkExternally() {
+            document.querySelectorAll('.aibot-message-content a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    require('electron').shell.openExternal(link.href);
+                });
+            });
 
-            // make all links inside any .aibot-message-content open in new tab
             document.querySelectorAll('.aibot-message-content a').forEach(link => {
                 link.setAttribute('target', '_blank');
             });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+
+            openLinkExternally();
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
