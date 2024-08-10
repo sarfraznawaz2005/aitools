@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * while message is streaming, we should not allow sending another message, disable textarea and button
  * Regenerate button
  * download conversation as pdf
  * loading indicator for chat list and sidebar and other components

@@ -110,14 +110,12 @@
 
         function setElementsDisabledStatus(disabled = true) {
             const textarea = document.getElementById('query');
-            const submitButton = document.getElementById('submit-button');
 
             if (disabled) {
                 textarea.setAttribute('disabled', 'disabled');
-                submitButton.setAttribute('disabled', 'disabled');
             } else {
                 textarea.removeAttribute('disabled');
-                submitButton.removeAttribute('disabled');
+                document.getElementById('query').focus();
             }
         }
 
