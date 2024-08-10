@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use OpenAI\Laravel\Facades\OpenAI;
 
 class Conversation extends Model
 {
@@ -13,7 +12,7 @@ class Conversation extends Model
 
     protected $fillable = ['title'];
 
-    public function addInput(string $message, bool $isAi = false): Message
+    public function addChatMessage(string $message, bool $isAi = false): Message
     {
         return $this->messages()->create([
             'body' => $message,
@@ -22,54 +21,6 @@ class Conversation extends Model
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-    }
-
-    /**
-     * Save the output message of the bot
-     */
-    public function addOutput(string $request): Message
-    {
-        $message = $this->getAiResponse($request);
-
-        return $this->addInput($message, false);
-    }
-
-    /**
-     * Get the response from the AI
-     */
-    public function getAiResponse($input)
-    {
-        if (!$input || $input == '') {
-            return 'Please enter a message';
-        }
-
-        if (str_starts_with($input, '/image')) {
-            return $this->getOpenAiImage();
-        }
-
-        return $this->getOpenAiChat();
-    }
-
-    /**
-     * Get response chat from OpenAI
-     */
-    public function getOpenAiChat(int $limit = 5): string
-    {
-        $latestMessages = $this->messages()->latest()->limit($limit)->get()->sortBy('id');
-
-        /**
-         * Reverse the messages to preserve the order for OpenAI
-         */
-        $latestMessagesArray = [];
-        foreach ($latestMessages as $message) {
-            $latestMessagesArray[] = [
-                'role' => $message->is_ai ? 'user' : 'assistant', 'content' => $message->compressed_body];
-        }
-
-        $response = OpenAI::chat()->create(['model' => 'gpt-3.5-turbo', 'messages' => $latestMessagesArray]);
-
-        return $response->choices[0]->message->content;
-
     }
 
     /**
