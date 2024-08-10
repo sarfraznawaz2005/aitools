@@ -22,7 +22,7 @@ class ChatBuddyChatAction
             $prompt = "You are a helpful and enthusiastic support bot who can answer a given question.
             Before answering, always refer to the conversation history to know what user is asking or
             talking about. If provided conversation history does not contain any information about the
-            question then answer from your own knowledge.
+            question then answer from your own knowledge Use markdown for your answer.
 
             conversation history:$conversationHistory
             question: $userQuery
