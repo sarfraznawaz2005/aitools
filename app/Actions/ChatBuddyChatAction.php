@@ -8,11 +8,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatBuddyChatAction
 {
+    const TOTAL_CONVERSATION_HISTORY = 5;
+
     public function __invoke(Conversation $conversation): StreamedResponse
     {
         return response()->stream(function () use ($conversation) {
             $userQuery = $conversation->messages()->where('is_ai', false)->orderByDesc('id')->first();
-            $latestMessages = $conversation->messages()->latest()->limit(5)->get()->sortBy('id');
+            $latestMessages = $conversation->messages()->latest()->limit(self::TOTAL_CONVERSATION_HISTORY)->get()->sortBy('id');
             $conversationHistory = '';
 
             foreach ($latestMessages as $message) {
@@ -25,7 +27,7 @@ class ChatBuddyChatAction
             question then answer from your own knowledge Use markdown for your answer.
 
             conversation history:$conversationHistory
-            question: $userQuery
+            question: $userQuery->body
             answer: ";
 
             Log::info($prompt);
