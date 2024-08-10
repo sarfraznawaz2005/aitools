@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * conversation should scroll to end automatically, both on page load and sending message
  * when new conversation is created, it redirecs without giving ai response first
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages

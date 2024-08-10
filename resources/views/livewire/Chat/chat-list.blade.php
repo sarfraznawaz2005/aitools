@@ -99,6 +99,13 @@
             });
         }
 
+        function scrollPageToBottom() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
         // make all links inside any .aibot-message-content open in default browser
         function openLinkExternally() {
             document.querySelectorAll('.aibot-message-content a').forEach(link => {
@@ -118,6 +125,9 @@
             openLinkExternally();
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
+
+                scrollPageToBottom();
+
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
 
@@ -131,11 +141,14 @@
                         console.log("SSE closed");
                         // window.location.reload();
                         lastMessage.innerHTML = marked.parse(lastMessage.textContent);
+                        scrollPageToBottom();
                         return;
                     }
 
                     const decodedData = decodeUnicode(JSON.parse(event.data));
                     lastMessage.innerHTML += decodedData;
+
+                    scrollPageToBottom();
                 });
             })
         });
