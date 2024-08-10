@@ -41,10 +41,10 @@
                                     <div
                                         class="bg-white border border-gray-200 rounded-lg px-4 py-2 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                         <p>
-                                            <x-markdown x-ref="content" class="text-gray-600 aibot-message-content"
+                                            <div x-ref="content" class="text-gray-600 aibot-message-content"
                                                         style="font-size: 1rem; line-height: 1.8rem;">
-                                                {!! $message->body !!}
-                                            </x-markdown>
+                                                <x-markdown>{!! $message->body !!}</x-markdown>
+                                            </div>
                                         </p>
                                     </div>
                                     <!-- End Card -->
