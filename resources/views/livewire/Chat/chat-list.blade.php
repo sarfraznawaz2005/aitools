@@ -125,6 +125,9 @@
             scrollPageToBottom();
             openLinkExternally();
 
+            // livewire message listener
+            Livewire.hook('message.received', () => scrollPageToBottom());
+
             window.Livewire.on('getAiResponse', ($conversationId) => {
 
                 scrollPageToBottom();
