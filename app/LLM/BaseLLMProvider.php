@@ -43,6 +43,7 @@ abstract class BaseLLMProvider implements LlmProvider
             if ($stream) {
                 curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($ch, $data) {
                     static::getStreamingResponse($data);
+                    return strlen($data);
                 });
             }
 

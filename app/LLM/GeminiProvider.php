@@ -109,7 +109,11 @@ class GeminiProvider extends BaseLLMProvider
                     foreach ($jsonItem['candidates'] as $candidate) {
                         if (isset($candidate['content'])) {
                             foreach ($candidate['content']['parts'] ?? [] as $part) {
-                                echo $part['text'] ?? '';
+                                //echo $part['text'] ?? '';
+                                echo "event: update\n";
+                                echo 'data: ' . json_encode($part['text'] ?? '') . "\n\n";
+                                ob_flush();
+                                flush();
                             }
                         }
                     }

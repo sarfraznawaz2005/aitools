@@ -31,25 +31,15 @@ class ChatBuddyChatAction
 
             $llm = getChatBuddyLLMProvider();
 
-            $stream = $llm->chat($prompt, true);
+            $text = $llm->chat($prompt, true);
 
-            foreach ($stream as $text) {
-                $output .= $text;
+            $output .= $text;
 
-                if (connection_aborted()) {
-                    break;
-                }
+            echo "event: update\n";
+            echo 'data: ' . $text;
+            echo "\n\n";
 
-                echo "event: update\n";
-                echo 'data: ' . $text;
-                echo "\n\n";
-
-                if (ob_get_level() > 0) {
-                    @ob_flush();
-                }
-
-                flush();
-            }
+            ob_flush();
 
             // Rewrite the last message with the full output
             $latestMessages->last()->update(['body' => $output]);
