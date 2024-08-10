@@ -101,7 +101,7 @@
 
         function scrollPageToBottom() {
             window.scrollTo({
-                top: document.body.scrollHeight,
+                top: document.body.scrollHeight + 1000,
                 behavior: 'smooth'
             });
         }
@@ -122,6 +122,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
 
+            scrollPageToBottom();
             openLinkExternally();
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
