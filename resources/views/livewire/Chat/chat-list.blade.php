@@ -41,7 +41,8 @@
                                     <div
                                         class="bg-white border border-gray-200 rounded-lg px-4 py-2 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                         <p>
-                                            <x-markdown x-ref="content" class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;">
+                                            <x-markdown x-ref="content" class="text-gray-600"
+                                                        style="font-size: 1rem; line-height: 1.8rem;">
                                                 {!! $message->body !!}
                                             </x-markdown>
                                         </p>
@@ -75,17 +76,45 @@
                     </div>
                 @empty
 
-                    <div class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
+                    <div
+                        class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
                         start a fresh conversation!
                     </div>
 
                 @endforelse
             @else
-                <div class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
+                <div
+                    class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
                     start a fresh conversation!
                 </div>
             @endif
         @endif
 
     </ul>
+
+    <script>
+
+        window.addEventListener('DOMContentLoaded', () => {
+            window.Livewire.on('getAiResponse', ($conversationId) => {
+                const source = new EventSource("/chat-buddy/chat/" + $conversationId);
+                source.addEventListener("update", function (event) {
+
+                    const lastMessage = document.querySelector('#chat-messages > div:last-child .message-content');
+                    console.log(lastMessage);
+
+                    if (event.data === "<END_STREAMING_SSE>") {
+                        source.close();
+                        console.log("SSE closed");
+                        // window.location.reload();
+                        return;
+                    }
+
+                    lastMessage.innerText += event.data;
+                });
+            })
+        });
+
+
+    </script>
+
 </div>
