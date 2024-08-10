@@ -97,6 +97,12 @@
 
         let messageContent = '';
 
+        function decodeUnicode(str) {
+            return str.replace(/\\u[\dA-F]{4}/gi, function(match) {
+                return String.fromCodePoint(parseInt(match.replace(/\\u/g, ''), 16));
+            });
+        }
+
         function updateLastMessage(data) {
             console.log('Updating last message with:', data);
 
@@ -105,7 +111,9 @@
             const lastMessage = messageElements[messageElements.length - 1];
 
             if (lastMessage) {
-                messageContent += data;
+                // Decode the incoming data
+                const decodedData = decodeUnicode(JSON.parse(data));
+                messageContent += decodedData;
                 lastMessage.innerHTML = messageContent;
                 console.log('Message updated');
             } else {
