@@ -123,6 +123,7 @@ class GeminiProvider extends BaseLLMProvider
     protected function getStreamingResponse($data): void
     {
         try {
+
             $data = $this->fixJson($data);
             $json = json_decode("[$data]", true);
 

@@ -3,6 +3,7 @@
 namespace App\LLM;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 abstract class BaseLLMProvider implements LlmProvider
 {
@@ -70,7 +71,10 @@ abstract class BaseLLMProvider implements LlmProvider
                     }
                 }
 
-                throw new Exception("Failed to get a successful response after $this->retries attempts. Error: $errorMessage");
+                $error = "Failed to get a successful response after $this->retries attempts. Error: $errorMessage";
+                Log::error($error);
+
+                throw new Exception($error);
             }
         }
 
