@@ -47,25 +47,25 @@ class GeminiProvider extends BaseLLMProvider
 
         try {
 
-            $response = $this->makeRequest($url, $body, $stream);
+            if ($stream) {
+                try {
+                    $this->makeRequest($url, $body, $stream);
+                } catch (Exception) {
+                    // fallback via non-streaming response
+                    sleep(1);
+                    $response = $this->makeRequest($this->baseUrl . 'models/' . $this->model . ":generateContent?key=" . $this->apiKey, $body);
+                    $text = $this->getResult($response);
 
-            if ($stream) return '';
-
-            $text = '';
-
-            if (isset($response['candidates'])) {
-                foreach ($response['candidates'] as $candidate) {
-                    if (!isset($candidate['content'])) {
-                        return "No response, please try again!";
-                    }
-
-                    foreach ($candidate['content']['parts'] as $part) {
-                        $text .= $part['text'] . (php_sapi_name() === 'cli' ? "\n" : PHP_EOL);
-                    }
+                    echo "event: update\n";
+                    echo 'data: ' . json_encode($text) . "\n\n";
+                    ob_flush();
+                    flush();
                 }
+            } else {
+                $response = $this->makeRequest($url, $body);
             }
 
-            return $text;
+            return isset($response) ? $this->getResult($response) : '';
 
         } catch (Exception $e) {
             return $e->getMessage();
@@ -98,33 +98,65 @@ class GeminiProvider extends BaseLLMProvider
         return $response['embedding']['values'] ?? [];
     }
 
-    protected function getStreamingResponse($data): void
+    protected function getResult(array $response): string
     {
-        $data = $this->fixJson($data);
-        $json = json_decode("[$data]", true);
+        $text = '';
 
-        if ($json) {
-            foreach ($json as $jsonItem) {
-                if (isset($jsonItem['candidates'])) {
-                    foreach ($jsonItem['candidates'] as $candidate) {
-                        if (isset($candidate['content'])) {
-                            foreach ($candidate['content']['parts'] ?? [] as $part) {
-                                $text = $part['text'] ?? '';
+        if (isset($response['candidates'])) {
+            foreach ($response['candidates'] as $candidate) {
+                if (!isset($candidate['content'])) {
+                    return "No response, please try again!";
+                }
 
-                                if (php_sapi_name() === 'cli') {
-                                    echo $text;
-                                    continue;
-                                }
-
-                                echo "event: update\n";
-                                echo 'data: ' . json_encode($text) . "\n\n";
-                                ob_flush();
-                                flush();
-                            }
-                        }
-                    }
+                foreach ($candidate['content']['parts'] as $part) {
+                    $text .= $part['text'] . (php_sapi_name() === 'cli' ? "\n" : PHP_EOL);
                 }
             }
+        }
+
+        return $text;
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function getStreamingResponse($data): void
+    {
+        try {
+            $data = $this->fixJson($data);
+            $json = json_decode("[$data]", true);
+
+            if ($json) {
+                foreach ($json as $jsonItem) {
+                    if (isset($jsonItem['candidates'])) {
+                        foreach ($jsonItem['candidates'] as $candidate) {
+                            if (isset($candidate['content'])) {
+                                foreach ($candidate['content']['parts'] ?? [] as $part) {
+                                    $text = $part['text'] ?? '';
+
+                                    if (php_sapi_name() === 'cli') {
+                                        echo $text;
+                                        continue;
+                                    }
+
+                                    echo "event: update\n";
+                                    echo 'data: ' . json_encode($text) . "\n\n";
+                                    ob_flush();
+                                    flush();
+                                }
+                            } else {
+                                throw new Exception('error');
+                            }
+                        }
+                    } else {
+                        throw new Exception('error');
+                    }
+                }
+            } else {
+                throw new Exception('error');
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 }

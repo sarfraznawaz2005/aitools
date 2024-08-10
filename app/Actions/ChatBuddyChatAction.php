@@ -35,9 +35,7 @@ class ChatBuddyChatAction
             $llm->chat($prompt, true);
 
             echo "event: update\n";
-            echo 'data: <END_STREAMING_SSE>';
-            echo "\n\n";
-
+            echo "data: <END_STREAMING_SSE>\n\n";
             ob_flush();
             flush();
 
