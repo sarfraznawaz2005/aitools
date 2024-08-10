@@ -32,7 +32,7 @@ class ChatList extends Component
     {
         // Create temp answer to show the user that the AI is typing
         $this->conversation->messages()->create([
-            'body' => '<div class="flex items-center"><x-icons.spinner/> <span class="font-semibold">Loading...</span></div>',
+            'body' => 'Loading...',
             'conversation_id' => $this->conversation->id,
             'is_ai' => true,
             'created_at' => now(),

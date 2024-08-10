@@ -107,6 +107,8 @@
                     const messageElements = document.querySelectorAll('.aibot-message-content');
                     const lastMessage = messageElements[messageElements.length - 1];
 
+                    lastMessage.innerHTML = lastMessage.innerHTML.replace("Loading...", "");
+
                     if (event.data === "<END_STREAMING_SSE>") {
                         source.close();
                         console.log("SSE closed");
