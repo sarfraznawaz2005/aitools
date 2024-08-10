@@ -44,10 +44,7 @@ class ChatBuddyChatAction
             });
 
             //Log::info("consolidatedResponse: $consolidatedResponse");
-            $conversation->messages()->create([
-                'body' => $consolidatedResponse,
-                'is_ai' => true,
-            ]);
+            $latestMessages->last()->update(['body' => $consolidatedResponse]);
 
             echo "event: update\n";
             echo "data: <END_STREAMING_SSE>\n\n";
