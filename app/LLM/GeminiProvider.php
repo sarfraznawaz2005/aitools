@@ -111,16 +111,13 @@ class GeminiProvider extends BaseLLMProvider
                             foreach ($candidate['content']['parts'] ?? [] as $part) {
                                 $text = $part['text'] ?? '';
 
-                                // Decode Unicode escape sequences
-                                $decodedText = $this->decodeUnicode($text);
-
                                 if (php_sapi_name() === 'cli') {
-                                    echo $decodedText;
+                                    echo $text;
                                     continue;
                                 }
 
                                 echo "event: update\n";
-                                echo 'data: ' . json_encode($decodedText) . "\n\n";
+                                echo 'data: ' . json_encode($text) . "\n\n";
                                 ob_flush();
                                 flush();
                             }
@@ -129,12 +126,5 @@ class GeminiProvider extends BaseLLMProvider
                 }
             }
         }
-    }
-
-    protected function decodeUnicode($text)
-    {
-        return preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
-            return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
-        }, $text);
     }
 }
