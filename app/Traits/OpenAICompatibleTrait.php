@@ -126,10 +126,7 @@ trait OpenAICompatibleTrait
                         throw new Exception('error');
                     }
                 }
-            } else {
-                throw new Exception('error');
             }
-
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
