@@ -1,4 +1,4 @@
-<x-layouts.app :title="'Home'">
+<x-layouts.app :title="''">
     <div class="mx-auto pt-24 px-8">
         <livewire:apikeys.api-key-banner />
 

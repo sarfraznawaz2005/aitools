@@ -11,7 +11,7 @@
 
 <body class="antialiased bg-gray-50 dark:bg-neutral-900 h-screen">
 
-<livewire:general.header title="{{$title ?? 'AiTools'}}"/>
+<livewire:general.header title="{{$title ?? ''}}"/>
 
 <div class="flex h-screen">
 
