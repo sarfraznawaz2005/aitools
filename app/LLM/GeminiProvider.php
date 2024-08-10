@@ -140,6 +140,10 @@ class GeminiProvider extends BaseLLMProvider
                                         continue;
                                     }
 
+                                    if (!$text) {
+                                        continue;
+                                    }
+
                                     echo "event: update\n";
                                     echo 'data: ' . json_encode($text) . "\n\n";
                                     ob_flush();
