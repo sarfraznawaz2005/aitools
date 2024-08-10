@@ -16,6 +16,10 @@ class ChatBuddy extends Component
     #[Title('Chat Buddy')]
     public function render(): Application|View|Factory
     {
+        if (session()->has('addBotMessage')) {
+            $this->dispatch('getAiResponse', session('addBotMessage'));
+        }
+
         return view('livewire.pages.chat-buddy');
     }
 }

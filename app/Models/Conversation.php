@@ -45,6 +45,18 @@ class Conversation extends Model
         return $title;
     }
 
+    // Create temp answer to show the user that the AI is typing
+    public function createTempAImessage()
+    {
+        $this->messages()->create([
+            'body' => 'Loading...',
+            'conversation_id' => $this->id,
+            'is_ai' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
     /* -----------------------------------------------------------------
      |  Relationships
      | -----------------------------------------------------------------

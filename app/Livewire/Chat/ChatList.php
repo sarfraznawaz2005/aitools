@@ -31,13 +31,7 @@ class ChatList extends Component
     public function createTempAImessage()
     {
         // Create temp answer to show the user that the AI is typing
-        $this->conversation->messages()->create([
-            'body' => 'Loading...',
-            'conversation_id' => $this->conversation->id,
-            'is_ai' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $this->conversation->createTempAImessage();
 
         $this->refresh();
 

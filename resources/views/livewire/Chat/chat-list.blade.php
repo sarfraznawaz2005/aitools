@@ -150,6 +150,11 @@
 
                     scrollPageToBottom();
                 });
+
+                source.addEventListener("error", function (event) {
+                    source.close();
+                    console.log("SSE closed due to error");
+                });
             })
         });
     </script>

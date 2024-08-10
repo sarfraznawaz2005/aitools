@@ -45,6 +45,10 @@ class ChatInput extends Component
 
             $this->conversation->addChatMessage($this->query);
 
+            $this->conversation->createTempAImessage();
+
+            session()->flash('addBotMessage', $this->conversation->id);
+
             $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $this->conversation), true);
 
             return;
