@@ -81,7 +81,15 @@ class OllamaProvider extends BaseLLMProvider
             if (isset($json['choices'])) {
                 foreach ($json['choices'] as $choice) {
                     if (isset($choice['delta'])) {
-                        echo $choice['delta']['content'] ?? '';
+                        if (php_sapi_name() === 'cli') {
+                            echo $choice['delta']['content'] ?? '';
+                            continue;
+                        }
+
+                        echo "event: update\n";
+                        echo 'data: ' . json_encode($choice['delta']['content'] ?? '') . "\n\n";
+                        ob_flush();
+                        flush();
                     }
                 }
             }

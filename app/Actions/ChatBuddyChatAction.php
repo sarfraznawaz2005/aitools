@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Models\Conversation;
+use Illuminate\Support\Facades\Log;
 
 class ChatBuddyChatAction
 {
@@ -27,22 +28,11 @@ class ChatBuddyChatAction
             question: $userQuery
             answer: ";
 
-            $output = '';
+            Log::info($prompt);
 
             $llm = getChatBuddyLLMProvider();
 
-            $text = $llm->chat($prompt, true);
-
-            $output .= $text;
-
-            echo "event: update\n";
-            echo 'data: ' . $text;
-            echo "\n\n";
-
-            ob_flush();
-
-            // Rewrite the last message with the full output
-            $latestMessages->last()->update(['body' => $output]);
+            $llm->chat($prompt, true);
 
             echo "event: update\n";
             echo 'data: <END_STREAMING_SSE>';

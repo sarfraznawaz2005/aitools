@@ -102,7 +102,7 @@
                     const lastMessage = document.querySelector('#chat-messages > div:last-child .message-content');
                     console.log(lastMessage);
 
-                    if (event.data === "<END_STREAMING_SSE>") {
+                    if (event.data === "<END_STREAMING_SSE>" || event.data === "end") {
                         source.close();
                         console.log("SSE closed");
                         // window.location.reload();
