@@ -41,10 +41,10 @@
                                     <div
                                         class="bg-white border border-gray-200 rounded-lg px-4 py-2 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                         <p>
-                                            <div x-ref="content" class="text-gray-600 aibot-message-content"
+                                            <x-markdown x-ref="content" class="text-gray-600 aibot-message-content"
                                                         style="font-size: 1rem; line-height: 1.8rem;">
-                                                <x-markdown>{!! $message->body !!}</x-markdown>
-                                            </div>
+                                                {!! $message->body !!}
+                                            </x-markdown>
                                         </p>
                                     </div>
                                     <!-- End Card -->
@@ -113,10 +113,12 @@
                         source.close();
                         console.log("SSE closed");
                         // window.location.reload();
+                        lastMessage.innerHTML = marked.parse(lastMessage.textContent);
                         return;
                     }
 
-                    lastMessage.innerHTML += decodeUnicode(JSON.parse(event.data));
+                    const decodedData = decodeUnicode(JSON.parse(event.data));
+                    lastMessage.innerHTML += decodedData;
                 });
             })
         });
