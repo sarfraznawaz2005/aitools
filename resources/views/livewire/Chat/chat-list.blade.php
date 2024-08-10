@@ -129,6 +129,7 @@
 
             // livewire message listener
             Livewire.hook('message.received', () => scrollPageToBottom());
+            document.addEventListener('livewire:navigated', () => scrollPageToBottom());
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
 
