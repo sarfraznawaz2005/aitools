@@ -79,6 +79,7 @@
                 @else
                     <button
                         type="submit"
+                        id="chatSubmitButton"
                         @click="lastQuery = $wire.query;"
                         :disabled="!$wire.query.trim()"
                         wire:loading.attr="disabled"

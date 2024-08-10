@@ -108,6 +108,19 @@
             document.getElementById('query').focus();
         }
 
+        function setElementsDisabledStatus(disabled = true) {
+            const textarea = document.getElementById('query');
+            const submitButton = document.getElementById('submit-button');
+
+            if (disabled) {
+                textarea.setAttribute('disabled', 'disabled');
+                submitButton.setAttribute('disabled', 'disabled');
+            } else {
+                textarea.removeAttribute('disabled');
+                submitButton.removeAttribute('disabled');
+            }
+        }
+
         // make all links inside any .aibot-message-content open in default browser
         function openLinkExternally() {
             document.querySelectorAll('.aibot-message-content a').forEach(link => {
@@ -138,6 +151,8 @@
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
 
+                    setElementsDisabledStatus(true);
+
                     const messageElements = document.querySelectorAll('.aibot-message-content');
                     const lastMessage = messageElements[messageElements.length - 1];
 
@@ -149,6 +164,7 @@
                         // window.location.reload();
                         lastMessage.innerHTML = marked.parse(lastMessage.textContent);
                         scrollPageToBottom();
+                        setElementsDisabledStatus(false);
                         return;
                     }
 
@@ -160,6 +176,7 @@
 
                 source.addEventListener("error", function (event) {
                     source.close();
+                    setElementsDisabledStatus(false);
                     console.log("SSE closed due to error");
                 });
             })

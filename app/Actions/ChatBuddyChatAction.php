@@ -68,7 +68,7 @@ class ChatBuddyChatAction
             } catch (Exception $e) {
                 $error = 'Oops! Failed to get a response, please try again.';
 
-                Log::error($e->getMessage());
+                Log::error(__CLASS__ . ': ' . $e->getMessage());
 
                 echo "event: update\n";
                 echo "data: " . json_encode($error) . "\n\n";
