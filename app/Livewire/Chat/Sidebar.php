@@ -31,7 +31,7 @@ class Sidebar extends Component
 
     public function rename(Conversation $conversation, $title): void
     {
-        if ($conversation->title === $title) {
+        if (trim($conversation->title) === trim($title)) {
             return;
         }
 
@@ -39,8 +39,8 @@ class Sidebar extends Component
             return;
         }
 
-        if (strlen($title) < 5 || strlen($title) > 25) {
-            $this->danger('Conversation title must be between 5 to 25 characters.');
+        if (strlen($title) < 4 || strlen($title) > 25) {
+            $this->danger('Conversation title must be between 4 to 25 characters.');
             return;
         }
 

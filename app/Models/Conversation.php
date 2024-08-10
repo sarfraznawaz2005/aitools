@@ -31,8 +31,8 @@ class Conversation extends Model
         $llm = getChatBuddyLLMProvider();
 
         $prompt = "
-        Create only a single title from the text, it must not be more than 25 characters and without punctuation characters,
-        keep the language spoken, here is the text: '$message'
+        Create only a single title from the provided Text, it must be of minimum 4 characters and must not be more than
+        25 characters and without punctuation characters, language must be same as Text. Text: '$message'
         ";
 
         $title = $llm->chat($prompt);
