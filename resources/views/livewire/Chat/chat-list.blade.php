@@ -41,7 +41,7 @@
                                     <div
                                         class="bg-white border border-gray-200 rounded-lg px-4 py-2 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                         <p>
-                                            <x-markdown x-ref="content" class="text-gray-600"
+                                            <x-markdown x-ref="content" class="text-gray-600 aibot-message-content"
                                                         style="font-size: 1rem; line-height: 1.8rem;">
                                                 {!! $message->body !!}
                                             </x-markdown>
@@ -93,28 +93,69 @@
     </ul>
 
     <script>
+        console.log('Script loaded');
 
-        window.addEventListener('DOMContentLoaded', () => {
-            window.Livewire.on('getAiResponse', ($conversationId) => {
-                const source = new EventSource("/chat-buddy/chat/" + $conversationId);
-                source.addEventListener("update", function (event) {
+        let messageContent = '';
 
-                    const lastMessage = document.querySelector('#chat-messages > div:last-child .message-content');
-                    console.log(lastMessage);
+        function updateLastMessage(data) {
+            console.log('Updating last message with:', data);
 
-                    if (event.data === "<END_STREAMING_SSE>" || event.data === "end") {
-                        source.close();
-                        console.log("SSE closed");
-                        // window.location.reload();
-                        return;
-                    }
+            // Find all .aibot-message-content elements and get the last one
+            const messageElements = document.querySelectorAll('.aibot-message-content');
+            const lastMessage = messageElements[messageElements.length - 1];
 
-                    lastMessage.innerText += event.data;
+            if (lastMessage) {
+                messageContent += data;
+                lastMessage.innerHTML = messageContent;
+                console.log('Message updated');
+            } else {
+                console.error('No .aibot-message-content elements found');
+            }
+        }
+
+        function initializeEventSource(conversationId) {
+            console.log('Initializing EventSource for conversation:', conversationId);
+            const source = new EventSource("/chat-buddy/chat/" + conversationId);
+            source.addEventListener("update", function (event) {
+                console.log('Received SSE update:', event.data);
+                if (event.data === "<END_STREAMING_SSE>" || event.data === "end") {
+                    source.close();
+                    console.log("SSE closed");
+                    return;
+                }
+
+                updateLastMessage(event.data);
+            });
+
+            source.addEventListener("error", function(event) {
+                console.error("EventSource failed:", event);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded and parsed');
+            if (window.Livewire) {
+                console.log('Livewire detected');
+                window.Livewire.on('getAiResponse', (conversationId) => {
+                    console.log('getAiResponse event received', conversationId);
+                    messageContent = ''; // Reset message content
+                    initializeEventSource(conversationId);
                 });
-            })
+            } else {
+                console.error('Livewire not detected');
+            }
         });
 
-
+        // Fallback for Livewire
+        if (typeof window.Livewire !== 'undefined') {
+            console.log('Setting up Livewire hooks');
+            window.Livewire.hook('message.processed', (message, component) => {
+                console.log('Livewire message processed');
+                const messageElements = document.querySelectorAll('.aibot-message-content');
+                const lastMessage = messageElements[messageElements.length - 1];
+                console.log('Last message element:', lastMessage);
+            });
+        }
     </script>
 
 </div>
