@@ -100,6 +100,12 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+
+            // make all links inside any .aibot-message-content open in new tab
+            document.querySelectorAll('.aibot-message-content a').forEach(link => {
+                link.setAttribute('target', '_blank');
+            });
+
             window.Livewire.on('getAiResponse', ($conversationId) => {
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
