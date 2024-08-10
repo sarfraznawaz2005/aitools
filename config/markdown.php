@@ -25,7 +25,7 @@ return [
     /**
      * When enabled, anchors will be rendered as links.
      */
-    'render_anchors_as_links' => false,
+    'render_anchors_as_links' => true,
 
     /*
      * These options will be passed to the league/commonmark package which is
