@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * history issue
  * Regenerate button
  * download conversation as pdf
  * loading indicator for chat list and sidebar and other components

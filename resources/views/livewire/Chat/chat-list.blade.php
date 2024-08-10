@@ -104,6 +104,8 @@
                 top: document.body.scrollHeight + 1000,
                 behavior: 'smooth'
             });
+
+            document.getElementById('query').focus();
         }
 
         // make all links inside any .aibot-message-content open in default browser
