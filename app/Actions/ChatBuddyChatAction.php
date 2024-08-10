@@ -34,7 +34,7 @@ class ChatBuddyChatAction
 
             $consolidatedResponse = '';
 
-            $llm->chat($prompt, true, function($chunk) use (&$consolidatedResponse) {
+            $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
                 $consolidatedResponse .= $chunk;
 
                 echo "event: update\n";
@@ -43,13 +43,11 @@ class ChatBuddyChatAction
                 flush();
             });
 
-            Log::info("consolidatedResponse: $consolidatedResponse");
-
-            // Save the consolidated response to the database
-//            $conversation->messages()->create([
-//                'body' => $consolidatedResponse,
-//                'is_ai' => true,
-//            ]);
+            //Log::info("consolidatedResponse: $consolidatedResponse");
+            $conversation->messages()->create([
+                'body' => $consolidatedResponse,
+                'is_ai' => true,
+            ]);
 
             echo "event: update\n";
             echo "data: <END_STREAMING_SSE>\n\n";
