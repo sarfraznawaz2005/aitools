@@ -44,3 +44,13 @@ function getChatBuddyLLMProvider(): LlmProvider
 
     return getLLM($model);
 }
+
+function AIChatFailed($result): string
+{
+    if (str_contains(strtolower($result), 'failed to get a successful response') ||
+        str_contains(strtolower($result), 'unknown error')) {
+        return 'There was some problem, make sure you have internet connection working.';
+    }
+
+    return '';
+}

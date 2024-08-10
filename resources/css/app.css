@@ -12,3 +12,11 @@
 .conversation:last-child {
     margin-bottom: 20px !important;
 }
+
+.notyf__toast {
+    max-width: 50em !important;
+    .notyf__ripple {
+        height: 60em;
+        width: 60em;
+    }
+}

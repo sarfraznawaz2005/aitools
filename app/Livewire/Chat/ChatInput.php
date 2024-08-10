@@ -3,6 +3,7 @@
 namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
+use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -11,6 +12,8 @@ use Livewire\Component;
 
 class ChatInput extends Component
 {
+    use InteractsWithToast;
+
     #[Validate('min:2')]
     public string $query = '';
 
@@ -31,7 +34,14 @@ class ChatInput extends Component
             $this->conversation = Conversation::create();
 
             // for new conversation, we need to generate a title
-            $this->conversation->generateTitle($this->query);
+            $result = $this->conversation->generateTitle($this->query);
+
+            if ($error = AIChatFailed($result)) {
+                $this->conversation->delete();
+                $this->conversation = null;
+                $this->danger($error);
+                return;
+            }
 
             $this->conversation->addInput($this->query);
 

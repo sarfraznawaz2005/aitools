@@ -8,7 +8,10 @@
         if (message) {
             window.notyf.open({
                 type: notificationType,
-                message: message
+                message: message,
+                duration: 5000,
+                ripple: true,
+                dismissible: true,
             });
         }
     }

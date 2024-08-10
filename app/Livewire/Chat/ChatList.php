@@ -22,7 +22,7 @@ class ChatList extends Component
     {
         $this->lastMessage = $this->conversation->messages->last();
 
-        $this->messages = $this->conversation->messages->sortBy('id');
+        $this->refresh();
 
         $this->dispatch('createTempAImessage')->self();
     }
@@ -39,9 +39,14 @@ class ChatList extends Component
             'updated_at' => now(),
         ]);
 
-        $this->messages = $this->conversation->messages->sortBy('id');
+        $this->refresh();
 
         $this->dispatch('getAiResponse', $this->conversation->id);
+    }
+
+    protected function refresh(): void
+    {
+        $this->messages = $this->conversation->messages->sortBy('id');
     }
 
     public function mount($conversation = null): void

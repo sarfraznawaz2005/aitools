@@ -65,9 +65,9 @@
                         @input="adjustHeight"
                         @paste="setTimeout(() => adjustHeight(), 0)"
                         @keydown="handleKeyDown"
+                        wire:loading.attr="disabled"
                         tabindex="0"
                         autofocus
-                        wire:loading.attr="disabled"
                         autocomplete="off"
                         dir="auto"
                         rows="1"
@@ -85,7 +85,7 @@
                 @else
                     <button
                         type="submit"
-                        @click="lastQuery = $wire.query"
+                        @click="lastQuery = $wire.query;"
                         :disabled="!$wire.query.trim()"
                         wire:loading.attr="disabled"
                         wire:click="save"

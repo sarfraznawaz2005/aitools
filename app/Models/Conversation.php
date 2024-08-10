@@ -75,7 +75,7 @@ class Conversation extends Model
     /**
      * Generate title for the chat
      */
-    public function generateTitle($message): void
+    public function generateTitle($message): string
     {
         $llm = getChatBuddyLLMProvider();
 
@@ -87,6 +87,8 @@ class Conversation extends Model
 
         $this->title = $title;
         $this->save();
+
+        return $title;
     }
 
     /* -----------------------------------------------------------------
