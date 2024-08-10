@@ -132,7 +132,8 @@ class GeminiProvider extends BaseLLMProvider
             $json = json_decode("[$data]", true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new Exception('Invalid JSON: ' . json_last_error_msg());
+                // streams works even when some chunks fail because of which caused double response, ignoring...
+                //throw new Exception('Invalid JSON: ' . json_last_error_msg());
             }
 
             if ($json) {

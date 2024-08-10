@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 trait OpenAICompatibleTrait
 {
@@ -26,7 +27,10 @@ trait OpenAICompatibleTrait
             if ($stream) {
                 try {
                     $this->makeRequest($url, $body, $stream, true, $callback);
-                } catch (Exception) {
+                } catch (Exception $exception) {
+
+                    Log::error('fallback error: '. $exception->getMessage());
+
                     // fallback via non-streaming response
                     sleep(1);
 
@@ -107,7 +111,8 @@ trait OpenAICompatibleTrait
                     $json = json_decode($part, true);
 
                     if (json_last_error() !== JSON_ERROR_NONE) {
-                        throw new Exception('Invalid JSON: ' . json_last_error_msg());
+                        // streams works even when some chunks fail because of which caused double response, ignoring...
+                        //throw new Exception('Invalid JSON: ' . json_last_error_msg());
                     }
 
                     if (isset($json['choices'])) {
