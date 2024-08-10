@@ -93,77 +93,31 @@
     </ul>
 
     <script>
-        console.log('Script loaded');
-
-        let messageContent = '';
-
         function decodeUnicode(str) {
-            return str.replace(/\\u[\dA-F]{4}/gi, function(match) {
+            return str.replace(/\\u[\dA-F]{4}/gi, function (match) {
                 return String.fromCodePoint(parseInt(match.replace(/\\u/g, ''), 16));
             });
         }
 
-        function updateLastMessage(data) {
-            console.log('Updating last message with:', data);
+        window.addEventListener('DOMContentLoaded', () => {
+            window.Livewire.on('getAiResponse', ($conversationId) => {
+                const source = new EventSource("/chat-buddy/chat/" + $conversationId);
+                source.addEventListener("update", function (event) {
 
-            // Find all .aibot-message-content elements and get the last one
-            const messageElements = document.querySelectorAll('.aibot-message-content');
-            const lastMessage = messageElements[messageElements.length - 1];
+                    const messageElements = document.querySelectorAll('.aibot-message-content');
+                    const lastMessage = messageElements[messageElements.length - 1];
 
-            if (lastMessage) {
-                // Decode the incoming data
-                const decodedData = decodeUnicode(JSON.parse(data));
-                messageContent += decodedData;
-                lastMessage.innerHTML = messageContent;
-                console.log('Message updated');
-            } else {
-                console.error('No .aibot-message-content elements found');
-            }
-        }
+                    if (event.data === "<END_STREAMING_SSE>") {
+                        source.close();
+                        console.log("SSE closed");
+                        // window.location.reload();
+                        return;
+                    }
 
-        function initializeEventSource(conversationId) {
-            console.log('Initializing EventSource for conversation:', conversationId);
-            const source = new EventSource("/chat-buddy/chat/" + conversationId);
-            source.addEventListener("update", function (event) {
-                console.log('Received SSE update:', event.data);
-                if (event.data === "<END_STREAMING_SSE>" || event.data === "end") {
-                    source.close();
-                    console.log("SSE closed");
-                    return;
-                }
-
-                updateLastMessage(event.data);
-            });
-
-            source.addEventListener("error", function(event) {
-                console.error("EventSource failed:", event);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM fully loaded and parsed');
-            if (window.Livewire) {
-                console.log('Livewire detected');
-                window.Livewire.on('getAiResponse', (conversationId) => {
-                    console.log('getAiResponse event received', conversationId);
-                    messageContent = ''; // Reset message content
-                    initializeEventSource(conversationId);
+                    lastMessage.innerHTML += decodeUnicode(JSON.parse(event.data));
                 });
-            } else {
-                console.error('Livewire not detected');
-            }
+            })
         });
-
-        // Fallback for Livewire
-        if (typeof window.Livewire !== 'undefined') {
-            console.log('Setting up Livewire hooks');
-            window.Livewire.hook('message.processed', (message, component) => {
-                console.log('Livewire message processed');
-                const messageElements = document.querySelectorAll('.aibot-message-content');
-                const lastMessage = messageElements[messageElements.length - 1];
-                console.log('Last message element:', lastMessage);
-            });
-        }
     </script>
 
 </div>
