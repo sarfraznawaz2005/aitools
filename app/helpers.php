@@ -3,9 +3,10 @@
  * TODO
  * global disabler until api key is saved
  * when new conversation is created, it redirecs without giving ai response first
+ * history issue
+ * download conversation as pdf
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
- * download conversation as pdf
  * chat with pdf
  * get other tools idea from eteam ai
  * */
