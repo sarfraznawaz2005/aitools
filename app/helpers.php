@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * when new conversation is created, it redirecs without giving ai response first
  * history issue
  * download conversation as pdf
  * loading indicator for chat list and sidebar and other components
