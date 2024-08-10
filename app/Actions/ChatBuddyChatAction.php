@@ -4,13 +4,13 @@ namespace App\Actions;
 
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatBuddyChatAction
 {
-    public function __invoke(Conversation $conversation)
+    public function __invoke(Conversation $conversation): StreamedResponse
     {
         return response()->stream(function () use ($conversation) {
-
             $userQuery = $conversation->messages()->where('is_ai', false)->orderByDesc('id')->first();
             $latestMessages = $conversation->messages()->latest()->limit(5)->get()->sortBy('id');
             $conversationHistory = '';
@@ -32,7 +32,24 @@ class ChatBuddyChatAction
 
             $llm = getChatBuddyLLMProvider();
 
-            $llm->chat($prompt, true);
+            $consolidatedResponse = '';
+
+            $llm->chat($prompt, true, function($chunk) use (&$consolidatedResponse) {
+                $consolidatedResponse .= $chunk;
+
+                echo "event: update\n";
+                echo "data: " . json_encode($chunk) . "\n\n";
+                ob_flush();
+                flush();
+            });
+
+            Log::info("consolidatedResponse: $consolidatedResponse");
+
+            // Save the consolidated response to the database
+//            $conversation->messages()->create([
+//                'body' => $consolidatedResponse,
+//                'is_ai' => true,
+//            ]);
 
             echo "event: update\n";
             echo "data: <END_STREAMING_SSE>\n\n";

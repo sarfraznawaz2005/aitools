@@ -6,7 +6,7 @@ use Exception;
 
 trait OpenAICompatibleTrait
 {
-    public function chat(string $message, bool $stream = false): string
+    public function chat(string $message, bool $stream = false, ?callable $callback = null): string
     {
         $url = $this->baseUrl . 'chat/completions';
 
@@ -25,23 +25,27 @@ trait OpenAICompatibleTrait
 
             if ($stream) {
                 try {
-                    $this->makeRequest($url, $body, $stream, true);
+                    $this->makeRequest($url, $body, $stream, true, $callback);
                 } catch (Exception) {
                     // fallback via non-streaming response
                     sleep(1);
 
                     unset($body['stream']);
 
-                    $response = $this->makeRequest($url, $body, false, true);
+                    $response = $this->makeRequest($url, $body, false, true, $callback);
                     $text = $this->getResult($response);
 
-                    echo "event: update\n";
-                    echo 'data: ' . json_encode($text) . "\n\n";
-                    ob_flush();
-                    flush();
+                    if ($callback) {
+                        $callback($text);
+                    } else {
+                        echo "event: update\n";
+                        echo 'data: ' . json_encode($text) . "\n\n";
+                        ob_flush();
+                        flush();
+                    }
                 }
             } else {
-                $response = $this->makeRequest($url, $body, false, true);
+                $response = $this->makeRequest($url, $body, false, true, $callback);
             }
 
             return isset($response) ? $this->getResult($response) : '';
@@ -89,7 +93,7 @@ trait OpenAICompatibleTrait
     /**
      * @throws Exception
      */
-    protected function getStreamingResponse($data): void
+    protected function getStreamingResponse($data, ?callable $callback = null): void
     {
         try {
 
@@ -102,13 +106,22 @@ trait OpenAICompatibleTrait
                 foreach ($parts as $part) {
                     $json = json_decode($part, true);
 
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        throw new Exception('Invalid JSON: ' . json_last_error_msg());
+                    }
+
                     if (isset($json['choices'])) {
                         foreach ($json['choices'] as $choice) {
                             if (isset($choice['delta'])) {
                                 $text = $choice['delta']['content'] ?? '';
 
                                 if (php_sapi_name() === 'cli') {
-                                    echo $text;
+                                    if ($callback) {
+                                        $callback($text);
+                                    } else {
+                                        echo $text;
+                                    }
+
                                     continue;
                                 }
 
@@ -116,14 +129,16 @@ trait OpenAICompatibleTrait
                                     continue;
                                 }
 
-                                echo "event: update\n";
-                                echo 'data: ' . json_encode($text) . "\n\n";
-                                ob_flush();
-                                flush();
+                                if ($callback) {
+                                    $callback($text);
+                                } else {
+                                    echo "event: update\n";
+                                    echo 'data: ' . json_encode($text) . "\n\n";
+                                    ob_flush();
+                                    flush();
+                                }
                             }
                         }
-                    } else {
-                        throw new Exception('error');
                     }
                 }
             }

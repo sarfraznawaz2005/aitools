@@ -25,7 +25,7 @@ abstract class BaseLLMProvider implements LlmProvider
     /**
      * @throws Exception
      */
-    protected function makeRequest(string $url, array $body, bool $stream = false, $useBearer = false): mixed
+    protected function makeRequest(string $url, array $body, bool $stream = false, $useBearer = false, ?callable $callback = null): mixed
     {
         $headers = [
             'Content-Type: application/json',
@@ -42,8 +42,8 @@ abstract class BaseLLMProvider implements LlmProvider
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
 
             if ($stream) {
-                curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($ch, $data) {
-                    static::getStreamingResponse($data);
+                curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($ch, $data) use ($callback) {
+                    static::getStreamingResponse($data, $callback);
                     return strlen($data);
                 });
             }

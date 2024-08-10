@@ -11,7 +11,7 @@ class GeminiProvider extends BaseLLMProvider
         parent::__construct($apiKey, 'https://generativelanguage.googleapis.com/v1/', $model, $options, $retries);
     }
 
-    public function chat(string $message, bool $stream = false): string
+    public function chat(string $message, bool $stream = false, ?callable $callback = null): string
     {
         $responseType = $stream ? 'streamGenerateContent' : 'generateContent';
 
@@ -49,20 +49,24 @@ class GeminiProvider extends BaseLLMProvider
 
             if ($stream) {
                 try {
-                    $this->makeRequest($url, $body, $stream);
+                    $this->makeRequest($url, $body, $stream, false, $callback);
                 } catch (Exception) {
                     // fallback via non-streaming response
                     sleep(1);
-                    $response = $this->makeRequest($this->baseUrl . 'models/' . $this->model . ":generateContent?key=" . $this->apiKey, $body);
+                    $response = $this->makeRequest($this->baseUrl . 'models/' . $this->model . ":generateContent?key=" . $this->apiKey, $body, false, false, $callback);
                     $text = $this->getResult($response);
 
-                    echo "event: update\n";
-                    echo 'data: ' . json_encode($text) . "\n\n";
-                    ob_flush();
-                    flush();
+                    if ($callback) {
+                        $callback($text);
+                    } else {
+                        echo "event: update\n";
+                        echo 'data: ' . json_encode($text) . "\n\n";
+                        ob_flush();
+                        flush();
+                    }
                 }
             } else {
-                $response = $this->makeRequest($url, $body);
+                $response = $this->makeRequest($url, $body, false, false, $callback);
             }
 
             return isset($response) ? $this->getResult($response) : '';
@@ -120,12 +124,16 @@ class GeminiProvider extends BaseLLMProvider
     /**
      * @throws Exception
      */
-    protected function getStreamingResponse($data): void
+    protected function getStreamingResponse($data, ?callable $callback = null): void
     {
         try {
 
             $data = $this->fixJson($data);
             $json = json_decode("[$data]", true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('Invalid JSON: ' . json_last_error_msg());
+            }
 
             if ($json) {
                 foreach ($json as $jsonItem) {
@@ -136,7 +144,12 @@ class GeminiProvider extends BaseLLMProvider
                                     $text = $part['text'] ?? '';
 
                                     if (php_sapi_name() === 'cli') {
-                                        echo $text;
+                                        if ($callback) {
+                                            $callback($text);
+                                        } else {
+                                            echo $text;
+                                        }
+
                                         continue;
                                     }
 
@@ -144,17 +157,17 @@ class GeminiProvider extends BaseLLMProvider
                                         continue;
                                     }
 
-                                    echo "event: update\n";
-                                    echo 'data: ' . json_encode($text) . "\n\n";
-                                    ob_flush();
-                                    flush();
+                                    if ($callback) {
+                                        $callback($text);
+                                    } else {
+                                        echo "event: update\n";
+                                        echo 'data: ' . json_encode($text) . "\n\n";
+                                        ob_flush();
+                                        flush();
+                                    }
                                 }
-                            } else {
-                                throw new Exception('error');
                             }
                         }
-                    } else {
-                        throw new Exception('error');
                     }
                 }
             }
