@@ -73,7 +73,7 @@
                         rows="1"
                         {{!hasApiKeysCreated() ? 'disabled' : ''}}
                         placeholder="Ask me anything..."
-                        class="m-0 resize-none border-0 rounded px-4 focus:ring-0 focus-visible:ring-0"
+                        class="m-0 resize-none border-0 rounded px-4 focus:ring-0 focus-visible:ring-0 disabled:bg-gray-200"
                         style="height: 40px;"
                     ></textarea>
                 </div>
