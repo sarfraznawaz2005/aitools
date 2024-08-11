@@ -1,6 +1,6 @@
 <x-layouts.app :title="'Home'">
 
-    <div class="flex flex-row justify-center items-center mb-4 mx-auto" wire:offline wire:key="offline-$id" style="margin-left: 23%;">
+    <div class="flex mt-8 flex-row justify-center items-center mb-4 mx-auto" wire:offline wire:key="offline-$id" style="margin-left: 23%;">
         <div class="p-3 text-sm text-white break-words flex items-center rounded-lg bg-yellow-500 ">
             <div class="flex items-center justify-center text-center">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -14,7 +14,7 @@
     </div>
 
     <!-- Announcement Banner -->
-    <div class="bg-gradient-to-r from-red-500 via-purple-400 to-blue-500">
+    <div class="bg-gradient-to-r from-red-500 via-purple-400 to-blue-500 mt-20">
         <div class="max-w-[85rem] px-4 py-4 sm:px-6 lg:px-8 mx-auto">
             <!-- Grid -->
             <div class="grid justify-center md:grid-cols-2 md:justify-between md:items-center gap-2">
@@ -147,5 +147,26 @@
         </div>
     </div>
 
+
+    <div class="max-w-xs flex flex-col bg-white border border-t-4 border-t-blue-600 shadow-sm rounded-xl">
+        <div class="p-4 md:p-5">
+            <h3 class="text-lg font-bold text-gray-800">
+                Card title
+            </h3>
+            <p class="mt-2 text-gray-500">
+                With supporting text below as a natural lead-in to additional content.
+            </p>
+            <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
+                Card link
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-blue-600 rounded-full" role="status" aria-label="loading">
+        <span class="sr-only">Loading...</span>
+    </div>
 
 </x-layouts.app>

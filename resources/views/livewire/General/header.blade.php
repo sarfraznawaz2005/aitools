@@ -29,14 +29,14 @@
                         </button>
 
                         <div
-                            class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-gray-200 dark:bg-neutral-900 shadow-md rounded-lg border dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+                            class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-gray-200 dark:bg-neutral-900 shadow-md rounded border dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
                             role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
                             <div class="p-1.5 space-y-0.5">
                                 <ul class="flex flex-col space-y-1">
                                     @foreach(config('tools') as $tool)
                                         <li wire:key="{{ $tool['name'] }}">
                                             <a href="{{route($tool['route'])}}" wire:navigate
-                                               class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-100' : '' }}">
+                                               class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-100' : '' }}">
                                                 <x-dynamic-component :component="'icons.' . $tool['icon']['name']"
                                                                      :color="$tool['icon']['color']"/>
                                                 {{$tool['name']}}

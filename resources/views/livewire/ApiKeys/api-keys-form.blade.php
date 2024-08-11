@@ -115,7 +115,7 @@
         <!-- End Floating Input -->
 
         <div
-            class="flex justify-end items-center gap-x-4 pt-4 border-t-2 border-gray-100 dark:border-neutral-700 mt-4">
+            class="flex justify-end items-center gap-x-4 mt-4">
             <x-gradient-button wire:click="save">
                 <x-icons.ok class="size-5"/>
                 Save
