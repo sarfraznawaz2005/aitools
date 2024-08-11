@@ -33,7 +33,7 @@
         <div class="flex justify-center mt-4">
             <x-confirm-dialog id="0" using="deleteAllConversations"
                               text="Are you sure you want to delete all conversations?"
-                              class="p-3 text-white text-sm bg-red-600 hover:bg-red-800 rounded">
+                              class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:bg-red-600 disabled:opacity-50 disabled:pointer-events-none">
                 <x-icons.delete class="inline-block mt-[-3px]"/>
                 Delete All Conversations
             </x-confirm-dialog>
