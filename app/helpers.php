@@ -2,6 +2,7 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * conversation create date on top
  * Regenerate button
  * download conversation as pdf
  * loading indicator for chat list and sidebar and other components

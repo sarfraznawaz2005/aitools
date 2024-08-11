@@ -13,17 +13,44 @@
                     <div wire:key="{{$message->id}}">
 
                         @if(!$message->is_ai)
-                            <li class="my-4">
+                            <li class="my-4" x-data="{
+                                copied: false,
+                                copy () {
+                                  $clipboard($refs.content.innerText)
+                                  this.copied = true
+                                  setTimeout(() => {
+                                    this.copied = false
+                                  }, 1000)
+                                }
+                              }">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
-                                        <p class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;">
+                                        <p class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;" x-ref="content">
                                             {{$message->body}}
                                         </p>
                                     </div>
                                 </div>
-                                <div class="text-gray-500 flex justify-end text-sm">
-                                    {{isset($message->created_at) ? $message->created_at->diffForHumans() : ''}}
+
+                                <!-- Button Group -->
+                                <div class="flex justify-end mt-2">
+                                    <div>
+                                        <button type="button"
+                                                x-data x-tooltip.raw="Copy"
+                                                @click="copy"
+                                                class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.copy/>
+                                            <span x-text="copied ? 'Copied' : ''"></span>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button type="button"
+                                                x-data x-tooltip.raw="Delete"
+                                                class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.delete/>
+                                        </button>
+                                    </div>
                                 </div>
+                                <!-- End Button Group -->
                             </li>
                         @else
                             <li class="flex gap-x-2 sm:gap-x-4 my-8" x-data="{
@@ -50,23 +77,20 @@
                                     <!-- End Card -->
 
                                     <!-- Button Group -->
-                                    <div class="sm:flex sm:justify-between">
-                                        <div class="text-gray-500 flex justify-end text-sm mt-[-5px]">
-                                            {{isset($message->created_at) ? $message->created_at->diffForHumans() : ''}}
-                                        </div>
+                                    <div class="flex justify-end">
                                         <div class="mt-[-5px]">
                                             <button type="button"
                                                     x-data x-tooltip.raw="Copy"
                                                     @click="copy"
-                                                    class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                                                    class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
                                                 <x-icons.copy/>
-                                                <span class="ml-1" x-text="copied ? 'Copied' : ''"></span>
+                                                <span x-text="copied ? 'Copied' : ''"></span>
                                             </button>
 
                                             @if($loop->last)
                                                 <button type="button"
                                                         x-data x-tooltip.raw="Regenerate"
-                                                        class="hover:text-gray-800 inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                                                        class="hover:text-gray-900 inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
                                                     <x-icons.refresh class="size-5 text-gray-500" />
                                                 </button>
                                            @endif
@@ -83,14 +107,14 @@
 
                     <div
                         class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
-                        start a fresh conversation!
+                        Start New Conversation
                     </div>
 
                 @endforelse
             @else
                 <div
                     class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
-                    start a fresh conversation!
+                    Start New Conversation
                 </div>
             @endif
         @endif
