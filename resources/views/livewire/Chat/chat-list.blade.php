@@ -37,17 +37,16 @@
                                         <button type="button"
                                                 x-data x-tooltip.raw="Copy"
                                                 @click="copy"
-                                                class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
-                                            <x-icons.copy/>
+                                                class="inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.copy class="hover:text-gray-600"/>
                                             <span x-text="copied ? 'Copied' : ''"></span>
                                         </button>
                                     </div>
                                     <div>
-                                        <button type="button"
-                                                x-data x-tooltip.raw="Delete"
-                                                class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
-                                            <x-icons.delete/>
-                                        </button>
+                                        <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data x-tooltip.raw="Delete"
+                                                          class="inline-flex items-center ml-3 text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
+                                        </x-confirm-dialog>
                                     </div>
                                 </div>
                                 <!-- End Button Group -->
@@ -82,16 +81,16 @@
                                             <button type="button"
                                                     x-data x-tooltip.raw="Copy"
                                                     @click="copy"
-                                                    class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
-                                                <x-icons.copy/>
+                                                    class="inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                                <x-icons.copy class="hover:text-gray-600"/>
                                                 <span x-text="copied ? 'Copied' : ''"></span>
                                             </button>
 
                                             @if($loop->last)
                                                 <button type="button"
                                                         x-data x-tooltip.raw="Regenerate"
-                                                        class="hover:text-gray-900 inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                    <x-icons.refresh class="size-5 text-gray-500" />
+                                                        class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
+                                                    <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600" />
                                                 </button>
                                            @endif
 

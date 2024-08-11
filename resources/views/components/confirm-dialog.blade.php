@@ -1,4 +1,5 @@
 <div
+    x-cloak
     class="inline"
     x-data="{ open: false }"
     @keydown.escape.window="open = false"

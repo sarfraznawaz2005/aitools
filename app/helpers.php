@@ -4,6 +4,8 @@
  * global disabler until api key is saved
  * conversation create date on top
  * Regenerate button
+ * code highlight on client side
+ * edit message?
  * download conversation as pdf
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages

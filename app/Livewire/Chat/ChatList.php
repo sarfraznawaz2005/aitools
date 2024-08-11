@@ -4,6 +4,7 @@ namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,6 +14,8 @@ use Livewire\Component;
 
 class ChatList extends Component
 {
+    use InteractsWithToast;
+
     public ?Conversation $conversation = null;
     public Collection $messages;
     public ?Message $lastMessage = null;
@@ -28,7 +31,7 @@ class ChatList extends Component
     }
 
     #[On('createTempAImessage')]
-    public function createTempAImessage()
+    public function createTempAImessage(): void
     {
         // Create temp answer to show the user that the AI is typing
         $this->conversation->createTempAImessage();
@@ -41,6 +44,17 @@ class ChatList extends Component
     protected function refresh(): void
     {
         $this->messages = $this->conversation->messages->sortBy('id');
+    }
+
+    public function deleteMessage(Message $message): void
+    {
+        if ($message->delete()) {
+            $this->success('Message deleted successfully.');
+
+            $this->refresh();
+        } else {
+            $this->danger('Failed to delete message.');
+        }
     }
 
     public function mount($conversation = null): void

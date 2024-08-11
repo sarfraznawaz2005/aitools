@@ -90,7 +90,7 @@
                                 <ul class="py-1">
                                     <li>
                                         <a href="#"
-                                           wire:click="toggleFavorite({{$conversationItem->id}}); openDropdown = null;"
+                                           wire:click.prevent="toggleFavorite({{$conversationItem->id}}); openDropdown = null;"
                                            class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                                             <x-icons.star class="inline-block mr-2 text-gray-500" fill="{{$conversationItem->favorite ? '#c1f9a9' : 'none'}}" />
                                             Favorite
