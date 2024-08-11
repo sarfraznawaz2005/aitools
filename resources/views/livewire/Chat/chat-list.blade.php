@@ -39,7 +39,7 @@
                                 <div class="grow w-full space-y-3">
                                     <!-- Card -->
                                     <div
-                                        class="bg-white border border-gray-200 rounded-lg px-4 py-2 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
+                                        class="bg-white border border-gray-200 rounded-lg px-4 py-1 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
                                         <p>
                                             <x-markdown x-ref="content" class="text-gray-600 aibot-message-content"
                                                         style="font-size: 1rem; line-height: 1.8rem;">
