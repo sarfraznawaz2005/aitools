@@ -13,6 +13,11 @@
     margin-bottom: 20px !important;
 }
 
+.aibot-message-content a {
+    color: #2563EB;
+    text-decoration: underline;
+}
+
 .notyf__toast {
     max-width: 50em !important;
     .notyf__ripple {
