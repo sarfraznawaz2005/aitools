@@ -103,6 +103,11 @@
                                                 <span x-text="copied ? 'Copied' : ''"></span>
                                             </button>
 
+                                            <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data x-tooltip.raw="Delete"
+                                                              class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
+                                                <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
+                                            </x-confirm-dialog>
+
                                             @if($loop->last)
                                                 <button type="button"
                                                         x-data x-tooltip.raw="Regenerate"
@@ -110,7 +115,6 @@
                                                     <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600" />
                                                 </button>
                                            @endif
-
                                         </div>
                                     </div>
                                     <!-- End Button Group -->
