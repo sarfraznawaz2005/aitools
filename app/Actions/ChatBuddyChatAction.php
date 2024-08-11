@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Constants;
 use App\Models\Conversation;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -9,8 +10,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatBuddyChatAction
 {
-    const int TOTAL_CONVERSATION_HISTORY = 50;
-
     public function __invoke(Conversation $conversation): StreamedResponse
     {
         $llm = getChatBuddyLLMProvider();
@@ -19,20 +18,20 @@ class ChatBuddyChatAction
 
         $latestMessage = $conversation
             ->messages()
-            ->where('body', '=', 'Loading...')
+            ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
             ->latest()
             ->first();
 
         $latestMessages = $conversation
             ->messages()
-            ->where('body', '!=', 'Loading...')
+            ->where('body', '!=', Constants::CHATBUDDY_LOADING_STRING)
             ->whereNot(function ($query) {
                 $query->where('body', 'like', '%conversation history%')
                     ->orWhere('body', 'like', '%sorry%')
                     ->orWhere('body', 'like', '%context%');
             })
             ->latest()
-            ->limit(self::TOTAL_CONVERSATION_HISTORY)
+            ->limit(Constants::TOTAL_CONVERSATION_HISTORY)
             ->get()
             ->sortBy('id');
 

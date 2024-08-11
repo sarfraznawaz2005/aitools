@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -49,7 +50,7 @@ class Conversation extends Model
     public function createTempAImessage()
     {
         $this->messages()->create([
-            'body' => 'Loading...',
+            'body' => Constants::CHATBUDDY_LOADING_STRING,
             'conversation_id' => $this->id,
             'is_ai' => true,
             'created_at' => now(),
