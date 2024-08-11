@@ -66,6 +66,16 @@
                                     <!-- Card -->
                                     <div
                                         class="bg-white border border-gray-200 rounded-lg px-4 py-1 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
+
+                                        @if($loop->last)
+                                            <div class="relative hidden" id="indicator">
+                                                <span class="flex absolute size-5 mt-3 right-0">
+                                                    <span class="animate-ping absolute inline-flex size-full rounded-full bg-green-400 opacity-75"></span>
+                                                    <span class="relative inline-flex rounded-full size-5 bg-green-500"></span>
+                                                </span>
+                                            </div>
+                                        @endif
+
                                         <p>
                                             <x-markdown x-ref="content" class="text-gray-600 aibot-message-content"
                                                         style="font-size: 1rem; line-height: 1.8rem;">
@@ -128,14 +138,14 @@
         }
 
         function performCommonPageActions() {
-            colorizeErrors();
-
             window.scrollTo({
                 top: document.body.scrollHeight + 1000,
                 behavior: 'smooth'
             });
 
             document.getElementById('query').focus();
+
+            colorizeErrors();
         }
 
         function setElementsDisabledStatus(disabled = true) {
@@ -176,6 +186,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
 
+
             performCommonPageActions();
             openLinkExternally();
 
@@ -185,10 +196,13 @@
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
 
-                performCommonPageActions();
-
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
+                    performCommonPageActions();
+
+                    const indicator = document.getElementById('indicator');
+
+                    indicator.style.display = 'block';
 
                     setElementsDisabledStatus(true);
 
@@ -204,6 +218,7 @@
                         lastMessage.innerHTML = marked.parse(lastMessage.textContent);
                         performCommonPageActions();
                         setElementsDisabledStatus(false);
+                        indicator.style.display = 'none';
                         return;
                     }
 
@@ -216,6 +231,7 @@
                 source.addEventListener("error", function (event) {
                     source.close();
                     setElementsDisabledStatus(false);
+                    indicator.style.display = 'none';
                     console.log("SSE closed due to error");
                 });
             })
