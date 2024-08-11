@@ -6,6 +6,7 @@
  * code highlight on client side
  * edit message?
  * download conversation as pdf
+ * get chat ideas from other installed desktop apps
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
  * chat with pdf
