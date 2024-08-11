@@ -21,6 +21,8 @@ class ChatList extends Component
     public Collection $messages;
     public ?Message $lastMessage = null;
 
+    protected $listeners = ['refreshChatList' => '$refresh'];
+
     public function mount($conversation = null): void
     {
         if ($conversation) {

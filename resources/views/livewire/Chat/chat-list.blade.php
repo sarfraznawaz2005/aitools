@@ -226,11 +226,12 @@
                     if (event.data === "<END_STREAMING_SSE>") {
                         source.close();
                         console.log("SSE closed");
-                        // window.location.reload();
-                        lastMessage.innerHTML = marked.parse(lastMessage.textContent);
                         performCommonPageActions();
                         setElementsDisabledStatus(false);
                         indicator.style.display = 'none';
+
+                        Livewire.dispatch('refreshChatList');
+
                         return;
                     }
 
@@ -242,8 +243,9 @@
 
                 source.addEventListener("error", function (event) {
                     source.close();
-                    setElementsDisabledStatus(false);
+                    const indicator = document.getElementById('indicator');
                     indicator.style.display = 'none';
+                    setElementsDisabledStatus(false);
                     console.log("SSE closed due to error");
                 });
             })

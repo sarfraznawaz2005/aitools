@@ -20,12 +20,12 @@ return [
     /*
      * When enabled, anchor links will be added to all titles
      */
-    'add_anchors_to_headings' => true,
+    'add_anchors_to_headings' => false,
 
     /**
      * When enabled, anchors will be rendered as links.
      */
-    'render_anchors_as_links' => true,
+    'render_anchors_as_links' => false,
 
     /*
      * These options will be passed to the league/commonmark package which is

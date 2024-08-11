@@ -17,12 +17,10 @@
     },
     "dependencies": {
         "@preline/overlay": "^2.4.1",
-        "@preline/theme-switch": "^2.4.1",
         "@ryangjchandler/alpine-clipboard": "^2.3.0",
         "@ryangjchandler/alpine-tooltip": "^2.0.0",
         "@tailwindcss/typography": "^0.5.13",
         "cross-env": "^7.0.3",
-        "marked": "^14.0.0",
         "notyf": "^3.10.0",
         "preline": "^2.4.1",
         "shiki": "^1.11.2"

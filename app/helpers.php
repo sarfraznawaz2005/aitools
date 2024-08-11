@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * code highlight on client side
  * edit message?
  * download conversation as pdf
  * get chat ideas from other installed desktop apps
