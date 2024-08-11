@@ -61,11 +61,15 @@
                                                 <x-icons.copy/>
                                                 <span x-text="copied ? 'Copied' : 'Copy'"></span>
                                             </button>
-                                            <button type="button"
-                                                    class="hover:text-gray-800 px-3 inline-flex items-center gap-x-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
-                                                <x-icons.refresh/>
-                                                Regenerate
-                                            </button>
+
+                                            @if($loop->last)
+                                                <button type="button"
+                                                        class="hover:text-gray-800 px-3 inline-flex items-center gap-x-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                                                    <x-icons.refresh/>
+                                                    Regenerate
+                                                </button>
+                                           @endif
+
                                         </div>
                                     </div>
                                     <!-- End Button Group -->
