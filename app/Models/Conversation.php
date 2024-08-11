@@ -6,12 +6,21 @@ use App\Constants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
+use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 class Conversation extends Model
 {
     use HasFactory;
 
     protected $fillable = ['title'];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::deleteOlderConversations();
+    }
 
     public function addChatMessage(string $message, bool $isAi = false): Message
     {
@@ -47,7 +56,7 @@ class Conversation extends Model
     }
 
     // Create temp answer to show the user that the AI is typing
-    public function createTempAImessage()
+    public function createTempAImessage(): void
     {
         $this->messages()->create([
             'body' => Constants::CHATBUDDY_LOADING_STRING,
@@ -56,6 +65,25 @@ class Conversation extends Model
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
+
+    public static function deleteOlderConversations(): void
+    {
+        $days = 30;
+
+        if (Setting::select('ChatBuddy')->has('chatBuddyDeleteOldDays')) {
+            $days = Setting::select('ChatBuddy')->get('chatBuddyDeleteOldDays');
+        }
+
+        $oldConversations = static::query()
+            ->where('created_at', '<', now()->subDays($days))
+            ->where('favorite', false);
+
+        if ($oldConversations->exists()) {
+            $deletedCount = $oldConversations->delete();
+
+            Log::info("Deleted $deletedCount old conversations");
+        }
     }
 
     /* -----------------------------------------------------------------

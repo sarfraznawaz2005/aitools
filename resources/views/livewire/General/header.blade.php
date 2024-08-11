@@ -24,7 +24,8 @@
                         <button id="hs-dropdown-account" title="Menu" type="button"
                                 class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
                                 aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <x-icons.dots class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
+                            <x-icons.dots
+                                class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
                         </button>
 
                         <div
@@ -85,7 +86,8 @@
                             class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                             aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
                             data-hs-overlay="#general-modal">
-                        <x-icons.settings class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500" />
+                        <x-icons.settings
+                            class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
                         <span class="sr-only">Settings</span>
                     </button>
 
@@ -106,7 +108,33 @@
         </x-slot>
 
         <x-slot name="body">
-            <livewire:apikeys.api-keys-form/>
+
+            <div class="border-b border-gray-200 dark:border-neutral-700">
+                <nav class="flex gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
+                    <button type="button"
+                            class="hs-tab-active:bg-white hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 dark:hs-tab-active:bg-neutral-800 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:text-white -mb-px py-3 px-4 inline-flex items-center gap-x-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-t-lg hover:text-gray-700 focus:outline-none focus:text-gray-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200 active"
+                            id="card-type-tab-item-1" aria-selected="true" data-hs-tab="#apk-keys-tab"
+                            aria-controls="apk-keys-tab" role="tab">
+                        API Keys
+                    </button>
+                    <button type="button"
+                            class="hs-tab-active:bg-white hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 dark:hs-tab-active:bg-neutral-800 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:text-white -mb-px py-3 px-4 inline-flex items-center gap-x-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-t-lg hover:text-gray-700 focus:outline-none focus:text-gray-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                            id="card-type-tab-item-2" aria-selected="false" data-hs-tab="#chatbuddy-tab"
+                            aria-controls="chatbuddy-tab" role="tab">
+                        Chat Buddy
+                    </button>
+                </nav>
+            </div>
+
+            <div class="mt-3">
+                <div id="apk-keys-tab" role="tabpanel" aria-labelledby="card-type-tab-item-1">
+                    <livewire:apikeys.api-keys-form/>
+                </div>
+                <div id="chatbuddy-tab" class="hidden" role="tabpanel" aria-labelledby="card-type-tab-item-2">
+                    <livewire:settings.chat-buddy-settings/>
+                </div>
+            </div>
+
         </x-slot>
     </x-modal>
 
