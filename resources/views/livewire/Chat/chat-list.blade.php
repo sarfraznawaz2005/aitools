@@ -9,6 +9,13 @@
         @else
 
             @if ($messages)
+
+                <div class="flex justify-center align-center">
+                    <span class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg font-medium bg-gray-100 text-gray-500">
+                        📅 Conversation created {{$conversation->created_at->diffForHumans()}}
+                    </span>
+                </div>
+
                 @forelse($messages as $message)
                     <div wire:key="{{$message->id}}">
 

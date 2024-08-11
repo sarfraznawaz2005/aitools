@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * conversation create date on top
  * Regenerate button
  * code highlight on client side
  * edit message?
