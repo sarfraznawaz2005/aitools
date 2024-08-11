@@ -75,17 +75,15 @@ class ChatBuddyChatAction
                 $latestMessage->update(['body' => $consolidatedResponse]);
 
             } catch (Exception $e) {
-                $error = 'Oops! Failed to get a response, please try again.';
-
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
 
                 echo "event: update\n";
-                echo "data: " . json_encode($error) . "\n\n";
+                echo "data: " . json_encode(Constants::CHATBUDDY_AI_ERROR_MESSSAGE) . "\n\n";
                 ob_flush();
                 flush();
 
-                //$latestMessage->update(['body' => $error]);
-                $latestMessage->delete();
+                //$latestMessage->delete();
+                $latestMessage->update(['body' => Constants::CHATBUDDY_AI_ERROR_MESSSAGE]);
             } finally {
                 echo "event: update\n";
                 echo "data: <END_STREAMING_SSE>\n\n";

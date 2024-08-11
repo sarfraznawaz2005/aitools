@@ -99,7 +99,9 @@
             });
         }
 
-        function scrollPageToBottom() {
+        function performCommonPageActions() {
+            colorizeErrors();
+
             window.scrollTo({
                 top: document.body.scrollHeight + 1000,
                 behavior: 'smooth'
@@ -135,18 +137,27 @@
             */
         }
 
+        function colorizeErrors() {
+            document.querySelectorAll('.aibot-message-content').forEach(element => {
+                // if element text contains "foobar", apply red color to parent element
+                if (element.textContent.includes("Failed")) {
+                    element.parentElement.style.backgroundColor = '#f9cccc';
+                }
+            });
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
 
-            scrollPageToBottom();
+            performCommonPageActions();
             openLinkExternally();
 
             // livewire message listener
-            Livewire.hook('message.received', () => scrollPageToBottom());
-            document.addEventListener('livewire:navigated', () => scrollPageToBottom());
+            Livewire.hook('message.received', () => performCommonPageActions());
+            document.addEventListener('livewire:navigated', () => performCommonPageActions());
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
 
-                scrollPageToBottom();
+                performCommonPageActions();
 
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
@@ -163,7 +174,7 @@
                         console.log("SSE closed");
                         // window.location.reload();
                         lastMessage.innerHTML = marked.parse(lastMessage.textContent);
-                        scrollPageToBottom();
+                        performCommonPageActions();
                         setElementsDisabledStatus(false);
                         return;
                     }
@@ -171,7 +182,7 @@
                     const decodedData = decodeUnicode(JSON.parse(event.data));
                     lastMessage.innerHTML += decodedData;
 
-                    scrollPageToBottom();
+                    performCommonPageActions();
                 });
 
                 source.addEventListener("error", function (event) {
