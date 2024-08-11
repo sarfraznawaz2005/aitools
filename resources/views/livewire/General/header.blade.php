@@ -12,7 +12,7 @@
 
                 <div class="inline-flex gap-4 items-center">
 
-                    <a href="{{route('home')}}" wire:navigate>
+                    <a href="{{route('home')}}" wire:navigate x-data x-tooltip.raw="Home">
                         <x-icons.home
                             class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
                     </a>
@@ -21,7 +21,7 @@
 
                     <!-- Dropdown -->
                     <div class="hs-dropdown [--placement:center] relative inline-flex items-center">
-                        <button id="hs-dropdown-account" title="Menu" type="button"
+                        <button id="hs-dropdown-account" x-data x-tooltip.raw="Menu" type="button"
                                 class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
                                 aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                             <x-icons.dots
@@ -63,7 +63,7 @@
                 <div class="flex flex-row items-center justify-end gap-1">
                     {{--
                     <button type="button"
-                            title="Change Theme"
+                            x-data x-tooltip.raw="Change Theme"
                             class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                             data-hs-theme-click-value="dark">
                         <span class="group inline-flex shrink-0 justify-center items-center size-9">
@@ -72,7 +72,7 @@
                     </button>
 
                     <button type="button"
-                            title="Change Theme"
+                            x-data x-tooltip.raw="Change Theme"
                             class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                             data-hs-theme-click-value="light">
                         <span class="group inline-flex shrink-0 justify-center items-center size-9">
@@ -82,7 +82,7 @@
                     --}}
 
                     <button type="button"
-                            title="Settings"
+                            x-data x-tooltip.raw="Settings"
                             class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                             aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
                             data-hs-overlay="#general-modal">

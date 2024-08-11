@@ -32,12 +32,12 @@
                         </td>
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
                             @if ($apiKey->active)
-                                <button title="This is currently default"
+                                <button x-data x-tooltip.raw="This is currently default"
                                         class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded mr-2">
                                     <x-icons.ok class="w-4 h-4 mx-auto"/>
                                 </button>
                             @else
-                                <button title="Make Default"
+                                <button x-data x-tooltip.raw="Make Default"
                                         wire:click="markDefault({{ $apiKey->id }})"
                                         class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
                                     <x-icons.ok class="w-4 h-4 mx-auto"/>
@@ -45,13 +45,13 @@
                             @endif
 
                             <button
-                                title="Edit"
+                                x-data x-tooltip.raw="Edit"
                                 wire:click="edit({{ $apiKey->id }})"
                                 class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
                                 <x-icons.edit class="w-4 h-4 mx-auto"/>
                             </button>
 
-                            <x-confirm-dialog :id="$apiKey->id" using="deleteApiKey" title="Delete"
+                            <x-confirm-dialog :id="$apiKey->id" using="deleteApiKey" x-data x-tooltip.raw="Delete"
                                               class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
                                 <x-icons.delete class="w-4 h-4 mx-auto"/>
                             </x-confirm-dialog>

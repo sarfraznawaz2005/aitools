@@ -56,17 +56,18 @@
                                         </div>
                                         <div class="mt-[-5px]">
                                             <button type="button"
+                                                    x-data x-tooltip.raw="Copy"
                                                     @click="copy"
-                                                    class="hover:text-gray-800 px-3 inline-flex items-center gap-x-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                                                    class="hover:text-gray-800 inline-flex items-center text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                                                 <x-icons.copy/>
-                                                <span x-text="copied ? 'Copied' : 'Copy'"></span>
+                                                <span class="ml-1" x-text="copied ? 'Copied' : ''"></span>
                                             </button>
 
                                             @if($loop->last)
                                                 <button type="button"
-                                                        class="hover:text-gray-800 px-3 inline-flex items-center gap-x-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
-                                                    <x-icons.refresh/>
-                                                    Regenerate
+                                                        x-data x-tooltip.raw="Regenerate"
+                                                        class="hover:text-gray-800 inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                                                    <x-icons.refresh class="size-5 text-gray-500" />
                                                 </button>
                                            @endif
 
