@@ -122,15 +122,17 @@
         // make all links inside any .aibot-message-content open in default browser
         function openLinkExternally() {
             document.querySelectorAll('.aibot-message-content a').forEach(link => {
+                link.setAttribute('target', '_blank');
+            });
+
+            /*
+            document.querySelectorAll('.aibot-message-content a').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     require('electron').shell.openExternal(link.href);
                 });
             });
-
-            document.querySelectorAll('.aibot-message-content a').forEach(link => {
-                link.setAttribute('target', '_blank');
-            });
+            */
         }
 
         window.addEventListener('DOMContentLoaded', () => {
