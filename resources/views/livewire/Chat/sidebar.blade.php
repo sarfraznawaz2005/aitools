@@ -56,6 +56,10 @@
                                    href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
                                     <span x-ref="titleDisplay">
+                                        @if($conversationItem->favorite)
+                                            <x-icons.star class="inline-block text-gray-500 size-4" viewBox="0 0 24 24" />
+                                        @endif
+
                                         @if($conversationItem->title)
                                             {{Str::limit($conversationItem->title, 25)}}
                                         @else
@@ -84,6 +88,14 @@
                                  @click.away="openDropdown = null"
                                  class="absolute right-[4px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
                                 <ul class="py-1">
+                                    <li>
+                                        <a href="#"
+                                           wire:click="toggleFavorite({{$conversationItem->id}}); openDropdown = null;"
+                                           class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                                            <x-icons.star class="inline-block mr-2 text-gray-500" fill="{{$conversationItem->favorite ? '#c1f9a9' : 'none'}}" />
+                                            Favorite
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="#"
                                            @click.prevent="startEdit(); openDropdown = null;"

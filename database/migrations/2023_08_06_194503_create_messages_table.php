@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->text('body');
             $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
-            $table->boolean('is_ai')->default(0);
+            $table->boolean('is_ai')->default(false);
             $table->timestamps();
         });
     }

@@ -29,6 +29,21 @@ class Sidebar extends Component
         return view('livewire.chat.sidebar');
     }
 
+    public function toggleFavorite(Conversation $conversation): void
+    {
+        if ($conversation->favorite) {
+            $conversation->favorite = false;
+            $conversation->save();
+            $this->success('Conversation un-favorited successfully.');
+        } else {
+            $conversation->favorite = true;
+            $conversation->save();
+            $this->success('Conversation favorited successfully.');
+        }
+
+        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+    }
+
     public function rename(Conversation $conversation, $title): void
     {
         if (trim($conversation->title) === trim($title)) {
