@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * Regenerate button
  * code highlight on client side
  * edit message?
  * download conversation as pdf
