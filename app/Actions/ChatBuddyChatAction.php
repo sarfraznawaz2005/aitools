@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatBuddyChatAction
 {
-    const int TOTAL_CONVERSATION_HISTORY = 5;
+    const int TOTAL_CONVERSATION_HISTORY = 50;
 
     public function __invoke(Conversation $conversation): StreamedResponse
     {
@@ -26,15 +26,25 @@ class ChatBuddyChatAction
         $latestMessages = $conversation
             ->messages()
             ->where('body', '!=', 'Loading...')
+            ->whereNot(function ($query) {
+                $query->where('body', 'like', '%conversation history%')
+                    ->orWhere('body', 'like', '%sorry%')
+                    ->orWhere('body', 'like', '%context%');
+            })
             ->latest()
             ->limit(self::TOTAL_CONVERSATION_HISTORY)
             ->get()
             ->sortBy('id');
 
-        $conversationHistory = '';
+        $uniqueMessages = [];
         foreach ($latestMessages as $message) {
-            $conversationHistory .= ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body . "\n";
+            $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
+            if (!in_array($formattedMessage, $uniqueMessages)) {
+                $uniqueMessages[] = $formattedMessage;
+            }
         }
+
+        $conversationHistory = implode("\n", $uniqueMessages);
 
         $prompt = "You are a helpful and enthusiastic support assistant who can answer a given question.
                 Before answering, always refer to the conversation history to know what user is asking or
