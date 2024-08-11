@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings;
 
+use App\Models\Conversation;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,15 @@ class ChatBuddySettings extends Component
         Setting::select('ChatBuddy')->set('chatBuddyDeleteOldDays', $this->chatBuddyDeleteOldDays);
 
         session()->flash('message', 'Settings saved successfully.');
+    }
+
+    public function deleteAllConversations(): void
+    {
+        Conversation::query()->where('favorite', false)->delete();
+
+        session()->flash('conversationsDeleted', 'Conversations deleted successfully.');
+
+        $this->redirect(route(config('tools.chat-buddy.route')));
     }
 
     public function render(): Application|View|Factory
