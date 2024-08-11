@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Chat;
 
+use App\Constants;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Traits\InteractsWithToast;
@@ -19,6 +20,18 @@ class ChatList extends Component
     public ?Conversation $conversation = null;
     public Collection $messages;
     public ?Message $lastMessage = null;
+
+    public function mount($conversation = null): void
+    {
+        if ($conversation) {
+            $this->conversation = $conversation;
+            $this->messages = $conversation->messages->sortBy('id');
+
+            // Update last access time
+            $conversation->updated_at = now();
+            $conversation->save();
+        }
+    }
 
     #[On('inputSaved')]
     public function refreshMessagesByInput(): void
@@ -57,16 +70,14 @@ class ChatList extends Component
         }
     }
 
-    public function mount($conversation = null): void
+    public function regenerate(Message $message): void
     {
-        if ($conversation) {
-            $this->conversation = $conversation;
-            $this->messages = $conversation->messages->sortBy('id');
+        $message->body = Constants::CHATBUDDY_LOADING_STRING;
+        $message->save();
 
-            // Update last access time
-            $conversation->updated_at = now();
-            $conversation->save();
-        }
+        $this->refresh();
+
+        $this->dispatch('getAiResponse', $this->conversation->id);
     }
 
     public function render(): View|Application|Factory

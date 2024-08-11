@@ -110,6 +110,7 @@
 
                                             @if($loop->last)
                                                 <button type="button"
+                                                        wire:click="regenerate({{$message->id}})"
                                                         x-data x-tooltip.raw="Regenerate"
                                                         class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
                                                     <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600" />
