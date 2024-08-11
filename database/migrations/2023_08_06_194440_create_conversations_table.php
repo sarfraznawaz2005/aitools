@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
+            $table->enum('favorite', [true, false])->default(false);
             $table->timestamps();
         });
     }
