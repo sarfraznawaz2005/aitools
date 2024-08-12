@@ -210,7 +210,12 @@
 
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
-                    const lastMessage = document.querySelector('.aibot-message-content:last-child');
+                    // strangely, streaming does not show up correctly in this way
+                    //const lastMessage = document.querySelector('.aibot-message-content:last-child');
+
+                    const messageElements = document.querySelectorAll('.aibot-message-content');
+                    const lastMessage = messageElements[messageElements.length - 1];
+
                     const indicator = document.getElementById('indicator');
 
                     performInProgressActions();
