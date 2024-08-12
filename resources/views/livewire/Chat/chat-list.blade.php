@@ -87,11 +87,9 @@
                                             </div>
                                         @endif
 
-                                        <p>
-                                            <x-markdown x-ref="content" class="text-gray-500 aibot-message-content">
-                                                {!! $message->body !!}
-                                            </x-markdown>
-                                        </p>
+                                        <x-markdown x-ref="content" class="text-gray-500 aibot-message-content">
+                                            {!! $message->body !!}
+                                        </x-markdown>
                                     </div>
                                     <!-- End Card -->
 
