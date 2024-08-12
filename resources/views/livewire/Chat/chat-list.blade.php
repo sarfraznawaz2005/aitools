@@ -87,7 +87,7 @@
                                             </div>
                                         @endif
 
-                                        <x-markdown x-ref="content" class="text-gray-500 aibot-message-content">
+                                        <x-markdown x-ref="content" class="text-gray-500 aibot-message-content prose prose-sm sm:prose lg:prose xl:prose w-full break-words">
                                             {!! $message->body !!}
                                         </x-markdown>
                                     </div>

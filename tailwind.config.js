@@ -9,6 +9,15 @@ export default {
         "node_modules/preline/dist/*.js",
     ],
     safelist: [
+        'list-disc',
+        'list-decimal',
+        'list-square',
+        'list-circle',
+        'list-lower-alpha',
+        'list-lower-roman',
+        'list-upper-alpha',
+        'list-upper-roman',
+        'text-gray-600',
         'from-blue-400',
         'to-blue-600',
         'from-green-400',
@@ -33,6 +42,17 @@ export default {
                 // 'neutral-900': '#131B28',
             }
         },
+        listStyleType: {
+            none: 'none',
+            disc: 'disc',
+            decimal: 'decimal',
+            square: 'square',
+            circle: 'circle',
+            'lower-alpha': 'lower-alpha',
+            'lower-roman': 'lower-roman',
+            'upper-alpha': 'upper-alpha',
+            'upper-roman': 'upper-roman',
+        }
     },
     plugins: [
         require('@tailwindcss/forms'),

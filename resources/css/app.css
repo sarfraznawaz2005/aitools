@@ -36,8 +36,12 @@
     margin: 0 0 5px;
 }
 
-.chatlist p {
-    margin: 1rem 0;
+.aibot-message-content {
+    width: 100% !important;
+    /*max-width: none !important;*/
+}
+.aibot-message-content > * {
+    max-width: none !important;
 }
 
 /* alpine titles */
