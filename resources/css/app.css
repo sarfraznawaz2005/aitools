@@ -41,6 +41,16 @@ pre {
     margin: 0 0 5px;
 }
 
+.mainSection h1 {
+    font-size: 1.5rem;
+    margin: 0 0 5px;
+}
+
+.mainSection h3 {
+    font-size: 1.1rem;
+    margin: 0 0 5px;
+}
+
 strong {
     font-weight: 400 !important;
 }

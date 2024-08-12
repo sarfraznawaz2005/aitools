@@ -68,7 +68,8 @@ class ChatBuddyChatAction
         $prompt = "You are a helpful and enthusiastic support assistant who can answer a given question.
                 Before answering, always refer to the conversation history to know what user is asking or
                 talking about. If provided conversation history does not contain any information about the
-                question then answer from your own knowledge Use markdown for your answer.
+                question then answer from your own knowledge Use markdown for your answer. If the user asks
+                same question again, try to give different answer each time.
 
                 Conversation History:\n$conversationHistory\n\n
                 Question: $userQuery->body

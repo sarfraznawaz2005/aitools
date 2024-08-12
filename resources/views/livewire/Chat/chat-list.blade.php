@@ -80,34 +80,47 @@
                                     </div>
                                     <!-- End Card -->
 
-                                    <!-- Button Group -->
-                                    <div class="flex justify-end">
-                                        <div class="mt-[-5px]">
-                                            <button type="button"
-                                                    x-data x-tooltip.raw="Copy"
-                                                    @click="copy"
-                                                    class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
-                                                <x-icons.copy class="hover:text-gray-600"/>
-                                                <span x-text="copied ? 'Copied' : ''"></span>
-                                            </button>
+                                    <div class="flex justify-between items-center">
 
-                                            <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data
-                                                              x-tooltip.raw="Delete"
-                                                              class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
-                                            </x-confirm-dialog>
+                                        @if ($message->llm)
+                                            {{--
+                                            <div class="inline-block mt-[-20px] ml-2">
+                                                <span class="text-gray-400 text-xs">{{$message->llm}}</span>
+                                            </div>
+                                            --}}
+                                            <div>&nbsp;</div>
+                                        @endif
 
-                                            @if($loop->last)
+                                        <!-- Button Group -->
+                                        <div class="flex justify-end">
+                                            <div class="mt-[-5px]">
                                                 <button type="button"
-                                                        wire:click="regenerate({{$message->id}})"
-                                                        x-data x-tooltip.raw="Regenerate"
-                                                        class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                    <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600"/>
+                                                        x-data x-tooltip.raw="Copy"
+                                                        @click="copy"
+                                                        class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                                    <x-icons.copy class="hover:text-gray-600"/>
+                                                    <span x-text="copied ? 'Copied' : ''"></span>
                                                 </button>
-                                            @endif
+
+                                                <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data
+                                                                  x-tooltip.raw="Delete"
+                                                                  class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
+                                                    <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
+                                                </x-confirm-dialog>
+
+                                                @if($loop->last)
+                                                    <button type="button"
+                                                            wire:click="regenerate({{$message->id}})"
+                                                            x-data x-tooltip.raw="Regenerate"
+                                                            class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
+                                                        <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600"/>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </div>
+                                        <!-- End Button Group -->
                                     </div>
-                                    <!-- End Button Group -->
+
                                 </div>
                             </li>
                         @endif

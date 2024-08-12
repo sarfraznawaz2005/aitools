@@ -13,6 +13,13 @@ class Conversation extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     protected $fillable = ['title'];
 
     protected static function boot(): void
@@ -54,6 +61,8 @@ class Conversation extends Model
         $title = preg_replace('/[^A-Za-z0-9] /', '', $title);
 
         $this->title = $title;
+        $this->updated_at = now();
+        $this->created_at = now();
         $this->save();
 
         return $title;
