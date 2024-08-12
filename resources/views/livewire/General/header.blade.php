@@ -12,7 +12,7 @@
 
                 <div class="inline-flex gap-4 items-center">
 
-                    <a href="{{route('home')}}" wire:navigate x-data x-tooltip.raw="Home">
+                    <a href="{{route('home')}}" wire:navigate>
                         <x-icons.home
                             class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
                     </a>
