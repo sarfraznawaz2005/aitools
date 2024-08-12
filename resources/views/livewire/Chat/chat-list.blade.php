@@ -33,10 +33,10 @@
                               }">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
-                                        <p class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;"
+                                        <span class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;"
                                            x-ref="content">
                                             {{$message->body}}
-                                        </p>
+                                        </span>
                                     </div>
                                 </div>
 
