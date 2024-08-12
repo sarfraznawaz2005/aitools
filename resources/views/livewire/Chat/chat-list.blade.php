@@ -207,7 +207,9 @@
             // order is important
             performCommonPageActions();
 
-            Livewire.dispatch('hideLoading');
+            setTimeout(() => {
+                Livewire.dispatch('hideLoading');
+            }, 1000);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -238,22 +240,14 @@
                     const messageElements = document.querySelectorAll('.aibot-message-content');
                     const lastMessage = messageElements[messageElements.length - 1];
 
-                    const indicator = document.getElementById('indicator');
-
                     performInProgressActions();
-
-                    indicator.style.display = 'block';
 
                     lastMessage.innerHTML = lastMessage.textContent.replace("{{App\Constants::CHATBUDDY_LOADING_STRING}}", "");
 
                     if (event.data === "<END_STREAMING_SSE>") {
                         source.close();
                         console.log("SSE closed");
-
                         performDoneActions();
-
-                        indicator.style.display = 'none';
-
                         return;
                     }
 
@@ -266,8 +260,6 @@
                 source.addEventListener("error", function () {
                     source.close();
                     performDoneActions();
-                    const indicator = document.getElementById('indicator');
-                    indicator.style.display = 'none';
                     console.log("SSE closed due to error");
                 });
             })

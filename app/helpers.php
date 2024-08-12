@@ -2,8 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * copy takes to bottom of page.
- * markdown server side.
  * download conversation as pdf
  * get chat ideas from other installed desktop apps
  * loading indicator for chat list and sidebar and other components
