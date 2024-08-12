@@ -201,6 +201,8 @@
 
             // order is important
             performCommonPageActions();
+
+            Livewire.dispatch('hideLoading');
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -215,6 +217,8 @@
             });
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
+
+                Livewire.dispatch('showLoading');
 
                 const chatTextInput = document.getElementById('query');
                 chatTextInput.setAttribute('disabled', 'disabled');
