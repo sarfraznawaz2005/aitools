@@ -172,7 +172,7 @@
 
         function performCommonPageActions() {
             window.scrollTo({
-                top: document.body.scrollHeight + 100000,
+                top: document.body.scrollHeight + 10000,
                 behavior: 'smooth'
             });
 
@@ -184,13 +184,14 @@
         }
 
         function performDoneActions() {
-            performCommonPageActions();
-
             Livewire.dispatch('refreshChatList');
 
             const chatTextInput = document.getElementById('query');
             chatTextInput.removeAttribute('disabled');
             chatTextInput.focus();
+
+            // order is important
+            performCommonPageActions();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
