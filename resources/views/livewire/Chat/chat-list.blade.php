@@ -33,8 +33,7 @@
                               }">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
-                                        <span class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;"
-                                              x-ref="content">
+                                        <span class="text-gray-600" x-ref="content">
                                             {{$message->body}}
                                         </span>
                                     </div>
@@ -89,8 +88,7 @@
                                         @endif
 
                                         <p>
-                                            <x-markdown x-ref="content" class="text-gray-600 aibot-message-content"
-                                                        style="font-size: 1rem; line-height: 1.8rem;">
+                                            <x-markdown x-ref="content" class="text-gray-500 aibot-message-content">
                                                 {!! $message->body !!}
                                             </x-markdown>
                                         </p>
@@ -172,7 +170,7 @@
 
         function scrollToBottom() {
             window.scrollTo({
-                top: document.body.scrollHeight,
+                top: document.body.scrollHeight + 10000,
                 behavior: 'smooth'
             });
         }
@@ -209,12 +207,15 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            observeChatList();
             performCommonPageActions();
+            observeChatList();
 
             Livewire.hook('message.received', () => performInProgressActions());
 
-            document.addEventListener('livewire:navigated', () => performInProgressActions());
+            document.addEventListener('livewire:navigated', () => {
+                performCommonPageActions();
+                observeChatList();
+            });
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
 
