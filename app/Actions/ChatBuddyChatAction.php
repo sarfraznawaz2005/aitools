@@ -83,12 +83,14 @@ class ChatBuddyChatAction
                 if (Constants::TEST_MODE) {
                     sleep(2);
 
+                    $text = "## Test Message\n\nThis is a **test** message with some *italic* text and a [link](https://google.com).";
+
                     echo "event: update\n";
-                    echo "data: " . json_encode('This is a test message') . "\n\n";
+                    echo "data: " . json_encode($text) . "\n\n";
                     ob_flush();
                     flush();
 
-                    $latestMessage->update(['body' => 'This is a test message']);
+                    $latestMessage->update(['body' => $text]);
 
                     return;
                 }

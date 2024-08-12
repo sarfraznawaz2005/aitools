@@ -2,8 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * recall message does not work after refresh
- * textarea loosed focus after validation and regenerate
  * edit message?
  * download conversation as pdf
  * get chat ideas from other installed desktop apps

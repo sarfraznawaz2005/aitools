@@ -16,7 +16,7 @@
 <div class="flex h-screen">
 
     <!-- main content start -->
-    <div class="flex-1 text-gray-600 dark:text-neutral-200">
+    <div class="flex-1 text-gray-600 dark:text-neutral-200 mainSection">
         <livewire:general.offline/>
 
         <x-flash/>

@@ -155,30 +155,6 @@
             });
         }
 
-        function performCommonPageActions() {
-            const textarea = document.getElementById('query');
-
-            window.scrollTo({
-                top: document.body.scrollHeight + 1000,
-                behavior: 'smooth'
-            });
-
-            if (textarea) {
-                textarea.focus();
-            }
-        }
-
-        function setElementsDisabledStatus(disabled = true) {
-            const textarea = document.getElementById('query');
-
-            if (disabled) {
-                textarea.setAttribute('disabled', 'disabled');
-            } else {
-                textarea.removeAttribute('disabled');
-            }
-        }
-
-        // make all links inside any .aibot-message-content open in default browser
         function openLinkExternally() {
             document.querySelectorAll('.aibot-message-content a').forEach(link => {
                 link.setAttribute('target', '_blank');
@@ -194,27 +170,51 @@
             */
         }
 
+        function performCommonPageActions() {
+            window.scrollTo({
+                top: document.body.scrollHeight + 100000,
+                behavior: 'smooth'
+            });
+
+            openLinkExternally();
+        }
+
+        function performInProgressActions() {
+            performCommonPageActions();
+        }
+
+        function performDoneActions() {
+            performCommonPageActions();
+
+            Livewire.dispatch('refreshChatList');
+
+            const chatTextInput = document.getElementById('query');
+            chatTextInput.removeAttribute('disabled');
+            chatTextInput.focus();
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
 
-
             performCommonPageActions();
-            openLinkExternally();
 
-            // livewire message listener
-            Livewire.hook('message.received', () => performCommonPageActions());
-            document.addEventListener('livewire:navigated', () => performCommonPageActions());
+            Livewire.hook('message.received', () => performInProgressActions());
+
+            document.addEventListener('livewire:navigated', () => performInProgressActions());
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
 
+                const chatTextInput = document.getElementById('query');
+                chatTextInput.setAttribute('disabled', 'disabled');
+
+                performInProgressActions();
+
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
-                    performCommonPageActions();
+                    performInProgressActions();
 
                     const indicator = document.getElementById('indicator');
 
                     indicator.style.display = 'block';
-
-                    setElementsDisabledStatus(true);
 
                     const messageElements = document.querySelectorAll('.aibot-message-content');
                     const lastMessage = messageElements[messageElements.length - 1];
@@ -224,11 +224,9 @@
                     if (event.data === "<END_STREAMING_SSE>") {
                         source.close();
                         console.log("SSE closed");
-                        performCommonPageActions();
-                        setElementsDisabledStatus(false);
                         indicator.style.display = 'none';
 
-                        Livewire.dispatch('refreshChatList');
+                        performDoneActions();
 
                         return;
                     }
@@ -236,15 +234,15 @@
                     const decodedData = decodeUnicode(JSON.parse(event.data));
                     lastMessage.innerHTML += decodedData;
 
-                    performCommonPageActions();
+                    performInProgressActions();
                 });
 
                 source.addEventListener("error", function (event) {
                     source.close();
                     const indicator = document.getElementById('indicator');
                     indicator.style.display = 'none';
-                    setElementsDisabledStatus(false);
                     console.log("SSE closed due to error");
+                    performDoneActions();
                 });
             })
         });
