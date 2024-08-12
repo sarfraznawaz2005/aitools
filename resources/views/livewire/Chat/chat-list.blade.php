@@ -74,18 +74,6 @@
                                 <div class="grow w-full max-w-none space-y-3">
                                     <!-- Card -->
                                     <div class="bg-white border border-gray-200 rounded-lg px-4 py-2">
-
-                                        @if($loop->last)
-                                            <div class="relative hidden" id="indicator" x-cloak>
-                                                <span class="flex absolute size-5 mt-1 right-0">
-                                                    <span
-                                                        class="animate-ping absolute inline-flex size-full rounded-full bg-green-400 opacity-75"></span>
-                                                    <span
-                                                        class="relative inline-flex rounded-full size-5 bg-green-500"></span>
-                                                </span>
-                                            </div>
-                                        @endif
-
                                         <x-markdown x-ref="content" class="text-gray-500 aibot-message-content prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
                                             {!! $message->body !!}
                                         </x-markdown>
@@ -184,6 +172,7 @@
                 }
 
                 performCommonPageActions();
+
                 Livewire.dispatch('showLoading');
             });
 
@@ -219,6 +208,7 @@
             observeChatList();
 
             Livewire.hook('message.received', () => performInProgressActions());
+            Livewire.hook('message.processed', () => performDoneActions());
 
             document.addEventListener('livewire:navigated', () => {
                 performCommonPageActions();
@@ -226,8 +216,6 @@
             });
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
-
-                Livewire.dispatch('showLoading');
 
                 const chatTextInput = document.getElementById('query');
                 chatTextInput.setAttribute('disabled', 'disabled');
