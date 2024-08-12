@@ -21,7 +21,7 @@
 
                     <!-- Dropdown -->
                     <div class="hs-dropdown [--placement:center] relative inline-flex items-center">
-                        <button id="hs-dropdown-account" x-data x-tooltip.raw="Menu" type="button"
+                        <button id="hs-dropdown-account" type="button"
                                 class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
                                 aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                             <x-icons.dots
