@@ -156,14 +156,16 @@
         }
 
         function performCommonPageActions() {
+            const textarea = document.getElementById('query');
+
             window.scrollTo({
                 top: document.body.scrollHeight + 1000,
                 behavior: 'smooth'
             });
 
-            document.getElementById('query').focus();
-
-            colorizeErrors();
+            if (textarea) {
+                textarea.focus();
+            }
         }
 
         function setElementsDisabledStatus(disabled = true) {
@@ -190,15 +192,6 @@
                 });
             });
             */
-        }
-
-        function colorizeErrors() {
-            document.querySelectorAll('.aibot-message-content').forEach(element => {
-                // if element text contains "foobar", apply red color to parent element
-                if (element.textContent.includes("Failed")) {
-                    element.parentElement.style.backgroundColor = '#f9cccc';
-                }
-            });
         }
 
         window.addEventListener('DOMContentLoaded', () => {
