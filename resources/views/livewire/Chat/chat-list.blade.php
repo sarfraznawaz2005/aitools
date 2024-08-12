@@ -1,4 +1,4 @@
-<div class="py-20 px-8">
+<div class="py-20 px-8 chatlist">
 
     <ul class="space-y-5">
 
