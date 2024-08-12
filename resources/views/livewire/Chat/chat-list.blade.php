@@ -210,14 +210,12 @@
 
                 const source = new EventSource("/chat-buddy/chat/" + $conversationId);
                 source.addEventListener("update", function (event) {
-                    performInProgressActions();
-
+                    const lastMessage = document.querySelector('.aibot-message-content:last-child');
                     const indicator = document.getElementById('indicator');
 
-                    indicator.style.display = 'block';
+                    performInProgressActions();
 
-                    const messageElements = document.querySelectorAll('.aibot-message-content');
-                    const lastMessage = messageElements[messageElements.length - 1];
+                    indicator.style.display = 'block';
 
                     lastMessage.innerHTML = lastMessage.innerHTML.replace("{{App\Constants::CHATBUDDY_LOADING_STRING}}", "");
 
@@ -237,7 +235,7 @@
                     performInProgressActions();
                 });
 
-                source.addEventListener("error", function (event) {
+                source.addEventListener("error", function () {
                     source.close();
                     const indicator = document.getElementById('indicator');
                     indicator.style.display = 'none';
