@@ -62,8 +62,11 @@ class Conversation extends Model
     // Create temp answer to show the user that the AI is typing
     public function createTempAImessage(): void
     {
+        $selectedModel = getChatBuddySelectedLLMModel();
+
         $this->messages()->create([
             'body' => Constants::CHATBUDDY_LOADING_STRING,
+            'llm' => $selectedModel->model_name . ' (' . $selectedModel->llm_type . ')',
             'conversation_id' => $this->id,
             'is_ai' => true,
             'created_at' => now(),

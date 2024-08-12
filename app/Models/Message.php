@@ -12,6 +12,7 @@ class Message extends Model
 
     public $fillable = [
         'body',
+        'llm',
         'is_ai',
     ];
 

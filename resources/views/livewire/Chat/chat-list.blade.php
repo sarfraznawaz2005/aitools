@@ -172,8 +172,6 @@
                 }
 
                 performCommonPageActions();
-
-                Livewire.dispatch('showLoading');
             });
 
             observer.observe(chatList, {childList: true, subtree: true});
@@ -216,6 +214,8 @@
             });
 
             window.Livewire.on('getAiResponse', ($conversationId) => {
+
+                Livewire.dispatch('showLoading');
 
                 const chatTextInput = document.getElementById('query');
                 chatTextInput.setAttribute('disabled', 'disabled');

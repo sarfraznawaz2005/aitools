@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->text('body');
+            $table->string('llm')->nullable();
             $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
             $table->boolean('is_ai')->default(false);
             $table->timestamps();

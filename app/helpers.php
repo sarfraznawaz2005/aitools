@@ -30,7 +30,7 @@ function hasApiKeysCreated()
     return ApiKey::hasApiKeys();
 }
 
-function getChatBuddyLLMProvider(): LlmProvider
+function getChatBuddySelectedLLMModel(): ApiKey
 {
     if (
         Setting::select('ChatBuddy')->has('selectedModel') &&
@@ -41,7 +41,12 @@ function getChatBuddyLLMProvider(): LlmProvider
         $model = ApiKey::whereActive()->first();
     }
 
-    return getLLM($model);
+    return $model;
+}
+
+function getChatBuddyLLMProvider(): LlmProvider
+{
+    return getLLM(getChatBuddySelectedLLMModel());
 }
 
 function AIChatFailed($result): string
