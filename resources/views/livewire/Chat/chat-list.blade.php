@@ -34,7 +34,7 @@
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
                                         <span class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;"
-                                           x-ref="content">
+                                              x-ref="content">
                                             {{$message->body}}
                                         </span>
                                     </div>
@@ -170,12 +170,26 @@
             */
         }
 
-        function performCommonPageActions() {
+        function scrollToBottom() {
             window.scrollTo({
-                top: document.body.scrollHeight + 10000,
+                top: document.body.scrollHeight,
                 behavior: 'smooth'
             });
+        }
 
+        function observeChatList() {
+            const chatList = document.querySelector('.chatlist ul');
+            if (!chatList) return;
+
+            const observer = new MutationObserver(() => {
+                performCommonPageActions();
+            });
+
+            observer.observe(chatList, {childList: true, subtree: true});
+        }
+
+        function performCommonPageActions() {
+            scrollToBottom();
             openLinkExternally();
         }
 
@@ -195,7 +209,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-
+            observeChatList();
             performCommonPageActions();
 
             Livewire.hook('message.received', () => performInProgressActions());
