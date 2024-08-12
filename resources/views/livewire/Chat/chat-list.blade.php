@@ -45,7 +45,7 @@
                                         <button type="button"
                                                 x-data x-tooltip.raw="Copy"
                                                 @click="copy"
-                                                class="inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                                class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
                                             <x-icons.copy class="hover:text-gray-600"/>
                                             <span x-text="copied ? 'Copied' : ''"></span>
                                         </button>
@@ -98,7 +98,7 @@
                                             <button type="button"
                                                     x-data x-tooltip.raw="Copy"
                                                     @click="copy"
-                                                    class="inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                                    class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
                                                 <x-icons.copy class="hover:text-gray-600"/>
                                                 <span x-text="copied ? 'Copied' : ''"></span>
                                             </button>
@@ -176,7 +176,12 @@
             const chatList = document.querySelector('.chatlist ul');
             if (!chatList) return;
 
-            const observer = new MutationObserver(() => {
+            const observer = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    if (mutation.target.closest('.ignore-mutation')) {
+                        return; // Ignore changes triggered by the copy button
+                    }
+                }
                 performCommonPageActions();
             });
 
