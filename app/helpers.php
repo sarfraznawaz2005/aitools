@@ -2,9 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * edit message for both human and ai, does not send new request to ai, just useful for ai context
- * delete all conversations button on sidebar similar to chatbox
- * clear all messages button
  * export as html, txt and markdown
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages

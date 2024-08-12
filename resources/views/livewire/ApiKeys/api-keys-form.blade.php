@@ -67,7 +67,17 @@
     <x-flash/>
 
     <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
-        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">API KEY</legend>
+        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
+            {{ $model->exists ? 'EDIT API KEY' : 'ADD API KEY'}}
+        </legend>
+
+        @if ($model->exists)
+            <button wire:click="resetForm"
+                    class="flex justify-center items-center py-1 px-4 mb-8 inline-block text-gray-600 bg-red-100 rounded hover:bg-red-200">
+                <x-icons.close class="size-5 mr-2 inline-block"/>
+                Cancel
+            </button>
+        @endif
 
         <!-- Select -->
         <div class="relative mb-3">
