@@ -33,7 +33,8 @@
                               }">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
-                                        <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base" x-ref="content">
+                                        <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base"
+                                              x-ref="content">
                                             {{$message->body}}
                                         </span>
                                     </div>
@@ -74,7 +75,8 @@
                                 <div class="grow w-full max-w-none space-y-3">
                                     <!-- Card -->
                                     <div class="bg-white border border-gray-200 rounded-lg px-4 py-2">
-                                        <x-markdown x-ref="content" class="text-gray-500 aibot-message-content prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
+                                        <x-markdown x-ref="content"
+                                                    class="text-gray-500 aibot-message-content prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
                                             {!! $message->body !!}
                                         </x-markdown>
                                     </div>
@@ -113,7 +115,8 @@
                                                             wire:click="regenerate({{$message->id}})"
                                                             x-data x-tooltip.raw="Regenerate"
                                                             class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                        <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600"/>
+                                                        <x-icons.refresh
+                                                            class="size-5 text-gray-500 hover:text-gray-600"/>
                                                     </button>
                                                 @endif
                                             </div>
@@ -203,8 +206,11 @@
             Livewire.dispatch('refreshChatList');
 
             const chatTextInput = document.getElementById('query');
-            chatTextInput.removeAttribute('disabled');
-            chatTextInput.focus();
+
+            if (typeof chatTextInput !== 'undefined') {
+                chatTextInput.removeAttribute('disabled');
+                chatTextInput.focus();
+            }
 
             // order is important
             performCommonPageActions();

@@ -2,7 +2,7 @@
     <div class="lg:hidden flex mb-2 sm:mb-3">
         <!-- Sidebar Toggle -->
         <button type="button"
-                class="p-2 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                class="p-2 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                 aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
                 aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
             <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -47,7 +47,9 @@
             });
 
             Livewire.on('focusInput', () => {
-                this.$refs.textarea.focus();
+                if (typeof this.$refs.textarea !== 'undefined') {
+                    this.$refs.textarea.focus();
+                }
             });
         }
     }"
@@ -103,7 +105,13 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:navigated', () => document.getElementById('query').focus());
+        document.addEventListener('livewire:navigated', () => {
+            const chatTextInput = document.getElementById('query');
+
+            if (typeof chatTextInput !== 'undefined') {
+                chatTextInput.focus();
+            }
+        });
     </script>
 
 </div>
