@@ -45,6 +45,10 @@
             this.$watch('$wire.query', (value) => {
                 this.adjustHeight();
             });
+
+            Livewire.on('focusInput', () => {
+                this.$refs.textarea.focus();
+            });
         }
     }"
          @submit-success="lastQuery = $wire.query">

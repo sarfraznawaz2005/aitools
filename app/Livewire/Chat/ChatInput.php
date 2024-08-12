@@ -61,6 +61,8 @@ class ChatInput extends Component
 
     public function render(): Application|View|Factory
     {
+        $this->dispatch('focusInput');
+
         return view('livewire.chat.chat-input');
     }
 }
