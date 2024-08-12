@@ -24,6 +24,10 @@ class Conversation extends Model
 
     public function addChatMessage(string $message, bool $isAi = false): Message
     {
+        // update conversation last used time
+        $this->updated_at = now();
+        $this->save();
+
         return $this->messages()->create([
             'body' => $message,
             'conversation_id' => $this->id,

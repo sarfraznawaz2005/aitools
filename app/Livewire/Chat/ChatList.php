@@ -28,10 +28,6 @@ class ChatList extends Component
         if ($conversation) {
             $this->conversation = $conversation;
             $this->messages = $conversation->messages->sortBy('id');
-
-            // Update last access time
-            $conversation->updated_at = now();
-            $conversation->save();
         }
     }
 

@@ -55,6 +55,7 @@ class ChatInput extends Component
         $this->conversation->addChatMessage($this->query);
 
         $this->dispatch('inputSaved');
+        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
 
         $this->reset('query');
     }
