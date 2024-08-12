@@ -179,10 +179,12 @@
             const observer = new MutationObserver((mutationsList) => {
                 for (const mutation of mutationsList) {
                     if (mutation.target.closest('.ignore-mutation')) {
-                        return; // Ignore changes triggered by the copy button
+                        return;
                     }
                 }
+
                 performCommonPageActions();
+                Livewire.dispatch('showLoading');
             });
 
             observer.observe(chatList, {childList: true, subtree: true});
