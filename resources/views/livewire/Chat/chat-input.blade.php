@@ -47,7 +47,7 @@
             });
 
             Livewire.on('focusInput', () => {
-                if (typeof this.$refs.textarea !== 'undefined') {
+                if (typeof this.$refs.textarea !== 'undefined' && this.$refs.textarea !== null) {
                     this.$refs.textarea.focus();
                 }
             });
@@ -108,7 +108,7 @@
         document.addEventListener('livewire:navigated', () => {
             const chatTextInput = document.getElementById('query');
 
-            if (typeof chatTextInput !== 'undefined') {
+            if (typeof chatTextInput !== 'undefined' && chatTextInput !== null) {
                 chatTextInput.focus();
             }
         });

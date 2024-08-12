@@ -207,7 +207,7 @@
 
             const chatTextInput = document.getElementById('query');
 
-            if (typeof chatTextInput !== 'undefined') {
+            if (typeof chatTextInput !== 'undefined' && chatTextInput !== null) {
                 chatTextInput.removeAttribute('disabled');
                 chatTextInput.focus();
             }
