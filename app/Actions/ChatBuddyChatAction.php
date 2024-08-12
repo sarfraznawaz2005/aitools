@@ -80,6 +80,19 @@ class ChatBuddyChatAction
 
             try {
 
+                if (Constants::TEST_MODE) {
+                    sleep(2);
+
+                    echo "event: update\n";
+                    echo "data: " . json_encode('This is a test message') . "\n\n";
+                    ob_flush();
+                    flush();
+
+                    $latestMessage->update(['body' => 'This is a test message']);
+
+                    return;
+                }
+
                 $consolidatedResponse = '';
 
                 $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {

@@ -78,7 +78,7 @@
                                         class="bg-white border border-gray-200 rounded-lg px-4 py-1 space-y-2 dark:bg-neutral-900 dark:border-neutral-700">
 
                                         @if($loop->last)
-                                            <div class="relative hidden" id="indicator">
+                                            <div class="relative hidden" id="indicator" x-cloak>
                                                 <span class="flex absolute size-5 mt-3 right-0">
                                                     <span
                                                         class="animate-ping absolute inline-flex size-full rounded-full bg-green-400 opacity-75"></span>
