@@ -12,7 +12,7 @@
 
                 <div class="flex justify-center align-center">
                     <span
-                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg font-medium bg-gray-100 text-gray-500">
+                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
                         📅 Conversation created {{$conversation->created_at->diffForHumans()}}
                     </span>
                 </div>
@@ -33,7 +33,7 @@
                               }">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
-                                        <span class="text-gray-600 xs:text-xs" x-ref="content">
+                                        <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base" x-ref="content">
                                             {{$message->body}}
                                         </span>
                                     </div>
