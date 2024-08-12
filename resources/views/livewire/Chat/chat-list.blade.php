@@ -217,7 +217,7 @@
 
                     indicator.style.display = 'block';
 
-                    lastMessage.innerHTML = lastMessage.innerHTML.replace("{{App\Constants::CHATBUDDY_LOADING_STRING}}", "");
+                    lastMessage.innerHTML = lastMessage.textContent.replace("{{App\Constants::CHATBUDDY_LOADING_STRING}}", "");
 
                     if (event.data === "<END_STREAMING_SSE>") {
                         source.close();
