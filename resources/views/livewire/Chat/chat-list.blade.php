@@ -11,7 +11,8 @@
             @if ($messages)
 
                 <div class="flex justify-center align-center">
-                    <span class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg font-medium bg-gray-100 text-gray-500">
+                    <span
+                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg font-medium bg-gray-100 text-gray-500">
                         📅 Conversation created {{$conversation->created_at->diffForHumans()}}
                     </span>
                 </div>
@@ -32,7 +33,8 @@
                               }">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
-                                        <p class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;" x-ref="content">
+                                        <p class="text-gray-600" style="font-size: 1rem; line-height: 1.8rem;"
+                                           x-ref="content">
                                             {{$message->body}}
                                         </p>
                                     </div>
@@ -50,7 +52,8 @@
                                         </button>
                                     </div>
                                     <div>
-                                        <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data x-tooltip.raw="Delete"
+                                        <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data
+                                                          x-tooltip.raw="Delete"
                                                           class="inline-flex items-center ml-3 text-sm rounded-full border border-transparent text-gray-500">
                                             <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
                                         </x-confirm-dialog>
@@ -77,8 +80,10 @@
                                         @if($loop->last)
                                             <div class="relative hidden" id="indicator">
                                                 <span class="flex absolute size-5 mt-3 right-0">
-                                                    <span class="animate-ping absolute inline-flex size-full rounded-full bg-green-400 opacity-75"></span>
-                                                    <span class="relative inline-flex rounded-full size-5 bg-green-500"></span>
+                                                    <span
+                                                        class="animate-ping absolute inline-flex size-full rounded-full bg-green-400 opacity-75"></span>
+                                                    <span
+                                                        class="relative inline-flex rounded-full size-5 bg-green-500"></span>
                                                 </span>
                                             </div>
                                         @endif
@@ -103,7 +108,8 @@
                                                 <span x-text="copied ? 'Copied' : ''"></span>
                                             </button>
 
-                                            <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data x-tooltip.raw="Delete"
+                                            <x-confirm-dialog :id="$message->id" using="deleteMessage" x-data
+                                                              x-tooltip.raw="Delete"
                                                               class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
                                                 <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
                                             </x-confirm-dialog>
@@ -113,9 +119,9 @@
                                                         wire:click="regenerate({{$message->id}})"
                                                         x-data x-tooltip.raw="Regenerate"
                                                         class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                    <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600" />
+                                                    <x-icons.refresh class="size-5 text-gray-500 hover:text-gray-600"/>
                                                 </button>
-                                           @endif
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- End Button Group -->
@@ -167,7 +173,6 @@
                 textarea.setAttribute('disabled', 'disabled');
             } else {
                 textarea.removeAttribute('disabled');
-                document.getElementById('query').focus();
             }
         }
 

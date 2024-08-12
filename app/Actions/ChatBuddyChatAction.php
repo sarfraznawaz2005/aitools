@@ -10,8 +10,28 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatBuddyChatAction
 {
-    public function __invoke(Conversation $conversation): StreamedResponse
+    public function __invoke(Conversation $conversation = null): StreamedResponse
     {
+        if (is_null($conversation)) {
+            return response()->stream(function () {
+
+                echo "event: update\n";
+                echo "data: " . json_encode("Error, conversation has been deleted!") . "\n\n";
+                ob_flush();
+                flush();
+
+                echo "event: update\n";
+                echo "data: <END_STREAMING_SSE>\n\n";
+                ob_flush();
+                flush();
+
+            }, 200, [
+                'Cache-Control' => 'no-cache',
+                'X-Accel-Buffering' => 'no',
+                'Content-Type' => 'text/event-stream',
+            ]);
+        }
+
         $llm = getChatBuddyLLMProvider();
 
         $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
