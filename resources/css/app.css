@@ -36,12 +36,27 @@
     margin: 0 0 5px;
 }
 
-.aibot-message-content {
-    width: 100% !important;
-    /*max-width: none !important;*/
-}
-.aibot-message-content > * {
+.prose {
     max-width: none !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+.prose > * {
+    max-width: none !important;
+}
+
+.prose pre,
+.prose code {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.prose pre code {
+    display: inline-block;
+    min-width: 100%;
 }
 
 /* alpine titles */

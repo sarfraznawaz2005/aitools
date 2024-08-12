@@ -37,21 +37,41 @@ export default {
             sans: ['sans-serif'],
         },
         extend: {
+            utilities: {
+                '.word-break-all': {
+                    'word-break': 'break-word',
+                    'overflow-wrap': 'break-word'
+                },
+                '.scrollbar-code': {
+                    '&::-webkit-scrollbar': {
+                        height: '8px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        backgroundColor: 'rgba(156, 163, 175, 0.5)',
+                        borderRadius: '4px',
+                    },
+                },
+                '.break-long-words': {
+                    'word-break': 'break-word',
+                    'overflow-wrap': 'break-word',
+                    'hyphens': 'auto',
+                },
+            },
             colors: {
                 // 'dark-text': '#353f55',
                 // 'neutral-900': '#131B28',
+            },
+            listStyleType: {
+                none: 'none',
+                disc: 'disc',
+                decimal: 'decimal',
+                square: 'square',
+                circle: 'circle',
+                'lower-alpha': 'lower-alpha',
+                'lower-roman': 'lower-roman',
+                'upper-alpha': 'upper-alpha',
+                'upper-roman': 'upper-roman',
             }
-        },
-        listStyleType: {
-            none: 'none',
-            disc: 'disc',
-            decimal: 'decimal',
-            square: 'square',
-            circle: 'circle',
-            'lower-alpha': 'lower-alpha',
-            'lower-roman': 'lower-roman',
-            'upper-alpha': 'upper-alpha',
-            'upper-roman': 'upper-roman',
         }
     },
     plugins: [
