@@ -99,9 +99,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.addEventListener('livewire:navigated', () => document.getElementById('query').focus());
-        });
+        document.addEventListener('livewire:navigated', () => document.getElementById('query').focus());
     </script>
 
 </div>
