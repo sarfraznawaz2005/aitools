@@ -55,13 +55,13 @@
                                    class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full"
                                    href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
-                                    <span x-ref="titleDisplay">
+                                    <span class="max-w-48 truncate whitespace-nowrap inline-block">
                                         @if($conversationItem->favorite)
                                             <x-icons.star class="inline-block text-gray-500 size-4" viewBox="0 0 24 24" />
                                         @endif
 
                                         @if($conversationItem->title)
-                                            {{Str::limit($conversationItem->title, 25)}}
+                                            {{$conversationItem->title}}
                                         @else
                                             Conversation #{{$conversationItem->id}}
                                         @endif
