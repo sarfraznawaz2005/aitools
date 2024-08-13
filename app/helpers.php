@@ -2,7 +2,8 @@
 /*
  * TODO
  * global disabler until api key is saved
- * tap onto markdown renderer, look for events
+ * chunks markdown
+ * compress
  * export as html, txt and markdown
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
@@ -59,4 +60,11 @@ function AIChatFailed($result): string
     }
 
     return '';
+}
+
+function htmlToText($html): string
+{
+    $html = strip_tags($html);
+
+    return preg_replace('/\s+/', ' ', $html);
 }

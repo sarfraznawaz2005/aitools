@@ -6,6 +6,7 @@ use App\Constants;
 use App\Models\Conversation;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatBuddyChatAction
@@ -32,6 +33,7 @@ class ChatBuddyChatAction
             ]);
         }
 
+        $markdown = app(MarkdownRenderer::class);
         $llm = getChatBuddyLLMProvider();
 
         $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
@@ -59,7 +61,7 @@ class ChatBuddyChatAction
         foreach ($latestMessages as $message) {
             $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
             if (!in_array($formattedMessage, $uniqueMessages)) {
-                $uniqueMessages[] = $formattedMessage;
+                $uniqueMessages[] = htmlToText($formattedMessage);
             }
         }
 
@@ -77,7 +79,7 @@ class ChatBuddyChatAction
 
         //Log::info($prompt);
 
-        return response()->stream(function () use ($llm, $latestMessages, $latestMessage, $userQuery, $prompt) {
+        return response()->stream(function () use ($markdown, $llm, $latestMessages, $latestMessage, $userQuery, $prompt) {
 
             try {
 
@@ -91,7 +93,7 @@ class ChatBuddyChatAction
                     ob_flush();
                     flush();
 
-                    $latestMessage->update(['body' => $text]);
+                    $latestMessage->update(['body' => $markdown->toHtml($text)]);
 
                     return;
                 }
@@ -108,7 +110,7 @@ class ChatBuddyChatAction
                 });
 
                 //Log::info("consolidatedResponse: $consolidatedResponse");
-                $latestMessage->update(['body' => $consolidatedResponse]);
+                $latestMessage->update(['body' => $markdown->toHtml($consolidatedResponse)]);
 
             } catch (Exception $e) {
                 Log::error(__CLASS__ . ': ' . $e->getMessage());

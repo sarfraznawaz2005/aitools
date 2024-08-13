@@ -44,7 +44,7 @@ class Sidebar extends Component
             $this->success('Conversation favorited successfully.');
         }
 
-        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+        $this->dispatch('conversationsUpdated');
     }
 
     public function rename(Conversation $conversation, $title): void
@@ -64,7 +64,7 @@ class Sidebar extends Component
 
         $conversation->update(['title' => $title]);
 
-        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+        $this->dispatch('conversationsUpdated');
 
         $this->success('Conversation re-named successfully.');
     }
@@ -77,7 +77,7 @@ class Sidebar extends Component
         if ($this->conversation && $this->conversation->id === $conversation->id) {
             $this->redirect(route(config('tools.chat-buddy.route')), true);
         } else {
-            $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+            $this->dispatch('conversationsUpdated');
 
             $this->success('Conversation deleted successfully.');
         }
