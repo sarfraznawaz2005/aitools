@@ -7,6 +7,7 @@
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
  * chat with pdf
+ * https://www.youtube.com/watch?v=7rYR_l9oqQg
  * get other tools idea from eteam ai
  * */
 
