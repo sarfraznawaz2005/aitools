@@ -27,7 +27,8 @@ class ChatList extends Component
     {
         if ($conversation) {
             $this->conversation = $conversation;
-            $this->messages = $conversation->messages->sortBy('id');
+
+            $this->refresh();
         }
     }
 
