@@ -2,6 +2,7 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * headings sizes
  * chunks markdown
  * export as html, txt and markdown
  * loading indicator for chat list and sidebar and other components
