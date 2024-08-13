@@ -36,7 +36,7 @@ class Conversation extends Model
         $this->save();
 
         return $this->messages()->create([
-            'body' => $message,
+            'body' => nl2br($message),
             'conversation_id' => $this->id,
             'is_ai' => $isAi,
             'created_at' => now(),

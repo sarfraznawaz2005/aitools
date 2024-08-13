@@ -15,7 +15,7 @@
 
 .aibot-message-content a {
     color: rgb(59 130 246);
-    text-decoration: underline;
+    text-decoration: none !important;
 }
 
 .notyf__toast {
@@ -29,6 +29,30 @@
 pre {
     background: #f3f4f6 !important;
     color: #222 !important;
+}
+
+.chatlist h1 {
+    font-size: 1.5rem;
+    margin: 0 0 5px;
+}
+
+.chatlist h2 {
+    font-size: 1.25rem;
+    margin: 0 0 5px;
+}
+
+.chatlist h1 {
+    font-size: 1.5rem;
+    margin: 0 0 5px;
+}
+
+.chatlist h3 {
+    font-size: 1.1rem;
+    margin: 0 0 5px;
+}
+
+strong {
+    font-weight: 600 !important;
 }
 
 .prose {

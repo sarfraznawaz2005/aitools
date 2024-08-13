@@ -60,6 +60,7 @@ class ChatBuddyChatAction
         $uniqueMessages = [];
         foreach ($latestMessages as $message) {
             $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
+
             if (!in_array($formattedMessage, $uniqueMessages)) {
                 $uniqueMessages[] = htmlToText($formattedMessage);
             }

@@ -35,7 +35,7 @@
                                     <div class="inline-block bg-blue-100 rounded-lg px-4 py-2 shadow-sm">
                                         <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base"
                                               x-ref="content">
-                                            {{$message->body}}
+                                            {!! $message->body !!}
                                         </span>
                                     </div>
                                 </div>
