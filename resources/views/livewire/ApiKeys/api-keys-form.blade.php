@@ -1,4 +1,4 @@
-<div x-data="{ llm_type: @entangle('llm_type') }">
+<div>
 
     @if ($apiKeys && count($apiKeys))
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
@@ -81,7 +81,7 @@
 
         <!-- Select -->
         <div class="relative mb-3">
-            <select x-model="llm_type" wire:model="llm_type" id="llm_type"
+            <select wire:model="llm_type" id="llm_type"
                     class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600">
                 <option value="">Choose LLM</option>
                 <option value="OpenAI">OpenAI</option>
@@ -92,7 +92,7 @@
         <!-- End Select -->
 
         <!-- Floating Input -->
-        <div class="relative mb-3" x-show="llm_type === 'Ollama'">
+        <div class="relative mb-3" x-show="$wire.llm_type === 'Ollama'">
             <input type="url" wire:model="base_url"
                    id="base_url"
                    placeholder="http://127.0.0.1:11434"
