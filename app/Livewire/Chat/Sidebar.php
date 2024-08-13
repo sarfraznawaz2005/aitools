@@ -19,16 +19,13 @@ class Sidebar extends Component
 
     protected $listeners = ['conversationsUpdated' => '$refresh'];
 
-    public function boot(): void
+    public function render(): View|Application|Factory
     {
         $this->conversations = Conversation::query()
             ->orderByDesc('updated_at')
             ->orderByDesc('id')
             ->get();
-    }
 
-    public function render(): View|Application|Factory
-    {
         return view('livewire.chat.sidebar');
     }
 

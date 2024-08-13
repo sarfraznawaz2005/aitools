@@ -105,7 +105,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <x-confirm-dialog :id="$conversationItem->id" using="delete" title="Delete"
+                                        <x-confirm-dialog call="delete({{$conversationItem->id}})" title="Delete"
                                                           class="pr-3 block py-2 text-sm bg-white hover:bg-gray-100 w-full">
                                             <x-icons.delete class="inline-block mr-2 text-red-500"/>
                                             Delete

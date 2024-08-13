@@ -1,13 +1,20 @@
 <?php
 
-use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension;
+use League\CommonMark\Extension\Embed\Bridge\OscaroteroEmbedAdapter;
+use League\CommonMark\Extension\Embed\EmbedExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
+use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\Extension\Table\Table;
+use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 
 return [
     'code_highlighting' => [
@@ -86,6 +93,30 @@ return [
                 'target' => '_blank',
             ],
         ],
+        'disallowed_raw_html' => [
+            'disallowed_tags' => ['title', 'textarea', 'style', 'xmp', 'noembed', 'noframes', 'script', 'plaintext'],
+        ],
+        'embed' => [
+            'adapter' => new OscaroteroEmbedAdapter(), // See the "Adapter" documentation below
+            'allowed_domains' => ['youtube.com', 'twitter.com', 'github.com', 'vimeo.com'],
+            'fallback' => 'link',
+        ],
+        'footnote' => [
+            'backref_class' => 'footnote-backref',
+            'backref_symbol' => '↩',
+            'container_add_hr' => true,
+            'container_class' => 'footnotes',
+            'ref_class' => 'footnote-ref',
+            'ref_id_prefix' => 'fnref:',
+            'footnote_class' => 'footnote',
+            'footnote_id_prefix' => 'fn:',
+        ],
+        'smartpunct' => [
+            'double_quote_opener' => '“',
+            'double_quote_closer' => '”',
+            'single_quote_opener' => '‘',
+            'single_quote_closer' => '’',
+        ],
     ],
 
     /*
@@ -124,10 +155,13 @@ return [
      * More info: https://commonmark.thephpleague.com/2.4/extensions/overview/
      */
     'extensions' => [
-        AutolinkExtension::class,
+        GithubFlavoredMarkdownExtension::class,
         ExternalLinkExtension::class,
         DefaultAttributesExtension::class,
-        GithubFlavoredMarkdownExtension::class,
+        EmbedExtension::class,
+        FootnoteExtension::class,
+        FrontMatterExtension::class,
+        SmartPunctExtension::class,
     ],
 
     /*
