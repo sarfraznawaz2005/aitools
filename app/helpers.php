@@ -4,7 +4,10 @@
  * global disabler until api key is saved
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
+ * Tips notifier should support multiple tips
  * chat with pdf
+ * user can create prompts and use and do things like idea generator, hours estimaot, etc
+ * DBTalk - https://ai.eteamprojects.com/tools/talk-database/index.php
  * https://www.youtube.com/watch?v=7rYR_l9oqQg
  * get other tools idea from eteam ai
  * */
