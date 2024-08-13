@@ -1,38 +1,4 @@
-@php
-    use League\CommonMark\Environment\Environment;
-     use League\CommonMark\Extension\Autolink\AutolinkExtension;
-     use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-     use League\CommonMark\MarkdownConverter;
-@endphp
 <x-layouts.app :title="'Home'">
-
-    <?php
-
-
-
-
-// Define your configuration, if needed
-    $config = [
-        'autolink' => [
-            'allowed_protocols' => ['https'], // defaults to ['https', 'http', 'ftp']
-            'default_protocol' => 'https', // defaults to 'http'
-        ],
-    ];
-
-// Configure the Environment with all the CommonMark parsers/renderers
-    $environment = new Environment($config);
-    $environment->addExtension(new CommonMarkCoreExtension());
-
-// Add this extension
-    $environment->addExtension(new AutolinkExtension());
-
-// Instantiate the converter engine and start converting some Markdown!
-    $converter = new MarkdownConverter($environment);
-    echo $converter->convert('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
-
-
-    exit;
-    ?>
 
     <div class="flex mt-8 flex-row justify-center items-center mb-4 mx-auto" wire:offline wire:key="offline-$id"
          style="margin-left: 23%;">
