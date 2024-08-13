@@ -23,15 +23,6 @@ class ChatList extends Component
 
     protected $listeners = ['refreshChatList' => '$refresh'];
 
-    public function mount($conversation = null): void
-    {
-        if ($conversation) {
-            $this->conversation = $conversation;
-
-            $this->refresh();
-        }
-    }
-
     #[On('inputSaved')]
     public function refreshMessagesByInput(): void
     {
@@ -81,6 +72,8 @@ class ChatList extends Component
 
     public function render(): View|Application|Factory
     {
+        $this->refresh();
+
         return view('livewire.chat.chat-list');
     }
 }
