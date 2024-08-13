@@ -10,7 +10,7 @@
         <div class="h-full overflow-y-auto flex-1">
 
             <!-- List -->
-            <ul class="space-y-1.5">
+            <ul class="space-y-1">
 
                 @if(hasApiKeysCreated())
                     <li class="p-4">
@@ -52,7 +52,8 @@
                             <div class="flex justify-between">
                                 <a wire:navigate
                                    x-show="!editable"
-                                   class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full"
+                                   class="items-center py-3 px-3 flex-nowrap text-sm text-gray-700 block w-full"
+                                   style="padding-bottom: 5px;"
                                    href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
                                     <span class="max-w-48 truncate whitespace-nowrap inline-block">
@@ -87,7 +88,7 @@
                             <div x-cloak x-show="openDropdown === {{$conversationItem->id}}"
                                  @click.away="openDropdown = null"
                                  class="absolute right-[4px] bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
-                                <ul class="py-1">
+                                <ul>
                                     <li>
                                         <a href="#"
                                            wire:click.prevent="toggleFavorite({{$conversationItem->id}}); openDropdown = null;"
