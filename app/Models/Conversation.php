@@ -71,6 +71,10 @@ class Conversation extends Model
     // Create temp answer to show the user that the AI is typing
     public function createTempAImessage(): void
     {
+        // update conversation last used time
+        $this->updated_at = now();
+        $this->save();
+
         $selectedModel = getChatBuddySelectedLLMModel();
 
         $this->messages()->create([

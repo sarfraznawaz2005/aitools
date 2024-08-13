@@ -3,7 +3,6 @@
  * TODO
  * global disabler until api key is saved
  * chunks markdown
- * compress
  * export as html, txt and markdown
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages

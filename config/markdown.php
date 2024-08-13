@@ -1,8 +1,13 @@
 <?php
 
-use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
+use League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\Table\Table;
 
 return [
     'code_highlighting' => [
@@ -38,6 +43,10 @@ return [
      * More info: https://spatie.be/docs/laravel-markdown/v1/using-the-blade-component/passing-options-to-commonmark
      */
     'commonmark_options' => [
+        'autolink' => [
+            'allowed_protocols' => ['https', 'http'], // defaults to ['https', 'http', 'ftp']
+            'default_protocol' => 'https', // defaults to 'http'
+        ],
         'external_link' => [
             'internal_hosts' => 'www.example.com', // TODO: Don't forget to set this!
             'open_in_new_window' => true,
@@ -45,6 +54,37 @@ return [
             'nofollow' => '',
             'noopener' => 'external',
             'noreferrer' => 'external',
+        ],
+        'default_attributes' => [
+            Strong::class => [
+                'class' => 'font-medium',
+            ],
+            Heading::class => [
+                'class' => static function (Heading $node) {
+                    if ($node->getLevel() === 1) {
+                        return 'text-4xl';
+                    } elseif ($node->getLevel() === 2) {
+                        return 'text-3xl';
+                    } elseif ($node->getLevel() === 3) {
+                        return 'text-2xl';
+                    } elseif ($node->getLevel() === 4) {
+                        return 'text-xl';
+                    } elseif ($node->getLevel() === 5) {
+                        return 'text-lg';
+                    } elseif ($node->getLevel() === 6) {
+                        return 'text-base';
+                    } else {
+                        return null;
+                    }
+                },
+            ],
+            Table::class => [
+                'class' => 'table',
+            ],
+            Link::class => [
+                'class' => 'hover:text-blue-700 focus:outline-none',
+                'target' => '_blank',
+            ],
         ],
     ],
 
@@ -84,7 +124,9 @@ return [
      * More info: https://commonmark.thephpleague.com/2.4/extensions/overview/
      */
     'extensions' => [
+        AutolinkExtension::class,
         ExternalLinkExtension::class,
+        DefaultAttributesExtension::class,
         GithubFlavoredMarkdownExtension::class,
     ],
 

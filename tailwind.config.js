@@ -5,6 +5,7 @@ export default {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        "./resources/**/*.css",
         "./storage/framework/views/*.php",
         "node_modules/preline/dist/*.js",
     ],
@@ -31,6 +32,7 @@ export default {
         'bg-green-500',
         'bg-yellow-500',
         'bg-red-500',
+        'marker:text-blue-600',
     ],
     theme: {
         fontFamily: {

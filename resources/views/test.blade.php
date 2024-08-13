@@ -1,28 +1,34 @@
+@php
+    use League\CommonMark\Environment\Environment;
+     use League\CommonMark\Extension\Autolink\AutolinkExtension;
+     use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+     use League\CommonMark\MarkdownConverter;
+@endphp
 <x-layouts.app :title="'Home'">
 
     <?php
 
 
-$markdown = <<<'MARKDOWN'
-Okay, here's a sample table with 10 rows of employee details:
-
-| Employee ID | First Name | Last Name | Department | Job Title | Salary | Start Date |
-|---|---|---|---|---|---|---|
-| 12345 | John | Smith | Marketing | Marketing Manager | $80,000 | 2020-01-15 |
-| 67890 | Jane | Doe | Sales | Sales Representative | $55,000 | 2021-03-22 |
-| 11122 | Michael | Johnson | Finance | Accountant | $65,000 | 2019-07-08 |
-| 33445 | Emily | Brown | Human Resources | HR Specialist | $50,000 | 2022-05-10 |
-| 55678 | David | Wilson | IT | Software Engineer | $90,000 | 2018-11-01 |
-| 99001 | Jessica | Davis | Operations | Operations Manager | $75,000 | 2020-09-18 |
-| 22334 | Christopher | Miller | Legal | Legal Counsel | $100,000 | 2017-04-25 |
-| 77889 | Sarah | Jones | Customer Service | Customer Service Representative | $45,000 | 2021-12-12 |
-| 44556 | Daniel | Garcia | Engineering | Project Manager | $85,000 | 2019-02-15 |
-| 88990 | Jennifer | Rodriguez | Marketing | Marketing Coordinator | $58,000 | 2022-08-01 |
-
-MARKDOWN;
 
 
-echo app(Spatie\LaravelMarkdown\MarkdownRenderer::class)->toHtml($markdown);
+// Define your configuration, if needed
+    $config = [
+        'autolink' => [
+            'allowed_protocols' => ['https'], // defaults to ['https', 'http', 'ftp']
+            'default_protocol' => 'https', // defaults to 'http'
+        ],
+    ];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+    $environment = new Environment($config);
+    $environment->addExtension(new CommonMarkCoreExtension());
+
+// Add this extension
+    $environment->addExtension(new AutolinkExtension());
+
+// Instantiate the converter engine and start converting some Markdown!
+    $converter = new MarkdownConverter($environment);
+    echo $converter->convert('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
 
 
     exit;
