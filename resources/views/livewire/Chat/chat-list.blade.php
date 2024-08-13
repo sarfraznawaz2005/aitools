@@ -10,27 +10,27 @@
 
             @if ($messages)
 
-                <div class="flex justify-center align-center">
+                <li>
+                    <div class="flex justify-center align-center">
                     <span
                         class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
                         📅 Conversation created {{$conversation->created_at->diffForHumans()}}
                     </span>
-                </div>
+                    </div>
+                </li>
 
                 @forelse($messages as $message)
-                    <div wire:key="{{$message->id}}">
-
                         @if(!$message->is_ai)
                             <li class="my-4" x-data="{
-                                copied: false,
-                                copy () {
-                                  $clipboard($refs.content.innerText)
-                                  this.copied = true
-                                  setTimeout(() => {
-                                    this.copied = false
-                                  }, 1000)
-                                }
-                              }">
+                            copied: false,
+                            copy () {
+                              $clipboard($refs.content.innerText)
+                              this.copied = true
+                              setTimeout(() => {
+                                this.copied = false
+                              }, 1000)
+                            }
+                          }">
                                 <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
                                     <div class="inline-block bg-gray-200 rounded-lg px-4 py-2 shadow-sm">
                                         <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base"
@@ -63,15 +63,15 @@
                             </li>
                         @else
                             <li class="flex gap-x-2 sm:gap-x-4 my-8" x-data="{
-                                copied: false,
-                                copy () {
-                                  $clipboard($refs.content.innerText)
-                                  this.copied = true
-                                  setTimeout(() => {
-                                    this.copied = false
-                                  }, 1000)
-                                }
-                              }">
+                            copied: false,
+                            copy () {
+                              $clipboard($refs.content.innerText)
+                              this.copied = true
+                              setTimeout(() => {
+                                this.copied = false
+                              }, 1000)
+                            }
+                          }">
                                 <div class="grow w-full max-w-none space-y-3">
                                     <!-- Card -->
                                     <div class="bg-white border border-gray-200 rounded-lg px-4 py-2">
@@ -128,20 +128,17 @@
                             </li>
                         @endif
 
-                    </div>
                 @empty
-
-                    <div
+                    <li
                         class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
                         Start New Conversation
-                    </div>
-
+                    </li>
                 @endforelse
             @else
-                <div
+                <li
                     class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
                     Start New Conversation
-                </div>
+                </li>
             @endif
         @endif
 
