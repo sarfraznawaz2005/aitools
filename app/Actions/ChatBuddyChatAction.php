@@ -84,7 +84,7 @@ class ChatBuddyChatAction
             try {
 
                 if (Constants::TEST_MODE) {
-                    sleep(2);
+                    sleep(1);
 
                     $text = "## Test Message\n\nThis is a **test** message with some *italic* text and a [link](https://google.com).";
 
