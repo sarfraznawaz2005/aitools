@@ -104,7 +104,7 @@
                                                     <span x-text="copied ? 'Copied' : ''"></span>
                                                 </button>
 
-                                                <x-confirm-dialog call="deleteMessage{{$message->id}}" x-data
+                                                <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
                                                                   x-tooltip.raw="Delete"
                                                                   class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
                                                     <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
