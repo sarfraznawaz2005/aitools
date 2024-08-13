@@ -2,8 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * chunks markdown
- * export as html, txt and markdown
  * loading indicator for chat list and sidebar and other components
  * make sure there are no errors on console on all pages
  * chat with pdf
@@ -61,9 +59,30 @@ function AIChatFailed($result): string
     return '';
 }
 
-function htmlToText($html): string
+function htmlToText($html, $removeWhiteSpace = true): string
 {
-    $html = strip_tags($html);
+    // Replace <br> tags with newlines
+    $text = preg_replace('/<br\s*\/?>/i', "\n", $html);
 
-    return preg_replace('/\s+/', ' ', $html);
+    // Replace </p> tags with double newlines
+    $text = preg_replace('/<\/p>/i', "\n\n", $text);
+
+    // Remove all remaining HTML tags
+    $text = strip_tags($text);
+
+    // Decode HTML entities
+    $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+    // Normalize line breaks
+    $text = preg_replace('/\r\n|\r/', "\n", $text);
+
+    // Replace any combination of more than two newlines and whitespace with two newlines
+    $text = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $text);
+
+    // Remove extra whitespace
+    if ($removeWhiteSpace) {
+        $text = preg_replace('/\s+/', ' ', $text);
+    }
+
+    return trim($text);
 }

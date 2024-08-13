@@ -20,8 +20,8 @@
                 </li>
 
                 @forelse($messages as $message)
-                        @if(!$message->is_ai)
-                            <li wire:key="chatlist-message{{$message->id}}" class="my-4" x-data="{
+                    @if(!$message->is_ai)
+                        <li wire:key="chatlist-message{{$message->id}}" class="my-4" x-data="{
                             copied: false,
                             copy () {
                               $clipboard($refs.content.innerText)
@@ -31,38 +31,38 @@
                               }, 1000)
                             }
                           }">
-                                <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
-                                    <div class="inline-block bg-blue-100 rounded-lg px-4 py-2 shadow-sm">
+                            <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
+                                <div class="inline-block bg-blue-100 rounded-lg px-4 py-2 shadow-sm">
                                         <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base"
                                               x-ref="content">
                                             {!! $message->body !!}
                                         </span>
-                                    </div>
                                 </div>
+                            </div>
 
-                                <!-- Button Group -->
-                                <div class="flex justify-end mt-2">
-                                    <div>
-                                        <button type="button"
-                                                x-data x-tooltip.raw="Copy"
-                                                @click="copy"
-                                                class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
-                                            <x-icons.copy class="hover:text-gray-600"/>
-                                            <span x-text="copied ? 'Copied' : ''"></span>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
-                                                          x-tooltip.raw="Delete"
-                                                          class="inline-flex items-center ml-3 text-sm rounded-full border border-transparent text-gray-500">
-                                            <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
-                                        </x-confirm-dialog>
-                                    </div>
+                            <!-- Button Group -->
+                            <div class="flex justify-end mt-2">
+                                <div>
+                                    <button type="button"
+                                            x-data x-tooltip.raw="Copy"
+                                            @click="copy"
+                                            class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                        <x-icons.copy class="hover:text-gray-600"/>
+                                        <span x-text="copied ? 'Copied' : ''"></span>
+                                    </button>
                                 </div>
-                                <!-- End Button Group -->
-                            </li>
-                        @else
-                            <li wire:key="chatlist-message{{$message->id}}" class="flex gap-x-2 sm:gap-x-4 my-8" x-data="{
+                                <div>
+                                    <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
+                                                      x-tooltip.raw="Delete"
+                                                      class="inline-flex items-center ml-3 text-sm rounded-full border border-transparent text-gray-500">
+                                        <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
+                                    </x-confirm-dialog>
+                                </div>
+                            </div>
+                            <!-- End Button Group -->
+                        </li>
+                    @else
+                        <li wire:key="chatlist-message{{$message->id}}" class="flex gap-x-2 sm:gap-x-4 my-8" x-data="{
                             copied: false,
                             copy () {
                               $clipboard($refs.content.innerText)
@@ -72,61 +72,61 @@
                               }, 1000)
                             }
                           }">
-                                <div class="grow w-full max-w-none space-y-3">
-                                    <!-- Card -->
-                                    <div class="bg-white border border-gray-200 rounded-lg px-4 py-2">
-                                        <div x-ref="content"
-                                                    class="text-gray-500 aibot-message-content prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
-                                            {!! $message->body !!}
-                                        </div>
+                            <div class="grow w-full max-w-none space-y-3">
+                                <!-- Card -->
+                                <div class="bg-white border border-gray-200 rounded-lg px-4 py-2">
+                                    <div x-ref="content"
+                                         class="text-gray-500 aibot-message-content prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
+                                        {!! $message->body !!}
                                     </div>
-                                    <!-- End Card -->
-
-                                    <div class="flex justify-between items-center">
-
-                                        @if ($message->llm)
-                                            {{--
-                                            <div class="inline-block mt-[-20px] ml-2">
-                                                <span class="text-gray-400 text-xs">{{$message->llm}}</span>
-                                            </div>
-                                            --}}
-                                            <div>&nbsp;</div>
-                                        @endif
-
-                                        <!-- Button Group -->
-                                        <div class="flex justify-end">
-                                            <div class="mt-[-5px]">
-                                                <button type="button"
-                                                        x-data x-tooltip.raw="Copy"
-                                                        @click="copy"
-                                                        class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
-                                                    <x-icons.copy class="hover:text-gray-600"/>
-                                                    <span x-text="copied ? 'Copied' : ''"></span>
-                                                </button>
-
-                                                <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
-                                                                  x-tooltip.raw="Delete"
-                                                                  class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                    <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
-                                                </x-confirm-dialog>
-
-                                                @if($loop->last)
-                                                    <button type="button"
-                                                            wire:click="regenerate({{$message->id}})"
-                                                            x-data x-tooltip.raw="Regenerate"
-                                                            class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                        <x-icons.refresh
-                                                            class="size-5 text-gray-500 hover:text-gray-600"/>
-                                                    </button>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- End Button Group -->
-                                    </div>
-
                                 </div>
-                            </li>
-                        @endif
+                                <!-- End Card -->
+
+                                <div class="flex justify-between items-center">
+
+                                    @if ($message->llm)
+                                        {{--
+                                        <div class="inline-block mt-[-20px] ml-2">
+                                            <span class="text-gray-400 text-xs">{{$message->llm}}</span>
+                                        </div>
+                                        --}}
+                                        <div>&nbsp;</div>
+                                    @endif
+
+                                    <!-- Button Group -->
+                                    <div class="flex justify-end">
+                                        <div class="mt-[-5px]">
+                                            <button type="button"
+                                                    x-data x-tooltip.raw="Copy"
+                                                    @click="copy"
+                                                    class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                                <x-icons.copy class="hover:text-gray-600"/>
+                                                <span x-text="copied ? 'Copied' : ''"></span>
+                                            </button>
+
+                                            <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
+                                                              x-tooltip.raw="Delete"
+                                                              class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
+                                                <x-icons.delete class="size-4 text-gray-400 hover:text-gray-500"/>
+                                            </x-confirm-dialog>
+
+                                            @if($loop->last)
+                                                <button type="button"
+                                                        wire:click="regenerate({{$message->id}})"
+                                                        x-data x-tooltip.raw="Regenerate"
+                                                        class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
+                                                    <x-icons.refresh
+                                                        class="size-5 text-gray-500 hover:text-gray-600"/>
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <!-- End Button Group -->
+                                </div>
+
+                            </div>
+                        </li>
+                    @endif
 
                 @empty
                     <li
@@ -140,6 +140,28 @@
                     Start New Conversation
                 </li>
             @endif
+        @endif
+
+        @if (isset($messages) && count($messages) > 1)
+            <li class="flex justify-center">
+                <div class="hs-dropdown fixed right-14 top-16 inline-flex">
+                    <button id="hs-dropdown-with-icons" type="button" class="hs-dropdown-toggle py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                        <x-icons.export class="shrink-0 size-4" /> Export
+                        <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+
+                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-32 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 divide-y divide-gray-200" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-with-icons">
+                        <div class="py-2 first:pt-0 last:pb-0">
+                            <a wire:click.prevent="export('html')" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
+                                <x-icons.code class="shrink-0 size-4" /> HTML
+                            </a>
+                            <a wire:click.prevent="export('txt')" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
+                                <x-icons.text class="shrink-0 size-4" /> TEXT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
         @endif
 
     </ul>
