@@ -46,7 +46,9 @@ class ChatList extends Component
 
     protected function refresh(): void
     {
-        $this->messages = $this->conversation->messages->sortBy('id');
+        if ($this->conversation) {
+            $this->messages = $this->conversation->messages->sortBy('id');
+        }
     }
 
     public function deleteMessage(Message $message): void
