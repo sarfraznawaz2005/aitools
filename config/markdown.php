@@ -1,5 +1,9 @@
 <?php
 
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+
 return [
     'code_highlighting' => [
         /*
@@ -33,7 +37,16 @@ return [
      *
      * More info: https://spatie.be/docs/laravel-markdown/v1/using-the-blade-component/passing-options-to-commonmark
      */
-    'commonmark_options' => [],
+    'commonmark_options' => [
+        'external_link' => [
+            'internal_hosts' => 'www.example.com', // TODO: Don't forget to set this!
+            'open_in_new_window' => true,
+            'html_class' => 'external-link',
+            'nofollow' => '',
+            'noopener' => 'external',
+            'noreferrer' => 'external',
+        ],
+    ],
 
     /*
      * Rendering markdown to HTML can be resource intensive. By default
@@ -71,7 +84,8 @@ return [
      * More info: https://commonmark.thephpleague.com/2.4/extensions/overview/
      */
     'extensions' => [
-        //
+        ExternalLinkExtension::class,
+        GithubFlavoredMarkdownExtension::class,
     ],
 
     /*

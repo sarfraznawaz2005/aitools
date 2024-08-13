@@ -152,10 +152,6 @@
         }
 
         function openLinkExternally() {
-            document.querySelectorAll('.aibot-message-content a').forEach(link => {
-                link.setAttribute('target', '_blank');
-            });
-
             /*
             document.querySelectorAll('.aibot-message-content a').forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -192,7 +188,7 @@
 
         function performCommonPageActions() {
             scrollToBottom();
-            openLinkExternally();
+            //openLinkExternally()
         }
 
         function performInProgressActions() {
