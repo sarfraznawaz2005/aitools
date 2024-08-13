@@ -18,8 +18,8 @@ class ChatList extends Component
     use InteractsWithToast;
 
     public ?Conversation $conversation = null;
-    public Collection $messages;
     public ?Message $lastMessage = null;
+    public Collection $messages;
 
     protected $listeners = ['refreshChatList' => '$refresh'];
 
