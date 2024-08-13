@@ -21,7 +21,7 @@
 
                 @forelse($messages as $message)
                         @if(!$message->is_ai)
-                            <li class="my-4" x-data="{
+                            <li wire:key="chatlist-message{{$message->id}}" class="my-4" x-data="{
                             copied: false,
                             copy () {
                               $clipboard($refs.content.innerText)
@@ -62,7 +62,7 @@
                                 <!-- End Button Group -->
                             </li>
                         @else
-                            <li class="flex gap-x-2 sm:gap-x-4 my-8" x-data="{
+                            <li wire:key="chatlist-message{{$message->id}}" class="flex gap-x-2 sm:gap-x-4 my-8" x-data="{
                             copied: false,
                             copy () {
                               $clipboard($refs.content.innerText)
