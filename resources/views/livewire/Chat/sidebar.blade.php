@@ -10,7 +10,7 @@
         <div class="h-full overflow-y-auto flex-1">
 
             <!-- List -->
-            <ul class="space-y-1">
+            <ul class="space-y-0.5">
 
                 @if(hasApiKeysCreated())
                     <li class="p-4">
@@ -62,7 +62,7 @@
                                         @endif
 
                                         @if($conversationItem->title)
-                                            {{$conversationItem->title}}
+                                            {{ucwords($conversationItem->title)}}
                                         @else
                                             Conversation #{{$conversationItem->id}}
                                         @endif

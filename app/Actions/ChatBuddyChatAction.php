@@ -48,9 +48,9 @@ class ChatBuddyChatAction
             ->messages()
             ->where('body', '!=', Constants::CHATBUDDY_LOADING_STRING)
             ->whereNot(function ($query) {
-                $query->where('body', 'like', '%conversation history%')
-                    ->orWhere('body', 'like', '%sorry%')
-                    ->orWhere('body', 'like', '%context%');
+                $query
+                    ->where('body', 'like', '%conversation history%')
+                    ->orWhere('body', 'like', '%provided context%');
             })
             ->latest()
             ->limit(Constants::TOTAL_CONVERSATION_HISTORY)

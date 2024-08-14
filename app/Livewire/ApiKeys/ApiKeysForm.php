@@ -22,7 +22,7 @@ class ApiKeysForm extends Component
         return [
             'llm_type' => 'required|regex:/^\S*$/u',
             'base_url' => 'required_if:llm_type,Ollama',
-            'api_key' => 'required|min:3|unique:api_keys,api_key,' . ($this->model->id ?? 'NULL') . ',id|regex:/^\S*$/u',
+            'api_key' => 'required|min:3|regex:/^\S*$/u',
             'model_name' => 'required|min:3|unique:api_keys,model_name,' . ($this->model->id ?? 'NULL') . ',id|regex:/^\S*$/u',
         ];
     }
