@@ -55,9 +55,9 @@
 
                     <div x-ref="content" class="py-5 font-medium" id="textStylerOutput"></div>
 
-                    <div class="flex justify-center border-t border-gray-300 p-5 hidden" id="copyButtonContainer">
+                    <div class="justify-center border-t border-gray-300 p-5 hidden" id="copyButtonContainer">
                         <x-gradient-button @click="copy">
-                            <x-icons.copy class="hover:text-gray-600"/>
+                            <x-icons.copy />
                             <span x-text="copied ? 'Copied' : 'Copy Output'"></span>
                         </x-gradient-button>
                     </div>

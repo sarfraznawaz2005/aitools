@@ -12,6 +12,8 @@
 <body class="antialiased bg-gray-50 dark:bg-neutral-900 h-screen">
 
 <x-autoloading/>
+<x-page-expired/>
+
 <livewire:general.header title="{{$title ?? ''}}"/>
 
 <div class="flex h-screen">
