@@ -15,7 +15,7 @@
             <div class="w-full max-w-4xl">
 
                <textarea
-                   class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                   class="py-3 px-4 block w-full border-gray-200 rounded-lg text-base focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                    wire:model="text"
                    rows="10"
                    placeholder="Type your text...">
@@ -25,7 +25,7 @@
                 @enderror
 
                 <fieldset
-                    class="flex items-center justify-center w-full border border-gray-300 rounded-lg p-5 pb-7 dark:border-neutral-700 mt-4 bg-white">
+                    class="flex items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-5 pb-7 dark:border-neutral-700 mt-4 bg-white">
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Choose Style</legend>
 
                     <div class="w-full flex justify-center items-center flex-wrap">
@@ -50,10 +50,10 @@
                         }
                       }"
                     id="textStylerOutputContainer"
-                    class="bg-gray-100 border border-gray-300 px-5 rounded-lg text-base mt-8">
+                    class="bg-gray-100 border border-gray-300 px-5 rounded-lg text-base font-semibold mt-8">
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Output</legend>
 
-                    <div x-ref="content" class="py-5" id="textStylerOutput"></div>
+                    <div x-ref="content" class="py-5 font-medium" id="textStylerOutput"></div>
 
                     <div class="flex justify-center border-t border-gray-300 p-5 hidden" id="copyButtonContainer">
                         <x-gradient-button @click="copy">
