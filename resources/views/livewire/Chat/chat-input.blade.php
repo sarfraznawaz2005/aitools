@@ -1,4 +1,4 @@
-<div class="w-full lg:left-64 lg:w-[calc(100%-16rem)] mx-auto fixed bottom-0 z-10 p-4 px-12 bg-gray-200 sm:bg-gray-50">
+<div class="w-full lg:left-64 lg:w-[calc(100%-16rem)] mx-auto fixed bottom-0 z-10 p-4 px-8 bg-gray-200 sm:bg-gray-50">
     <div class="lg:hidden flex mb-2 sm:mb-3">
         <!-- Sidebar Toggle -->
         <button type="button"
