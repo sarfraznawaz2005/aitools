@@ -71,17 +71,14 @@
     <script>
         (function () {
 
-            const textStylerOutputContainer = document.getElementById('textStylerOutputContainer');
-            const copyButtonContainer = document.getElementById('copyButtonContainer');
-            const outputElement = document.getElementById('textStylerOutput');
+            window.addEventListener('DOMContentLoaded', () => {
+                const textStylerOutputContainer = document.getElementById('textStylerOutputContainer');
+                textStylerOutputContainer.style.display = 'none';
 
-            textStylerOutputContainer.style.display = 'none';
-
-            document.addEventListener('DOMContentLoaded', () => startServerSentSession());
-            document.addEventListener('livewire:navigated', () => startServerSentSession());
-
-            function startServerSentSession() {
                 window.Livewire.on('getTextStylerAiResponse', () => {
+                    const copyButtonContainer = document.getElementById('copyButtonContainer');
+                    const outputElement = document.getElementById('textStylerOutput');
+
                     outputElement.innerHTML = '';
                     outputElement.style.display = 'block';
 
@@ -111,7 +108,7 @@
                         console.log("SSE closed due to error");
                     });
                 });
-            }
+            });
 
             function scrollToBottom() {
                 window.scrollTo({

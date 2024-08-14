@@ -236,7 +236,7 @@
             Livewire.hook('message.received', () => performInProgressActions());
             Livewire.hook('message.processed', () => performDoneActions());
 
-            document.addEventListener('livewire:navigated', () => {
+            document.addEventListener('livewire:initialized', () => {
                 performCommonPageActions();
                 observeChatList();
             });
