@@ -13,7 +13,7 @@
                 <li>
                     <div class="flex justify-center align-center">
                     <span
-                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
+                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
                         📅 Conversation created {{$conversation->created_at->diffForHumans()}}
                     </span>
                     </div>
