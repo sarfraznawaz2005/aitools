@@ -15,7 +15,6 @@ class TextStyler extends Component
 {
     #[Validate('required|min:25')]
     public string $text = '';
-    public bool $showModal = false;
 
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
@@ -25,8 +24,6 @@ class TextStyler extends Component
 
         Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('prompt', $prompt);
         Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('text', $this->text);
-
-        $this->showModal = true;
 
         $this->dispatch('getTextStylerAiResponse');
     }

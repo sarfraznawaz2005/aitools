@@ -56,65 +56,31 @@
                     </div>
                 </fieldset>
 
-            </div>
-        </div>
+                <fieldset
+                    x-data="{
+                        copied: false,
+                        copy () {
+                          $clipboard($refs.content.innerText)
+                          this.copied = true
+                          setTimeout(() => {
+                            this.copied = false
+                          }, 1000)
+                        }
+                      }"
+                    id="textStylerOutputContainer"
+                    class="bg-gray-100 border border-gray-300 px-5 rounded-lg text-base mt-8">
+                    <legend class="text-sm text-gray-500 dark:text-neutral-300">Output</legend>
 
-        <div x-data="{ open: @entangle('showModal') }" x-init="$nextTick(() => { open = false })">
-            <div id="hs-task-created-alert"
-                 x-cloak
-                 class="fixed inset-0 top-0 start-0 z-[100] overflow-y-auto"
-                 x-show="open"
-                 x-transition:enter="ease-out duration-300"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="ease-in duration-200"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 role="dialog"
-                 tabindex="-1"
-                 aria-labelledby="hs-task-created-alert-label">
-                <div class="flex items-center justify-center min-h-screen p-4">
-                    <div class="relative w-full max-w-lg bg-white shadow-lg rounded-xl dark:bg-neutral-900">
-                        <div class="absolute top-2 right-2">
-                            <button type="button"
-                                    class="inline-flex justify-center items-center w-8 h-8 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:ring-neutral-600"
-                                    aria-label="Close"
-                                    @click="open = false">
-                                <span class="sr-only">Close</span>
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </button>
-                        </div>
+                    <div x-ref="content" class="py-5" id="textStylerOutput"></div>
 
-                        <!-- Modal content -->
-                        <div class="p-4 text-center">
-                            <p class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400" id="textStylerOutput">
-
-                            </p>
-
-                            <div class="flex justify-end mt-12 gap-x-4">
-                                <div class="">
-                                    <button type="button"
-                                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-green-500 text-white shadow-sm hover:bg-green-600 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                    >
-                                        Copy
-                                    </button>
-                                </div>
-                                <div class="flex justify-center gap-x-4">
-                                    <button type="button"
-                                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                            @click="open = false">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
+                    <div class="flex justify-center border-t border-gray-300 p-5" id="copyButtonContainer">
+                        <x-gradient-button @click="copy">
+                            <x-icons.copy class="hover:text-gray-600"/>
+                            <span x-text="copied ? 'Copied' : 'Copy Output'"></span>
+                        </x-gradient-button>
                     </div>
-                </div>
+                </fieldset>
+
             </div>
         </div>
 
@@ -123,27 +89,48 @@
     <script>
         (function () {
 
+            const textStylerOutputContainer = document.getElementById('textStylerOutputContainer');
+            const outputElement = document.getElementById('textStylerOutput');
+
+            textStylerOutputContainer.style.display = 'none';
+
             window.addEventListener('DOMContentLoaded', () => {
                 window.Livewire.on('getTextStylerAiResponse', () => {
+                    outputElement.innerHTML = '';
+                    outputElement.style.display = 'block';
+
+                    Livewire.dispatch('showLoading');
+                    scrollToBottom();
+
                     const source = new EventSource("/text-styler/chat");
                     source.addEventListener("update", function (event) {
-                        const outputElement = document.getElementById('textStylerOutput');
 
                         if (event.data === "<END_STREAMING_SSE>") {
                             source.close();
                             console.log("SSE closed");
+                            scrollToBottom();
+                            Livewire.dispatch('hideLoading');
                             return;
                         }
 
                         outputElement.innerHTML += JSON.parse(event.data);
+                        scrollToBottom();
                     });
 
                     source.addEventListener("error", function () {
                         source.close();
+                        Livewire.dispatch('hideLoading');
                         console.log("SSE closed due to error");
                     });
                 });
             });
+
+            function scrollToBottom() {
+                window.scrollTo({
+                    top: document.body.scrollHeight + 10000,
+                    behavior: 'smooth'
+                });
+            }
 
             ////////////////////////////////
 

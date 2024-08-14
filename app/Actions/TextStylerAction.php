@@ -33,7 +33,7 @@ class TextStylerAction
                 $text = Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->get('text');
 
                 $prompt = $prompt . "\n" . '"' . $text . '"';
-                Log::info($prompt);
+                //Log::info($prompt);
 
                 $llm->chat($prompt, true, function ($chunk) {
                     echo "event: update\n";
