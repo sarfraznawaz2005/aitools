@@ -19,7 +19,7 @@ Route::get('test', function () {
 
 Route::get($tools['chat-buddy']['route'], ChatBuddy::class)->name($tools['chat-buddy']['route']);
 Route::get($tools['chat-buddy']['route'] . '/{conversation}', ChatBuddy::class)->name($tools['chat-buddy']['route'] . 'load-conversation');
-Route::get('/chat-buddy/chat/{conversation}', ChatBuddyChatAction::class);
+Route::get('/chat-buddy/chat/{conversation}', [ChatBuddy::class, 'chat']);
 
 Route::get($tools['text-styler']['route'], TextStyler::class)->name($tools['text-styler']['route']);
 Route::get('/text-styler/chat', [TextStyler::class, 'chat']);
