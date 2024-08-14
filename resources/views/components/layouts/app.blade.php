@@ -11,6 +11,7 @@
 
 <body class="antialiased bg-gray-50 dark:bg-neutral-900 h-screen">
 
+<x-autoloading/>
 <livewire:general.header title="{{$title ?? ''}}"/>
 
 <div class="flex h-screen">
@@ -19,9 +20,9 @@
     <div class="flex-1 text-gray-600 dark:text-neutral-200 mainSection">
         <livewire:general.offline/>
 
-        <x-flash/>
-        <x-toast/>
         <x-loading/>
+        <x-toast/>
+        <x-flash/>
 
         {{ $slot }}
     </div>
