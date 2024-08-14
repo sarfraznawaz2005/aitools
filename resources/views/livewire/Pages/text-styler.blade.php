@@ -91,15 +91,15 @@
                         if (event.data === "<END_STREAMING_SSE>") {
                             source.close();
                             console.log("SSE closed");
-                            scrollToBottom();
                             Livewire.dispatch('hideLoading');
                             copyButtonContainer.style.display = 'flex';
+                            scrollToBottom();
                             return;
                         }
 
                         outputElement.innerHTML += JSON.parse(event.data);
-                        scrollToBottom();
                         copyButtonContainer.style.display = 'none';
+                        scrollToBottom();
                     });
 
                     source.addEventListener("error", function () {
