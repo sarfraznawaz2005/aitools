@@ -14,6 +14,7 @@
             <div class="w-full max-w-4xl">
                 <div class="relative">
                     <textarea
+                        wire:model="text"
                         id="hs-floating-textarea-gray"
                         class="peer p-4 block w-full border-gray-300 rounded-lg text-base placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
                             focus:pt-6
@@ -52,6 +53,8 @@
                                 {{ ucwords(str_replace('_', ' ', $style)) }}
                             </button>
                         @endforeach
+
+                        {{$output}}
 
                     </div>
                 </fieldset>
