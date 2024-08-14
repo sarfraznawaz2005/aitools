@@ -36,16 +36,12 @@
         Livewire.hook('request', ({ uri, options, payload, respond, succeed, fail }) => {
             Alpine.store('loading', true);
             succeed(({ status, json }) => {
-                setTimeout(() => {
-                    Alpine.store('loading', false);
-                }, 5000);
+                Alpine.store('loading', false);
             });
         });
 
         Livewire.hook('element.updated', (el, component) => {
-            setTimeout(() => {
-                Alpine.store('loading', false);
-            }, 5000);
+            Alpine.store('loading', false);
         });
 
         document.addEventListener('livewire:navigate:start', () => {
@@ -53,9 +49,7 @@
         });
 
         document.addEventListener('livewire:navigate:end', () => {
-            setTimeout(() => {
-                Alpine.store('loading', false);
-            }, 5000);
+            Alpine.store('loading', false);
         });
     }
 </script>
