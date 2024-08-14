@@ -49,7 +49,7 @@ class Conversation extends Model
      */
     public function generateTitle($message): string
     {
-        $llm = getChatBuddyLLMProvider();
+        $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
         $prompt = "
         Create only a single title from the provided Text, it must be of minimum 4 characters and must not be more than
@@ -75,7 +75,7 @@ class Conversation extends Model
         $this->updated_at = now();
         $this->save();
 
-        $selectedModel = getChatBuddySelectedLLMModel();
+        $selectedModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
         $this->messages()->create([
             'body' => Constants::CHATBUDDY_LOADING_STRING,

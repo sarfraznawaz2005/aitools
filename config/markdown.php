@@ -64,7 +64,7 @@ return [
         ],
         'default_attributes' => [
             Strong::class => [
-                'class' => 'font-medium',
+                'class' => 'font-semibold',
             ],
             Heading::class => [
                 'class' => static function (Heading $node) {

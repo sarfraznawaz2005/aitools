@@ -34,7 +34,7 @@ class ChatBuddyChatAction
         }
 
         $markdown = app(MarkdownRenderer::class);
-        $llm = getChatBuddyLLMProvider();
+        $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
         $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
 
@@ -53,7 +53,7 @@ class ChatBuddyChatAction
                     ->orWhere('body', 'like', '%provided context%');
             })
             ->latest()
-            ->limit(Constants::TOTAL_CONVERSATION_HISTORY)
+            ->limit(Constants::CHATBUDDY_TOTAL_CONVERSATION_HISTORY)
             ->get()
             ->sortBy('id');
 

@@ -124,7 +124,7 @@
         @if (hasApiKeysCreated())
             <div
                 class="sticky bottom-0 border-gray-200 dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 p-1">
-                <livewire:general.model-selector for="ChatBuddy"/>
+                <livewire:general.model-selector for="{{App\Constants::CHATBUDDY_SELECTED_LLM_KEY}}"/>
             </div>
         @endif
 

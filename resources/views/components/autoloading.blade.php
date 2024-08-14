@@ -18,17 +18,17 @@
         Alpine.store('loading', false);
 
         Alpine.effect(() => {
-            console.log('Global loading state:', Alpine.store('loading'));
+            //console.log('Global loading state:', Alpine.store('loading'));
         });
     });
 
     if (window.Livewire) {
-        console.log('Livewire already initialized');
         initializeLoading();
+        //console.log('Livewire already initialized');
     } else {
         document.addEventListener('livewire:init', () => {
-            console.log('Livewire initialized');
             initializeLoading();
+            //console.log('Livewire initialized');
         });
     }
 

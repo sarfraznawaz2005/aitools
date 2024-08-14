@@ -32,13 +32,13 @@ function hasApiKeysCreated()
     return ApiKey::hasApiKeys();
 }
 
-function getChatBuddySelectedLLMModel(): ApiKey
+function getSelectedLLMModel(string $key): ApiKey
 {
     if (
-        Setting::select('ChatBuddy')->has('selectedModel') &&
-        ApiKey::where('model_name', Setting::select('ChatBuddy')->get('selectedModel'))->exists()
+        Setting::select($key)->has('selectedModel') &&
+        ApiKey::where('model_name', Setting::select($key)->get('selectedModel'))->exists()
     ) {
-        $model = ApiKey::where('model_name', Setting::select('ChatBuddy')->get('selectedModel'))->first();
+        $model = ApiKey::where('model_name', Setting::select($key)->get('selectedModel'))->first();
     } else {
         $model = ApiKey::whereActive()->first();
     }
@@ -46,9 +46,9 @@ function getChatBuddySelectedLLMModel(): ApiKey
     return $model;
 }
 
-function getChatBuddyLLMProvider(): LlmProvider
+function getSelectedLLMProvider(string $key): LlmProvider
 {
-    return getLLM(getChatBuddySelectedLLMModel());
+    return getLLM(getSelectedLLMModel($key));
 }
 
 function AIChatFailed($result): string
