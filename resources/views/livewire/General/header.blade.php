@@ -34,7 +34,7 @@
                         <div
                             class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded border border-gray-300 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
                             role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
-                            <ul class="flex flex-col space-y-1">
+                            <ul class="flex flex-col space-y-0.5">
                                 @foreach(config('tools') as $tool)
                                     <li wire:key="{{ $tool['name'] }}">
                                         <a href="{{route($tool['route'])}}" wire:navigate
