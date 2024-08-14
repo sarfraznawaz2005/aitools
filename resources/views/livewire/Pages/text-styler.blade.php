@@ -49,13 +49,11 @@
                     <div class="w-full flex justify-center items-center flex-wrap">
 
                         @foreach(config('text-styler') as $style => $prompt)
-                            <button type="button" wire:click="getText('{{ $style }}')"
+                            <button type="button" @click="$dispatch('getText', ['{{$style}}'])"
                                     class="min-w-40 w-full sm:w-auto justify-center py-2 font-medium px-4 inline-flex items-center gap-x-2 text-sm rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none m-2">
                                 {{ ucwords(str_replace('_', ' ', $style)) }}
                             </button>
                         @endforeach
-
-                        {{$output}}
 
                     </div>
                 </fieldset>
@@ -63,10 +61,10 @@
             </div>
         </div>
 
-        <div x-data="{ open: @entangle('showModal') }" x-init="$nextTick(() => { open = true })">
+        <div x-data="{ open: @entangle('showModal') }" x-init="$nextTick(() => { open = false })">
             <div id="hs-task-created-alert"
                  x-cloak
-                 class="fixed inset-0 z-[80] overflow-y-auto"
+                 class="fixed inset-0 top-0 start-0 z-[100] overflow-y-auto"
                  x-show="open"
                  x-transition:enter="ease-out duration-300"
                  x-transition:enter-start="opacity-0"
@@ -93,15 +91,11 @@
 
                         <!-- Modal content -->
                         <div class="p-4 text-center">
-                            <!-- Add your modal content here -->
-                            <h3 class="text-lg font-medium text-gray-900 dark:text-white" id="hs-task-created-alert-label">
-                                Welcome Message
-                            </h3>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                This is a welcome message for your application.
+                            <p class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+
                             </p>
 
-                            <div class="flex justify-end mt-6 gap-x-4">
+                            <div class="flex justify-end mt-12 gap-x-4">
                                 <div class="">
                                     <button type="button"
                                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-green-500 text-white shadow-sm hover:bg-green-600 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
@@ -112,7 +106,7 @@
                                 <div class="flex justify-center gap-x-4">
                                     <button type="button"
                                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                            data-hs-overlay="#hs-task-created-alert">
+                                            @click="open = false">
                                         Close
                                     </button>
                                 </div>

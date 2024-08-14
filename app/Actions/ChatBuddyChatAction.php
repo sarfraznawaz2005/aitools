@@ -117,12 +117,12 @@ class ChatBuddyChatAction
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
 
                 echo "event: update\n";
-                echo "data: " . json_encode(Constants::CHATBUDDY_AI_ERROR_MESSSAGE) . "\n\n";
+                echo "data: " . json_encode(Constants::AI_ERROR_MESSSAGE) . "\n\n";
                 ob_flush();
                 flush();
 
                 //$latestMessage->delete();
-                $latestMessage->update(['body' => Constants::CHATBUDDY_AI_ERROR_MESSSAGE]);
+                $latestMessage->update(['body' => Constants::AI_ERROR_MESSSAGE]);
             } finally {
                 echo "event: update\n";
                 echo "data: <END_STREAMING_SSE>\n\n";
