@@ -89,7 +89,7 @@ class ChatBuddy extends Component
                 Question: $userQuery->body
                 Your Answer: ";
 
-                Log::info($prompt);
+                //Log::info($prompt);
 
                 $markdown = app(MarkdownRenderer::class);
 

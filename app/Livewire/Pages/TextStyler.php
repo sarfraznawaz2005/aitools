@@ -55,7 +55,7 @@ class TextStyler extends Component
                 $text = base64_decode($text);
 
                 $prompt = $prompt . "\n" . '"' . $text . '"';
-                Log::info($prompt);
+                //Log::info($prompt);
 
                 $llm = getSelectedLLMProvider(Constants::TEXTSTYLER_SELECTED_LLM_KEY);
 
