@@ -8,8 +8,9 @@
  * chat with pdf
  * user can create prompts and use and do things like idea generator, hours estimaot, etc
  * DBTalk - https://ai.eteamprojects.com/tools/talk-database/index.php
+ * Researcher Agent
+ * UpWork AI extension
  * https://www.youtube.com/watch?v=7rYR_l9oqQg
- * get other tools idea from eteam ai
  * */
 
 use App\LLM\GeminiProvider;
