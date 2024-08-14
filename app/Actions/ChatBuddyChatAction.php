@@ -33,42 +33,43 @@ class ChatBuddyChatAction
             ]);
         }
 
-        $markdown = app(MarkdownRenderer::class);
-        $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+        return response()->stream(function () use ($conversation) {
 
-        $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
+            try {
 
-        $latestMessage = $conversation
-            ->messages()
-            ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
-            ->latest()
-            ->first();
+                $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
 
-        $latestMessages = $conversation
-            ->messages()
-            ->where('body', '!=', Constants::CHATBUDDY_LOADING_STRING)
-            ->whereNot(function ($query) {
-                $query
-                    ->where('body', 'like', '%conversation history%')
-                    ->orWhere('body', 'like', '%provided context%');
-            })
-            ->latest()
-            ->limit(Constants::CHATBUDDY_TOTAL_CONVERSATION_HISTORY)
-            ->get()
-            ->sortBy('id');
+                $latestMessage = $conversation
+                    ->messages()
+                    ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
+                    ->latest()
+                    ->first();
 
-        $uniqueMessages = [];
-        foreach ($latestMessages as $message) {
-            $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
+                $latestMessages = $conversation
+                    ->messages()
+                    ->where('body', '!=', Constants::CHATBUDDY_LOADING_STRING)
+                    ->whereNot(function ($query) {
+                        $query
+                            ->where('body', 'like', '%conversation history%')
+                            ->orWhere('body', 'like', '%provided context%');
+                    })
+                    ->latest()
+                    ->limit(Constants::CHATBUDDY_TOTAL_CONVERSATION_HISTORY)
+                    ->get()
+                    ->sortBy('id');
 
-            if (!in_array($formattedMessage, $uniqueMessages)) {
-                $uniqueMessages[] = htmlToText($formattedMessage);
-            }
-        }
+                $uniqueMessages = [];
+                foreach ($latestMessages as $message) {
+                    $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
 
-        $conversationHistory = implode("\n", $uniqueMessages);
+                    if (!in_array($formattedMessage, $uniqueMessages)) {
+                        $uniqueMessages[] = htmlToText($formattedMessage);
+                    }
+                }
 
-        $prompt = "You are a helpful and enthusiastic support assistant who can answer a given question.
+                $conversationHistory = implode("\n", $uniqueMessages);
+
+                $prompt = "You are a helpful and enthusiastic support assistant who can answer a given question.
                 Before answering, always refer to the conversation history to know what user is asking or
                 talking about. If provided conversation history does not contain any information about the
                 question then answer from your own knowledge Use markdown for your answer. If the user asks
@@ -78,11 +79,9 @@ class ChatBuddyChatAction
                 Question: $userQuery->body
                 Your Answer: ";
 
-        //Log::info($prompt);
+                //Log::info($prompt);
 
-        return response()->stream(function () use ($markdown, $llm, $latestMessages, $latestMessage, $userQuery, $prompt) {
-
-            try {
+                $markdown = app(MarkdownRenderer::class);
 
                 if (Constants::TEST_MODE) {
                     sleep(1);
@@ -100,6 +99,7 @@ class ChatBuddyChatAction
                 }
 
                 $consolidatedResponse = '';
+                $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
                 $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
                     $consolidatedResponse .= $chunk;
