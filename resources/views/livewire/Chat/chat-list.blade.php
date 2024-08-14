@@ -161,6 +161,7 @@
     </ul>
 
     <script data-navigate-once>
+
         function decodeUnicode(str) {
             return str.replace(/\\u[\dA-F]{4}/gi, function (match) {
                 return String.fromCodePoint(parseInt(match.replace(/\\u/g, ''), 16));
