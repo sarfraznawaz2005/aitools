@@ -3,6 +3,7 @@
  * TODO
  * global disabler until api key is saved
  * Tips notifier should support multiple tips
+ * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * chat with pdf
  * user can create prompts and use and do things like idea generator, hours estimaot, etc
  * DBTalk - https://ai.eteamprojects.com/tools/talk-database/index.php
