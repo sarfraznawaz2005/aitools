@@ -229,7 +229,7 @@
             }, 1000);
         }
 
-        window.addEventListener('livewire:initialized', () => {
+        document.addEventListener('livewire:initialized', () => {
             performCommonPageActions();
             observeChatList();
 
