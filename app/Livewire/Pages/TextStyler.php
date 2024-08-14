@@ -9,26 +9,26 @@ use Illuminate\Foundation\Application;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 class TextStyler extends Component
 {
     #[Validate('required|min:25')]
     public string $text = '';
-    public string $output = '';
+    public bool $showModal = false;
 
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
-    public function getText(string $style): void
+    public function getText(string $prompt): void
     {
         $this->validate();
 
-        $llm = getSelectedLLMProvider(Constants::TEXTSTYLER_SELECTED_LLM_KEY);
+        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('prompt', $prompt);
+        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('text', $this->text);
 
-        $prompt = config('text-styler.' . $style);
+        $this->showModal = true;
 
-        $result = $llm->chat($prompt . $this->text);
-
-        $this->output = $result;
+        $this->dispatch('getTextStylerAiResponse');
     }
 
     #[Title('Text Styler')]

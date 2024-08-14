@@ -47,14 +47,12 @@
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Choose Style</legend>
 
                     <div class="w-full flex justify-center items-center flex-wrap">
-
                         @foreach(config('text-styler') as $style => $prompt)
-                            <button type="button" @click="$dispatch('getText', ['{{$style}}'])"
+                            <button type="button" wire:click="getText('{{$prompt}}')"
                                     class="min-w-40 w-full sm:w-auto justify-center py-2 font-medium px-4 inline-flex items-center gap-x-2 text-sm rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none m-2">
                                 {{ ucwords(str_replace('_', ' ', $style)) }}
                             </button>
                         @endforeach
-
                     </div>
                 </fieldset>
 
@@ -83,15 +81,17 @@
                                     aria-label="Close"
                                     @click="open = false">
                                 <span class="sr-only">Close</span>
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
                             </button>
                         </div>
 
                         <!-- Modal content -->
                         <div class="p-4 text-center">
-                            <p class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                            <p class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400" id="textStylerOutput">
 
                             </p>
 
@@ -122,6 +122,30 @@
 
     <script>
         (function () {
+
+            window.addEventListener('DOMContentLoaded', () => {
+                window.Livewire.on('getTextStylerAiResponse', () => {
+                    const source = new EventSource("/text-styler/chat");
+                    source.addEventListener("update", function (event) {
+                        const outputElement = document.getElementById('textStylerOutput');
+
+                        if (event.data === "<END_STREAMING_SSE>") {
+                            source.close();
+                            console.log("SSE closed");
+                            return;
+                        }
+
+                        outputElement.innerHTML += JSON.parse(event.data);
+                    });
+
+                    source.addEventListener("error", function () {
+                        source.close();
+                        console.log("SSE closed due to error");
+                    });
+                });
+            });
+
+            ////////////////////////////////
 
             function textareaAutoHeight(el, offsetTop = 0) {
                 el.style.height = 'auto';

@@ -243,7 +243,7 @@
                 observeChatList();
             });
 
-            window.Livewire.on('getAiResponse', ($conversationId) => {
+            window.Livewire.on('getChatBuddyAiResponse', ($conversationId) => {
 
                 Livewire.dispatch('showLoading');
 

@@ -87,7 +87,7 @@ class ChatBuddyChatAction
                 if (Constants::TEST_MODE) {
                     sleep(1);
 
-                    $text = "## Test Message\n\nThis is a **test** message with some *italic* text and a [link](https://google.com).";
+                    $text = Constants::TEST_MESSAGE;
 
                     echo "event: update\n";
                     echo "data: " . json_encode($text) . "\n\n";

@@ -43,7 +43,7 @@ class ChatList extends Component
 
         $this->refresh();
 
-        $this->dispatch('getAiResponse', $this->conversation->id);
+        $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
     }
 
     protected function refresh(): void
@@ -70,7 +70,7 @@ class ChatList extends Component
 
         $this->refresh();
 
-        $this->dispatch('getAiResponse', $this->conversation->id);
+        $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
     }
 
     public function export($format): StreamedResponse

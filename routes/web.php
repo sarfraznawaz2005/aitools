@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\ChatBuddyChatAction;
+use App\Actions\TextStylerAction;
 use App\Livewire\Pages\ChatBuddy;
 use App\Livewire\Pages\TextStyler;
 use App\Livewire\Pages\TipsNotifier;
@@ -21,5 +22,6 @@ Route::get($tools['chat-buddy']['route'] . '/{conversation}', ChatBuddy::class)-
 Route::get('/chat-buddy/chat/{conversation}', ChatBuddyChatAction::class);
 
 Route::get($tools['text-styler']['route'], TextStyler::class)->name($tools['text-styler']['route']);
+Route::get('/text-styler/chat', TextStylerAction::class);
 
 Route::get($tools['tips-notifier']['route'], TipsNotifier::class)->name($tools['tips-notifier']['route']);
