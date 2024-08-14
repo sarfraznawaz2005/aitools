@@ -11,7 +11,8 @@ use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 class ModelSelector extends Component
 {
-    public string $for;
+    public string $for = '';
+    public string $classes = '';
 
     public string $selectedModel;
 
