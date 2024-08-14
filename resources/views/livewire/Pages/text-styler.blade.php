@@ -71,7 +71,7 @@
     <script>
         (function () {
 
-            window.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('livewire:initialized', () => {
                 const textStylerOutputContainer = document.getElementById('textStylerOutputContainer');
                 textStylerOutputContainer.style.display = 'none';
 

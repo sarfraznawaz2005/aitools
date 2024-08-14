@@ -229,17 +229,12 @@
             }, 1000);
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('livewire:initialized', () => {
             performCommonPageActions();
             observeChatList();
 
             Livewire.hook('message.received', () => performInProgressActions());
             Livewire.hook('message.processed', () => performDoneActions());
-
-            document.addEventListener('livewire:initialized', () => {
-                performCommonPageActions();
-                observeChatList();
-            });
 
             window.Livewire.on('getChatBuddyAiResponse', ($conversationId) => {
 
