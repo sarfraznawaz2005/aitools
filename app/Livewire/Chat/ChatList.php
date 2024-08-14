@@ -77,11 +77,15 @@ class ChatList extends Component
     {
         $filename = 'chat-' . strtolower(Str::slug($this->conversation->title)) . '.' . $format;
 
-        $content = '<div align="center"><h2>Conversation Name: ' . $this->conversation->title . '</h2></div><br>';
-        $content .= '<div align="center"><strong>Created On: ' . $this->conversation->created_at . '</strong></div><br><br>';
+        $content = '<div style="margin:50px;">';
+        $content .= '<div align="center"><h2 style="margin-bottom: 0">Conversation Name: ' . $this->conversation->title . '</h2></div><br>';
+        $content .= '<div align="center"><strong>Created On: ' . $this->conversation->created_at . '</strong></div><br>';
+
+        if ($format === 'txt') {
+            $content .= str_repeat('-', 100);
+        }
 
         foreach ($this->messages as $message) {
-
             $body = trim($message->body);
 
             if ($message->is_ai) {
@@ -102,7 +106,13 @@ $body
 HTML;
 
             }
+
+            if ($format === 'txt') {
+                $content .= str_repeat('-', 100);
+            }
         }
+
+        $content .= '</div>';
 
         $content = trim($content);
 
