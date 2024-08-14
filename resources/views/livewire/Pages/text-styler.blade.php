@@ -55,7 +55,7 @@
 
                     <div x-ref="content" class="py-5" id="textStylerOutput"></div>
 
-                    <div class="flex justify-center border-t border-gray-300 p-5" id="copyButtonContainer">
+                    <div class="flex justify-center border-t border-gray-300 p-5 hidden" id="copyButtonContainer">
                         <x-gradient-button @click="copy">
                             <x-icons.copy class="hover:text-gray-600"/>
                             <span x-text="copied ? 'Copied' : 'Copy Output'"></span>
@@ -81,7 +81,6 @@
                 window.Livewire.on('getTextStylerAiResponse', () => {
                     outputElement.innerHTML = '';
                     outputElement.style.display = 'block';
-                    copyButtonContainer.style.display = 'none';
 
                     scrollToBottom();
                     Livewire.dispatch('showLoading');
