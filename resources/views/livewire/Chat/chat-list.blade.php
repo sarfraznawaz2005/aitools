@@ -160,7 +160,7 @@
 
     </ul>
 
-    <script>
+    <script data-navigate-once>
         function decodeUnicode(str) {
             return str.replace(/\\u[\dA-F]{4}/gi, function (match) {
                 return String.fromCodePoint(parseInt(match.replace(/\\u/g, ''), 16));
@@ -229,7 +229,7 @@
             }, 1000);
         }
 
-        document.addEventListener('livewire:initialized', () => {
+        document.addEventListener('livewire:navigated', () => {
             performCommonPageActions();
             observeChatList();
 
@@ -276,7 +276,7 @@
                     console.log("SSE closed due to error");
                 });
             })
-        });
+        }, {once: true});
     </script>
 
 </div>
