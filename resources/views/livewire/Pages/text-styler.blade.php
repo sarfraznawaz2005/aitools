@@ -6,8 +6,8 @@
         <div class="fixed left-3 bottom-3 inline-flex">
             <div
                 class="sticky bottom-0 border-gray-200 rounded-lg dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 p-1">
-                <livewire:general.model-selector for="{{App\Constants::TEXTSTYLER_SELECTED_LLM_KEY}}"
-                                                 classes="rounded-lg"/>
+                <livewire:general.model-selector
+                    for="{{App\Constants::TEXTSTYLER_SELECTED_LLM_KEY}}" classes="rounded-lg"/>
             </div>
         </div>
 
@@ -57,7 +57,7 @@
 
                     <div class="justify-center border-t border-gray-300 p-5 hidden" id="copyButtonContainer">
                         <x-gradient-button @click="copy">
-                            <x-icons.copy />
+                            <x-icons.copy/>
                             <span x-text="copied ? 'Copied' : 'Copy Output'"></span>
                         </x-gradient-button>
                     </div>
