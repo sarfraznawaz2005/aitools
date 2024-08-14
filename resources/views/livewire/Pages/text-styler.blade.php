@@ -77,7 +77,10 @@
 
             textStylerOutputContainer.style.display = 'none';
 
-            window.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('DOMContentLoaded', () => startServerSentSession());
+            document.addEventListener('livewire:navigated', () => startServerSentSession());
+
+            function startServerSentSession() {
                 window.Livewire.on('getTextStylerAiResponse', () => {
                     outputElement.innerHTML = '';
                     outputElement.style.display = 'block';
@@ -108,7 +111,7 @@
                         console.log("SSE closed due to error");
                     });
                 });
-            });
+            }
 
             function scrollToBottom() {
                 window.scrollTo({
