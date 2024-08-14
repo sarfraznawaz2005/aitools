@@ -46,7 +46,7 @@ class TextStylerAction
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
 
                 echo "event: update\n";
-                echo "data: " . json_encode('Oops! Failed to get a response, please try again.') . "\n\n";
+                echo "data: " . json_encode(Constants::AI_ERROR_MESSSAGE) . "\n\n";
                 ob_flush();
                 flush();
             } finally {
