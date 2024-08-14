@@ -30,7 +30,10 @@ class TextStylerAction
                 }
 
                 $prompt = Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->get('prompt');
+                $prompt = base64_decode($prompt);
+
                 $text = Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->get('text');
+                $text = base64_decode($text);
 
                 $prompt = $prompt . "\n" . '"' . $text . '"';
                 //Log::info($prompt);

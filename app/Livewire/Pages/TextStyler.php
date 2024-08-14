@@ -22,8 +22,8 @@ class TextStyler extends Component
     {
         $this->validate();
 
-        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('prompt', $prompt);
-        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('text', $this->text);
+        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('prompt', base64_encode($prompt));
+        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('text', base64_encode($this->text));
 
         $this->dispatch('getTextStylerAiResponse');
     }
