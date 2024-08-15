@@ -53,20 +53,31 @@ class GeminiProvider extends BaseLLMProvider
                 } catch (Exception) {
                     // fallback via non-streaming response
                     sleep(1);
-                    $response = $this->makeRequest($this->baseUrl . 'models/' . $this->model . ":generateContent?key=" . $this->apiKey, $body, false, false, $callback);
-                    $text = $this->getResult($response);
 
-                    if ($callback) {
-                        $callback($text);
-                    } else {
-                        echo "event: update\n";
-                        echo 'data: ' . json_encode($text) . "\n\n";
-                        ob_flush();
-                        flush();
+                    try {
+                        $response = $this->makeRequest($this->baseUrl . 'models/' . $this->model . ":generateContent?key=" . $this->apiKey, $body, false, false, $callback);
+                        $text = $this->getResult($response);
+
+                        if ($callback) {
+                            $callback($text);
+                        } else {
+                            echo "event: update\n";
+                            echo 'data: ' . json_encode($text) . "\n\n";
+                            ob_flush();
+                            flush();
+                        }
+                    } catch (Exception $e) {
+                        throw new Exception($e->getMessage());
                     }
+
+
                 }
             } else {
-                $response = $this->makeRequest($url, $body, false, false, $callback);
+                try {
+                    $response = $this->makeRequest($url, $body, false, false, $callback);
+                } catch (Exception $e) {
+                    throw new Exception($e->getMessage());
+                }
             }
 
             return isset($response) ? $this->getResult($response) : '';

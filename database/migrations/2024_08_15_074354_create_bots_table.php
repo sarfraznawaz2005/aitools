@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\ApiKeyTypeEnum;
+use App\Enums\BotTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,13 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('api_keys', function (Blueprint $table) {
+        Schema::create('bots', function (Blueprint $table) {
             $table->id();
-            $table->string('api_key');
-            $table->string('model_name')->unique();
-            $table->string('base_url')->nullable();
-            $table->string('llm_type')->default(ApiKeyTypeEnum::OPENAI);
-            $table->boolean('active')->default(false);
+            $table->string('name');
+            $table->text('bio');
+            $table->text('prompt');
+            $table->string('type')->default(BotTypeEnum::TEXT);
+            $table->string('avatar')->nullable();
+            $table->string('greeting')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('api_keys');
+        Schema::dropIfExists('bots');
     }
 };
