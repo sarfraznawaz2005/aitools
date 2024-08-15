@@ -8,7 +8,9 @@
             </li>
         @else
 
-            @if ($messages)
+            @unless (isset($messages))
+                <livewire:chat.bot-selector/>
+            @else
 
                 <li>
                     <div class="flex justify-center align-center">
@@ -19,7 +21,43 @@
                     </div>
                 </li>
 
-                @forelse($messages as $message)
+                @if (count($messages) > 1)
+                    <li class="flex justify-center">
+                        <div class="hs-dropdown fixed right-14 top-16 inline-flex">
+                            <button id="hs-dropdown-with-icons" type="button"
+                                    class="hs-dropdown-toggle py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                                <x-icons.export class="shrink-0 size-4"/>
+                                Export
+                                <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg"
+                                     width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+                            </button>
+
+                            <div
+                                class="hs-dropdown-menu transition-[opacity,margin] duration rounded-lg bg-gray-50 hs-dropdown-open:opacity-100 opacity-0 hidden min-w-28 shadow-md space-y-0.5 mt-2 divide-y divide-gray-200"
+                                role="menu">
+                                <div class="py-2 first:pt-0 last:pb-0">
+                                    <a wire:click.prevent="export('html')"
+                                       class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                       href="#">
+                                        <x-icons.code class="shrink-0 size-4"/>
+                                        HTML
+                                    </a>
+                                    <a wire:click.prevent="export('txt')"
+                                       class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                       href="#">
+                                        <x-icons.text class="shrink-0 size-4"/>
+                                        TEXT
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endif
+
+                @foreach($messages as $message)
                     @if(!$message->is_ai)
                         <li wire:key="chatlist-message{{$message->id}}" class="my-4" x-data="{
                             copied: false,
@@ -32,7 +70,8 @@
                             }
                           }">
                             <div class="max-w-2xl ms-auto flex justify-end gap-x-2 sm:gap-x-4">
-                                <div class="inline-block bg-blue-100 rounded-lg px-4 py-2 shadow-sm border border-blue-200">
+                                <div
+                                    class="inline-block bg-blue-100 rounded-lg px-4 py-2 shadow-sm border border-blue-200">
                                         <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base"
                                               x-ref="content">
                                             {!! $message->body !!}
@@ -122,39 +161,9 @@
                             </div>
                         </li>
                     @endif
-
-                @empty
-                @endforelse
-            @else
-                <li
-                    class="fixed inset-0 m-auto w-full lg:left-32 h-64 flex items-center justify-center text-gray-300 text-3xl font-bold">
-                    Start New Conversation
-                </li>
-            @endif
+                @endforeach
+            @endunless
         @endif
-
-        @if (isset($messages) && count($messages) > 1)
-            <li class="flex justify-center">
-                <div class="hs-dropdown fixed right-14 top-16 inline-flex">
-                    <button id="hs-dropdown-with-icons" type="button" class="hs-dropdown-toggle py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                        <x-icons.export class="shrink-0 size-4" /> Export
-                        <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                    </button>
-
-                    <div class="hs-dropdown-menu transition-[opacity,margin] duration rounded-lg bg-gray-50 hs-dropdown-open:opacity-100 opacity-0 hidden min-w-28 shadow-md space-y-0.5 mt-2 divide-y divide-gray-200" role="menu">
-                        <div class="py-2 first:pt-0 last:pb-0">
-                            <a wire:click.prevent="export('html')" class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
-                                <x-icons.code class="shrink-0 size-4" /> HTML
-                            </a>
-                            <a wire:click.prevent="export('txt')" class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
-                                <x-icons.text class="shrink-0 size-4" /> TEXT
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        @endif
-
     </ul>
 
     <script data-navigate-once>

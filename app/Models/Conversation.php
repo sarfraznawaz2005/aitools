@@ -80,7 +80,7 @@ class Conversation extends Model
 
         $this->messages()->create([
             'body' => Constants::CHATBUDDY_LOADING_STRING,
-            'llm' => $selectedModel->model_name . ' (' . $selectedModel->llm_type . ')',
+            'llm' => $selectedModel->llm_type . ' (' . $selectedModel->model_name . ')',
             'conversation_id' => $this->id,
             'is_ai' => true,
             'created_at' => now(),
