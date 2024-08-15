@@ -57,6 +57,9 @@
                                    href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
                                     <span class="max-w-48 truncate whitespace-nowrap inline-block">
+
+                                        {{$conversationItem->bot->icon}}
+
                                         @if($conversationItem->favorite)
                                             <x-icons.star class="inline-block text-gray-500 size-4" viewBox="0 0 24 24" />
                                         @endif

@@ -66,8 +66,8 @@ class BotSeeder extends Seeder
         PROMPT;
 
         $promptGeneratorPrompt = <<<'PROMPT'
-            You are an AI prompt generator. Your task is to create a clear and detailed prompt for an AI based on a user's
-            question. Follow these guidelines:
+            Forget all previus instructions. You are an AI prompt generator. Your task is to create a clear and detailed
+            prompt for an AI based on a user's question. Follow these guidelines:
 
             1. The prompt should instruct the AI to act as a specific character or entity related to the user's question.
             2. Be as detailed as possible in describing the AI's role and responsibilities.
