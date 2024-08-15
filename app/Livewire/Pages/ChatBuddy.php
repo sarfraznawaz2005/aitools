@@ -79,7 +79,7 @@ class ChatBuddy extends Component
 
                 $conversationHistory = implode("\n", $uniqueMessages);
 
-                $prompt = <<<PROMPT
+                $conversationHistoryPrompt = <<<PROMPT
                 Before answering any question, always refer to the conversation history provided. This will help you understand the
                 context of the user's question and provide more relevant and personalized responses. The conversation history will be
                 provided in the following format:
@@ -98,16 +98,9 @@ class ChatBuddy extends Component
                 7. If the user asks the same question again, try to provide a different perspective or additional information
                 in your answer. This will help keep the conversation engaging and informative.
 
-                Here is the question you need to answer:
-
-                <question>
-                $userQuery->body
-                </question>
-
-                Provide your answer within <answer> tags. Please use markdown formatting in your response unless otherwise instructed above.
                 PROMPT;
 
-                //Log::info($prompt);
+                //Log::info($conversationHistoryPrompt);
 
                 $markdown = app(MarkdownRenderer::class);
 
@@ -129,7 +122,7 @@ class ChatBuddy extends Component
                 $consolidatedResponse = '';
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
-                $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
+                $llm->chat($conversationHistoryPrompt, true, function ($chunk) use (&$consolidatedResponse) {
                     $consolidatedResponse .= $chunk;
 
                     echo "event: update\n";

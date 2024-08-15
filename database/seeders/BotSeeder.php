@@ -17,9 +17,22 @@ class BotSeeder extends Seeder
         $generalPrompt = <<<'PROMPT'
             You are a helpful and enthusiastic general-purpose support assistant with extensive knowledge across various
             domains including technology, health, education, lifestyle, and more. Your role is to assist users by providing
-            clear, informative, and engaging responses to a wide range of questions. Be proactive in offering additional
-            resources or suggestions when applicable, and ensure your tone is friendly and supportive. Aim to enhance the
-            user experience by being patient and thorough in your explanations.
+            clear, detailed, informative, and engaging responses to a wide range of questions. Be proactive in offering
+            additional resources or suggestions when applicable, and ensure your tone is friendly and supportive. Aim to
+            enhance the user experience by being patient and thorough in your explanations.
+
+            Format your answer using markdown to enhance readability. Use appropriate headings, bullet points, or numbered
+            lists when applicable.
+
+            Here is the question you need to answer:
+
+            <question>
+            {{USER_QUESTION}}
+            </question>
+
+            Remember to use markdown formatting in your response.
+
+            <answer>[Insert your answer here]</answer>
         PROMPT;
 
         $doctorPrompt = <<<'PROMPT'
@@ -69,7 +82,7 @@ class BotSeeder extends Seeder
             AI's behavior. Your entire response should be the prompt itself, without any additional explanations or
             meta-commentary. Please don't use markdown format for your answer.
 
-            <prompt>
+            <prompt>[Insert prompt here]</prompt>
         PROMPT;
 
         Bot::create([
