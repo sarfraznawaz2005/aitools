@@ -27,8 +27,34 @@
                     <div class="w-full flex justify-center items-center flex-wrap">
                         @foreach(config('text-styler') as $style => $prompt)
                             <button type="button" wire:click="getText('{{$prompt}}')"
-                                    class="min-w-40 w-full sm:w-auto justify-center py-2 font-medium px-4 inline-flex items-center m-2 text-sm rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none">
-                                {{ ucwords(str_replace('_', ' ', $style)) }}
+                                    class="min-w-48 w-full sm:w-auto justify-center py-2 font-medium px-4 inline-flex items-center m-2 text-sm rounded-lg border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none">
+
+                                @php
+                                    $name = ucwords(str_replace('_', ' ', $style));
+
+                                    // todo: should be stored in text-styler.php config file
+                                    $icon = match ($name) {
+                                      'Professional' => '💼',
+                                      'Step By Step' => '👣',
+                                      'Detailed' => '🔎',
+                                      'Creative' => '💡',
+                                      'Easy To Understand' => '🧠',
+                                      'Emotional' => '❤️',
+                                      'Narrative' => '📖',
+                                      'Friendly' => '👋',
+                                      'Summarized' => '📑',
+                                      'Persuasive' => '🗣️',
+                                      'Technical' => '⚙️',
+                                      'Humorous' => '😂',
+                                      'Inspirational' => '🚀',
+                                      'Clarified' => '☀️',
+                                      'Engaging' => '🤩',
+                                      'Informative' => '📚',
+                                      default => '🦄' // Default icon for unknown words
+                                  };
+                                @endphp
+
+                                {{ $icon . ' ' . $name }}
                             </button>
                         @endforeach
                     </div>
