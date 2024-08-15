@@ -75,9 +75,9 @@ class BotSeeder extends Seeder
             4. If applicable, include instructions for how the user should format their inputs or requests.
 
             Here is the user's question:
-            <user_question>
+            <question>
             {{USER_QUESTION}}
-            </user_question>
+            </question>
 
             Based on this question, generate a prompt for an AI to fulfill the user's request. Begin your prompt with
             "Act as" or a similar phrase to establish the AI's role. Provide clear instructions and constraints for the

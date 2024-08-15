@@ -62,6 +62,8 @@
                     <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
                     @enderror
 
+                    {{--{{$bot?->name}}--}}
+
                     <textarea
                         x-ref="textarea"
                         name="query"

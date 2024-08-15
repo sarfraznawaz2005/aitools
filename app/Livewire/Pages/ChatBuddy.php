@@ -47,6 +47,7 @@ class ChatBuddy extends Component
 
             try {
 
+                $prompt = $conversation->bot->prompt;
                 $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
 
                 $latestMessage = $conversation
@@ -70,6 +71,11 @@ class ChatBuddy extends Component
 
                 $uniqueMessages = [];
                 foreach ($latestMessages as $message) {
+
+                    if ($message->id === $userQuery->id) {
+                        continue;
+                    }
+
                     $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
 
                     if (!in_array($formattedMessage, $uniqueMessages)) {
@@ -100,7 +106,15 @@ class ChatBuddy extends Component
 
                 PROMPT;
 
-                //Log::info($conversationHistoryPrompt);
+                if (str_contains(strtolower($prompt), '{{user_question}}')) {
+                    $prompt = str_ireplace('{{user_question}}', $userQuery->body, $prompt);
+                } else {
+                    $prompt = $prompt . "\n\n<question>$userQuery->body</question>";
+                }
+
+                $prompt = $conversationHistoryPrompt . "\n\n" . $prompt;
+
+                Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
 
                 $markdown = app(MarkdownRenderer::class);
 
@@ -122,7 +136,7 @@ class ChatBuddy extends Component
                 $consolidatedResponse = '';
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
-                $llm->chat($conversationHistoryPrompt, true, function ($chunk) use (&$consolidatedResponse) {
+                $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
                     $consolidatedResponse .= $chunk;
 
                     echo "event: update\n";

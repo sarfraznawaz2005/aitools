@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Chat;
 
+use App\Models\Bot;
 use App\Models\Conversation;
 use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -17,7 +19,15 @@ class ChatInput extends Component
     #[Validate('min:2')]
     public string $query = '';
 
+    public ?Bot $bot = null;
+
     public ?Conversation $conversation = null;
+
+    #[On('botSelected')]
+    public function botSelected(Bot $bot): void
+    {
+        $this->bot = $bot;
+    }
 
     public function save(): void
     {
@@ -27,9 +37,16 @@ class ChatInput extends Component
             return;
         }
 
+        if (!$this->bot) {
+            $this->bot = Bot::where('name', 'General')->first();
+        }
+
         // create new conversation if not exists
         if (!$this->conversation) {
-            $this->conversation = Conversation::create();
+
+            $this->conversation = Conversation::create([
+                'bot_id' => $this->bot->id,
+            ]);
 
             // for new conversation, we need to generate a title
             $result = $this->conversation->generateTitle($this->query);

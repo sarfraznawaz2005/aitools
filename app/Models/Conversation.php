@@ -21,7 +21,10 @@ class Conversation extends Model
         'updated_at' => 'datetime',
     ];
 
-    protected $fillable = ['title'];
+    protected $fillable = [
+        'bot_id',
+        'title',
+    ];
 
     protected static function boot(): void
     {
