@@ -24,8 +24,8 @@ use Sajadsdi\LaravelSettingPro\Support\Setting;
 function getLLM(ApiKey $model): LlmProvider
 {
     return match ($model->llm_type) {
-        'Gemini' => new GeminiProvider($model->api_key, $model->model_name, ['maxOutputTokens' => 8192]),
-        'OpenAI' => new OpenAiProvider($model->api_key, $model->model_name, ['max_tokens' => 4096]),
+        'Gemini' => new GeminiProvider($model->api_key, $model->model_name, ['maxOutputTokens' => 8192, 'temperature' => 1.0]),
+        'OpenAI' => new OpenAiProvider($model->api_key, $model->model_name, ['max_tokens' => 4096, 'temperature' => 0.7]),
         default => new OllamaProvider($model->api_key, $model->model_name, ['max_tokens' => 4096]),
     };
 }
