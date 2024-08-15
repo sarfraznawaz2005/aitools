@@ -40,7 +40,7 @@
                                         <a href="{{route($tool['route'])}}" wire:navigate
                                            class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
                                         >
-                                            <img width="32" height="32" alt="{{$tool['name']}}" src="{{$tool['icon_data']}}">
+                                            <img width="24" height="24" alt="{{$tool['name']}}" src="{{$tool['icon_data']}}">
 
                                             {{$tool['name']}}
                                         </a>
@@ -58,7 +58,7 @@
                     @else
                         <a href="{{route('home')}}" wire:navigate>
                             <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24 hover:text-gray-700 dark:hover:text-gray-500">
-                                <img width="32" height="32" class="inline" alt="{{$title}}" src="{{config('tools.' . $currentRoute . '.icon_data')}}">
+                                <img width="32" height="32" class="inline" alt="{{$title}}" src="{{config('tools.' . Request::segment(1) . '.icon_data')}}">
                                 {{ $title }}
                             </h2>
                         </a>
