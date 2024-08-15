@@ -84,12 +84,9 @@
 
                                 <div class="flex justify-between items-center">
 
-                                    @if ($message->llm)
-                                        <div class="inline-block mt-[-20px] ml-2">
-                                            <span class="text-gray-400 text-xs">{{$message->llm}}</span>
-                                        </div>
-                                        <div>&nbsp;</div>
-                                    @endif
+                                    <div class="inline-block mt-[-20px] ml-2">
+                                        <span class="text-gray-400 text-xs">{{$message->llm}}</span>
+                                    </div>
 
                                     <!-- Button Group -->
                                     <div class="flex justify-end">

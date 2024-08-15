@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chat>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Conversation>
  */
 class ConversationFactory extends Factory
 {
@@ -18,6 +18,8 @@ class ConversationFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence,
+            'updated_at' => now(),
+            'created_at' => now(),
         ];
     }
 }
