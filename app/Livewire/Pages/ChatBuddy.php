@@ -81,7 +81,7 @@ class ChatBuddy extends Component
 
                 $prompt = <<<PROMPT
                 Before answering any question, always refer to the conversation history provided. This will help you understand the
-                context of the user's query and provide more relevant and personalized responses. The conversation history will be
+                context of the user's question and provide more relevant and personalized responses. The conversation history will be
                 provided in the following format:
 
                 <conversation_history>
@@ -95,9 +95,8 @@ class ChatBuddy extends Component
                 4. Offer additional information or suggestions that might be helpful to the user.
                 5. If you're unsure about something, admit it and offer to find more information if possible.
                 6. Maintain a friendly and supportive tone throughout your response.
-
-                If the user asks the same question again, try to provide a different perspective or additional information in your answer.
-                This will help keep the conversation engaging and informative.
+                7. If the user asks the same question again, try to provide a different perspective or additional information
+                in your answer. This will help keep the conversation engaging and informative.
 
                 Here is the question you need to answer:
 
