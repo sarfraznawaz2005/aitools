@@ -19,7 +19,6 @@ return new class extends Migration
             $table->text('prompt');
             $table->string('type')->default(BotTypeEnum::TEXT);
             $table->string('avatar')->nullable();
-            $table->string('greeting')->nullable();
             $table->timestamps();
         });
     }
