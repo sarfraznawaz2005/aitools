@@ -8,7 +8,7 @@ class GeminiProvider extends BaseLLMProvider
 {
     public function __construct(string $apiKey, string $model, array $options = [], int $retries = 1)
     {
-        parent::__construct($apiKey, 'https://generativelanguage.googleapis.com/v1/', $model, $options, $retries);
+        parent::__construct($apiKey, 'https://generativelanguage.googleapis.com/v1beta/', $model, $options, $retries);
     }
 
     public function chat(string $message, bool $stream = false, ?callable $callback = null): string
