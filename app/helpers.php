@@ -2,6 +2,7 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * chat scroll position on delete
  * custom prompts
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips

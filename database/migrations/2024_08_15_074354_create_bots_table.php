@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('bio');
             $table->text('prompt');
             $table->string('type')->default(BotTypeEnum::TEXT);
-            $table->string('avatar')->nullable();
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
     }
