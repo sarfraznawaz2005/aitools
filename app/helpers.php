@@ -9,6 +9,7 @@
  * DBTalk - https://ai.eteamprojects.com/tools/talk-database/index.php
  * Researcher Agent
  * UpWork AI extension
+ * Image/Video Generator
  * https://www.youtube.com/watch?v=7rYR_l9oqQg
  * */
 

@@ -50,7 +50,7 @@
                         }
                       }"
                     id="textStylerOutputContainer"
-                    class="bg-gray-100 border border-gray-300 px-5 rounded-lg text-base font-semibold mt-8">
+                    class="bg-gray-100 border border-gray-300 px-5 rounded-lg text-base font-semibold mt-8 invisible">
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Output</legend>
 
                     <div x-ref="content" class="py-5 font-medium" id="textStylerOutput"></div>
@@ -72,21 +72,21 @@
         (function () {
 
             document.addEventListener('livewire:navigated', () => {
-                const textStylerOutputContainer = document.getElementById('textStylerOutputContainer');
-                textStylerOutputContainer.style.display = 'none';
-
                 window.Livewire.on('getTextStylerAiResponse', () => {
+                    const textStylerOutputContainer = document.getElementById('textStylerOutputContainer');
                     const copyButtonContainer = document.getElementById('copyButtonContainer');
                     const outputElement = document.getElementById('textStylerOutput');
 
-                    outputElement.innerHTML = '';
                     outputElement.style.display = 'block';
+                    outputElement.innerHTML = '';
 
                     scrollToBottom();
                     Livewire.dispatch('showLoading');
 
                     const source = new EventSource("/text-styler/chat");
                     source.addEventListener("update", function (event) {
+
+                        textStylerOutputContainer.style.visibility = 'visible';
 
                         if (event.data === "<END_STREAMING_SSE>") {
                             source.close();
