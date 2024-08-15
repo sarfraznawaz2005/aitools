@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BotSeeder::class);
 
         if (app()->environment('local')) {
-            $this->call(DemoSeeder::class);
+            //$this->call(DemoSeeder::class);
         }
     }
 }
