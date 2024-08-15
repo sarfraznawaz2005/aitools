@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
@@ -111,11 +112,13 @@ class Conversation extends Model
      | -----------------------------------------------------------------
      */
 
-    /**
-     * Chat has many messages.
-     */
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function bot(): BelongsTo
+    {
+        return $this->belongsTo(Bot::class);
     }
 }
