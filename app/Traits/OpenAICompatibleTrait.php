@@ -22,41 +22,35 @@ trait OpenAICompatibleTrait
             'temperature' => $this->options['temperature'] ?? 1.0,
         ];
 
-        try {
+        if ($stream) {
+            try {
+                $this->makeRequest($url, $body, $stream, true, $callback);
+            } catch (Exception $exception) {
 
-            if ($stream) {
-                try {
-                    $this->makeRequest($url, $body, $stream, true, $callback);
-                } catch (Exception $exception) {
+                Log::error('fallback error: ' . $exception->getMessage());
 
-                    Log::error('fallback error: '. $exception->getMessage());
+                // fallback via non-streaming response
+                sleep(1);
 
-                    // fallback via non-streaming response
-                    sleep(1);
+                unset($body['stream']);
 
-                    unset($body['stream']);
-
-                    $response = $this->makeRequest($url, $body, false, true, $callback);
-                    $text = $this->getResult($response);
-
-                    if ($callback) {
-                        $callback($text);
-                    } else {
-                        echo "event: update\n";
-                        echo 'data: ' . json_encode($text) . "\n\n";
-                        ob_flush();
-                        flush();
-                    }
-                }
-            } else {
                 $response = $this->makeRequest($url, $body, false, true, $callback);
+                $text = $this->getResult($response);
+
+                if ($callback) {
+                    $callback($text);
+                } else {
+                    echo "event: update\n";
+                    echo 'data: ' . json_encode($text) . "\n\n";
+                    ob_flush();
+                    flush();
+                }
             }
-
-            return isset($response) ? $this->getResult($response) : '';
-
-        } catch (Exception $e) {
-            return $e->getMessage();
+        } else {
+            $response = $this->makeRequest($url, $body, false, true, $callback);
         }
+
+        return isset($response) ? $this->getResult($response) : '';
     }
 
     public function embed(string $text, string $embeddingModel): array|string

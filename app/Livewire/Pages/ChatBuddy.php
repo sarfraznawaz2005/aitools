@@ -125,14 +125,15 @@ class ChatBuddy extends Component
 
             } catch (Exception $e) {
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
+                $error = '<span class="text-red-600">Oops! Failed to get a response, please try again.' . ' ' . $e->getMessage() . '</span>';
 
                 echo "event: update\n";
-                echo "data: " . json_encode(Constants::AI_ERROR_MESSSAGE) . "\n\n";
+                echo "data: " . json_encode($error) . "\n\n";
                 ob_flush();
                 flush();
 
                 //$latestMessage->delete();
-                $latestMessage->update(['body' => Constants::AI_ERROR_MESSSAGE]);
+                $latestMessage->update(['body' => $error]);
             } finally {
                 echo "event: update\n";
                 echo "data: <END_STREAMING_SSE>\n\n";
