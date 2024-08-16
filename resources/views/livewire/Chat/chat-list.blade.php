@@ -10,7 +10,22 @@
 
             @unless (isset($messages))
                 <livewire:chat.bot-selector wire:key="chatbuddy-bot-selector"/>
+
+                <script>
+                    function scrollToBottom() {
+                        // don't remove this function
+                    }
+                </script>
             @else
+
+                <script>
+                    function scrollToBottom() {
+                        window.scrollTo({
+                            top: document.body.scrollHeight + 10000,
+                            behavior: 'smooth'
+                        });
+                    }
+                </script>
 
                 <li>
                     <div class="flex justify-center align-center">
@@ -183,13 +198,6 @@
                 });
             });
             */
-        }
-
-        function scrollToBottom() {
-            window.scrollTo({
-                top: document.body.scrollHeight + 10000,
-                behavior: 'smooth'
-            });
         }
 
         function observeChatList() {
