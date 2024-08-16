@@ -13,7 +13,7 @@
                <textarea
                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-base focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                    wire:model="text"
-                   rows="10"
+                   rows="8"
                    placeholder="Type your text...">
                </textarea>
                 @error('text')
@@ -25,36 +25,11 @@
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Choose Style</legend>
 
                     <div class="w-full flex justify-center items-center flex-wrap">
-                        @foreach(config('text-styler') as $style => $prompt)
-                            <button type="button" wire:click="getText('{{$prompt}}')"
+                        @foreach(config('text-styler') as $key => $style)
+                            <button type="button" wire:click="getText('{{$style['prompt']}}')"
                                     class="min-w-48 w-full sm:w-auto justify-center py-2 font-medium px-4 inline-flex items-center m-2 text-sm rounded-lg border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none">
 
-                                @php
-                                    $name = ucwords(str_replace('_', ' ', $style));
-
-                                    // todo: should be stored in text-styler.php config file
-                                    $icon = match ($name) {
-                                      'Professional' => '💼',
-                                      'Step By Step' => '👣',
-                                      'Detailed' => '🔎',
-                                      'Creative' => '💡',
-                                      'Easy To Understand' => '🧠',
-                                      'Emotional' => '❤️',
-                                      'Narrative' => '📖',
-                                      'Friendly' => '👋',
-                                      'Summarized' => '📑',
-                                      'Persuasive' => '🗣️',
-                                      'Technical' => '⚙️',
-                                      'Humorous' => '😂',
-                                      'Inspirational' => '🚀',
-                                      'Clarified' => '☀️',
-                                      'Engaging' => '🤩',
-                                      'Informative' => '📚',
-                                      default => '🦄' // Default icon for unknown words
-                                  };
-                                @endphp
-
-                                {{ $icon . ' ' . $name }}
+                                {{ $style['icon'] . ' ' .ucwords(str_replace('_', ' ', $key)) }}
                             </button>
                         @endforeach
                     </div>
@@ -72,7 +47,7 @@
                         }
                       }"
                     id="textStylerOutputContainer"
-                    class="bg-gray-100 border border-gray-300 px-5 rounded-lg text-base font-semibold mt-8 invisible">
+                    class="bg-gray-100 border border-gray-300 px-5 rounded-lg text-base font-semibold my-4 invisible">
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Output</legend>
 
                     <div x-ref="content" class="py-5 font-medium" id="textStylerOutput"></div>

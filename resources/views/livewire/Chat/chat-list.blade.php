@@ -237,6 +237,10 @@
         }
 
         document.addEventListener('livewire:navigated', () => {
+            scrollToBottom();
+        });
+
+        document.addEventListener('livewire:navigated', () => {
             performCommonPageActions();
             observeChatList();
 
