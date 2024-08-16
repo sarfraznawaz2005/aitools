@@ -9,7 +9,7 @@
         <div class="p-3 md:p-5 text-center">
             <div
                 class="rounded-lg p-3 border border-gray-200 w-fit justify-center m-auto bg-gray-100 text-gray-800 text-xs sm:text-sm md:text-base lg:text-base mb-4">
-                🎉 Hey there, pick a bot or start talking to the versatile General bot by default.
+                🎉 Hey there, click a bot to choose or start talking to the versatile General bot by default.
             </div>
 
             <div class="w-full flex justify-center items-center flex-wrap">
@@ -18,35 +18,43 @@
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Your Bots</legend>
 
                     <div
-                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 font-medium">
+                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 font-medium">
                         @foreach($bots as $bot)
                             @if(!$bot->system)
-                                <button
-                                    type="button"
-                                    wire:click.prevent="selectBot({{ $bot->id }})"
-                                    x-data="{
-                                   isSelected: false,
-                                    init() {
-                                            $wire.on('botSelected', (botId) => {
-                                                this.isSelected = (botId == {{ $bot->id }});
-                                            });
-                                        }
-                                    }"
-                                    :class="{ 'bg-yellow-100 hover:bg-yellow-100': isSelected }"
-                                    x-tooltip.raw="{{$bot->bio}}"
-                                    wire:key="bot-{{ $bot->id }}"
-                                    x-ref="button"
-                                    class="w-full text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
-                                >
-
+                                <div class="flex w-full">
+                                    <button
+                                        type="button"
+                                        wire:click.prevent="selectBot({{ $bot->id }})"
+                                        x-data="{
+                                            isSelected: false,
+                                            init() {
+                                                $wire.on('botSelected', (botId) => {
+                                                    this.isSelected = (botId == {{ $bot->id }});
+                                                });
+                                            }
+                                        }"
+                                        :class="{ 'bg-yellow-100 hover:bg-yellow-100': isSelected }"
+                                        x-tooltip.raw="{{$bot->bio}}"
+                                        wire:key="bot-{{ $bot->id }}"
+                                        x-ref="button"
+                                        class="w-full px-1 text-sm inline-flex items-center border hover:bg-gray-200 border-gray-300 text-gray-800 rounded-l-lg focus:outline-none disabled:opacity-50 disabled:pointer-events-none transition duration-150 ease-in-out overflow-hidden"
+                                    >
                                     <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg">
                                       <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl">
                                           {{ $bot->icon }}
                                       </span>
                                     </span>
+                                        <span class="truncate">{{ $bot->name }}</span>
+                                    </button>
 
-                                    <span class="truncate">{{ $bot->name }}</span>
-                                </button>
+                                    <button
+                                        type="button"
+                                        @click="// Add your edit function here"
+                                        class="flex-shrink-0 px-2 bg-gray-100 hover:bg-gray-200 text-gray-500 border-l-0 rounded-r-lg border border-gray-300 focus:outline-none disabled:opacity-50 disabled:pointer-events-none transition duration-150 ease-in-out"
+                                    >
+                                        <x-icons.edit/>
+                                    </button>
+                                </div>
                             @endif
                         @endforeach
                     </div>
