@@ -58,8 +58,27 @@
             class="flex w-full flex-col gap-1.5 rounded p-1 transition-colors bg-gray-200 dark:bg-token-main-surface-secondary">
             <div class="flex gap-2 items-center">
 
-                <div class="inline-block text-2xl ml-1" x-data x-tooltip.raw="{{$bot->name ?? 'General'}} - {{$bot->bio ?? 'A versatile general purpose bot that can help you with a variety of tasks.'}}">
-                    <span class="inline-block">{{$bot->icon ?? '🤖'}}</span>
+                @php
+                    $name = $bot->name ?? 'General';
+                    $bio = $bot->bio ?? 'A versatile general purpose bot that can help you with a variety of tasks.';
+                    $icon = $bot->icon ?? '🤖';
+
+                     if (isset($conversation) && $conversation->bot->name) {
+                        $name = $conversation->bot->name;
+                    }
+
+                    if (isset($conversation) && $conversation->bot->bio) {
+                        $bio = $conversation->bot->bio;
+                    }
+
+                     if (isset($conversation)) {
+                        $icon = $conversation->bot->icon;
+                    }
+                @endphp
+
+                <div class="inline-block text-2xl ml-1" x-data
+                     x-tooltip.raw="{{$name}} - {{$bio}}">
+                    <span class="inline-block">{{$icon}}</span>
                 </div>
 
                 <div class="flex min-w-0 flex-1 flex-col">
