@@ -202,8 +202,8 @@
                 </div>
 
                 <fieldset
-                    class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
-                    <legend class="text-sm text-gray-500 dark:text-neutral-300">Add Knowledge Sources</legend>
+                    class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
+                    <legend class="text-sm text-gray-600 dark:text-neutral-300">Add Knowledge Sources</legend>
 
                     <div class="text-red-500 text-xs mb-2">Currently not supported.</div>
 
