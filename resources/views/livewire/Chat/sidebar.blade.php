@@ -62,10 +62,6 @@
                                             <span class="inline-block">{{getBotIcon($conversationItem)}}</span>
                                         </div>
 
-                                        @if($conversationItem->favorite)
-                                            <x-icons.star class="inline-block text-gray-500 size-4 mt-1" viewBox="0 0 24 24" />
-                                        @endif
-
                                         @if($conversationItem->title)
                                             {{ucwords($conversationItem->title)}}
                                         @else
@@ -83,11 +79,21 @@
                                     {{$conversationItem->title ?? "Conversation #" . $conversationItem->id}}
                                 </div>
 
-                                <button
-                                    @click.prevent.stop="openDropdown = openDropdown === {{$conversationItem->id}} ? null : {{$conversationItem->id}}"
-                                    class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
-                                    <x-icons.dots class="inline-block"/>
-                                </button>
+                                <div class="flex justify-end items-center mr-2">
+                                    @if($conversationItem->favorite)
+                                        <x-icons.star class="inline-block text-gray-500 size-4 mt-1" viewBox="0 0 24 24" />
+                                    @endif
+
+                                    <div>
+                                        <button
+                                            @click.prevent.stop="openDropdown = openDropdown === {{$conversationItem->id}} ? null : {{$conversationItem->id}}"
+                                            class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
+                                            <x-icons.dots class="inline-block"/>
+                                        </button>
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             <div x-cloak x-show="openDropdown === {{$conversationItem->id}}"
@@ -98,7 +104,7 @@
                                         <a href="#"
                                            wire:click.prevent="toggleFavorite({{$conversationItem->id}}); openDropdown = null;"
                                            class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
-                                            <x-icons.star class="inline-block mr-2 text-gray-500" fill="{{$conversationItem->favorite ? '#c1f9a9' : 'none'}}" />
+                                            <x-icons.star class="inline-block mr-2 text-gray-500" fill="{{$conversationItem->favorite ? '#f9e084' : 'none'}}" />
                                             Favorite
                                         </a>
                                     </li>
