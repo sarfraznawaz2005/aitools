@@ -9,7 +9,7 @@
         @else
 
             @unless (isset($messages))
-                <livewire:chat.bot-selector/>
+                <livewire:chat.bot-selector wire:key="chatbuddy-bot-selector"/>
             @else
 
                 <li>

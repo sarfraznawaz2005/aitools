@@ -17,18 +17,31 @@
                     class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-5 pb-7 dark:border-neutral-700 my-4">
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">Your Bots</legend>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 font-medium">
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 font-medium">
                         @foreach($bots as $bot)
                             @if(!$bot->system)
-                                <button type="button" wire:click="selectBot({{ $bot->id }})"
-                                        x-data x-tooltip.raw="{{$bot->bio}}"
-                                        wire:key="bot-{{ $bot->id }}"
-                                        class="w-full py-1 px-2 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
+                                <button
+                                    type="button"
+                                    wire:click.prevent="selectBot({{ $bot->id }})"
+                                    x-data="{
+                                    isSelected: false,
+                                    init() {
+                                        $wire.on('botSelected', (botId) => {
+                                            this.isSelected = (botId == {{ $bot->id }});
+                                        });
+                                    }
+                                }"
+                                    :class="{ 'bg-yellow-100': isSelected }"
+                                    x-tooltip.raw="{{$bot->bio}}"
+                                    wire:key="bot-{{ $bot->id }}"
+                                    x-ref="button"
+                                    class="w-full py-1 px-2 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
                                 >
-                                    <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
-                                        {{ $bot->icon }}
-                                    </span>
-                                    <span class="truncate">{{ $bot->name }}</span>
+                                <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
+                                    {{ $bot->icon }}
+                                </span>
+                                    {{ $bot->name }}
                                 </button>
                             @endif
                         @endforeach
@@ -39,18 +52,31 @@
                     class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-5 pb-7 dark:border-neutral-700 my-4">
                     <legend class="text-sm text-gray-500 dark:text-neutral-300">System Bots</legend>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 font-medium">
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 font-medium">
                         @foreach($bots as $bot)
                             @if($bot->system)
-                                <button type="button" wire:click="selectBot({{ $bot->id }})"
-                                        x-data x-tooltip.raw="{{$bot->bio}}"
-                                        wire:key="bot-{{ $bot->id }}"
-                                        class="w-full py-1 px-2 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
+                                <button
+                                    type="button"
+                                    wire:click.prevent="selectBot({{ $bot->id }})"
+                                    x-data="{
+                                    isSelected: false,
+                                    init() {
+                                        $wire.on('botSelected', (botId) => {
+                                            this.isSelected = (botId == {{ $bot->id }});
+                                        });
+                                    }
+                                }"
+                                    :class="{ 'bg-yellow-100': isSelected }"
+                                    x-tooltip.raw="{{$bot->bio}}"
+                                    wire:key="bot-{{ $bot->id }}"
+                                    x-ref="button"
+                                    class="w-full py-1 px-2 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
                                 >
-                                    <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
-                                        {{ $bot->icon }}
-                                    </span>
-                                    <span class="truncate">{{ $bot->name }}</span>
+                                <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
+                                    {{ $bot->icon }}
+                                </span>
+                                    {{ $bot->name }}
                                 </button>
                             @endif
                         @endforeach
