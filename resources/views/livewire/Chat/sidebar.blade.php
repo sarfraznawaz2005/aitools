@@ -63,7 +63,7 @@
                                         </div>
 
                                         @if($conversationItem->favorite)
-                                            <x-icons.star class="inline-block text-gray-500 size-4" viewBox="0 0 24 24" />
+                                            <x-icons.star class="inline-block text-gray-500 size-4 mt-1" viewBox="0 0 24 24" />
                                         @endif
 
                                         @if($conversationItem->title)
