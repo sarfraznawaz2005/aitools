@@ -45,7 +45,7 @@
                                       </span>
                                     </span>
 
-                                    {{ $bot->name }}
+                                    <span class="truncate">{{ $bot->name }}</span>
                                 </button>
                             @endif
                         @endforeach
@@ -98,7 +98,7 @@
                                       </span>
                                     </span>
 
-                                    {{ $bot->name }}
+                                    <span class="truncate">{{ $bot->name }}</span>
                                 </button>
                             @endif
                         @endforeach
