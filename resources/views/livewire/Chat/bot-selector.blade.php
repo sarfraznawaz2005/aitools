@@ -36,10 +36,10 @@
                                     x-tooltip.raw="{{$bot->bio}}"
                                     wire:key="bot-{{ $bot->id }}"
                                     x-ref="button"
-                                    class="w-full bg-gray-50 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
+                                    class="w-full text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                                 >
 
-                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg bg-white">
+                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg">
                                       <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl">
                                           {{ $bot->icon }}
                                       </span>
@@ -89,10 +89,10 @@
                                     x-tooltip.raw="{{$bot->bio}}"
                                     wire:key="bot-{{ $bot->id }}"
                                     x-ref="button"
-                                    class="w-full bg-gray-50 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
+                                    class="w-full text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                                 >
 
-                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg bg-white">
+                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg">
                                       <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl">
                                           {{ $bot->icon }}
                                       </span>
