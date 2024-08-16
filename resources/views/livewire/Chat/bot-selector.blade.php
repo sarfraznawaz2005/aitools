@@ -25,22 +25,26 @@
                                     type="button"
                                     wire:click.prevent="selectBot({{ $bot->id }})"
                                     x-data="{
-                                    isSelected: false,
+                                   isSelected: false,
                                     init() {
                                             $wire.on('botSelected', (botId) => {
                                                 this.isSelected = (botId == {{ $bot->id }});
                                             });
                                         }
                                     }"
-                                    :class="{ 'bg-yellow-100': isSelected }"
+                                    :class="{ 'bg-yellow-100 hover:bg-yellow-100': isSelected }"
                                     x-tooltip.raw="{{$bot->bio}}"
                                     wire:key="bot-{{ $bot->id }}"
                                     x-ref="button"
-                                    class="w-full py-1 px-2 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
+                                    class="w-full bg-gray-50 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                                 >
-                                <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
-                                    {{ $bot->icon }}
-                                </span>
+
+                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg bg-white">
+                                      <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl">
+                                          {{ $bot->icon }}
+                                      </span>
+                                    </span>
+
                                     {{ $bot->name }}
                                 </button>
                             @endif
@@ -67,15 +71,19 @@
                                             });
                                         }
                                     }"
-                                    :class="{ 'bg-yellow-100': isSelected }"
+                                    :class="{ 'bg-yellow-100 hover:bg-yellow-100': isSelected }"
                                     x-tooltip.raw="{{$bot->bio}}"
                                     wire:key="bot-{{ $bot->id }}"
                                     x-ref="button"
-                                    class="w-full py-1 px-2 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
+                                    class="w-full bg-gray-50 text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                                 >
-                                <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
-                                    {{ $bot->icon }}
-                                </span>
+
+                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg bg-white">
+                                      <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl">
+                                          {{ $bot->icon }}
+                                      </span>
+                                    </span>
+
                                     {{ $bot->name }}
                                 </button>
                             @endif

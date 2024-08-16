@@ -53,7 +53,7 @@
                                 <a wire:navigate
                                    x-show="!editable"
                                    class="items-center flex-nowrap text-sm text-gray-700 block w-full"
-                                   style="padding: 8px 8px 5px 8px;"
+                                   style="padding: 8px 8px 7px 8px;"
                                    href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
                                     <div class="max-w-48 truncate whitespace-nowrap inline-flex items-center">
