@@ -63,17 +63,9 @@
                     $bio = $bot->bio ?? 'A versatile general purpose bot that can help you with a variety of tasks.';
                     $icon = $bot->icon ?? '🤖';
 
-                     if (isset($conversation) && $conversation->bot->name) {
-                        $name = $conversation->bot->name;
-                    }
-
-                    if (isset($conversation) && $conversation->bot->bio) {
-                        $bio = $conversation->bot->bio;
-                    }
-
-                     if (isset($conversation)) {
-                        $icon = $conversation->bot->icon;
-                    }
+                    $name = isset($conversation) ? $conversation->bot->name: $name;
+                    $bio = isset($conversation) ? $conversation->bot->bio: $bio;
+                    $icon = isset($conversation) ? $conversation->bot->icon: $icon;
                 @endphp
 
                 <div class="inline-block text-2xl ml-1" x-data
