@@ -19,6 +19,7 @@ class BotSelector extends Component
     public string $bio;
     public string $prompt;
     public string $icon;
+    public string $type;
 
     protected function rules(): array
     {
@@ -27,6 +28,7 @@ class BotSelector extends Component
             'bio' => 'required|min:5|max:500',
             'prompt' => 'required|min:3|max:2500',
             'icon' => 'required',
+            'type' => 'required',
         ];
     }
 
@@ -51,7 +53,7 @@ class BotSelector extends Component
             'bio' => $this->bio,
             'prompt' => $this->prompt,
             'icon' => $this->icon,
-            'system' => false,
+            'type' => $this->type,
         ])->save();
 
         //dd($this->model);

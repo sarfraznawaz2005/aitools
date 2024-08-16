@@ -15,7 +15,7 @@ class Bot extends Model
         'bio',
         'prompt',
         'type',
-        'avatar',
+        'icon',
     ];
 
     public function conversations(): HasMany
