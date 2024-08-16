@@ -180,73 +180,43 @@
                 </div>
 
                 <div class="relative mb-3">
-                    <select
-                        wire:model="icon"
-                        class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                        <option value="">Choose Icon</option>
 
-                        <!-- Human Icons -->
-                        <option value="🕵️">🕵️</option>
-                        <option value="🧙‍♂️">🧙‍♂️</option>
-                        <option value="🦸‍♀️">🦸‍♀️</option>
-                        <option value="🥷">🥷</option>
-                        <option value="👷">👷</option>
-                        <option value="👨‍🏫">👨‍🏫</option>
-                        <option value="👨‍🍳">👨‍🍳</option>
-                        <option value="🧑‍🚀">🧑‍🚀</option>
-                        <option value="😉">😉</option>
-                        <option value="😍">😍</option>
-                        <option value="😎">😎</option>
-                        <option value="👽">👽</option>
-                        <option value="👹">👹</option>
+                    <div x-data="{ open: false, selectedIcon: @entangle('icon') }" class="relative w-full">
+                        <!-- Dropdown button -->
+                        <button
+                            @click="open = !open"
+                            class="py-3 px-4 pr-3 w-full bg-gray-100 border rounded-lg text-sm focus:border-2 focus:border-blue-500 focus:ring-blue-500 flex justify-between items-center h-12">
 
-                        <!-- Education Icons -->
-                        <option value="📚">📚</option>
-                        <option value="🎓">🎓</option>
+                            <span class="flex items-center space-x-1">
+                                <span :class="selectedIcon ? 'text-lg text-gray-700' : 'text-sm text-gray-500'"
+                                      x-text="selectedIcon ? selectedIcon : 'Choose Icon'">
+                                </span>
+                            </span>
 
-                        <!-- Technology Icons -->
-                        <option value="🧠">🧠</option>
-                        <option value="💻">💻</option>
-                        <option value="📱">📱</option>
-                        <option value="🌎">🌎</option>
-                        <option value="🚀">🚀</option>
-                        <option value="💡">💡</option>
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
 
-                        <!-- Lifestyle Icons -->
-                        <option value="🐼">🐼</option>
-                        <option value="🦁">🦁</option>
-                        <option value="🎠">🎠</option>
-                        <option value="🏠">🏠</option>
-                        <option value="🌳">🌳</option>
-                        <option value="🌸">🌸</option>
-                        <option value="🚲">🚲</option>
-                        <option value="🛒">🛒</option>
-                        <option value="⌚">⌚</option>
-                        <option value="🎨">🎨</option>
-                        <option value="🎥">🎥</option>
-                        <option value="🎧">🎧</option>
-                        <option value="💄">💄</option>
-                        <option value="📅">📅</option>
-                        <option value="📊">📊</option>
-                        <option value="📌">📌</option>
-                        <option value="🍔">🍔</option>
-                        <option value="🍒">🍒</option>
-                        <option value="🌈">🌈</option>
-                        <option value="👑">👑</option>
-                        <option value="👕">👕</option>
-                        <option value="📢">📢</option>
+                        <!-- Dropdown content -->
+                        <div x-show="open"
+                             @click.away="open = false"
+                             class="absolute mt-1 w-full bg-white border rounded-lg shadow-lg max-h-56 overflow-y-auto z-10">
+                            <div class="p-2 grid grid-cols-3 gap-2 w-full">
+                                <template
+                                    x-for="icon in ['🕵️', '🧙‍♂️', '🦸‍♀️', '🥷', '👷', '👨‍🏫', '👨‍🍳', '🧑‍🚀', '😉', '😍', '😎', '👽', '👹', '📚', '🎓', '🧠', '💻', '📱', '🌎', '🚀', '💡', '🐼', '🦁', '🎠', '🏠', '🌳', '🌸', '🚲', '🛒', '⌚', '🎨', '🎥', '🎧', '💄', '📅', '📊', '📌', '🍔', '🍒', '🌈', '👑', '👕', '📢', '💰', '💵', '🔥', '🧰', '💊', '✈️', '🕌', '🎉', '💝']"
+                                    :key="icon">
+                                    <div @click="selectedIcon = icon; open = false;"
+                                         class="p-2 bg-gray-100 hover:bg-blue-100 cursor-pointer rounded-lg text-center">
+                                        <span x-text="icon" class="text-4xl"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
 
-                        <!-- Other Icons -->
-                        <option value="💰">💰</option>
-                        <option value="💵">💵</option>
-                        <option value="🔥">🔥</option>
-                        <option value="🧰">🧰</option>
-                        <option value="💊">💊</option>
-                        <option value="✈️">✈️</option>
-                        <option value="🕌">🕌</option>
-                        <option value="🎉">🎉</option>
-                        <option value="💝">💝</option>
-                    </select>
                 </div>
 
                 <div class="relative mb-3">
@@ -262,7 +232,10 @@
 
                 <fieldset
                     class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
-                    <legend class="text-sm text-gray-600 dark:text-neutral-300">Add Knowledge Sources</legend>
+                    <legend class="text-sm text-gray-600 dark:text-neutral-300">
+                        Add Knowledge Sources
+                        <span class="text-xs">(PDFs, TXTs, etc)</span>
+                    </legend>
 
                     <div class="text-red-500 text-xs mb-2">Currently not supported.</div>
 
