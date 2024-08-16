@@ -3,7 +3,6 @@
  * TODO
  * global disabler until api key is saved
  * for deleted bot conversation, if user posts conversation, ask him to re-select a bot
- * chat scroll to bottom on wire navigation
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * chat with pdf
