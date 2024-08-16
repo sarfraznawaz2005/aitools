@@ -93,6 +93,7 @@ class BotSeeder extends Seeder
             'prompt' => trim($generalPrompt),
             'type' => BotTypeEnum::TEXT,
             'icon' => '🤖',
+            'system' => true,
         ]);
 
         Bot::create([
@@ -101,6 +102,7 @@ class BotSeeder extends Seeder
             'prompt' => trim($doctorPrompt),
             'type' => BotTypeEnum::TEXT,
             'icon' => '👨‍⚕️',
+            'system' => true,
         ]);
 
         Bot::create([
@@ -109,6 +111,7 @@ class BotSeeder extends Seeder
             'prompt' => trim($promptGeneratorPrompt),
             'type' => BotTypeEnum::TEXT,
             'icon' => '💡',
+            'system' => true,
         ]);
     }
 }
