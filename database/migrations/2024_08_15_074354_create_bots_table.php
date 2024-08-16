@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('bots', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('bio');
             $table->text('prompt');
             $table->string('type')->default(BotTypeEnum::TEXT);

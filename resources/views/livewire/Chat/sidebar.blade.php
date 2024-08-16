@@ -52,13 +52,15 @@
                             <div class="flex justify-between">
                                 <a wire:navigate
                                    x-show="!editable"
-                                   class="items-center py-3 px-3 flex-nowrap text-sm text-gray-700 block w-full"
-                                   style="padding-bottom: 5px;"
+                                   class="items-center flex-nowrap text-sm text-gray-700 block w-full"
+                                   style="padding: 8px 8px 5px 8px;"
                                    href="{{route($tools['chat-buddy']['route'] . 'load-conversation', $conversationItem)}}">
 
-                                    <span class="max-w-48 truncate whitespace-nowrap inline-block">
+                                    <div class="max-w-48 truncate whitespace-nowrap inline-flex items-center">
 
-                                        {{$conversationItem->bot->icon}}
+                                        <div class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
+                                            <span class="inline-block">{{getBotIcon($conversationItem)}}</span>
+                                        </div>
 
                                         @if($conversationItem->favorite)
                                             <x-icons.star class="inline-block text-gray-500 size-4" viewBox="0 0 24 24" />
@@ -69,7 +71,7 @@
                                         @else
                                             Conversation #{{$conversationItem->id}}
                                         @endif
-                                    </span>
+                                    </div>
                                 </a>
 
                                 <div x-show="editable"

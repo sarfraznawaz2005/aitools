@@ -2,7 +2,8 @@
 /*
  * TODO
  * global disabler until api key is saved
- * chat scroll position on delete
+ * for deleted bot conversation, if user posts conversation, ask him to re-select a bot
+ * chat scroll to bottom on wire navigation
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * chat with pdf
@@ -17,6 +18,7 @@ use App\LLM\LlmProvider;
 use App\LLM\OllamaProvider;
 use App\LLM\OpenAiProvider;
 use App\Models\ApiKey;
+use App\Models\Conversation;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 function getLLM(ApiKey $model): LlmProvider
@@ -88,4 +90,9 @@ function htmlToText($html, $removeWhiteSpace = true): string
     }
 
     return trim($text);
+}
+
+function getBotIcon(Conversation $conversation): string
+{
+    return $conversation?->bot?->icon ?? '🤖';
 }
