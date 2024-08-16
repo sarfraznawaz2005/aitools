@@ -58,7 +58,7 @@
             class="flex w-full flex-col gap-1.5 rounded p-1 transition-colors bg-gray-200 dark:bg-token-main-surface-secondary">
             <div class="flex gap-2 items-center">
 
-                <div class="inline-block text-2xl ml-1" x-data x-tooltip.raw="{{$bot->name ?? 'General'}} Bot">
+                <div class="inline-block text-2xl ml-1" x-data x-tooltip.raw="{{$bot->name ?? 'General'}}">
                     <span class="inline-block">{{$bot->icon ?? '🤖'}}</span>
                 </div>
 

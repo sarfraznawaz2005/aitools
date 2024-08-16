@@ -89,7 +89,7 @@ class BotSeeder extends Seeder
 
         Bot::create([
             'name' => 'General',
-            'bio' => 'A general purpose bot that can help you with a variety of tasks.',
+            'bio' => 'A versatile general purpose bot that can help you with a variety of tasks.',
             'prompt' => trim($generalPrompt),
             'type' => BotTypeEnum::TEXT,
             'icon' => '🤖',
