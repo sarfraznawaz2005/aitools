@@ -91,7 +91,12 @@ function htmlToText($html, $removeWhiteSpace = true): string
     return trim($text);
 }
 
-function getBotIcon(Conversation $conversation): string
+function getBotIcon(Conversation $conversation = null): string
 {
     return $conversation?->bot?->icon ?? '🤖';
+}
+
+function getBotName(Conversation $conversation = null): string
+{
+    return $conversation?->bot?->name ?? 'General';
 }
