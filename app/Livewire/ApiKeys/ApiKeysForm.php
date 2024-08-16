@@ -12,10 +12,10 @@ class ApiKeysForm extends Component
 {
     public ApiKey $model;
 
-    public $llm_type;
-    public $base_url;
-    public $api_key;
-    public $model_name;
+    public string $llm_type;
+    public string $base_url;
+    public string $api_key;
+    public string $model_name;
 
     protected function rules(): array
     {
@@ -50,19 +50,6 @@ class ApiKeysForm extends Component
         $this->fill($apiKey->toArray());
     }
 
-    public function deleteApiKey(ApiKey $apiKey): void
-    {
-        if ($apiKey->active) {
-            $this->resetForm();
-            $this->addError('error', 'Cannot delete the default API key!');
-            return;
-        }
-
-        $apiKey->delete();
-
-        $this->resetForm();
-    }
-
     public function save()
     {
         $this->validate();
@@ -81,6 +68,19 @@ class ApiKeysForm extends Component
         if ($isFirstApiKey) {
             return $this->redirect(route('home'), true);
         }
+
+        $this->resetForm();
+    }
+
+    public function deleteApiKey(ApiKey $apiKey): void
+    {
+        if ($apiKey->active) {
+            $this->resetForm();
+            $this->addError('error', 'Cannot delete the default API key!');
+            return;
+        }
+
+        $apiKey->delete();
 
         $this->resetForm();
     }

@@ -120,11 +120,13 @@
     <x-modal id="botModal">
         <x-slot name="title">
             <div class="flex gap-x-2">
-                ➕ Create Bot
+                {{ $model->exists ? '✏️ Edit Bot' : '➕ Create Bot'}}
             </div>
         </x-slot>
 
         <x-slot name="body">
+
+            <x-flash/>
 
             <div class="max-w-lg mx-auto p-3">
 
@@ -285,9 +287,8 @@
                         </div>
                     </div>
 
-
                     <div class="flex items-center justify-end">
-                        <x-gradient-button wire:click="createBot">
+                        <x-gradient-button wire:click="save">
                             <x-icons.ok class="size-5"/>
                             Save
                         </x-gradient-button>
