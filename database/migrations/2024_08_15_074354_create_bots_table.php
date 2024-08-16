@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('prompt');
             $table->string('type')->default(BotTypeEnum::TEXT);
             $table->string('icon')->nullable();
+            $table->boolean('system')->default(false);
             $table->timestamps();
         });
     }
