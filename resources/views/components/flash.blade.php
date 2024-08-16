@@ -1,5 +1,5 @@
 @if (session('message'))
-    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100 max-h-screen" x-transition:leave-end="opacity-0 max-h-0" class="flash-message mt-12" wire:key="flash-general-{{ uniqid() }}">
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100 max-h-screen" x-transition:leave-end="opacity-0 max-h-0" class="flash-message" wire:key="flash-general-{{ uniqid() }}">
         <div class="mt-2 mb-4 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert"
              tabindex="-1"
              aria-labelledby="hs-bordered-success-style-label">
@@ -30,7 +30,7 @@
 @endif
 
 @if (isset($errors) && $errors->any())
-    <div class="mt-12 mb-4 bg-red-50 border-s-4 border-red-500 p-4 dark:bg-red-800/30" role="alert" tabindex="-1"
+    <div class="mb-4 bg-red-50 border-s-4 border-red-500 p-4 dark:bg-red-800/30" role="alert" tabindex="-1"
          aria-labelledby="hs-bordered-red-style-label">
         <div class="flex">
             <div class="shrink-0">

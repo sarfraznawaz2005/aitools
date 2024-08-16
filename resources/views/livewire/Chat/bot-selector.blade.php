@@ -49,6 +49,8 @@
 
                                     <button
                                         type="button"
+                                        wire:click="edit({{ $bot->id }})"
+                                        data-hs-overlay="#botModal"
                                         class="flex-shrink-0 px-2 bg-gray-100 hover:bg-gray-200 text-gray-500 border-l-0 rounded-r-lg border border-gray-300 focus:outline-none disabled:opacity-50 disabled:pointer-events-none transition duration-150 ease-in-out"
                                     >
                                         <x-icons.edit/>
