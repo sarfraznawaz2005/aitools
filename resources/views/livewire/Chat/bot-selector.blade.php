@@ -27,11 +27,11 @@
                                     x-data="{
                                     isSelected: false,
                                     init() {
-                                        $wire.on('botSelected', (botId) => {
-                                            this.isSelected = (botId == {{ $bot->id }});
-                                        });
-                                    }
-                                }"
+                                            $wire.on('botSelected', (botId) => {
+                                                this.isSelected = (botId == {{ $bot->id }});
+                                            });
+                                        }
+                                    }"
                                     :class="{ 'bg-yellow-100': isSelected }"
                                     x-tooltip.raw="{{$bot->bio}}"
                                     wire:key="bot-{{ $bot->id }}"
@@ -60,13 +60,13 @@
                                     type="button"
                                     wire:click.prevent="selectBot({{ $bot->id }})"
                                     x-data="{
-                                    isSelected: false,
+                                   isSelected: false,
                                     init() {
-                                        $wire.on('botSelected', (botId) => {
-                                            this.isSelected = (botId == {{ $bot->id }});
-                                        });
-                                    }
-                                }"
+                                            $wire.on('botSelected', (botId) => {
+                                                this.isSelected = (botId == {{ $bot->id }});
+                                            });
+                                        }
+                                    }"
                                     :class="{ 'bg-yellow-100': isSelected }"
                                     x-tooltip.raw="{{$bot->bio}}"
                                     wire:key="bot-{{ $bot->id }}"
