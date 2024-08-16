@@ -293,7 +293,7 @@
                         </x-gradient-button>
                     </div>
                 </div>
-
+            </div>
         </x-slot>
     </x-modal>
 
