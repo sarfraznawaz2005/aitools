@@ -238,36 +238,61 @@
                     </select>
                 </div>
 
-                <fieldset
-                    class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
-                    <legend class="text-sm text-gray-600 dark:text-neutral-300">
-                        Add Knowledge Sources
-                        <span class="text-xs">(PDFs, TXTs, etc)</span>
-                    </legend>
+                <div class="hs-accordion-group">
+                    <div class="hs-accordion" id="knowledge-sources-accordian">
+                        <button
+                            class="hs-accordion-toggle hs-accordion-active:text-gray-600 inline-flex items-center gap-x-3 w-full text-start text-gray-600 focus:outline-none rounded-lg disabled:opacity-50 disabled:pointer-events-none"
+                        >
+                            <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                            <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m18 15-6-6-6 6"></path>
+                            </svg>
+                            Knowledge Sources
+                        </button>
 
-                    <div class="text-red-500 text-xs mb-2">Currently not supported.</div>
+                        <div id="hs-basic-with-arrow-collapse-one"
+                             class="hs-accordion-content w-full hidden overflow-hidden transition-[height] duration-300"
+                             role="region" aria-labelledby="knowledge-sources-accordian">
 
-                    <div class="relative w-full">
-                        <label for="file-input" class="sr-only">Choose file</label>
-                        <input type="file"
-                               disabled
-                               name="file-input"
-                               id="file-input"
-                               class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
+                            <fieldset
+                                class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
+                                <legend class="text-sm text-gray-600 dark:text-neutral-300">
+                                    Add Knowledge Sources
+                                    <span class="text-xs">(PDFs, TXTs, etc)</span>
+                                </legend>
+
+                                <div class="text-red-500 text-xs mb-2">Currently not supported.</div>
+
+                                <div class="relative w-full">
+                                    <label for="file-input" class="sr-only">Choose file</label>
+                                    <input type="file"
+                                           disabled
+                                           name="file-input"
+                                           id="file-input"
+                                           class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
                             file:bg-gray-50 file:border-0
                             file:me-4
                             file:py-3 file:px-4
                        ">
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
-                </fieldset>
 
-                <div class="flex items-center justify-end">
-                    <x-gradient-button wire:click="createBot">
-                        <x-icons.ok class="size-5"/>
-                        Save
-                    </x-gradient-button>
+
+                    <div class="flex items-center justify-end">
+                        <x-gradient-button wire:click="createBot">
+                            <x-icons.ok class="size-5"/>
+                            Save
+                        </x-gradient-button>
+                    </div>
                 </div>
-            </div>
 
         </x-slot>
     </x-modal>
