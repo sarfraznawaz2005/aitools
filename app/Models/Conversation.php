@@ -40,7 +40,7 @@ class Conversation extends Model
         $this->save();
 
         return $this->messages()->create([
-            'body' => nl2br($message),
+            'body' => $message,
             'conversation_id' => $this->id,
             'is_ai' => $isAi,
             'created_at' => now(),

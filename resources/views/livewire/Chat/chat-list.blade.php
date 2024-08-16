@@ -74,7 +74,7 @@
                                     class="inline-block bg-blue-100 rounded-lg px-4 py-2 shadow-sm border border-blue-200">
                                         <span class="text-gray-600 text-xs sm:text-sm md:text-base lg:text-base"
                                               x-ref="content">
-                                            {!! $message->body !!}
+                                            {!! nl2br(e($message->body)) !!}
                                         </span>
                                 </div>
                             </div>

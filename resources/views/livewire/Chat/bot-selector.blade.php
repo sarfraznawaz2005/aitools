@@ -184,9 +184,68 @@
                         wire:model="icon"
                         class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         <option value="">Choose Icon</option>
-                        <option value="{{App\Enums\BotTypeEnum::TEXT}}">📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
-                        <option value="{{App\Enums\BotTypeEnum::IMAGE}}">🖼️ {{App\Enums\BotTypeEnum::IMAGE}}</option>
-                        <option value="{{App\Enums\BotTypeEnum::VIDEO}}">🎬 {{App\Enums\BotTypeEnum::VIDEO}}</option>
+
+                        <!-- Human Icons -->
+                        <option value="🕵️">🕵️</option>
+                        <option value="🧙‍♂️">🧙‍♂️</option>
+                        <option value="🦸‍♀️">🦸‍♀️</option>
+                        <option value="🥷">🥷</option>
+                        <option value="👷">👷</option>
+                        <option value="👨‍🏫">👨‍🏫</option>
+                        <option value="👨‍🍳">👨‍🍳</option>
+                        <option value="🧑‍🚀">🧑‍🚀</option>
+                        <option value="😉">😉</option>
+                        <option value="😍">😍</option>
+                        <option value="😎">😎</option>
+                        <option value="👽">👽</option>
+                        <option value="👹">👹</option>
+
+                        <!-- Education Icons -->
+                        <option value="📚">📚</option>
+                        <option value="🎓">🎓</option>
+
+                        <!-- Technology Icons -->
+                        <option value="🧠">🧠</option>
+                        <option value="💻">💻</option>
+                        <option value="📱">📱</option>
+                        <option value="🌎">🌎</option>
+                        <option value="🚀">🚀</option>
+                        <option value="💡">💡</option>
+
+                        <!-- Lifestyle Icons -->
+                        <option value="🐼">🐼</option>
+                        <option value="🦁">🦁</option>
+                        <option value="🎠">🎠</option>
+                        <option value="🏠">🏠</option>
+                        <option value="🌳">🌳</option>
+                        <option value="🌸">🌸</option>
+                        <option value="🚲">🚲</option>
+                        <option value="🛒">🛒</option>
+                        <option value="⌚">⌚</option>
+                        <option value="🎨">🎨</option>
+                        <option value="🎥">🎥</option>
+                        <option value="🎧">🎧</option>
+                        <option value="💄">💄</option>
+                        <option value="📅">📅</option>
+                        <option value="📊">📊</option>
+                        <option value="📌">📌</option>
+                        <option value="🍔">🍔</option>
+                        <option value="🍒">🍒</option>
+                        <option value="🌈">🌈</option>
+                        <option value="👑">👑</option>
+                        <option value="👕">👕</option>
+                        <option value="📢">📢</option>
+
+                        <!-- Other Icons -->
+                        <option value="💰">💰</option>
+                        <option value="💵">💵</option>
+                        <option value="🔥">🔥</option>
+                        <option value="🧰">🧰</option>
+                        <option value="💊">💊</option>
+                        <option value="✈️">✈️</option>
+                        <option value="🕌">🕌</option>
+                        <option value="🎉">🎉</option>
+                        <option value="💝">💝</option>
                     </select>
                 </div>
 
