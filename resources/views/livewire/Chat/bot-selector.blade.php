@@ -222,7 +222,7 @@
                 </fieldset>
 
                 <div class="flex items-center justify-end">
-                    <x-gradient-button wire:click="save">
+                    <x-gradient-button wire:click="createBot">
                         <x-icons.ok class="size-5"/>
                         Save
                     </x-gradient-button>
