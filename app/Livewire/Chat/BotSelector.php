@@ -18,7 +18,7 @@ class BotSelector extends Component
     public function render(): View|Factory|Application
     {
         return view('livewire.chat.bot-selector', [
-            'bots' => Bot::all(),
+            'bots' => Bot::query()->orderBy('name')->get(),
         ]);
     }
 }
