@@ -21,7 +21,7 @@
                         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 font-medium">
                         @foreach($bots as $bot)
                             @if(!$bot->system)
-                                <div class="flex w-full {{$bot->id === $newBotId ? 'animate-jump animate-delay-300' : ''}}">
+                                <div class="flex w-full {{$bot->id === $newBotId ? 'animate-jump animate-delay-500' : ''}}">
                                     <button
                                         type="button"
                                         wire:click.prevent="selectBot({{ $bot->id }})"
