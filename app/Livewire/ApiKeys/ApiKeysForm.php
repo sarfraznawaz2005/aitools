@@ -60,7 +60,7 @@ class ApiKeysForm extends Component
 
         $this->model->fill([
             'llm_type' => $this->llm_type,
-            'base_url' => $this->base_url,
+            'base_url' => $this->base_url ?? '',
             'api_key' => $this->api_key,
             'model_name' => $this->model_name,
         ])->save();
