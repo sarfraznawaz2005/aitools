@@ -197,12 +197,13 @@
                     <div
                         x-data="{ open: false, selectedIcon: @entangle('icon') }"
                         x-init="
-                            let interval = setInterval(() => {
+                        $nextTick(() => {
+                            $watch('$el', () => {
                                 Livewire.on('modal-opened', () => {
                                     open = false;
-                                    clearInterval(interval);
                                 });
-                            }, 1000);
+                            });
+                        })
                          "
                         class="relative w-full">
                         <!-- Dropdown button -->
