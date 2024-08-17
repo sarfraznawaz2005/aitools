@@ -61,7 +61,7 @@ class BotSelector extends Component
         //dd($this->model);
         //$this->dispatch('refreshBot');
 
-        session()->flash('message', $this->model->wasRecentlyCreated ? 'Bot created successfully!' : 'Bot saved successfully!');
+        $this->success($this->model->wasRecentlyCreated ? 'Bot created successfully!' : 'Bot saved successfully!');
 
         if ($this->model->wasRecentlyCreated) {
             $this->dispatch('hideModal', ['id' => 'botModal']);
