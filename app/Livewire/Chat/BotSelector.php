@@ -59,7 +59,6 @@ class BotSelector extends Component
         ])->save();
 
         //dd($this->model);
-        //$this->dispatch('refreshBot');
 
         $this->success($this->model->wasRecentlyCreated ? 'Bot created successfully!' : 'Bot saved successfully!');
 
@@ -93,6 +92,8 @@ class BotSelector extends Component
     {
         $this->reset();
         $this->resetErrorBag();
+
+        $this->dispatch('refreshBot');
 
         $this->model = new Bot();
     }
