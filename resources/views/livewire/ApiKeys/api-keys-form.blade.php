@@ -95,14 +95,14 @@
             <!-- Select -->
             <div>
                 <select wire:model="llm_type" id="llm_type" x-data x-init="
-                          $nextTick(() => {
-                            window.HSStaticMethods.autoInit();
+                  $nextTick(() => {
+                    window.HSStaticMethods.autoInit();
 
-                            $watch('$el', () => {
-                              window.HSStaticMethods.autoInit();
-                            });
-                          })
-                        "
+                    $watch('$el', () => {
+                      window.HSStaticMethods.autoInit();
+                    });
+                  })
+                "
                         data-hs-select='{
                   "placeholder": "Choose LLM",
                   "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 \" data-title></span></button>",
