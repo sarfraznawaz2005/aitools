@@ -45,6 +45,8 @@ class ApiKeysForm extends Component
 
     public function edit(ApiKey $apiKey): void
     {
+        $this->resetErrorBag();
+
         $this->model = $apiKey;
 
         $this->fill($apiKey->toArray());
@@ -89,7 +91,6 @@ class ApiKeysForm extends Component
     {
         $this->reset();
         $this->resetErrorBag();
-        $this->resetValidation();
 
         $this->model = new ApiKey();
 
