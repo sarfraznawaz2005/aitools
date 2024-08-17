@@ -137,89 +137,60 @@
                 <div class="relative mb-3">
                     <input type="text"
                            wire:model="name"
-                           id="name"
-                           class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2">
-                    <label
-                        for="name"
-                        class="absolute top-0 start-0 p-4 h-full peer-focus:text-xs truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0] dark:text-neutral-400 peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:scale-90 peer-focus:translate-x-0.5 peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:scale-90 peer-[:not(:placeholder-shown)]:translate-x-0.5 peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">
-                        Name
-                    </label>
+                           placeholder="Name"
+                           autofocus
+                           class="peer py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                 </div>
 
                 <div class="relative mb-3">
-                        <textarea
-                            wire:model="bio"
-                            id="bio"
-                            class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
-                            focus:pt-6
-                            focus:pb-2
-                            [&:not(:placeholder-shown)]:pt-6
-                            [&:not(:placeholder-shown)]:pb-2
-                            autofill:pt-6
-                            autofill:pb-2" placeholder="Description"></textarea>
-
-                    <label for="bio"
-                           class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
-                              peer-focus:text-xs
-                              peer-focus:-translate-y-1.5
-                              peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
-                              peer-[:not(:placeholder-shown)]:text-xs
-                              peer-[:not(:placeholder-shown)]:-translate-y-1.5
-                              peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">
-                        Description
-                    </label>
+                    <textarea
+                        wire:model="bio"
+                        class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                        rows="3" placeholder="Description"></textarea>
                 </div>
 
                 <div class="relative mb-3">
+                    <!-- Textarea -->
+                    <div class="relative">
                         <textarea
                             wire:model="prompt"
-                            id="prompt"
-                            class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
-                        focus:pt-6
-                        focus:pb-2
-                        [&:not(:placeholder-shown)]:pt-6
-                        [&:not(:placeholder-shown)]:pb-2
-                        autofill:pt-6
-                        autofill:pb-2" placeholder="Prompt"></textarea>
+                            rows="3"
+                            class="p-4 pb-12 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Prompt"></textarea>
 
-                    <div for="prompt" class="block w-full absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
-                          peer-focus:text-xs
-                          peer-focus:-translate-y-1.5
-                          peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
-                          peer-[:not(:placeholder-shown)]:text-xs
-                          peer-[:not(:placeholder-shown)]:-translate-y-1.5
-                          peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">
-                        <div class="flex justify-between w-full">
-                            <div>Prompt</div>
-                            <div class="pointer-events-auto">
-                                <!-- Popover -->
-                                <div class="hs-tooltip [--trigger:click] [--placement:bottom] inline-block" x-data="{ open: false }" x-on:click.away="open = false" x-on:click="open = true" x-tooltip.raw="click for example">
-                                <span class="hs-tooltip-toggle cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
-                                    💡
-                                    <span
-                                        x-show="open"
-                                        x-transition:enter="transition ease-out duration-200"
-                                        x-transition:enter-start="opacity-0 transform scale-95"
-                                        x-transition:enter-end="opacity-100 transform scale-100"
-                                        x-transition:leave="transition ease-in duration-75"
-                                        x-transition:leave-start="opacity-100 transform scale-100"
-                                        x-transition:leave-end="opacity-0 transform scale-95"
-                                        class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                                        role="tooltip">
-                                        Tip: You can use special word <span class="text-green-600 text-xs">@{{USER_QUESTION}}</span> to insert user's question at specific place in your prompt.
-                                        <hr class="h-1 m-0 my-2">
-                                        <div class="font-semibold mb-2 text-xs">Prompt Example:</div>
-                                        I want you to act as an interviewer. I will be the candidate and you will ask me the interview questions for the position position. I want you to only reply as the interviewer. Do not write all the conservation at once. I want you to only do the interview with me. Ask me the questions and wait for my answers. Do not write explanations. Ask me the questions one by one like an interviewer does and wait for my answers.
-                                    </span>
-                                </span>
+                        <!-- Toolbar -->
+                        <div class="absolute bottom-px inset-x-px p-2 rounded-b-md bg-gray-100">
+                            <div class="flex justify-end items-center">
+                                <!-- Button Group -->
+                                <div class="flex items-center gap-x-1">
+                                    <!-- Popover -->
+                                    <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
+                                        <span
+                                            class="hs-tooltip-toggle cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
+                                            💡
+                                            <span
+                                                x-transition:enter="transition ease-out duration-200"
+                                                x-transition:enter-start="opacity-0 transform scale-95"
+                                                x-transition:enter-end="opacity-100 transform scale-100"
+                                                x-transition:leave="transition ease-in duration-75"
+                                                x-transition:leave-start="opacity-100 transform scale-100"
+                                                x-transition:leave-end="opacity-0 transform scale-95"
+                                                class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                role="tooltip">
+                                                Tip: You can use special word <span class="text-green-600 text-xs">@{{USER_QUESTION}}</span> to insert user's question at specific place in your prompt.
+                                                <hr class="h-1 m-0 my-2">
+                                                <div class="font-semibold mb-2 text-xs">Prompt Example:</div>
+                                                I want you to act as an interviewer. I will be the candidate and you will ask me the interview questions for the position position. I want you to only reply as the interviewer. Do not write all the conservation at once. I want you to only do the interview with me. Ask me the questions and wait for my answers. Do not write explanations. Ask me the questions one by one like an interviewer does and wait for my answers.
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <!-- End Popover -->
                                 </div>
-
-                                <!-- End Popover -->
                             </div>
                         </div>
                     </div>
-
                 </div>
+
 
                 <div class="relative mb-3">
 
@@ -266,9 +237,9 @@
                         wire:model="type"
                         class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         {{--<option value="">Bot Type</option>--}}
-                        <option value="{{App\Enums\BotTypeEnum::TEXT}}">📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
-                        {{--<option value="{{App\Enums\BotTypeEnum::IMAGE}}">🖼️ {{App\Enums\BotTypeEnum::IMAGE}}</option>--}}
-                        {{--<option value="{{App\Enums\BotTypeEnum::VIDEO}}">🎬 {{App\Enums\BotTypeEnum::VIDEO}}</option>--}}
+                        <option class="text-base" value="{{App\Enums\BotTypeEnum::TEXT}}">📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
+                        {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::IMAGE}}">🖼️ {{App\Enums\BotTypeEnum::IMAGE}}</option>--}}
+                        {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::VIDEO}}">🎬 {{App\Enums\BotTypeEnum::VIDEO}}</option>--}}
                     </select>
                 </div>
 
