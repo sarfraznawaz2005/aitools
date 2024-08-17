@@ -2,7 +2,7 @@
 /*
  * TODO
  * global disabler until api key is saved
- * check prompts are created correctly with conversations
+ * more icons
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * chat with pdf
