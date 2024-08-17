@@ -70,10 +70,11 @@ class BotSelector extends Component
 
     public function edit(Bot $bot): void
     {
+        $this->dispatch('showModal', ['id' => 'botModal']);
+
         $this->resetErrorBag();
 
         $this->model = $bot;
-
         $this->fill($bot->toArray());
     }
 

@@ -6,16 +6,14 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('modalControl', () => ({
             init() {
+                Livewire.on('showModal', (eventData) => {
+                    const targetId = eventData[0]?.id;
+                    HSOverlay.open(`#${targetId}`);
+                });
+
                 Livewire.on('hideModal', (eventData) => {
                     const targetId = eventData[0]?.id;
-                    const modal = this.$refs[targetId];
-                    //console.log(eventData)
-                    //console.log(targetId)
-
-                    if (typeof modal !== 'undefined') {
-                        const modalCloseButton = modal.querySelector('.modalCloseButton');
-                        modalCloseButton.click();
-                    }
+                    HSOverlay.close(`#${targetId}`);
                 });
             }
         }))
@@ -24,7 +22,6 @@
 
 <div id="{{$id}}"
      wire:ignore.self
-     x-ref="{{$id}}"
      wire:key="modaldg-{{$id}}"
      x-data="modalControl"
      class="hs-overlay hs-overlay-backdrop-open:bg-blue-950/90 hidden size-full fixed top-0 start-0 z-[100] overflow-x-hidden overflow-y-auto pointer-events-none dark:hs-overlay-backdrop-open:bg-blue-950/90"
