@@ -21,6 +21,7 @@
                     </h3>
                     <p class="text-sm text-gray-700 dark:text-neutral-400">
                         {{ session('message') }}
+                        @php session()->forget('message') @endphp
                     </p>
                 </div>
 

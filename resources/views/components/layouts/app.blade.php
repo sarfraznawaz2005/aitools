@@ -24,7 +24,6 @@
 
         <x-loading/>
         <x-toast/>
-        <x-flash/>
 
         {{ $slot }}
     </div>

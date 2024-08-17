@@ -59,13 +59,15 @@
             <div class="flex gap-2 items-center">
 
                 @php
-                    $name = $bot->name ?? 'General';
-                    $bio = $bot->bio ?? 'A versatile general purpose bot that can help you with a variety of tasks.';
-                    $icon = $bot->icon ?? '🤖';
+                    $name = $bot?->name ?? 'General';
+                    $bio = $bot?->bio ?? 'A versatile general purpose bot that can help you with a variety of tasks.';
+                    $icon = $bot?->icon ?? '🤖';
 
-                    $name = isset($conversation) ? $conversation->bot->name: $name;
-                    $bio = isset($conversation) ? $conversation->bot->bio: $bio;
-                    $icon = isset($conversation) ? $conversation->bot->icon: $icon;
+                    if (isset($conversation) && $conversation->bot) {
+                        $name = $conversation->bot->name;
+                        $bio = $conversation->bot->bio;
+                        $icon = $conversation->bot->icon;
+                    }
                 @endphp
 
                 <div class="inline-block text-2xl ml-1" x-data

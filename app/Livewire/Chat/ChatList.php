@@ -3,6 +3,7 @@
 namespace App\Livewire\Chat;
 
 use App\Constants;
+use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Traits\InteractsWithToast;
@@ -50,6 +51,13 @@ class ChatList extends Component
     {
         if ($this->conversation) {
             $this->messages = $this->conversation->messages->sortBy('id');
+
+            if (!$this->conversation->bot) {
+                $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
+                $this->conversation->save();
+
+                session()->flash('message', 'The Bot was not found, so the conversation was assigned to the General Bot automatically.');
+            }
         }
     }
 

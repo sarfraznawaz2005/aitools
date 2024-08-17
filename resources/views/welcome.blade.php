@@ -1,5 +1,6 @@
 <x-layouts.app :title="''">
     <div class="mx-auto pt-24 px-8">
+        <x-flash/>
         <livewire:apikeys.api-key-banner />
 
         <div class="grid sm:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-10">

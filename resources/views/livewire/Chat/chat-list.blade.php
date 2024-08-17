@@ -1,5 +1,7 @@
 <div class="py-20 px-4 sm:px-6 md:px-8 chatlist mx-auto max-w-7xl w-full">
 
+    <x-flash/>
+
     <ul class="space-y-5 w-full max-w-none">
 
         @if(!hasApiKeysCreated())
