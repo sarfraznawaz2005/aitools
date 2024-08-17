@@ -36,6 +36,15 @@ class BotSelector extends Component
         ];
     }
 
+    protected function messages(): array
+    {
+        return [
+            'bio.required' => 'The description field is required.',
+            'bio.min' => 'The description must be at least 5 characters long.',
+            'bio.max' => 'The description must not exceed 500 characters.',
+        ];
+    }
+
     public function mount(Bot $bot = null): void
     {
         $this->model = $bot ?? new Bot();
