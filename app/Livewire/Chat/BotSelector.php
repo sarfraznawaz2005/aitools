@@ -21,6 +21,8 @@ class BotSelector extends Component
     public string $icon;
     public string $type;
 
+    public int $newBotId = 0;
+
     protected $listeners = ['refreshBot' => '$refresh'];
 
     protected function rules(): array
@@ -63,7 +65,10 @@ class BotSelector extends Component
         $this->success($this->model->wasRecentlyCreated ? 'Bot created successfully!' : 'Bot saved successfully!');
 
         if ($this->model->wasRecentlyCreated) {
+            $this->newBotId = $this->model->id;
+
             $this->dispatch('hideModal', ['id' => 'botModal']);
+
             $this->resetForm();
         }
     }
@@ -91,10 +96,9 @@ class BotSelector extends Component
 
     public function resetForm(): void
     {
-        $this->reset();
-        $this->resetErrorBag();
+        $this->reset(['name', 'bio', 'prompt', 'icon', 'type']);
 
-        //$this->dispatch('refreshBot');
+        $this->resetErrorBag();
 
         $this->model = new Bot();
     }
