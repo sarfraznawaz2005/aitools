@@ -94,17 +94,12 @@
 
             <!-- Select -->
             <div x-data x-init="
-                 let interval = setInterval(() => {
-                    const select = window.HSSelect.getInstance($refs.select);
-                    select.setValue('{{$llm_type}}');
-
-                    setTimeout(() => {
-                        clearInterval(interval);
-                    }, 1000);
-                }, 100);
+               setInterval(() => {
+                 window.HSStaticMethods.autoInit();
+               }, 100);
             ">
-                <div wire:ignore>
-                    <select wire:model="llm_type" id="llm_type" x-ref="select" data-hs-select='{
+                <div>
+                    <select wire:model="llm_type" id="llm_type" data-hs-select='{
                   "placeholder": "Choose LLM",
                   "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 \" data-title></span></button>",
                   "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500",
