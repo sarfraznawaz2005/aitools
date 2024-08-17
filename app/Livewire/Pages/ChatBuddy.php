@@ -26,15 +26,9 @@ class ChatBuddy extends Component
         if (is_null($conversation)) {
             return response()->stream(function () {
 
-                echo "event: update\n";
-                echo "data: " . json_encode("Error, conversation has been deleted!") . "\n\n";
-                ob_flush();
-                flush();
+                sendStream("Error, conversation has been deleted!", true);
 
-                echo "event: update\n";
-                echo "data: <END_STREAMING_SSE>\n\n";
-                ob_flush();
-                flush();
+                sendStream("", true);
 
             }, 200, [
                 'Cache-Control' => 'no-cache',
@@ -123,10 +117,7 @@ class ChatBuddy extends Component
 
                     $text = Constants::TEST_MESSAGE;
 
-                    echo "event: update\n";
-                    echo "data: " . json_encode($text) . "\n\n";
-                    ob_flush();
-                    flush();
+                    sendStream($text);
 
                     $latestMessage->update(['body' => $markdown->toHtml($text)]);
 
@@ -139,10 +130,7 @@ class ChatBuddy extends Component
                 $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
                     $consolidatedResponse .= $chunk;
 
-                    echo "event: update\n";
-                    echo "data: " . json_encode($chunk) . "\n\n";
-                    ob_flush();
-                    flush();
+                    sendStream($chunk);
                 });
 
                 //Log::info("consolidatedResponse: $consolidatedResponse");
@@ -152,18 +140,12 @@ class ChatBuddy extends Component
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
                 $error = '<span class="text-red-600">Oops! Failed to get a response, please try again.' . ' ' . $e->getMessage() . '</span>';
 
-                echo "event: update\n";
-                echo "data: " . json_encode($error) . "\n\n";
-                ob_flush();
-                flush();
+                sendStream($error);
 
                 //$latestMessage->delete();
                 $latestMessage->update(['body' => $error]);
             } finally {
-                echo "event: update\n";
-                echo "data: <END_STREAMING_SSE>\n\n";
-                ob_flush();
-                flush();
+                sendStream("", true);
             }
 
         }, 200, [

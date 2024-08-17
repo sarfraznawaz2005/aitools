@@ -64,6 +64,20 @@ function AIChatFailed($result): string
     return '';
 }
 
+function sendStream($text, $sendCloseSignal = false): void
+{
+    echo "event: update\n";
+
+    if ($sendCloseSignal) {
+        echo "data: <END_STREAMING_SSE>\n\n";
+    } else {
+        echo "data: " . json_encode($text) . "\n\n";
+    }
+
+    ob_flush();
+    flush();
+}
+
 function htmlToText($html, $removeWhiteSpace = true): string
 {
     // Replace <br> tags with newlines

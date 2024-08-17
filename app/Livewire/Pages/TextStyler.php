@@ -40,10 +40,7 @@ class TextStyler extends Component
                 if (Constants::TEST_MODE) {
                     sleep(1);
 
-                    echo "event: update\n";
-                    echo "data: " . json_encode(Constants::TEST_MESSAGE) . "\n\n";
-                    ob_flush();
-                    flush();
+                    sendStream(Constants::TEST_MESSAGE);
 
                     return;
                 }
@@ -60,25 +57,16 @@ class TextStyler extends Component
                 $llm = getSelectedLLMProvider(Constants::TEXTSTYLER_SELECTED_LLM_KEY);
 
                 $llm->chat($prompt, true, function ($chunk) {
-                    echo "event: update\n";
-                    echo "data: " . json_encode(nl2br($chunk)) . "\n\n";
-                    ob_flush();
-                    flush();
+                    sendStream(nl2br($chunk));
                 });
 
             } catch (Exception $e) {
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
                 $error = '<span class="text-red-600">Oops! Failed to get a response, please try again.' . ' ' . $e->getMessage() . '</span>';
 
-                echo "event: update\n";
-                echo "data: " . json_encode($error) . "\n\n";
-                ob_flush();
-                flush();
+                sendStream($error);
             } finally {
-                echo "event: update\n";
-                echo "data: <END_STREAMING_SSE>\n\n";
-                ob_flush();
-                flush();
+                sendStream("", true);
             }
 
         }, 200, [
