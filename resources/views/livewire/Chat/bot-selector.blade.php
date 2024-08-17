@@ -194,7 +194,17 @@
 
                 <div class="relative mb-3">
 
-                    <div x-data="{ open: false, selectedIcon: @entangle('icon') }" class="relative w-full">
+                    <div
+                        x-data="{ open: false, selectedIcon: @entangle('icon') }"
+                        x-init="
+                            let interval = setInterval(() => {
+                                Livewire.on('modal-opened', () => {
+                                    open = false;
+                                    clearInterval(interval);
+                                });
+                            }, 1000);
+                         "
+                        class="relative w-full">
                         <!-- Dropdown button -->
                         <button
                             @click="open = !open"
@@ -222,6 +232,7 @@
                                     x-for="icon in ['👨‍💻', '👤', '🕵️', '🧑‍🔬', '👨‍', '👨🏻‍🏫', '👨🏻‍🏭', '🧙‍♂️', '🧞', '🦸‍♀️', '🥷', '👷', '👨‍🏫', '🥸', '👨‍🍳', '👧🏼', '🧑‍🚀', '🫂', '🧑🏻‍🤝‍🧑🏻', '💏', '😉', '😍', '😎', '👽', '👹', '📚', '🎓', '🧠', '💻', '📱', '🌎', '🚀', '💡', '🐼', '🦁', '🎠', '🏠', '🌳', '🌸', '🚲', '🛒', '⌚', '🎨', '🎥', '🎧', '📅', '📊', '📌', '🍔', '🍒', '🌈', '👑', '👕', '📢', '💰', '💵', '💳', '🔥', '🧰', '✈️', '🕌', '🎉', '💝', '🤝', '✍️', '🗄️', '📝', '🖼️', '🎬']"
                                     :key="icon">
                                     <div @click="selectedIcon = icon; open = false;"
+                                         :class="{'bg-blue-100': selectedIcon === icon, 'bg-gray-100': selectedIcon !== icon}"
                                          class="p-2 bg-gray-100 hover:bg-blue-100 cursor-pointer rounded-lg text-center">
                                         <span x-text="icon" class="text-4xl"></span>
                                     </div>

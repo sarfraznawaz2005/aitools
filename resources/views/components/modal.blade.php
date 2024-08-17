@@ -9,11 +9,16 @@
                 Livewire.on('showModal', (eventData) => {
                     const targetId = eventData[0]?.id;
                     HSOverlay.open(`#${targetId}`);
+
+                    // dispatch alpine event
+                    Livewire.dispatch('modal-opened', { id: targetId });
                 });
 
                 Livewire.on('hideModal', (eventData) => {
                     const targetId = eventData[0]?.id;
                     HSOverlay.close(`#${targetId}`);
+
+                    Livewire.dispatch('modal-closed', { id: targetId });
                 });
             }
         }))

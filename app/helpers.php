@@ -2,10 +2,8 @@
 /*
  * TODO
  * global disabler until api key is saved
- * selected icon color
  * <prompt>[Insert prompt here]</prompt>
  * check prompts are created correctly with conversations
- * for deleted bot conversation, if user posts conversation, ask him to re-select a bot
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * chat with pdf
