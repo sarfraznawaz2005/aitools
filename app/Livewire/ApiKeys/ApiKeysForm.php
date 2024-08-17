@@ -13,7 +13,7 @@ class ApiKeysForm extends Component
     public ApiKey $model;
 
     public string $llm_type;
-    public string $base_url;
+    public ?string $base_url;
     public string $api_key;
     public string $model_name;
 
