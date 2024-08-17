@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="flex justify-center mt-4">
-                        <x-gradient-button data-hs-overlay="#botModal">
+                        <x-gradient-button data-hs-overlay="#botModal" wire:click="resetForm">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -289,15 +289,25 @@
                             </fieldset>
                         </div>
                     </div>
-
-                    <div class="flex items-center justify-end">
-                        <x-gradient-button wire:click="save">
-                            <x-icons.ok class="size-5"/>
-                            Save
-                        </x-gradient-button>
-                    </div>
                 </div>
             </div>
+
+            <div class="flex items-center border-t border-gray-300 pt-4 {{$model->exists ? 'justify-between' : 'justify-end'}}">
+                @if ($model->exists)
+                    <x-confirm-dialog call="delete({{ $model->id }})"
+                                      text="Are you sure you want to delete?"
+                                      class="font-bold flex items-center justify-center bg-red-500 hover:bg-red-600 gap-x-3 py-2 px-3 text-sm text-white rounded-lg focus:outline-none focus:ring-0 focus:ring-offset-0">
+                        <x-icons.delete/>
+                        Delete
+                    </x-confirm-dialog>
+                @endif
+
+                <x-gradient-button wire:click="save">
+                    <x-icons.ok class="size-5"/>
+                    Save
+                </x-gradient-button>
+            </div>
+
         </x-slot>
     </x-modal>
 
