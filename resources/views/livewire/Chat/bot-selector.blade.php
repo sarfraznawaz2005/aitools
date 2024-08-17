@@ -197,13 +197,13 @@
                     <div
                         x-data="{ open: false, selectedIcon: @entangle('icon') }"
                         x-init="
-                        $nextTick(() => {
-                            $watch('$el', () => {
-                                Livewire.on('modal-opened', () => {
-                                    open = false;
+                            $nextTick(() => {
+                                $watch('$el', () => {
+                                    Livewire.on('modal-opened', () => {
+                                        open = false;
+                                    });
                                 });
-                            });
-                        })
+                            })
                          "
                         class="relative w-full">
                         <!-- Dropdown button -->
