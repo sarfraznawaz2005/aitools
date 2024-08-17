@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Chat;
 
+use App\Enums\BotTypeEnum;
 use App\Models\Bot;
 use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
@@ -32,7 +33,6 @@ class BotSelector extends Component
             'bio' => 'required|min:5|max:500',
             'prompt' => 'required|min:3|max:2500',
             'icon' => 'required',
-            'type' => 'required',
         ];
     }
 
@@ -66,7 +66,7 @@ class BotSelector extends Component
             'bio' => $this->bio,
             'prompt' => $this->prompt,
             'icon' => $this->icon,
-            'type' => $this->type,
+            'type' => $this->type ?? BotTypeEnum::TEXT,
         ])->save();
 
         //dd($this->model);

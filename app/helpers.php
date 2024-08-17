@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * <prompt>[Insert prompt here]</prompt>
  * check prompts are created correctly with conversations
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
@@ -62,6 +61,18 @@ function AIChatFailed($result): string
     }
 
     return '';
+}
+
+function makePromopt(string $userQuery, string $conversationHistory, string $prompt, int $version = 1): string
+{
+    $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
+
+    $basePrommpt = config("prompts.v$version");
+
+    $promptFinal = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $basePrommpt);
+    $promptFinal = str_ireplace('{{USER_QUESTION}}', $userQuery, $promptFinal);
+
+    return str_ireplace('{{PROMPT}}', $prompt, $promptFinal);
 }
 
 function sendStream($text, $sendCloseSignal = false): void

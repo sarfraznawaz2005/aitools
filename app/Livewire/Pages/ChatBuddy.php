@@ -79,34 +79,7 @@ class ChatBuddy extends Component
 
                 $conversationHistory = implode("\n", $uniqueMessages);
 
-                $conversationHistoryPrompt = <<<PROMPT
-                Before answering any question, always refer to the conversation history provided. This will help you understand the
-                context of the user's question and provide more relevant and personalized responses. The conversation history will be
-                provided in the following format:
-
-                <conversation_history>
-                $conversationHistory
-                </conversation_history>
-
-                When answering questions, follow these guidelines:
-                1. If the conversation history contains relevant information about the question, use it to inform your answer.
-                2. If the conversation history does not contain any information about the question, answer from your own knowledge base.
-                3. Be clear, detailed, and accurate in your responses.
-                4. Offer additional information or suggestions that might be helpful to the user.
-                5. If you're unsure about something, admit it and offer to find more information if possible.
-                6. Maintain a friendly and supportive tone throughout your response.
-                7. If the user asks the same question again, try to provide a different perspective or additional information
-                in your answer. This will help keep the conversation engaging and informative.
-
-                PROMPT;
-
-                if (str_contains(strtolower($prompt), '{{user_question}}')) {
-                    $prompt = str_ireplace('{{user_question}}', $userQuery->body, $prompt);
-                } else {
-                    $prompt = $prompt . "\n\n<question>$userQuery->body</question>";
-                }
-
-                $prompt = $conversationHistoryPrompt . "\n\n" . $prompt;
+                $prompt = makePromopt($userQuery->body, $conversationHistory, $prompt, 2);
 
                 Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
 

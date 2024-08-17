@@ -2,6 +2,13 @@
 
 // https://github.com/f/awesome-chatgpt-prompts
 
+/*
+I want you to act as a linux terminal. I will type commands and you will reply with what the terminal should show.
+I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write
+explanations. do not type commands unless I instruct you to do so. When I need to tell you something in English,
+I will do so by putting text inside curly brackets {like this}. My first command is pwd
+ */
+
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,15 +33,7 @@ class BotSeeder extends Seeder
             Format your answer using markdown to enhance readability. Use appropriate headings, bullet points, or numbered
             lists when applicable.
 
-            Here is the question you need to answer:
-
-            <question>
-            {{USER_QUESTION}}
-            </question>
-
             Remember to use markdown formatting in your response.
-
-            <answer>[Insert your answer here]</answer>
         PROMPT;
 
         $doctorPrompt = <<<'PROMPT'
@@ -49,14 +48,10 @@ class BotSeeder extends Seeder
             Carefully analyze the provided information, considering the symptoms' duration, severity, and any patterns`.
             Based on your analysis, determine the most likely diagnosis and develop an appropriate treatment plan.
 
-            <diagnosis>
-            [Insert your diagnosis here, stating the condition you believe the patient has]
-            </diagnosis>
+            Your diagnosis here, stating the condition you believe the patient has:
 
-            <treatment_plan>
-            [Provide a comprehensive treatment plan, including any recommended medications, lifestyle changes, follow-up
-            appointments, or further tests if necessary]
-            </treatment_plan>
+            Your comprehensive treatment plan here, including any recommended medications, lifestyle changes, follow-up
+            appointments, or further tests if necessary:
 
             Important: Your response should strictly include the diagnosis followed by the treatment plan, without any
             additional explanations or commentary. Ensure your answer is focused, professional, and tailored to the
@@ -72,17 +67,10 @@ class BotSeeder extends Seeder
             3. Specify that the AI should only output the response related to its assigned role, without explanations or additional commentary.
             4. If applicable, include instructions for how the user should format their inputs or requests.
 
-            Here is the user's question:
-            <question>
-            {{USER_QUESTION}}
-            </question>
-
             Based on this question, generate a prompt for an AI to fulfill the user's request. Begin your prompt with
             "Act as" or a similar phrase to establish the AI's role. Provide clear instructions and constraints for the
             AI's behavior. Your entire response should be the prompt itself, without any additional explanations or
             meta-commentary. Please don't use markdown format for your answer.
-
-            <prompt>[Insert prompt here]</prompt>
         PROMPT;
 
         Bot::create([
