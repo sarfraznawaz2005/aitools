@@ -44,10 +44,16 @@
                         @if(isset($conversation) && $conversation)
                             <div class="fixed right-44 top-16 inline-flex">
                                 <button type="button"
-                                        wire:click="clearConversation"
-                                        class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                                    <x-icons.delete/>
-                                    Clear Conversation
+                                        x-data="{ isConfirming: false }"
+                                        @click="isConfirming ? $wire.clearConversation() : isConfirming = true"
+                                        @click.outside="isConfirming = false"
+                                        :class="{
+                                             'bg-white text-gray-800 hover:bg-gray-50': !isConfirming,
+                                             'bg-red-500 text-white hover:bg-red-500': isConfirming
+                                        }"
+                                        class="py-2 px-4 flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none w-48">
+                                    <x-icons.delete class="flex-shrink-0"/>
+                                    <span x-text="isConfirming ? 'Confirm?' : 'Clear Conversation'" class="flex-grow text-center" :class="{'pr-6': isConfirming}"></span>
                                 </button>
                             </div>
                         @endif
