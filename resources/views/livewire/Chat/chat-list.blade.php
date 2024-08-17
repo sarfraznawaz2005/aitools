@@ -243,6 +243,7 @@
 
             setTimeout(() => {
                 Livewire.dispatch('hideLoading');
+                scrollToBottom();
             }, 1000);
         }
 
