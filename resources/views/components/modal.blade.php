@@ -14,7 +14,7 @@
                     Livewire.dispatch('modal-opened', { id: targetId });
                 });
 
-                Livewire.on('hideModal', (eventData) => {
+                Livewire.on('closeModal', (eventData) => {
                     const targetId = eventData[0]?.id;
                     HSOverlay.close(`#${targetId}`);
 

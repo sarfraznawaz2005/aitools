@@ -71,12 +71,12 @@ class BotSelector extends Component
 
         //dd($this->model);
 
+        $this->dispatch('closeModal', ['id' => 'botModal']);
+
         $this->success($this->model->wasRecentlyCreated ? 'Bot created successfully!' : 'Bot saved successfully!');
 
         if ($this->model->wasRecentlyCreated) {
             $this->newBotId = $this->model->id;
-
-            $this->dispatch('hideModal', ['id' => 'botModal']);
 
             $this->resetForm();
         }
@@ -96,7 +96,7 @@ class BotSelector extends Component
     {
         $bot->delete();
 
-        $this->dispatch('hideModal', ['id' => 'botModal']);
+        $this->dispatch('closeModal', ['id' => 'botModal']);
 
         $this->success('Bot deleted successfully!');
 
