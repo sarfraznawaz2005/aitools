@@ -74,9 +74,8 @@ class ChatList extends Component
     public function clearConversation(): void
     {
         if ($this->conversation->messages()->delete()) {
-            $this->success('Conversation cleared successfully.');
-        } else {
-            $this->danger('Failed to clear conversation.');
+            // doing redirect because otherwise was getting 404 for some reason on multiple random deletes
+            $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $this->conversation), true);
         }
     }
 
