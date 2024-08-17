@@ -88,6 +88,8 @@ class BotSelector extends Component
 
     public function resetForm(): void
     {
+        $this->dispatch('hideModal');
+
         $this->reset();
         $this->resetErrorBag();
 
