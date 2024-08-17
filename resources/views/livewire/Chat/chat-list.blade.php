@@ -40,8 +40,21 @@
 
                 @if (count($messages) > 1)
                     <li class="flex justify-center">
+
+                        @if(isset($conversation) && $conversation)
+                            <div class="fixed right-44 top-16 inline-flex">
+                                <button type="button"
+                                        wire:click="clearConversation"
+                                        class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                                    <x-icons.delete/>
+                                    Clear Conversation
+                                </button>
+                            </div>
+                        @endif
+
                         <div class="hs-dropdown fixed right-14 top-16 inline-flex">
-                            <button id="hs-dropdown-with-icons" type="button"
+
+                            <button type="button"
                                     class="hs-dropdown-toggle py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
                                 <x-icons.export class="shrink-0 size-4"/>
                                 Export

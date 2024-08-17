@@ -71,6 +71,15 @@ class ChatList extends Component
         }
     }
 
+    public function clearConversation(): void
+    {
+        if ($this->conversation->messages()->delete()) {
+            $this->success('Conversation cleared successfully.');
+        } else {
+            $this->danger('Failed to clear conversation.');
+        }
+    }
+
     public function regenerate(Message $message): void
     {
         $message->body = Constants::CHATBUDDY_LOADING_STRING;

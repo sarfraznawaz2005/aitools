@@ -49,12 +49,10 @@ class BotSeeder extends Seeder
             Carefully analyze the provided information, considering the symptoms' duration, severity, and any patterns`.
             Based on your analysis, determine the most likely diagnosis and develop an appropriate treatment plan.
 
-            Present your diagnosis in the following format:
             <diagnosis>
             [Insert your diagnosis here, stating the condition you believe the patient has]
             </diagnosis>
 
-            Follow the diagnosis with a treatment plan in this format:
             <treatment_plan>
             [Provide a comprehensive treatment plan, including any recommended medications, lifestyle changes, follow-up
             appointments, or further tests if necessary]
