@@ -93,7 +93,7 @@ class BotSelector extends Component
         $this->reset();
         $this->resetErrorBag();
 
-        $this->dispatch('refreshBot');
+        //$this->dispatch('refreshBot');
 
         $this->model = new Bot();
     }
