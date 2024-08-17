@@ -64,6 +64,7 @@ class BotSelector extends Component
         session()->flash('message', $this->model->wasRecentlyCreated ? 'Bot created successfully!' : 'Bot saved successfully!');
 
         if ($this->model->wasRecentlyCreated) {
+            $this->dispatch('hideModal', ['id' => 'botModal']);
             $this->resetForm();
         }
     }
@@ -81,6 +82,8 @@ class BotSelector extends Component
     {
         $bot->delete();
 
+        $this->dispatch('hideModal', ['id' => 'botModal']);
+
         $this->success('Bot deleted successfully!');
 
         $this->resetForm();
@@ -88,8 +91,6 @@ class BotSelector extends Component
 
     public function resetForm(): void
     {
-        $this->dispatch('hideModal');
-
         $this->reset();
         $this->resetErrorBag();
 
