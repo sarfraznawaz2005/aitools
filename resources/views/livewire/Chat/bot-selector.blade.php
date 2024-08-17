@@ -3,9 +3,10 @@
     <div class="flex flex-col bg-white border shadow-sm rounded-xl m-auto">
         <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:px-5" style="padding: 16px 16px 14px 16px;">
             <p class="text-sm text-gray-500 font-bold">
-                Start New Conversation
+                💬 Start New Conversation
             </p>
         </div>
+
         <div class="p-3 md:p-5 text-center">
             <div
                 class="rounded-lg p-3 border border-gray-200 w-fit justify-center m-auto bg-gray-100 text-gray-800 text-xs sm:text-sm md:text-base lg:text-base mb-4">
@@ -21,7 +22,8 @@
                         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 font-medium">
                         @foreach($bots as $bot)
                             @if(!$bot->system)
-                                <div class="flex w-full {{$bot->id === $newBotId ? 'animate-jump animate-delay-500' : ''}}">
+                                <div
+                                    class="flex w-full {{$bot->id === $newBotId ? 'animate-jump animate-delay-500' : ''}}">
                                     <button
                                         type="button"
                                         wire:click.prevent="selectBot({{ $bot->id }})"
@@ -180,15 +182,43 @@
                         autofill:pt-6
                         autofill:pb-2" placeholder="Prompt"></textarea>
 
-                    <label for="prompt" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
+                    <div for="prompt" class="block w-full absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
                           peer-focus:text-xs
                           peer-focus:-translate-y-1.5
                           peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
                           peer-[:not(:placeholder-shown)]:text-xs
                           peer-[:not(:placeholder-shown)]:-translate-y-1.5
                           peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">
-                        Prompt
-                    </label>
+                        <div class="flex justify-between w-full">
+                            <div>Prompt</div>
+                            <div class="pointer-events-auto">
+                                <!-- Popover -->
+                                <div class="hs-tooltip [--trigger:click] [--placement:bottom] inline-block" x-data="{ open: false }" x-on:click.away="open = false" x-on:click="open = true" x-tooltip.raw="click for example">
+                                <span class="hs-tooltip-toggle cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
+                                    💡
+                                    <span
+                                        x-show="open"
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0 transform scale-95"
+                                        x-transition:enter-end="opacity-100 transform scale-100"
+                                        x-transition:leave="transition ease-in duration-75"
+                                        x-transition:leave-start="opacity-100 transform scale-100"
+                                        x-transition:leave-end="opacity-0 transform scale-95"
+                                        class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                        role="tooltip">
+                                        Tip: You can use special word <span class="text-green-600 text-xs">@{{USER_QUESTION}}</span> to insert user's question at specific place in your prompt.
+                                        <hr class="h-1 m-0 my-2">
+                                        <div class="font-semibold mb-2 text-xs">Prompt Example:</div>
+                                        I want you to act as an interviewer. I will be the candidate and you will ask me the interview questions for the position position. I want you to only reply as the interviewer. Do not write all the conservation at once. I want you to only do the interview with me. Ask me the questions and wait for my answers. Do not write explanations. Ask me the questions one by one like an interviewer does and wait for my answers.
+                                    </span>
+                                </span>
+                                </div>
+
+                                <!-- End Popover -->
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="relative mb-3">
@@ -291,7 +321,8 @@
                 </div>
             </div>
 
-            <div class="flex items-center border-t border-gray-300 pt-4 {{$model->exists ? 'justify-between' : 'justify-end'}}">
+            <div
+                class="flex items-center border-t border-gray-300 pt-4 {{$model->exists ? 'justify-between' : 'justify-end'}}">
                 @if ($model->exists)
                     <x-confirm-dialog call="delete({{ $model->id }})"
                                       text="Are you sure you want to delete?"
