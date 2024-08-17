@@ -9,8 +9,8 @@
                 Livewire.on('hideModal', (eventData) => {
                     const targetId = eventData[0]?.id;
                     const modal = this.$refs[targetId];
-                    console.log(eventData)
-                    console.log(targetId)
+                    //console.log(eventData)
+                    //console.log(targetId)
 
                     if (typeof modal !== 'undefined') {
                         const modalCloseButton = modal.querySelector('.modalCloseButton');
