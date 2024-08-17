@@ -25,7 +25,7 @@
 <div id="{{$id}}"
      wire:ignore.self
      x-ref="{{$id}}"
-     wire:key="{{$id}}"
+     wire:key="modaldg-{{$id}}"
      x-data="modalControl"
      class="hs-overlay hs-overlay-backdrop-open:bg-blue-950/90 hidden size-full fixed top-0 start-0 z-[100] overflow-x-hidden overflow-y-auto pointer-events-none dark:hs-overlay-backdrop-open:bg-blue-950/90"
      role="dialog"
