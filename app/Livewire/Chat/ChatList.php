@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -59,6 +60,33 @@ class ChatList extends Component
                 session()->flash('message', 'The Bot was not found, so the conversation was assigned to the General Bot automatically.');
             }
         }
+    }
+
+    public function forceAnswer(Message $message): void
+    {
+        // assign general agent which does not get stuck, get answer and restore original bot
+
+        //Log::info('Current Bot ID: ' . $this->conversation->bot_id);
+
+        $originalBotId = $this->conversation->bot_id;
+
+        $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
+        $this->conversation->save();
+
+        //Log::info('Changed Bot ID: ' . $this->conversation->bot_id);
+
+        $message->delete();
+
+        $this->conversation->createTempAImessage();
+
+        $this->refresh();
+
+        $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
+
+        $this->conversation->bot()->associate(Bot::find($originalBotId));
+        $this->conversation->save();
+
+        //Log::info('Restored Bot ID: ' . $message->conversation->bot_id);
     }
 
     public function deleteMessage(Message $message): void

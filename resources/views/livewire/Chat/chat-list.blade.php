@@ -59,7 +59,8 @@
                                         }"
                                         class="py-2 px-4 flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none w-48">
                                     <x-icons.delete class="flex-shrink-0"/>
-                                    <span x-text="isConfirming ? 'Confirm?' : 'Clear Conversation'" class="flex-grow text-center" :class="{'pr-6': isConfirming}"></span>
+                                    <span x-text="isConfirming ? 'Confirm?' : 'Clear Conversation'"
+                                          class="flex-grow text-center" :class="{'pr-6': isConfirming}"></span>
                                 </button>
                             </div>
                         @endif
@@ -197,6 +198,15 @@
                                     <div class="inline-block mt-[-20px] ml-2">
                                         <span class="text-gray-400 text-xs">{{$message->llm}}</span>
                                     </div>
+
+                                    @if($loop->last)
+                                        <div class="inline-block mt-[-12px] cursor-pointer"
+                                             wire:click="forceAnswer({{$message->id}})"
+                                             x-data
+                                             x-tooltip.raw="Stuck with AI giving same answer repeatedly? Click to get forced answer.">
+                                            😡
+                                        </div>
+                                    @endif
 
                                     <!-- Button Group -->
                                     <div class="flex justify-end">
