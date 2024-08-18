@@ -195,7 +195,69 @@
                 <div class="relative mb-3">
 
                     <div
-                        x-data="{ open: false, selectedIcon: @entangle('icon') }"
+                        x-data="{
+                            open: false,
+                            selectedIcon: @entangle('icon'),
+                            icons: ['👨‍💻', '👤', '🕵️', '🧑‍🔬', '👨‍', '👨🏻‍🏫', '👨🏻‍🏭', '🧙‍♂️', '🧕', '🧞', '🦸‍♀️', '🥷', '👷', '👨‍🏫', '🗣️', '🥸', '👨‍🍳', '👧🏼', '🧑‍🚀', '🫅', '🫂', '🧑🏻‍🤝‍🧑🏻', '💏', '😉', '😍', '😎', '🤠', '🤡', '👽', '👹', '📚', '🎓', '🧠', '💻', '📱', '🌎', '🚀', '💡', '🐼', '🦁', '🎠', '🦜', '🪅', '🏠', '🌳', '🌸', '🚲', '🛒', '⌚', '🎨', '🎥', '🎧', '📅', '📊', '📌', '🍔', '🍒', '🌈', '👑', '👕', '📢', '💰', '💵', '💳', '🔥', '🧰', '✈️', '🕌', '🎉', '💝', '🤝', '✍️', '🗄️', '📝', '🖼️', '🎬', '⚽', '✨', '⭐', '💪', '💼', '🧮', '🪄', '🪶'],
+                            iconGroups: [
+                                {
+                                    title: 'Professions & People',
+                                    icons: ['👨‍💻', '👤', '🕵️', '🧑‍🔬', '👨‍', '👨🏻‍🏫', '👨🏻‍🏭', '🧙‍♂️', '🧕', '🧞', '🦸‍♀️', '🥷', '👷', '👨‍🏫', '🗣️', '🥸', '👨‍🍳', '👧🏼', '🧑‍🚀', '🫅']
+                                },
+                                {
+                                    title: 'Relationships & Emotions',
+                                    icons: ['🫂', '🧑🏻‍🤝‍🧑🏻', '💏', '😉', '😍', '😎', '🤠', '🤡']
+                                },
+                                {
+                                    title: 'Fantasy & Mythical',
+                                    icons: ['👽', '👹']
+                                },
+                                {
+                                    title: 'Education & Knowledge',
+                                    icons: ['📚', '🎓', '🧠']
+                                },
+                                {
+                                    title: 'Technology',
+                                    icons: ['💻', '📱']
+                                },
+                                {
+                                    title: 'Space & Exploration',
+                                    icons: ['🌎', '🚀']
+                                },
+                                {
+                                    title: 'Ideas & Creativity',
+                                    icons: ['💡', '🎨']
+                                },
+                                {
+                                    title: 'Animals',
+                                    icons: ['🐼', '🦁', '🦜']
+                                },
+                                {
+                                    title: 'Places & Transportation',
+                                    icons: ['🏠', '🌳', '🚲', '✈️', '🕌']
+                                },
+                                {
+                                    title: 'Objects & Tools',
+                                    icons: ['🛒', '⌚', '🎥', '🎧', '📅', '📊', '📌', '👑', '👕', '📢', '🧰', '🗄️', '📝', '🖼️', '🎬', '🧮', '🪄', '🪶']
+                                },
+                                {
+                                    title: 'Food & Nature',
+                                    icons: ['🍔', '🍒', '🌸', '🌈']
+                                },
+                                {
+                                    title: 'Finance',
+                                    icons: ['💰', '💵', '💳']
+                                },
+                                {
+                                    title: 'Celebration & Gifts',
+                                    icons: ['🎠', '🪅', '🎉', '💝']
+                                },
+                                {
+                                    title: 'Miscellaneous',
+                                    icons: ['🔥', '🤝', '✍️', '⚽', '✨', '⭐', '💪', '💼']
+                                }
+                            ]
+                        }"
                         x-init="
                             $nextTick(() => {
                                 $watch('$el', () => {
@@ -206,6 +268,7 @@
                             })
                          "
                         class="relative w-full">
+
                         <!-- Dropdown button -->
                         <button
                             @click="open = !open"
@@ -228,14 +291,19 @@
                         <div x-show="open"
                              @click.away="open = false"
                              class="absolute mt-1 w-full bg-white border rounded-lg shadow-lg max-h-56 overflow-y-auto z-10">
-                            <div class="p-2 grid grid-cols-3 gap-2 w-full">
-                                <template
-                                    x-for="icon in ['👨‍💻', '👤', '🕵️', '🧑‍🔬', '👨‍', '👨🏻‍🏫', '👨🏻‍🏭', '🧙‍♂️', '🧕', '🧞', '🦸‍♀️', '🥷', '👷', '👨‍🏫', '🗣️', '🥸', '👨‍🍳', '👧🏼', '🧑‍🚀', '🫅', '🫂', '🧑🏻‍🤝‍🧑🏻', '💏', '😉', '😍', '😎', '🤠', '🤡', '👽', '👹', '📚', '🎓', '🧠', '💻', '📱', '🌎', '🚀', '💡', '🐼', '🦁', '🎠', '🦜', '🪅', '🏠', '🌳', '🌸', '🚲', '🛒', '⌚', '🎨', '🎥', '🎧', '📅', '📊', '📌', '🍔', '🍒', '🌈', '👑', '👕', '📢', '💰', '💵', '💳', '🔥', '🧰', '✈️', '🕌', '🎉', '💝', '🤝', '✍️', '🗄️', '📝', '🖼️', '🎬', '⚽', '✨', '⭐', '💪', '💼', '🧮', '🪄', '🪶']"
-                                    :key="icon">
-                                    <div @click="selectedIcon = icon; open = false;"
-                                         :class="{'bg-blue-100': selectedIcon === icon, 'bg-gray-100': selectedIcon !== icon}"
-                                         class="p-2 bg-gray-100 hover:bg-blue-100 cursor-pointer rounded-lg text-center">
-                                        <span x-text="icon" class="text-4xl"></span>
+                            <div class="p-2 space-y-4">
+                                <template x-for="group in iconGroups" :key="group.title">
+                                    <div>
+                                        <span class="text-sm font-semibold mb-2" x-text="group.title"></span>
+                                        <div class="grid grid-cols-3 gap-2 w-full">
+                                            <template x-for="icon in group.icons" :key="icon">
+                                                <div @click="selectedIcon = icon; open = false;"
+                                                     :class="{'bg-blue-100': selectedIcon === icon, 'bg-gray-100': selectedIcon !== icon}"
+                                                     class="p-2 bg-gray-100 hover:bg-blue-100 cursor-pointer rounded-lg text-center">
+                                                    <span x-text="icon" class="text-4xl"></span>
+                                                </div>
+                                            </template>
+                                        </div>
                                     </div>
                                 </template>
                             </div>
