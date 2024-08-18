@@ -40,7 +40,7 @@
                                     class="w-full text-sm inline-flex items-center rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-200 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                                 >
 
-                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg">
+                                    <span class="inline-flex justify-center items-center p-1 rounded-lg">
                                       <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl">
                                           {{ $bot->icon }}
                                       </span>
@@ -80,7 +80,7 @@
                                         x-ref="button"
                                         class="w-full px-1 text-sm inline-flex items-center border hover:bg-gray-200 border-gray-300 text-gray-800 rounded-l-lg focus:outline-none disabled:opacity-50 disabled:pointer-events-none transition duration-150 ease-in-out overflow-hidden"
                                     >
-                                    <span class="inline-flex mr-2 justify-center items-center p-1 rounded-lg">
+                                    <span class="inline-flex justify-center items-center p-1 rounded-lg">
                                       <span class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl">
                                           {{ $bot->icon }}
                                       </span>
