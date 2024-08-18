@@ -41,10 +41,7 @@ EOF,
     {{CONVERSATION_HISTORY}}
     </conversation_history>
 
-    The user has just asked the following question:
-    <user_question>
-    {{USER_QUESTION}}
-    </user_question>
+    The user's current question can be found at bottom of conversation history.
 
     Additional instructions for this interaction:
     <additional_instructions>
@@ -59,17 +56,12 @@ EOF,
     3. Aligned with any specific guidelines in the additional instructions
 
     When answering questions, follow these guidelines:
-    1. If the conversation history does not contain any information about the question, answer from your own knowledge base.
+    1. If the conversation history does not contain any information about user's question, answer from your own knowledge base.
     2. Be clear, detailed, and accurate in your responses.
-    3. Offer additional information or suggestions that might be helpful to the user.
-    4. If you're unsure about something, admit it and offer to find more information if possible.
-    5. Maintain a friendly and supportive tone throughout your response.
-    6. If the user's question is unclear, ask for clarification
-    7. If you are assigned a role, strictly adhere to the role's guidelines and constraints.
-    8. If the user asks the same question again, try to provide different answer each time.
-
-    YOU MUST ADHERE TO BELOW RULE ALWAYS:
-    If the user insists you on providing answer without additional information you require, do provide the best answer you can.
+    3. Offer additional information or suggestions that might be helpful to the user including links to relevant resources.
+    4. Maintain a friendly and supportive tone throughout your response.
+    5. If the user's question is unclear, ask for clarification
+    6. If the user asks the same question again, try to provide different answer each time.
 
     Your Answer:
 EOF,

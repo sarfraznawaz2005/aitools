@@ -70,7 +70,9 @@ class ChatList extends Component
 
         $originalBotId = $this->conversation->bot_id;
 
-        session()->put('originalBotPrompt', $this->conversation->bot->prompt);
+        // using file because for some reason, session wasn't getting cleared sometimes
+        @unlink('originalBotPrompt.txt');
+        file_put_contents('originalBotPrompt.txt', $this->conversation->bot->prompt);
 
         $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
         $this->conversation->save();
@@ -95,7 +97,7 @@ class ChatList extends Component
         $this->conversation->save();
         //Log::info('Restored Bot ID: ' . $this->conversation->bot_id);
 
-        session()->forget('originalBotPrompt');
+        @unlink('originalBotPrompt.txt');
     }
 
 

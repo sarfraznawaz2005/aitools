@@ -16,7 +16,7 @@ class ChatInput extends Component
 {
     use InteractsWithToast;
 
-    #[Validate('min:2')]
+    #[Validate('min:1')]
     public string $query = '';
 
     public ?Bot $bot = null;
