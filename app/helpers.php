@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * loading chatlist later
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * chat with pdf
