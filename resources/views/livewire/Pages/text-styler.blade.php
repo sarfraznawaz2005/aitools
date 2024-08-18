@@ -1,5 +1,7 @@
 <div class="mt-20 px-8">
-    <x-flash/>
+
+    {{--<x-flash/>--}}
+
     <livewire:apikeys.api-key-banner/>
 
     @if (hasApiKeysCreated())

@@ -8,6 +8,12 @@
             <li class="mb-5">
                 <livewire:apikeys.api-key-banner/>
             </li>
+
+            <script>
+                function scrollToBottom() {
+                    // don't remove this function
+                }
+            </script>
         @else
 
             @unless (isset($messages))
