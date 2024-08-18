@@ -79,6 +79,10 @@ class ChatBuddy extends Component
 
                 $conversationHistory = implode("\n", $uniqueMessages);
 
+                if (session()->has('originalBotPrompt')) {
+                    $conversationHistory .= "\n\n" . session('originalBotPrompt');
+                }
+
                 $prompt = makePromopt($userQuery->body, $conversationHistory, $prompt, 2);
 
                 Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");

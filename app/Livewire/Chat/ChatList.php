@@ -70,6 +70,8 @@ class ChatList extends Component
 
         $originalBotId = $this->conversation->bot_id;
 
+        session()->put('originalBotPrompt', $this->conversation->bot->prompt);
+
         $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
         $this->conversation->save();
 
@@ -82,6 +84,7 @@ class ChatList extends Component
         $this->refresh();
 
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
+        sleep(3);
         $this->dispatch('restoreOriginalBot', $originalBotId);
     }
 
@@ -91,6 +94,8 @@ class ChatList extends Component
         $this->conversation->bot()->associate(Bot::find($originalBotId));
         $this->conversation->save();
         //Log::info('Restored Bot ID: ' . $this->conversation->bot_id);
+
+        session()->forget('originalBotPrompt');
     }
 
 

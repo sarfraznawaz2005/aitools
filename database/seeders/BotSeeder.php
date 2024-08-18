@@ -382,6 +382,10 @@ class BotSeeder extends Seeder
 
                 Remember, your goal is to provide a comprehensive breakdown of tasks with realistic time estimates that
                 will help in project planning and resource allocation.
+
+                Also calculate the total hours for the project and tell:
+
+                Total Estimated Hours:
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🔢',
