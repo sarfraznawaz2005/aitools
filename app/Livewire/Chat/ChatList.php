@@ -11,7 +11,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -82,12 +81,17 @@ class ChatList extends Component
         $this->refresh();
 
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
+        $this->dispatch('restoreOriginalBot', $originalBotId);
+    }
 
+    #[On('restoreOriginalBot')]
+    public function restoreOriginalBot(int $originalBotId): void
+    {
         $this->conversation->bot()->associate(Bot::find($originalBotId));
         $this->conversation->save();
-
         //Log::info('Restored Bot ID: ' . $message->conversation->bot_id);
     }
+
 
     public function deleteMessage(Message $message): void
     {
