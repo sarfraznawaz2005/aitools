@@ -68,6 +68,9 @@ EOF,
     7. If you are assigned a role, strictly adhere to the role's guidelines and constraints.
     8. If the user asks the same question again, try to provide different answer each time.
 
+    YOU MUST ADHERE TO BELOW RULE ALWAYS:
+    If the user insists you on providing answer without additional information you require, do provide the best answer you can.
+
     Your Answer:
 EOF,
 

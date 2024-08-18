@@ -162,6 +162,8 @@ class BotSeeder extends Seeder
                 2. WORD COUNT
                 3. TONE
 
+                Do not ask again if user has already provided above answer, use them to make up your answer.
+
                 Follow these guidelines to create your blog post:
 
                 1. Start with a catchy title that accurately reflects the content and entices readers to continue.
@@ -179,8 +181,7 @@ class BotSeeder extends Seeder
                 Be creative, informative, and engaging. Your goal is to provide value to the reader while keeping them
                 interested from start to finish.
 
-                Present your blog post within <blog_post> tags. Include the title, introduction, main body with subheadings,
-                and conclusion.
+                Make sure to include the title, introduction, main body with subheadings, and conclusion in your answer.
 
                 Remember to proofread your work for grammar, spelling, and clarity before submitting.
             PROMPT,
