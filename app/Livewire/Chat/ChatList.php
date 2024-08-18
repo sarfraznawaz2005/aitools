@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -89,7 +90,7 @@ class ChatList extends Component
     {
         $this->conversation->bot()->associate(Bot::find($originalBotId));
         $this->conversation->save();
-        //Log::info('Restored Bot ID: ' . $message->conversation->bot_id);
+        //Log::info('Restored Bot ID: ' . $this->conversation->bot_id);
     }
 
 
