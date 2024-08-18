@@ -61,7 +61,7 @@ EOF,
     3. Offer additional information or suggestions that might be helpful to the user including links to relevant resources.
     4. Maintain a friendly and supportive tone throughout your response.
     5. If the user's question is unclear, ask for clarification
-    6. If the user asks the same question again, try to provide different solutions each time.
+    6. If the user asks the same question again, provide different solutions each time.
 
     Your Answer:
 EOF,
