@@ -257,6 +257,7 @@
                                 }
                             ]
                         }"
+
                         x-init="
                             $nextTick(() => {
                                 $watch('$el', () => {
@@ -282,14 +283,20 @@
                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M19 9l-7 7-7-7"></path>
+                                      d="M5 15l7-7 7 7"></path>
                             </svg>
                         </button>
 
                         <!-- Dropdown content -->
                         <div x-show="open"
                              @click.away="open = false"
-                             class="absolute mt-1 w-full bg-white border rounded-lg shadow-lg max-h-56 overflow-y-auto z-10">
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 transform translate-y-2"
+                             x-transition:enter-end="opacity-100 transform translate-y-0"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 transform translate-y-0"
+                             x-transition:leave-end="opacity-0 transform translate-y-2"
+                             class="absolute bottom-full mb-1 w-full bg-white border rounded-lg shadow-lg max-h-56 overflow-y-auto z-10">
                             <div class="p-2 space-y-4">
                                 <template x-for="group in iconGroups" :key="group.title">
                                     <div>
