@@ -80,7 +80,7 @@ class ChatBuddy extends Component
                 $conversationHistory = implode("\n", $uniqueMessages);
 
                 if (file_exists('originalBotPrompt.txt')) {
-                    $conversationHistory .= "\n\n" . file_get_contents('originalBotPrompt.txt');
+                    $conversationHistory .= "\nMore Context:" . file_get_contents('originalBotPrompt.txt');
                     @unlink('originalBotPrompt.txt');
                 }
 
