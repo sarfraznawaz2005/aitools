@@ -51,7 +51,7 @@ EOF,
     {{PROMPT}}
     </additional_instructions>
 
-    Please consider the conversation history, the user's current question, and the additional instructions provided above.
+    Please always consider the conversation history, the user's current question, and the additional instructions provided above.
     Formulate a response that is:
 
     1. Directly relevant to the user's question
