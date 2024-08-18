@@ -203,7 +203,7 @@
                                         <div class="inline-block mt-[-12px] cursor-pointer"
                                              wire:click="forceAnswer({{$message->id}})"
                                              x-data
-                                             x-tooltip.raw="Stuck with AI giving same answer repeatedly? Click to get forced answer.">
+                                             x-tooltip.raw="Stuck with AI giving same answer repeatedly? Click to try to get forced answer.">
                                             😡
                                         </div>
                                     @endif

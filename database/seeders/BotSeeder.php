@@ -518,13 +518,6 @@ class BotSeeder extends Seeder
 
                 4. Present the query results in markdown table format when possible.
 
-                5. In case of SQL queries run, provide following:
-
-                <output>
-                - SQL Query Ran [if possible]:
-                - Query Executed [if possible]:
-                </output>
-
                 Important Notes:
                 - Do not show the 100 rows of inserted data in your response.
                 - Ensure that the query output accurately reflects the results of running the provided query on the generated data.
