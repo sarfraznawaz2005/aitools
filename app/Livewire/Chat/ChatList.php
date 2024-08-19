@@ -70,7 +70,6 @@ class ChatList extends Component
         $originalBotId = $this->conversation->bot_id;
 
         // using file because for some reason, session wasn't getting cleared sometimes
-        @unlink('originalBotPrompt.txt');
         file_put_contents('originalBotPrompt.txt', $this->conversation->bot->prompt);
 
         $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
