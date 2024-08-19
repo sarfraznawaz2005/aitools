@@ -178,7 +178,8 @@
                                                 x-transition:leave-end="opacity-0 transform scale-95"
                                                 class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
                                                 role="tooltip">
-                                                <span class="font-semibold mb-2 text-xs">Prompt Example:</span><hr class="h-1 my-2">
+                                                <span class="font-semibold mb-2 text-xs">Prompt Example:</span><hr
+                                                    class="h-1 my-2">
                                                 I want you to act as an interviewer. I will be the candidate and you will ask me the interview questions for the position position. I want you to only reply as the interviewer. Do not write all the conservation at once. I want you to only do the interview with me. Ask me the questions and wait for my answers. Do not write explanations. Ask me the questions one by one like an interviewer does and wait for my answers.
                                             </span>
                                         </span>
@@ -322,7 +323,8 @@
                         wire:model="type"
                         class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         {{--<option value="">Bot Type</option>--}}
-                        <option class="text-base" value="{{App\Enums\BotTypeEnum::TEXT}}">📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
+                        <option class="text-base" value="{{App\Enums\BotTypeEnum::TEXT}}">
+                            📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
                         {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::IMAGE}}">🖼️ {{App\Enums\BotTypeEnum::IMAGE}}</option>--}}
                         {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::VIDEO}}">🎬 {{App\Enums\BotTypeEnum::VIDEO}}</option>--}}
                     </select>
@@ -347,7 +349,7 @@
                         </button>
 
                         <div id="hs-basic-with-arrow-collapse-one"
-                             class="hs-accordion-content w-full hidden overflow-hidden transition-[height] duration-300"
+                             class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
                              role="region" aria-labelledby="knowledge-sources-accordian">
 
                             <fieldset
@@ -357,21 +359,45 @@
                                     <span class="text-xs">(PDFs, TXTs, etc)</span>
                                 </legend>
 
-                                <div class="text-red-500 text-xs mb-2">Currently not supported.</div>
+                                {{--<div class="text-red-500 text-xs mb-2">Currently not supported.</div>--}}
 
                                 <div class="relative w-full">
-                                    <label for="file-input" class="sr-only">Choose file</label>
-                                    <input type="file"
-                                           disabled
-                                           name="file-input"
-                                           id="file-input"
-                                           class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
-                            file:bg-gray-50 file:border-0
-                            file:me-4
-                            file:py-3 file:px-4
-                       ">
+                                    <div
+                                        x-data="{ uploading: false, progress: 0 }"
+                                        x-on:livewire-upload-start="uploading = true"
+                                        x-on:livewire-upload-finish="uploading = false"
+                                        x-on:livewire-upload-cancel="uploading = false"
+                                        x-on:livewire-upload-error="uploading = false"
+                                        x-on:livewire-upload-progress="progress = $event.detail.progress"
+                                    >
+                                        <!-- File Input -->
+                                        <input type="file" wire:model="files" id="{{uniqid()}}">
+
+                                        <!-- Progress Bar -->
+                                        <div x-show="uploading">
+                                            <progress max="100" x-bind:value="progress"></progress>
+                                        </div>
+                                    </div>
                                 </div>
                             </fieldset>
+
+                            @if($botFiles)
+                                <fieldset
+                                    class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
+                                    <legend class="text-sm text-gray-600 dark:text-neutral-300">
+                                        Uploaded Files
+                                    </legend>
+                                    @foreach($botFiles as $file)
+                                        <div class="flex items center justify-between">
+                                            <div>{{$file}}</div>
+                                            <div class="cursor-pointer" wire:click="deleteFile('{{$file}}')">
+                                                <x-icons.delete class="text-red-500"/>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </fieldset>
+                            @endif
+
                         </div>
                     </div>
                 </div>

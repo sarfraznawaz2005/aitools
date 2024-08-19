@@ -42,7 +42,7 @@
             </div>
 
             <div
-                class="flex items-center border-t border-gray-300 justify-end mt-4 pt-4" x-show="isSelected">
+                class="flex items-center border-t border-gray-300 justify-end mt-4 pt-4">
                 <x-gradient-button wire:click="forward">
                     <x-icons.share class="size-5"/>
                     Forward

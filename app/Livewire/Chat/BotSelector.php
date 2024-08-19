@@ -8,10 +8,14 @@ use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Str;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class BotSelector extends Component
 {
+    use WithFileUploads;
     use InteractsWithToast;
 
     public Bot $model;
@@ -21,6 +25,11 @@ class BotSelector extends Component
     public string $prompt;
     public string $icon;
     public string $type;
+
+    #[Validate(['files.*' => 'mimes:txt,pdf|max:10240'])]
+    public array $files = [];
+
+    public array $botFiles = [];
 
     public int $newBotId = 0;
 
@@ -49,6 +58,8 @@ class BotSelector extends Component
     {
         $this->model = $bot ?? new Bot();
 
+        $this->files = [];
+
         $this->fill($this->model->toArray());
     }
 
@@ -71,6 +82,10 @@ class BotSelector extends Component
 
         //dd($this->model);
 
+        foreach ($this->files as $file) {
+            $file->storeAs(path: 'files/' . strtolower(Str::slug($this->model->name)), name: $file->getClientOriginalName());
+        }
+
         $this->dispatch('closeModal', ['id' => 'botModal']);
 
         $this->success($this->model->wasRecentlyCreated ? 'Bot created successfully!' : 'Bot saved successfully!');
@@ -84,6 +99,10 @@ class BotSelector extends Component
 
     public function edit(Bot $bot): void
     {
+        $this->newBotId = 0;
+
+        $this->botFiles = array_map(fn($file) => basename($file), glob(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)) . '/*'));
+
         $this->dispatch('showModal', ['id' => 'botModal']);
 
         $this->resetErrorBag();
@@ -94,6 +113,8 @@ class BotSelector extends Component
 
     public function delete(Bot $bot): void
     {
+        $this->newBotId = 0;
+
         $bot->delete();
 
         $this->dispatch('closeModal', ['id' => 'botModal']);
@@ -103,9 +124,20 @@ class BotSelector extends Component
         $this->resetForm();
     }
 
+    public function deleteFile(string $fileName): void
+    {
+        $path = base_path('storage/app/files/') . strtolower(Str::slug($this->model->name)) . '/' . $fileName;
+
+        @unlink($path);
+
+        $this->botFiles = array_map(fn($file) => basename($file), glob(base_path('storage/app/files/') . strtolower(Str::slug($this->model->name)) . '/*'));
+
+        $this->success('File deleted successfully!');
+    }
+
     public function resetForm(): void
     {
-        $this->reset(['name', 'bio', 'prompt', 'icon', 'type']);
+        $this->reset(['name', 'bio', 'prompt', 'icon', 'type', 'files']);
 
         $this->resetErrorBag();
 
