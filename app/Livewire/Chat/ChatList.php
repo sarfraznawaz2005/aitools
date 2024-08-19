@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -66,7 +67,6 @@ class ChatList extends Component
         // assign general agent which does not get stuck, get answer and restore original bot
 
         //Log::info('Current Bot ID: ' . $this->conversation->bot_id);
-
         $originalBotId = $this->conversation->bot_id;
 
         // using file because for some reason, session wasn't getting cleared sometimes
@@ -75,7 +75,6 @@ class ChatList extends Component
 
         $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
         $this->conversation->save();
-
         //Log::info('Changed Bot ID: ' . $this->conversation->bot_id);
 
         $message->delete();
@@ -85,11 +84,18 @@ class ChatList extends Component
         $this->refresh();
 
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
+        sleep(3);
+        $this->dispatch('restoreOriginalBot', $originalBotId);
+    }
 
+    #[On('restoreOriginalBot')]
+    public function restoreOriginalBot(int $originalBotId): void
+    {
         $this->conversation->bot()->associate(Bot::find($originalBotId));
         $this->conversation->save();
         //Log::info('Restored Bot ID: ' . $this->conversation->bot_id);
     }
+
 
     public function deleteMessage(Message $message): void
     {
