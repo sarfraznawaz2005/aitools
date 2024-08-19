@@ -331,7 +331,7 @@
                 </div>
 
                 <div class="hs-accordion-group">
-                    <div class="hs-accordion" id="knowledge-sources-accordian">
+                    <div class="hs-accordion active" id="knowledge-sources-accordian">
                         <button
                             class="hs-accordion-toggle hs-accordion-active:text-gray-600 inline-flex items-center gap-x-3 w-full text-start text-gray-600 focus:outline-none rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                         >
@@ -348,56 +348,58 @@
                             Knowledge Sources
                         </button>
 
-                        <div id="hs-basic-with-arrow-collapse-one"
-                             class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-                             role="region" aria-labelledby="knowledge-sources-accordian">
+                        <div class="hs-accordion-group">
+                            <div id="hs-basic-with-arrow-collapse-one"
+                                 class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+                                 role="region" aria-labelledby="knowledge-sources-accordian">
 
-                            <fieldset
-                                class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
-                                <legend class="text-sm text-gray-600 dark:text-neutral-300">
-                                    Add Knowledge Sources
-                                    <span class="text-xs">(PDFs, TXTs, etc)</span>
-                                </legend>
-
-                                {{--<div class="text-red-500 text-xs mb-2">Currently not supported.</div>--}}
-
-                                <div class="relative w-full">
-                                    <div
-                                        x-data="{ uploading: false, progress: 0 }"
-                                        x-on:livewire-upload-start="uploading = true"
-                                        x-on:livewire-upload-finish="uploading = false"
-                                        x-on:livewire-upload-cancel="uploading = false"
-                                        x-on:livewire-upload-error="uploading = false"
-                                        x-on:livewire-upload-progress="progress = $event.detail.progress"
-                                    >
-                                        <!-- File Input -->
-                                        <input type="file" wire:model="files" id="{{uniqid()}}" multiple>
-
-                                        <!-- Progress Bar -->
-                                        <div x-show="uploading">
-                                            <progress max="100" x-bind:value="progress"></progress>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            @if($botFiles)
                                 <fieldset
                                     class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
                                     <legend class="text-sm text-gray-600 dark:text-neutral-300">
-                                        Uploaded Files
+                                        Add Knowledge Sources
+                                        <span class="text-xs">(PDFs, TXTs, etc)</span>
                                     </legend>
-                                    @foreach($botFiles as $file)
-                                        <div class="flex items center justify-between mb-2 text-base">
-                                            <div>{{$file}}</div>
-                                            <div class="cursor-pointer" wire:click="deleteFile('{{$file}}')">
-                                                <x-icons.delete class="text-red-500"/>
+
+                                    {{--<div class="text-red-500 text-xs mb-2">Currently not supported.</div>--}}
+
+                                    <div class="relative w-full">
+                                        <div
+                                            x-data="{ uploading: false, progress: 0 }"
+                                            x-on:livewire-upload-start="uploading = true"
+                                            x-on:livewire-upload-finish="uploading = false"
+                                            x-on:livewire-upload-cancel="uploading = false"
+                                            x-on:livewire-upload-error="uploading = false"
+                                            x-on:livewire-upload-progress="progress = $event.detail.progress"
+                                        >
+                                            <!-- File Input -->
+                                            <input type="file" wire:model="files" id="{{uniqid()}}" multiple>
+
+                                            <!-- Progress Bar -->
+                                            <div x-show="uploading">
+                                                <progress max="100" x-bind:value="progress"></progress>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </fieldset>
-                            @endif
 
+                                @if($botFiles)
+                                    <fieldset
+                                        class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
+                                        <legend class="text-sm text-gray-600 dark:text-neutral-300">
+                                            Uploaded Files
+                                        </legend>
+                                        @foreach($botFiles as $file)
+                                            <div class="flex items center justify-between mb-2 text-base">
+                                                <div>{{$file}}</div>
+                                                <div class="cursor-pointer" wire:click="deleteFile('{{$file}}')">
+                                                    <x-icons.delete class="text-red-500"/>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </fieldset>
+                                @endif
+
+                            </div>
                         </div>
                     </div>
                 </div>
