@@ -263,7 +263,7 @@ class BotSeeder extends Seeder
         ]);
 
         Bot::create([
-            'name' => 'Fullstack Engineer',
+            'name' => 'Software Engineer',
             'bio' => 'A bot that can help you plan and implement a web application development project.',
             'prompt' => <<<PROMPT
                 You are an experienced fullstack software engineer tasked with developing a web application based on specific

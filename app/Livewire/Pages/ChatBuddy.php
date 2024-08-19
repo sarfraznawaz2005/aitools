@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\Constants;
+use App\Models\Bot;
 use App\Models\Conversation;
 use App\Traits\InteractsWithToast;
 use Exception;
@@ -10,6 +11,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Spatie\LaravelMarkdown\MarkdownRenderer;
@@ -79,9 +81,11 @@ class ChatBuddy extends Component
 
                 $conversationHistory = implode("\n", $uniqueMessages);
 
-                if (file_exists('originalBotPrompt.txt')) {
-                    $conversationHistory .= "\nMore Context:" . file_get_contents('originalBotPrompt.txt');
-                    @unlink('originalBotPrompt.txt');
+                // switch to general bot temporarily in case of forced mode
+                if (file_exists('forceAnswer')) {
+                    $generalBotPrompt = Bot::query()->where('name', 'General')->first()->prompt;
+                    $prompt = $generalBotPrompt;
+                    @unlink('forceAnswer');
                 }
 
                 // add user's current question

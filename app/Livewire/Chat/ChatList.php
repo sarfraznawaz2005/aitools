@@ -11,7 +11,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -64,37 +63,17 @@ class ChatList extends Component
 
     public function forceAnswer(Message $message): void
     {
-        // assign general agent which does not get stuck, get answer and restore original bot
-
-        //Log::info('Current Bot ID: ' . $this->conversation->bot_id);
-        $originalBotId = $this->conversation->bot_id;
-
-        // using file because for some reason, session wasn't getting cleared sometimes
-        file_put_contents('originalBotPrompt.txt', $this->conversation->bot->prompt);
-
-        $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
-        $this->conversation->save();
-        //Log::info('Changed Bot ID: ' . $this->conversation->bot_id);
+        touch('forceAnswer');
 
         $message->delete();
 
-        sleep(3);
         $this->conversation->createTempAImessage();
 
         $this->refresh();
 
+        sleep(1);
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
-        $this->dispatch('restoreOriginalBot', $originalBotId);
     }
-
-    #[On('restoreOriginalBot')]
-    public function restoreOriginalBot(int $originalBotId): void
-    {
-        $this->conversation->bot()->associate(Bot::find($originalBotId));
-        $this->conversation->save();
-        //Log::info('Restored Bot ID: ' . $this->conversation->bot_id);
-    }
-
 
     public function deleteMessage(Message $message): void
     {
