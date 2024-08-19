@@ -143,10 +143,11 @@
                 </div>
 
                 <div class="relative mb-3">
-                    <textarea
-                        wire:model="bio"
-                        class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                        rows="3" placeholder="Description"></textarea>
+                    <input type="text"
+                           wire:model="bio"
+                           placeholder="Description"
+                           autofocus
+                           class="peer py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                 </div>
 
                 <div class="relative mb-3">
