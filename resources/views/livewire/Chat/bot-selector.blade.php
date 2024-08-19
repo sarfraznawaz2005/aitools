@@ -331,7 +331,7 @@
                 </div>
 
                 <div class="hs-accordion-group">
-                    <div class="hs-accordion active" id="knowledge-sources-accordian">
+                    <div class="hs-accordion" id="knowledge-sources-accordian">
                         <button
                             class="hs-accordion-toggle hs-accordion-active:text-gray-600 inline-flex items-center gap-x-3 w-full text-start text-gray-600 focus:outline-none rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                         >
@@ -346,11 +346,33 @@
                                 <path d="m18 15-6-6-6 6"></path>
                             </svg>
                             Knowledge Sources
+
+                            <!-- Popover -->
+                            <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
+                                        <span
+                                            class="hs-tooltip-toggle cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
+                                            💡
+                                            <span
+                                                x-transition:enter="transition ease-out duration-200"
+                                                x-transition:enter-start="opacity-0 transform scale-95"
+                                                x-transition:enter-end="opacity-100 transform scale-100"
+                                                x-transition:leave="transition ease-in duration-75"
+                                                x-transition:leave-start="opacity-100 transform scale-100"
+                                                x-transition:leave-end="opacity-0 transform scale-95"
+                                                class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                role="tooltip">
+                                                If knowledge source files are uploaded, bot will be limited to them only
+                                                allowing you to talk to uploaded files only. This means, this option allows you to create talk to documents
+                                                bots. For this option to work, NodeJS must be installed on your system and added to PATH environment variable.
+                                            </span>
+                                        </span>
+                            </div>
+                            <!-- End Popover -->
                         </button>
 
                         <div class="hs-accordion-group">
                             <div id="hs-basic-with-arrow-collapse-one"
-                                 class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+                                 class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
                                  role="region" aria-labelledby="knowledge-sources-accordian">
 
                                 <fieldset
