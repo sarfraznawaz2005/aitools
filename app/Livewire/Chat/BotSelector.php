@@ -109,7 +109,7 @@ class BotSelector extends Component
     {
         $this->newBotId = 0;
 
-        $this->botFiles = array_map(fn($file) => basename($file), glob(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)) . '/*'));
+        $this->botFiles = $bot->files();
 
         $this->dispatch('showModal', ['id' => 'botModal']);
 
@@ -143,7 +143,7 @@ class BotSelector extends Component
 
         @unlink($path);
 
-        $this->botFiles = array_map(fn($file) => basename($file), glob(base_path('storage/app/files/') . strtolower(Str::slug($this->model->name)) . '/*'));
+        $this->botFiles = $this->model->files();
 
         $this->success('File deleted successfully!');
 

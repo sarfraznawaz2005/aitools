@@ -24,6 +24,11 @@ class Bot extends Model
         return count(glob(base_path('storage/app/files/') . strtolower(Str::slug($this->name)) . '/*')) > 0;
     }
 
+    public function files(): array
+    {
+        return array_map(fn($file) => basename($file), glob(base_path('storage/app/files/') . strtolower(Str::slug($this->name)) . '/*'));
+    }
+
     public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class);

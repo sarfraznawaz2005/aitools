@@ -46,6 +46,21 @@
                     </div>
                 </li>
 
+                @if($botFiles)
+                    <fieldset
+                        class="items-center justify-center w-full bg-gray-100 border border-gray-300 text-center rounded-lg p-3 dark:border-neutral-700 my-4">
+                        <legend class="text-sm text-gray-600 dark:text-neutral-300 font-semibold">
+                            Chatting With Uploaded Files
+                        </legend>
+                        @foreach($botFiles as $file)
+                            <div class="text-center mb-2" style="font-size: .8rem;">
+                                <div>{{$file}}</div>
+                            </div>
+                        @endforeach
+                    </fieldset>
+                @endif
+
+
                 @if (count($messages) > 1)
                     <li class="flex justify-center ignore-mutation">
 

@@ -23,6 +23,7 @@ class ChatList extends Component
     public ?Conversation $conversation = null;
     public ?Message $lastMessage = null;
     public Collection $messages;
+    public array $botFiles = [];
 
     protected $listeners = ['refreshChatList' => '$refresh'];
 
@@ -57,6 +58,10 @@ class ChatList extends Component
                 $this->conversation->save();
 
                 session()->flash('message', 'The Bot was not found, so the conversation was assigned to the General Bot automatically.');
+            }
+
+            if ($this->conversation->bot->isDocumentBot()) {
+                $this->botFiles = $this->conversation->bot->files();
             }
         }
     }
