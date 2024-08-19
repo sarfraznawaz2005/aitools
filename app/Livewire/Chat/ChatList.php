@@ -79,12 +79,12 @@ class ChatList extends Component
 
         $message->delete();
 
+        sleep(3);
         $this->conversation->createTempAImessage();
 
         $this->refresh();
 
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
-        sleep(3);
         $this->dispatch('restoreOriginalBot', $originalBotId);
     }
 
