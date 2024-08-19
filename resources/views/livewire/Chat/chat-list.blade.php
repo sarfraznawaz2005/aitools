@@ -57,9 +57,9 @@
                                              'bg-white text-gray-800 hover:bg-gray-50': !isConfirming,
                                              'bg-red-500 text-white hover:bg-red-500': isConfirming
                                         }"
-                                        class="py-2 px-4 flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none w-48">
+                                        class="py-2 px-4 flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
                                     <x-icons.delete class="flex-shrink-0"/>
-                                    <span x-text="isConfirming ? 'Confirm?' : 'Clear Conversation'"
+                                    <span x-data x-tooltip.raw="Clear Conversation" x-text="isConfirming ? 'Confirm?' : 'Clear'"
                                           class="flex-grow text-center" :class="{'pr-6': isConfirming}"></span>
                                 </button>
                             </div>
