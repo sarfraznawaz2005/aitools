@@ -34,6 +34,8 @@ class BotSelector extends Component
 
     public int $newBotId = 0;
 
+    public bool $isNodeInstalled = true;
+
     protected $listeners = ['refreshBot' => '$refresh'];
 
     protected function rules(): array
@@ -62,6 +64,8 @@ class BotSelector extends Component
         $this->files = [];
 
         $this->fill($this->model->toArray());
+
+        $this->isNodeInstalled = preg_match('/v\d+(\.\d+)*\b/', shell_exec('node -v')) === 1;
     }
 
     public function selectBot(Bot $bot): void

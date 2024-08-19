@@ -382,7 +382,9 @@
                                         <span class="text-xs">(PDFs, TXTs, etc)</span>
                                     </legend>
 
-                                    {{--<div class="text-red-500 text-xs mb-2">Currently not supported.</div>--}}
+                                    @if(!$isNodeInstalled)
+                                        <div class="text-red-500 text-xs mb-2">Sorry, NodeJS is not installed on your system.</div>
+                                    @endif
 
                                     <div class="relative w-full">
                                         <div
@@ -394,7 +396,8 @@
                                             x-on:livewire-upload-progress="progress = $event.detail.progress"
                                         >
                                             <!-- File Input -->
-                                            <input type="file" wire:model="files" id="{{uniqid()}}" multiple>
+                                            <input type="file" wire:model="files" id="{{uniqid()}}"
+                                                   multiple {{!$isNodeInstalled ? 'disabled' : ''}}>
 
                                             <!-- Progress Bar -->
                                             <div x-show="uploading">
