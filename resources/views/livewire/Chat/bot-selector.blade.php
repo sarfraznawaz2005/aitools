@@ -383,7 +383,9 @@
                                     </legend>
 
                                     @if(!$isNodeInstalled)
-                                        <div class="text-red-500 text-xs mb-2">Sorry, NodeJS is not installed on your system.</div>
+                                        <div class="text-red-500 text-xs mb-2">Sorry, NodeJS is not installed on your
+                                            system.
+                                        </div>
                                     @endif
 
                                     <div class="relative w-full">
@@ -396,8 +398,13 @@
                                             x-on:livewire-upload-progress="progress = $event.detail.progress"
                                         >
                                             <!-- File Input -->
-                                            <input type="file" wire:model="files" id="{{uniqid()}}"
-                                                   multiple {{!$isNodeInstalled ? 'disabled' : ''}}>
+                                            <label for="file-input" class="sr-only">Choose files</label>
+                                            <input type="file" wire:model="files" id="{{uniqid()}}" multiple
+                                                   {{!$isNodeInstalled ? 'disabled' : ''}} class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
+                                                file:bg-gray-50 file:border-0
+                                                file:me-4
+                                                file:py-3 file:px-4
+                                                dark:file:bg-neutral-700 dark:file:text-neutral-400">
 
                                             <!-- Progress Bar -->
                                             <div x-show="uploading">
@@ -414,7 +421,7 @@
                                             Uploaded Files
                                         </legend>
                                         @foreach($botFiles as $file)
-                                            <div class="flex items center justify-between mb-2 text-base">
+                                            <div class="flex items center justify-between mb-2" style="font-size: .8rem;">
                                                 <div>{{$file}}</div>
                                                 <div class="cursor-pointer" wire:click="deleteFile('{{$file}}')">
                                                     <x-icons.delete class="text-red-500"/>
