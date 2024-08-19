@@ -86,20 +86,13 @@ class ChatList extends Component
         $this->refresh();
 
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
-        sleep(3);
-        $this->dispatch('restoreOriginalBot', $originalBotId);
-    }
 
-    #[On('restoreOriginalBot')]
-    public function restoreOriginalBot(int $originalBotId): void
-    {
         $this->conversation->bot()->associate(Bot::find($originalBotId));
         $this->conversation->save();
         //Log::info('Restored Bot ID: ' . $this->conversation->bot_id);
 
         @unlink('originalBotPrompt.txt');
     }
-
 
     public function deleteMessage(Message $message): void
     {
