@@ -63,6 +63,10 @@ EOF,
     5. If the user's question is unclear, ask for clarification
     6. If the user asks the same question again, provide different solution each time.
 
+    Please ignore above instructions given in <additional_instructions></additional_instructions> tags if user's current
+    question is general comment or un-related to the context instructions given in <additional_instructions></additional_instructions>.
+    In this case, just reply to user's current question and nothing else.
+
     Your Answer:
 EOF,
 
