@@ -59,9 +59,7 @@ class BotForward extends Component
 
         $message = str_ireplace(['<br>', '<br/>', '<br />'], "\n\n", $query);
         $message = htmlToText($message);
-
         $message = "<forwarded_query>$message</forwarded_query>";
-        $message .= "\n\nPlease provide answer to request sent in <forwarded_query></forwarded_query> tags based on your role and instructions given in <additional_instructions></additional_instructions> tags.";
 
         $conversation->addChatMessage($message);
 
