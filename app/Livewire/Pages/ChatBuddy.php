@@ -28,8 +28,7 @@ class ChatBuddy extends Component
         if (is_null($conversation)) {
             return response()->stream(function () {
 
-                sendStream("Error, conversation has been deleted!", true);
-
+                sendStream("Error, conversation has been deleted!");
                 sendStream("", true);
 
             }, 200, [
@@ -37,6 +36,10 @@ class ChatBuddy extends Component
                 'X-Accel-Buffering' => 'no',
                 'Content-Type' => 'text/event-stream',
             ]);
+        }
+
+        if ($conversation->bot->isDocumentBot()) {
+            return $this->chatWithDocs($conversation);
         }
 
         return response()->stream(function () use ($conversation) {
@@ -152,5 +155,19 @@ class ChatBuddy extends Component
         }
 
         return view('livewire.pages.chat-buddy');
+    }
+
+    protected function chatWithDocs(Conversation $conversation): StreamedResponse
+    {
+        return response()->stream(function () {
+
+            sendStream("Hey!", );
+            sendStream("", true);
+
+        }, 200, [
+            'Cache-Control' => 'no-cache',
+            'X-Accel-Buffering' => 'no',
+            'Content-Type' => 'text/event-stream',
+        ]);
     }
 }
