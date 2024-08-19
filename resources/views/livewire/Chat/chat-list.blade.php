@@ -16,6 +16,8 @@
             </script>
         @else
 
+            <livewire:chat.bot-forward wire:key="chatbuddy-bot-forward"/>
+
             @unless (isset($messages))
                 <livewire:chat.bot-selector wire:key="chatbuddy-bot-selector"/>
 
@@ -201,11 +203,11 @@
                                     </div>
 
                                     @if($loop->last)
-                                        <div class="inline-block mt-[-12px] cursor-pointer"
+                                        <div class="inline-block mt-[-12px] cursor-pointer text-xl"
                                              wire:click="forceAnswer({{$message->id}})"
                                              x-data
                                              x-tooltip.raw="Stuck with AI giving same answer repeatedly? Click to try to get forced answer.">
-                                            👽
+                                            🧙‍♂️
                                         </div>
                                     @endif
 
@@ -233,6 +235,14 @@
                                                         class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
                                                     <x-icons.refresh
                                                         class="size-5 text-gray-500 hover:text-gray-600"/>
+                                                </button>
+
+                                                <button type="button"
+                                                        wire:click="$dispatch('startFoward', [{{$message->id}}])"
+                                                        x-data x-tooltip.raw="Forward to another bot"
+                                                        class="inline-flex items-center ml-2 mr-1 text-sm rounded-full border border-transparent text-gray-500">
+                                                    <x-icons.share
+                                                        class="size-5 text-gray-400 hover:text-gray-600"/>
                                                 </button>
                                             @endif
                                         </div>

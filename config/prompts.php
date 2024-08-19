@@ -63,6 +63,12 @@ EOF,
     5. If the user's question is unclear, ask for clarification
     6. If the user asks the same question again, provide different solution each time.
 
+    Important Rules You Need To Follow:
+
+    If user's current question contains <forwarded_query></forwarded_query> tags, think of it as any requirements you needed
+    and give your answer as per instructions given in <additional_instructions></additional_instructions> tags without asking
+    any further questions if possible. Assume all your requirements are met and given in <forwarded_query></forwarded_query> tags.
+
     Please ignore instructions given in <additional_instructions></additional_instructions> tags if user's current
     question is general comment or un-related to the context of instructions given in <additional_instructions></additional_instructions>.
     In this case, just reply to user's current question and nothing else.

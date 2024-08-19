@@ -7,7 +7,9 @@
         Alpine.data('modalControl', () => ({
             init() {
                 Livewire.on('showModal', (eventData) => {
-                    const targetId = eventData[0]?.id;
+                    let targetId = eventData[0]?.id;
+                    targetId = targetId || eventData;
+
                     HSOverlay.open(`#${targetId}`);
 
                     // dispatch alpine event
@@ -15,7 +17,9 @@
                 });
 
                 Livewire.on('closeModal', (eventData) => {
-                    const targetId = eventData[0]?.id;
+                    let targetId = eventData[0]?.id;
+                    targetId = targetId || eventData;
+
                     HSOverlay.close(`#${targetId}`);
 
                     Livewire.dispatch('modal-closed', { id: targetId });
