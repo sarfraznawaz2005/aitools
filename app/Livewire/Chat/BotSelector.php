@@ -125,6 +125,7 @@ class BotSelector extends Component
         // clean bot files
         File::cleanDirectory(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)));
         File::deleteDirectory(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)));
+        // todo: delete indexing folder too if already created
 
         $this->success('Bot deleted successfully!');
 
