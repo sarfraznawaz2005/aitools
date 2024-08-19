@@ -52,6 +52,7 @@
                             <div class="flex justify-end w-full fixed top-16 right-10 gap-x-2">
 
                                 <button type="button"
+                                        x-tooltip.raw="Clear Conversation"
                                         x-data="{ isConfirming: false }"
                                         @click="isConfirming ? $wire.clearConversation() : isConfirming = true"
                                         @click.outside="isConfirming = false"
@@ -61,7 +62,7 @@
                                         }"
                                         class="py-2 px-4 flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
                                     <x-icons.delete class="flex-shrink-0"/>
-                                    <span x-data x-tooltip.raw="Clear Conversation"
+                                    <span
                                           x-text="isConfirming ? 'Confirm?' : 'Clear'"
                                           class="flex-grow text-center" :class="{'pr-6': isConfirming}"></span>
                                 </button>
