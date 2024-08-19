@@ -8,6 +8,7 @@ use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -95,6 +96,8 @@ class BotSelector extends Component
 
             $this->resetForm();
         }
+
+        $this->dispatch('indexFiles', $this->model->id);
     }
 
     public function edit(Bot $bot): void
@@ -119,6 +122,10 @@ class BotSelector extends Component
 
         $this->dispatch('closeModal', ['id' => 'botModal']);
 
+        // clean bot files
+        File::cleanDirectory(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)));
+        File::deleteDirectory(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)));
+
         $this->success('Bot deleted successfully!');
 
         $this->resetForm();
@@ -133,6 +140,8 @@ class BotSelector extends Component
         $this->botFiles = array_map(fn($file) => basename($file), glob(base_path('storage/app/files/') . strtolower(Str::slug($this->model->name)) . '/*'));
 
         $this->success('File deleted successfully!');
+
+        $this->dispatch('indexFiles', $this->model->id);
     }
 
     public function resetForm(): void

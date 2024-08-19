@@ -388,7 +388,7 @@
                                         Uploaded Files
                                     </legend>
                                     @foreach($botFiles as $file)
-                                        <div class="flex items center justify-between">
+                                        <div class="flex items center justify-between mb-2 text-base">
                                             <div>{{$file}}</div>
                                             <div class="cursor-pointer" wire:click="deleteFile('{{$file}}')">
                                                 <x-icons.delete class="text-red-500"/>
