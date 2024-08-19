@@ -371,7 +371,7 @@
                                         x-on:livewire-upload-progress="progress = $event.detail.progress"
                                     >
                                         <!-- File Input -->
-                                        <input type="file" wire:model="files" id="{{uniqid()}}">
+                                        <input type="file" wire:model="files" id="{{uniqid()}}" multiple>
 
                                         <!-- Progress Bar -->
                                         <div x-show="uploading">
