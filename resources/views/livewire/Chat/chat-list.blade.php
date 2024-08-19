@@ -217,7 +217,7 @@
                                         <span class="text-gray-400 text-xs">{{$message->llm}}</span>
                                     </div>
 
-                                    @if($loop->last)
+                                    @if($loop->last && !$botFiles)
                                         <div class="inline-block mt-[-12px] cursor-pointer text-xl"
                                              wire:click="forceAnswer({{$message->id}})"
                                              x-data
