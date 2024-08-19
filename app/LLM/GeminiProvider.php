@@ -70,21 +70,27 @@ class GeminiProvider extends BaseLLMProvider
         return isset($response) ? $this->getResult($response) : '';
     }
 
-    public function embed(string $text, string $embeddingModel): array|string
+    public function embed(array $texts, string $embeddingModel): array|string
     {
-        // google also has batch embed content which should be used instead for multiple texts
+        $url = $this->baseUrl . 'models/' . $embeddingModel . ":batchEmbedContents?key=" . $this->apiKey;
 
-        $url = $this->baseUrl . 'models/' . $embeddingModel . ":embedContent?key=" . $this->apiKey;
+        $content = [];
 
-        $body = [
-            "model" => "models/$embeddingModel",
-            "content" => [
-                "parts" => [
-                    [
-                        "text" => $text
+        foreach ($texts as $text) {
+            $content[] = [
+                "model" => "models/$embeddingModel",
+                "content" => [
+                    "parts" => [
+                        [
+                            "text" => $text
+                        ]
                     ]
                 ]
-            ]
+            ];
+        }
+
+        $body = [
+            "requests" => $content
         ];
 
         try {
@@ -93,7 +99,7 @@ class GeminiProvider extends BaseLLMProvider
             return $e->getMessage();
         }
 
-        return $response['embedding']['values'] ?? [];
+        return $response ?? [];
     }
 
     protected function getResult(array $response): string
