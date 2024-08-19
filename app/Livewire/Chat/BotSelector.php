@@ -62,6 +62,7 @@ class BotSelector extends Component
         $this->model = $bot ?? new Bot();
 
         $this->files = [];
+        $this->botFiles = [];
 
         $this->fill($this->model->toArray());
 
@@ -154,6 +155,9 @@ class BotSelector extends Component
         $this->reset(['name', 'bio', 'prompt', 'icon', 'type', 'files']);
 
         $this->resetErrorBag();
+
+        $this->files = [];
+        $this->botFiles = [];
 
         $this->model = new Bot();
     }
