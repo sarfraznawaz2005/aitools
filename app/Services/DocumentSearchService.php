@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\LLM\LlmProvider;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Smalot\PdfParser\Parser;
 
 class DocumentSearchService
@@ -177,6 +178,7 @@ class DocumentSearchService
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
+            //Log::info("Loaded embeddings from cache for $fileName");
             return $data['embeddings'];
         }
 
@@ -209,11 +211,19 @@ class DocumentSearchService
         foreach ($files as $file) {
             $textWithMetadata = $this->extractTextFromFile($file);
             $chunks = $this->splitTextIntoChunks($textWithMetadata);
-            $textEmbeddings = $this->getEmbeddingsOrLoadFromCache($file, $chunks);
+
+            // Chunk the text based on $embdeddingsBatchSize
+            $chunkedTextArray = array_chunk($chunks, $this->embdeddingsBatchSize);
+
+            $chunkedEmbeddings = [];
+            foreach ($chunkedTextArray as $chunkIndex => $chunkedText) {
+                $embeddings = $this->getEmbeddingsOrLoadFromCache($file, $chunkedText);
+                $chunkedEmbeddings[$chunkIndex] = $embeddings;
+            }
 
             $textEmbeddingsArray[] = [
                 'textSplits' => array_column($chunks, 'text'),
-                'embeddings' => $textEmbeddings,
+                'embeddings' => $chunkedEmbeddings,
                 'source' => basename($file),
                 'metadata' => array_column($chunks, 'metadata'),
             ];
@@ -271,22 +281,26 @@ class DocumentSearchService
     {
         $results = [];
         $textSplits = $textEmbedding['textSplits'];
+        $chunkedEmbeddings = $textEmbedding['embeddings'];
 
-        if (count($textSplits) !== count($textEmbedding['embeddings']['embeddings'])) {
-            throw new Exception("Splits and embeddings count mismatch!");
-        }
+        foreach ($chunkedEmbeddings as $embeddings) {
 
-        foreach ($textEmbedding['embeddings']['embeddings'] as $index => $embedding) {
-            $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
+//            if (count($textSplits) !== count($embeddings['embeddings'])) {
+//                throw new Exception("Splits and embeddings count mismatch!");
+//            }
 
-            if ($similarity >= $this->similarityThreshold) {
-                $results[] = [
-                    'similarity' => $similarity,
-                    'index' => $index,
-                    'text' => $textSplits[$index],
-                    'source' => $textEmbedding['source'],
-                    'metadata' => $textEmbedding['metadata'][$index],
-                ];
+            foreach ($embeddings['embeddings'] as $index => $embedding) {
+                $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
+
+                if ($similarity >= $this->similarityThreshold) {
+                    $results[] = [
+                        'similarity' => $similarity,
+                        'index' => $index,
+                        'text' => $textSplits[$index],
+                        'source' => $textEmbedding['source'],
+                        'metadata' => $textEmbedding['metadata'][$index],
+                    ];
+                }
             }
         }
 
