@@ -191,11 +191,18 @@ class ChatBuddy extends Component
                 }
             }
 
+            // Replacing newlines with spaces for best results
+            // Replacing more than one space with single space
+            $cleanedText = $this->getCleanedText($text);
+
             // split text such that each split is not greater than 10000 byes (google limit)
             //$textSplits = str_split($text, 1000);
-            $textSplits = $this->splitTextIntoChunks($text, 1000);
+            $textSplits = $this->splitTextIntoChunks($cleanedText, 1000);
 
-            $queryEmbeddings = $llm->embed([$userQuery->body], 'embedding-001');
+            // get only 100 chunks (gemini)
+            $textSplits = array_slice($textSplits, 0, 100);
+
+            $queryEmbeddings = $llm->embed([$this->getCleanedText(($userQuery->body))], 'embedding-001');
 
             if (file_exists(storage_path('app/textEmbeddings' . $conversation->id))) {
                 $textEmbeddings = json_decode(file_get_contents(storage_path('app/textEmbeddings' . $conversation->id)), true);
@@ -241,18 +248,20 @@ class ChatBuddy extends Component
         ]);
     }
 
-    function splitTextIntoChunks($text, $chunkSize = 500): array
+    function splitTextIntoChunks($text, $chunkSize = 1000): array
     {
         $chunks = [];
-        $words = explode(" ", $text);
         $currentChunk = "";
+        $currentLength = 0;
 
-        foreach ($words as $word) {
-            if (strlen($currentChunk . " " . $word) <= $chunkSize) {
-                $currentChunk .= " " . $word;
-            } else {
+        for ($i = 0; $i < strlen($text); $i++) {
+            $currentChunk .= $text[$i];
+            $currentLength++;
+
+            if ($currentLength >= $chunkSize) {
                 $chunks[] = trim($currentChunk);
-                $currentChunk = $word;
+                $currentChunk = "";
+                $currentLength = 0;
             }
         }
 
@@ -280,5 +289,16 @@ class ChatBuddy extends Component
         $vLength = sqrt($vLength);
 
         return $dotProduct / ($uLength * $vLength);
+    }
+
+    function getCleanedText(string $text): string|array|null
+    {
+        $cleanedText = strip_tags($text);
+        $cleanedText = preg_replace('/\s+/', ' ', $cleanedText);
+        $cleanedText = preg_replace('/\r\n|\r/', "\n", $cleanedText);
+        $cleanedText = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $cleanedText);
+        $cleanedText = str_replace(["\r\n", "\r", "\n"], ' ', $cleanedText);
+
+        return trim($cleanedText);
     }
 }
