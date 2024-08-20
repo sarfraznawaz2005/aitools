@@ -27,7 +27,7 @@ class BotSelector extends Component
     public string $icon;
     public string $type;
 
-    #[Validate(['files.*' => 'mimes:txt,pdf|max:10240'])]
+    #[Validate(['files.*' => 'mimes:txt,pdf|max:20480'])]
     public array $files = [];
 
     public array $botFiles = [];
