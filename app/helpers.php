@@ -2,6 +2,7 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * try bigger document Streamlined Deployment Workflow.pdf
  * bot type dropdown, add Doc type bot
  * one pdf for best results info tip
  * html, htm, markdown
