@@ -166,7 +166,7 @@ class ChatBuddy extends Component
                 $results = $searchService->searchDocuments($files, $userQuery->body);
 
                 if (!$results) {
-                    $message = "Sorry, no results found for given query!";
+                    $message = "Sorry, I don’t have enough information to answer this question accurately.";
                     sendStream($message);
 
                     $latestMessage->update(['body' => $message]);
@@ -213,11 +213,14 @@ class ChatBuddy extends Component
                     3. Ensure your answer is clear, concise, and directly addresses the query.
                     4. If the answer can be found in the context, provide specific details and explanations.
                     5. If you need to make any assumptions or inferences, clearly state them as such.
-                    6. Please always try to provide Metadata information along with the answer.
+
+                    Please always try to provide Metadata information along with the answer in format:
+
+                    Sources: <source document here, Pages> Example: (Document1.pdf, Pages: 1, 2, 3)
 
                     If the information needed to answer the query is not present in the context or conversation history,
-                    or if you are unsure about the answer, respond with "I don't have enough information to answer this
-                    question accurately." Do not attempt to make up or guess an answer.
+                    or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
+                    this question accurately." Do not attempt to make up or guess an answer.
 
                     Your Answer:
                 PROMPT;

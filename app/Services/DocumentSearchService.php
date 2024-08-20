@@ -315,11 +315,27 @@ class DocumentSearchService
 
     protected function getCleanedText(string $text): string
     {
-        $cleanedText = strip_tags($text);
-        $cleanedText = preg_replace('/\s+/', ' ', $cleanedText);
-        $cleanedText = preg_replace('/\r\n|\r/', "\n", $cleanedText);
-        $cleanedText = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $cleanedText);
+        // Replace <br> tags with newlines
+        $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
 
-        return trim($cleanedText);
+        // Replace </p> tags with double newlines
+        $text = preg_replace('/<\/p>/i', "\n\n", $text);
+
+        // Remove all remaining HTML tags
+        $text = strip_tags($text);
+
+        // Decode HTML entities
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        // Normalize line breaks
+        $text = preg_replace('/\r\n|\r/', "\n", $text);
+
+        // Replace any combination of more than two newlines and whitespace with two newlines
+        $text = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $text);
+
+        // Remove extra whitespace
+        $text = preg_replace('/\s+/', ' ', $text);
+
+        return trim($text);
     }
 }

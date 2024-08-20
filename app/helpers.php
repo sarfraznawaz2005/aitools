@@ -3,6 +3,7 @@
  * TODO
  * global disabler until api key is saved
  * bot type dropdown, add Doc type bot
+ * one pdf for best results info tip
  * html, htm, markdown
  * new lines not shwoing pdf
  * openai/ollama chat pdf
