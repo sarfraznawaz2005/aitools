@@ -2,8 +2,10 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * html, htm, markdown
  * new lines not shwoing pdf
  * openai/ollama chat pdf
+ * mimes:txt,pdf|max:10240 overall or per file?
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * Researcher Agent

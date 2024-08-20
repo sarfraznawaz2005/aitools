@@ -36,7 +36,7 @@ class DocumentSearchService
             $results = $this->performTextSearch($files, $query);
         }
 
-        return $this->getTopResults($query, $results);
+        return $this->getTopResults($results);
     }
 
     /**
@@ -58,22 +58,26 @@ class DocumentSearchService
         return $this->deduplicateAndAddContext($results);
     }
 
+    /**
+     * @throws Exception
+     */
     protected function performTextSearch(array $files, string $query): array
     {
         $results = [];
         $cleanedQuery = $this->getCleanedText($query);
 
         foreach ($files as $file) {
-            $text = $this->extractTextFromFile($file);
-            $textSplits = $this->splitTextIntoChunks($this->getCleanedText($text));
+            $textWithMetadata = $this->extractTextFromFile($file);
+            $chunks = $this->splitTextIntoChunks($textWithMetadata);
 
-            foreach ($textSplits as $index => $chunk) {
-                if (stripos($chunk, $cleanedQuery) !== false) {
+            foreach ($chunks as $index => $chunk) {
+                if (stripos($chunk['text'], $cleanedQuery) !== false) {
                     $results[] = [
-                        'similarity' => 1 - (levenshtein($cleanedQuery, $chunk) / max(strlen($cleanedQuery), strlen($chunk))),
+                        'similarity' => 1 - (levenshtein($cleanedQuery, $chunk['text']) / max(strlen($cleanedQuery), strlen($chunk['text']))),
                         'index' => $index,
-                        'text' => $chunk,
+                        'text' => $chunk['text'],
                         'source' => basename($file),
+                        'metadata' => $chunk['metadata'],
                     ];
                 }
             }
@@ -99,7 +103,12 @@ class DocumentSearchService
                 $contextBefore = $this->getChunkAtIndex($result['source'], $result['index'] - 1);
                 $contextAfter = $this->getChunkAtIndex($result['source'], $result['index'] + 1);
 
-                $result['text'] = trim($contextBefore . "\n" . $result['text'] . "\n" . $contextAfter);
+                $result['text'] = trim($contextBefore['text'] . "\n" . $result['text'] . "\n" . $contextAfter['text']);
+                $result['metadata'] = array_merge(
+                    $contextBefore['metadata'] ?? [],
+                    $result['metadata'],
+                    $contextAfter['metadata'] ?? []
+                );
 
                 $deduplicatedResults[] = $result;
 
@@ -112,24 +121,24 @@ class DocumentSearchService
         return $deduplicatedResults;
     }
 
-    protected function getChunkAtIndex(string $source, int $index): string
+    protected function getChunkAtIndex(string $source, int $index): array
     {
         $fileName = $source;
         $path = storage_path("app/$fileName-" . $this->key . '.json');
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
-            $textSplits = $data['text_splits'] ?? [];
+            $chunks = $data['chunks'] ?? [];
 
-            if (isset($textSplits[$index])) {
-                return $textSplits[$index];
+            if (isset($chunks[$index])) {
+                return $chunks[$index];
             }
         }
 
-        return '';
+        return ['text' => '', 'metadata' => []];
     }
 
-    protected function getEmbeddingsOrLoadFromCache(string $file, array $textSplits): array
+    protected function getEmbeddingsOrLoadFromCache(string $file, array $chunks): array
     {
         $fileName = basename($file);
         $path = storage_path("app/$fileName-" . $this->key . '.json');
@@ -139,15 +148,22 @@ class DocumentSearchService
             return $data['embeddings'];
         }
 
+        $textSplits = array_map(function ($chunk) {
+            return trim($chunk['text']);
+        }, $chunks);
+
         $embeddings = $this->llm->embed($textSplits, 'embedding-001');
+
         $data = [
             'embeddings' => $embeddings,
-            'text_splits' => $textSplits
+            'chunks' => $chunks
         ];
+
         file_put_contents($path, json_encode($data));
 
         return $embeddings;
     }
+
 
     /**
      * @throws Exception
@@ -157,14 +173,15 @@ class DocumentSearchService
         $textEmbeddingsArray = [];
 
         foreach ($files as $file) {
-            $text = $this->extractTextFromFile($file);
-            $textSplits = $this->splitTextIntoChunks($this->getCleanedText($text));
-            $textEmbeddings = $this->getEmbeddingsOrLoadFromCache($file, $textSplits);
+            $textWithMetadata = $this->extractTextFromFile($file);
+            $chunks = $this->splitTextIntoChunks($textWithMetadata);
+            $textEmbeddings = $this->getEmbeddingsOrLoadFromCache($file, $chunks);
 
             $textEmbeddingsArray[] = [
-                'textSplits' => $textSplits,
+                'textSplits' => array_column($chunks, 'text'),
                 'embeddings' => $textEmbeddings,
                 'source' => basename($file),
+                'metadata' => array_column($chunks, 'metadata'),
             ];
         }
 
@@ -174,15 +191,38 @@ class DocumentSearchService
     /**
      * @throws Exception
      */
-    protected function extractTextFromFile(string $file): string
+    protected function extractTextFromFile(string $file): array
     {
         $extension = pathinfo($file, PATHINFO_EXTENSION);
 
-        return match (strtolower($extension)) {
-            'pdf' => $this->parser->parseFile($file)->getText(),
-            'txt', 'html', 'htm' => file_get_contents($file),
-            default => throw new Exception("Unsupported file type: $extension"),
-        };
+        switch (strtolower($extension)) {
+            case 'pdf':
+                $pdf = $this->parser->parseFile($file);
+                $pages = $pdf->getPages();
+                $text = [];
+                foreach ($pages as $pageNumber => $page) {
+                    $text[] = [
+                        'content' => $page->getText(),
+                        'metadata' => ['page' => $pageNumber + 1]
+                    ];
+                }
+                return $text;
+            case 'txt':
+            case 'html':
+            case 'htm':
+                $content = file_get_contents($file);
+                $lines = explode("\n", $content);
+                $text = [];
+                foreach ($lines as $lineNumber => $line) {
+                    $text[] = [
+                        'content' => $line,
+                        'metadata' => ['line' => $lineNumber + 1]
+                    ];
+                }
+                return $text;
+            default:
+                throw new Exception("Unsupported file type: $extension");
+        }
     }
 
     /**
@@ -192,10 +232,6 @@ class DocumentSearchService
     {
         $results = [];
         $textSplits = $textEmbedding['textSplits'];
-
-//        dump($textSplits);
-//        dump($textEmbedding['embeddings']['embeddings']);
-//        exit;
 
         if (count($textSplits) !== count($textEmbedding['embeddings']['embeddings'])) {
             throw new Exception("Splits and embeddings count mismatch!");
@@ -210,6 +246,7 @@ class DocumentSearchService
                     'index' => $index,
                     'text' => $textSplits[$index],
                     'source' => $textEmbedding['source'],
+                    'metadata' => $textEmbedding['metadata'][$index],
                 ];
             }
         }
@@ -217,7 +254,7 @@ class DocumentSearchService
         return $results;
     }
 
-    protected function getTopResults(string $query, array $results): array
+    protected function getTopResults(array $results): array
     {
         if (count($results) <= $this->maxResults) {
             return $results;
@@ -227,9 +264,42 @@ class DocumentSearchService
         return array_slice($results, 0, $this->maxResults);
     }
 
-    protected function splitTextIntoChunks(string $text): array
+    protected function splitTextIntoChunks(array $textWithMetadata): array
     {
-        return array_map('trim', str_split($text, $this->chunkSize));
+        $chunks = [];
+        $overlap = $this->chunkSize * 0.2; // 20% overlap
+
+        $fullText = implode("\n", array_column($textWithMetadata, 'content'));
+        $totalLength = strlen($fullText);
+
+        for ($i = 0; $i < $totalLength; $i += ($this->chunkSize - $overlap)) {
+            $chunk = substr($fullText, $i, $this->chunkSize);
+            $chunks[] = [
+                'text' => trim($chunk),
+                'metadata' => $this->getMetadataForChunk($textWithMetadata, $i, $i + strlen($chunk))
+            ];
+        }
+
+        return $chunks;
+    }
+
+    protected function getMetadataForChunk(array $textWithMetadata, int $start, int $end): array
+    {
+        $metadata = [];
+        $currentPosition = 0;
+
+        foreach ($textWithMetadata as $item) {
+            $length = strlen($item['content']);
+            if ($currentPosition + $length >= $start && $currentPosition <= $end) {
+                $metadata[] = $item['metadata'];
+            }
+            if ($currentPosition > $end) {
+                break;
+            }
+            $currentPosition += $length + 1; // +1 for the newline
+        }
+
+        return $metadata;
     }
 
     protected function cosineSimilarity(array $u, array $v): float
