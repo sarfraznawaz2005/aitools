@@ -196,8 +196,8 @@ class ChatBuddy extends Component
 
                 $answer = '';
                 foreach ($results as $result) {
-                    $answer .= $result['text'];
-                    sendStream($result['text'] . '<hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong>');
+                    $answer .= $result['text'] . '<hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong>';
+                    sendStream($answer);
                 }
 
                 $latestMessage->update(['body' => $answer]);
