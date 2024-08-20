@@ -179,7 +179,7 @@ class DocumentSearchService
             return (!$carry || $distance < $carry['distance']) ? ['distance' => $distance, 'result' => $result] : $carry;
         });
 
-        return $bestResult ? [$bestResult['result']] : ($topResults[0] ? [$topResults[0]] : []);
+        return $bestResult ? [$bestResult['result']] : ($topResults[0] ?? []);
     }
 
     protected function splitTextIntoChunks(string $text): array
