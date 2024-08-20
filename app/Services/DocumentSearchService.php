@@ -14,6 +14,7 @@ class DocumentSearchService
         protected LlmProvider $llm,
         protected string      $fileIdentifier,
         protected int         $chunkSize = 500,
+        protected int         $embdeddingsBatchSize = 100,
         protected float       $similarityThreshold = 0.6,
         protected int         $maxResults = 3,
     )

@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\Constants;
+use App\Enums\ApiKeyTypeEnum;
 use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
@@ -158,11 +159,11 @@ class ChatBuddy extends Component
 
                 $markdown = app(MarkdownRenderer::class);
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+                $batchSize = $this->getEmbeddingsBatchSize();
 
                 // todo: add stand alone llm answer?
-
-                //todo: what chunk size is best?
-                $searchService = new DocumentSearchService($llm, $conversation->id, 1000, 0.6, 3);
+                // todo: what chunk size is best?
+                $searchService = new DocumentSearchService($llm, $conversation->id, 1000, $batchSize, 0.6, 3);
 
                 $isIndexingDone = true;
                 foreach ($files as $file) {
@@ -308,5 +309,16 @@ class ChatBuddy extends Component
             }
         }
         return $uniqueMessages;
+    }
+
+    protected function getEmbeddingsBatchSize(): int
+    {
+        $llmModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+
+        return match ($llmModel->llm_type) {
+            ApiKeyTypeEnum::GEMINI->value => 100,
+            ApiKeyTypeEnum::OPENAI->value => 200,
+            default => 50,
+        };
     }
 }
