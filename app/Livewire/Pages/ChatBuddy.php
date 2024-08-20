@@ -218,6 +218,8 @@ class ChatBuddy extends Component
 
                     Sources: <source document here, Pages> Example: (Document1.pdf, pages: 1, 2, 3)
 
+                    Do not mention sources if not available.
+
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
                     this question accurately." Do not attempt to make up or guess an answer.
