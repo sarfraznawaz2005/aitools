@@ -187,12 +187,12 @@ class ChatBuddy extends Component
 
                 $prompt = <<<PROMPT
                     You are an AI assistant designed to answer questions based on provided context and conversation history.
-                    Your task is to provide helpful and accurate answers to user queries. You have been provided context
-                    from $attachedFilesCount document(s) named $attachedFiles.
+                    Your task is to provide helpful and accurate answers to user queries.
 
                     First, carefully read and analyze the following context:
 
                     <context>
+                    You have been provided context from $attachedFilesCount document(s) named $attachedFiles.\n
                     $context
                     </context>
 
