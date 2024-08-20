@@ -213,14 +213,17 @@ class ChatBuddy extends Component
 
             // loops throuogh all the inputs and compare on a cosine similarity to the question and output the correct answer
             $results = [];
+            $similarityThreshold = 0.6; // Adjust the threshold as needed
             for ($i = 0; $i < count($textEmbeddings['embeddings']); $i++) {
                 $similarity = $this->cosineSimilarity($textEmbeddings['embeddings'][$i]['values'], $queryEmbeddings['embeddings'][0]['values']);
 
-                $results[] = [
-                    'similarity' => $similarity,
-                    'index' => $i,
-                    'text' => $textSplits[$i],
-                ];
+                if ($similarity >= $similarityThreshold) {
+                    $results[] = [
+                        'similarity' => $similarity,
+                        'index' => $i,
+                        'text' => $textSplits[$i],
+                    ];
+                }
             }
 
             usort($results, function ($a, $b) {
@@ -232,13 +235,20 @@ class ChatBuddy extends Component
             // Top 3 results
             $topResults = array_slice($results, 0, 3);
 
-            $output = '';
+            $bestResult = null;
+            $bestDistance = PHP_INT_MAX;
+
             foreach ($topResults as $result) {
-                $output .= $result['text'] . "\n";
-                sendStream($result['text']);
+                $distance = levenshtein($this->getCleanedText(($userQuery->body)), $result['text']);
+
+                if ($distance < $bestDistance) {
+                    $bestDistance = $distance;
+                    $bestResult = $result;
+                    sendStream($bestResult['text']);
+                }
             }
 
-            $latestMessage->update(['body' => $output]);
+            $latestMessage->update(['body' => $bestResult['text']]);
             sendStream('', true);
 
         }, 200, [
