@@ -222,14 +222,12 @@ class DocumentSearchService
 
     protected function getTopResults(string $query, array $results): array
     {
-        $topResults = array_slice($results, 0, $this->maxResults);
+        if (count($results) <= $this->maxResults) {
+            return $results;
+        }
 
-        $bestResult = array_reduce($topResults, function ($carry, $result) use ($query) {
-            $distance = levenshtein($this->getCleanedText($query), $result['text']);
-            return (!$carry || $distance < $carry['distance']) ? ['distance' => $distance, 'result' => $result] : $carry;
-        });
-
-        return $bestResult ? [$bestResult['result']] : ($topResults[0] ?? []);
+        // return the top $maxResults
+        return array_slice($results, 0, $this->maxResults);
     }
 
     protected function splitTextIntoChunks(string $text): array
