@@ -5,6 +5,7 @@ namespace App\Livewire\Pages;
 use App\Constants;
 use App\Models\Bot;
 use App\Models\Conversation;
+use App\Services\DocumentSearchService;
 use App\Traits\InteractsWithToast;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -13,7 +14,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use Smalot\PdfParser\Parser;
 use Spatie\LaravelMarkdown\MarkdownRenderer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -161,7 +161,6 @@ class ChatBuddy extends Component
     {
         return response()->stream(function () use ($conversation) {
 
-            $text = '';
             $prompt = $conversation->bot->prompt;
             $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
 
@@ -179,85 +178,39 @@ class ChatBuddy extends Component
                 return;
             }
 
-            $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
-            $parser = new Parser();
+            try {
 
-            $textEmbeddings = [];
-            $queryEmbeddings = $llm->embed([$this->getCleanedText(($userQuery->body))], 'embedding-001');
+                $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
-            foreach ($files as $file) {
-                $fileName = basename($file);
+                $searchService = new DocumentSearchService($llm, $conversation->id, 1000, 0.6, 3);
+                $result = $searchService->searchDocuments($files, $userQuery->body);
 
-                if (str_contains($file, '.pdf')) {
-                    $pdf = $parser->parseFile($file);
-                    $text .= $pdf->getText();
-                } else {
-                    $text .= file_get_contents($file);
+                if (!$result) {
+                    $message = "Sorry, no results found for given query!";
+                    sendStream($message);
+
+                    $latestMessage->update(['body' => $message]);
+
+                    return;
                 }
 
-                // Replacing newlines with spaces for best results
-                // Replacing more than one space with single space
-                $cleanedText = $this->getCleanedText($text);
+                $answer = $result['text'] . '<hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong>';
 
-                // split text such that each split is not greater than 10000 byes (google limit)
-                //$textSplits = str_split($text, 1000);
-                $textSplits = $this->splitTextIntoChunks($cleanedText, 1000);
+                sendStream($answer);
 
-                // get only 100 chunks (gemini)
-                $textSplits = array_slice($textSplits, 0, 100);
+                $latestMessage->update(['body' => $answer]);
 
-                $path = storage_path("app/$fileName" . $conversation->id);
+            } catch (Exception $e) {
+                Log::error($e->getFile() . ' - Query: "' . $userQuery->body . '" - Error: ' . $e->getMessage() . ' on line ' . $e->getLine());
+                $error = '<span class="text-red-600">Oops! Failed to get a response due to some error, please try again.' . ' ' . $e->getMessage() . '</span>';
 
-                if (file_exists($path)) {
-                    $textEmbeddings[] = json_decode(file_get_contents($path), true);
-                } else {
-                    $textEmbeddings[] = $llm->embed($textSplits, 'embedding-001');
-                    file_put_contents($path, json_encode($textEmbeddings));
-                }
+                sendStream($error);
+
+                //$latestMessage->delete();
+                $latestMessage->update(['body' => $error]);
+            } finally {
+                sendStream("", true);
             }
-
-            // loops throuogh all the inputs and compare on a cosine similarity to the question and output the correct answer
-            $results = [];
-            $similarityThreshold = 0.6; // Adjust the threshold as needed
-
-            foreach ($textEmbeddings as $textEmbedding) {
-                for ($i = 0; $i < count($textEmbedding['embeddings']); $i++) {
-                    $similarity = $this->cosineSimilarity($textEmbedding['embeddings'][$i]['values'], $queryEmbeddings['embeddings'][0]['values']);
-
-                    if ($similarity >= $similarityThreshold) {
-                        $results[] = [
-                            'similarity' => $similarity,
-                            'index' => $i,
-                            'text' => $textSplits[$i],
-                        ];
-                    }
-                }
-            }
-
-            usort($results, function ($a, $b) {
-                // orginal example was like below but in case opposte works (https://www.guywarner.dev/using-openai-to-create-a-qa-in-laravelphp-with-embedding)
-                //return $a['similarity'] <=> $b['similarity'];
-                return $b['similarity'] <=> $a['similarity'];
-            });
-
-            // Top 3 results
-            $topResults = array_slice($results, 0, 3);
-
-            $bestResult = null;
-            $bestDistance = PHP_INT_MAX;
-
-            foreach ($topResults as $result) {
-                $distance = levenshtein($this->getCleanedText(($userQuery->body)), $result['text']);
-
-                if ($distance < $bestDistance) {
-                    $bestDistance = $distance;
-                    $bestResult = $result;
-                    sendStream($bestResult['text']);
-                }
-            }
-
-            $latestMessage->update(['body' => $bestResult['text']]);
-            sendStream('', true);
 
         }, 200, [
             'Cache-Control' => 'no-cache',

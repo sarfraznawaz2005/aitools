@@ -70,6 +70,9 @@ class GeminiProvider extends BaseLLMProvider
         return isset($response) ? $this->getResult($response) : '';
     }
 
+    /**
+     * @throws Exception
+     */
     public function embed(array $texts, string $embeddingModel): array|string
     {
         $url = $this->baseUrl . 'models/' . $embeddingModel . ":batchEmbedContents?key=" . $this->apiKey;
@@ -93,11 +96,7 @@ class GeminiProvider extends BaseLLMProvider
             "requests" => $content
         ];
 
-        try {
-            $response = $this->makeRequest($url, $body);
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        $response = $this->makeRequest($url, $body);
 
         return $response ?? [];
     }
