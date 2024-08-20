@@ -210,7 +210,7 @@ class ChatBuddy extends Component
 
                     1. Base your answer primarily on the information given in the context.
                     2. Use the conversation history to maintain consistency and provide relevant follow-ups if applicable.
-                    3. Ensure your answer is clear, concise, and directly addresses the query.
+                    3. Ensure your answer is clear, detailed, and directly addresses the query.
                     4. If the answer can be found in the context, provide specific details and explanations.
                     5. If you need to make any assumptions or inferences, clearly state them as such.
 
