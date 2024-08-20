@@ -288,7 +288,7 @@ class DocumentSearchService
 //            if (count($textSplits) !== count($embeddings['embeddings'])) {
 //                throw new Exception("Splits and embeddings count mismatch!");
 //            }
-
+            
             foreach ($embeddings['embeddings'] as $index => $embedding) {
                 $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
 
