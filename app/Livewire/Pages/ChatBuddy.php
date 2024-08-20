@@ -177,9 +177,7 @@ class ChatBuddy extends Component
                 $context = '';
                 foreach ($results as $result) {
                     $context .= $result['text'] .
-                        "\nMetadata: Source Document" . json_encode($result['source']) .
-                        "\nPages: Source Document" . json_encode($result['metadata']) .
-                        "\n\n";
+                        "\nMetadata:" . json_encode($result['source']) . "," . json_encode($result['metadata']) . "\n\n";
                 }
 
                 $latestMessages = $this->getLatestMessages($conversation);
