@@ -216,7 +216,7 @@ class ChatBuddy extends Component
 
                     Please always try to provide Metadata information along with the answer in format:
 
-                    Sources: <source document here, Pages> Example: (Document1.pdf, Pages: 1, 2, 3)
+                    Sources: <source document here, Pages> Example: (Document1.pdf, pages: 1, 2, 3)
 
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
