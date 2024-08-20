@@ -197,11 +197,11 @@ class ChatBuddy extends Component
 
             $queryEmbeddings = $llm->embed([$userQuery->body], 'embedding-001');
 
-            if (session()->has('textEmbeddings' . $conversation->id)) {
-                $textEmbeddings = session()->get('textEmbeddings' . $conversation->id);
+            if (file_exists(storage_path('app/textEmbeddings' . $conversation->id))) {
+                $textEmbeddings = json_decode(file_get_contents(storage_path('app/textEmbeddings' . $conversation->id)), true);
             } else {
                 $textEmbeddings = $llm->embed($textSplits, 'embedding-001');
-                session(['textEmbeddings' . $conversation->id => $textEmbeddings]);
+                file_put_contents(storage_path('app/textEmbeddings' . $conversation->id), json_encode($textEmbeddings));
             }
 
             // loops throuogh all the inputs and compare on a cosine similarity to the question and output the correct answer
