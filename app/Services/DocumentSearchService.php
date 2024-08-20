@@ -364,6 +364,9 @@ class DocumentSearchService
         // Remove extra whitespace
         $text = preg_replace('/\s+/', ' ', $text);
 
+        // remove punctuation symbols
+        $text = preg_replace('/[^\w\s\-_.&*$@]/', '', $text);
+
         if ($removeStopWords) {
             $text = $this->removeStopwords($text);
         }
@@ -386,6 +389,7 @@ class DocumentSearchService
 
         $words = explode(' ', $text);
         $filteredWords = array_diff($words, $stopwords);
+
         return implode(' ', $filteredWords);
     }
 }
