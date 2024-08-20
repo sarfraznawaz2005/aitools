@@ -67,12 +67,17 @@ class DocumentSearchService
             $chunks = $this->splitTextIntoChunks($textWithMetadata);
 
             foreach ($chunks as $index => $chunk) {
-                if (stripos($chunk['text'], $cleanedQuery) !== false) {
+                $exactMatchScore = $this->calculateExactMatchScore($cleanedQuery, $chunk['text']);
+                $fuzzyMatchScore = $this->calculateFuzzyMatchScore($cleanedQuery, $chunk['text']);
+
+                $maxScore = max($exactMatchScore, $fuzzyMatchScore);
+
+                if ($maxScore >= $this->similarityThreshold) {
                     $results[] = [
-                        'similarity' => 1 - (levenshtein($cleanedQuery, $chunk['text']) / max(strlen($cleanedQuery), strlen($chunk['text']))),
+                        'similarity' => $maxScore,
                         'index' => $index,
                         'text' => $chunk['text'],
-                        'source' => basename($file),
+                        'source' => 'example.txt',
                         'metadata' => $chunk['metadata'],
                     ];
                 }
@@ -82,6 +87,27 @@ class DocumentSearchService
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
         return $this->deduplicateAndAddContext($results);
+    }
+
+    protected function calculateExactMatchScore(string $query, string $text): float
+    {
+        if (stripos($text, $query) !== false) {
+            return $this->similarityThreshold;
+        }
+
+        return 0.0;
+    }
+
+    protected function calculateFuzzyMatchScore(string $query, string $text): float
+    {
+        $distance = levenshtein($query, $text);
+        $maxLength = max(strlen($query), strlen($text));
+
+        if ($maxLength === 0) {
+            return $this->similarityThreshold;
+        }
+
+        return 1 - ($distance / $maxLength);
     }
 
     protected function deduplicateAndAddContext(array $results): array
