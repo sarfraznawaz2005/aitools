@@ -216,7 +216,8 @@ class ChatBuddy extends Component
 
                     Please always try to provide Metadata information along with the answer in format:
 
-                    Sources: <source document here, Pages> Example: (Document1.pdf, pages: 1, 2, 3)
+                    <span class="text-xs">Sources: <source document here, Pages></span>
+                    <span class="text-xs">Example: (Document1.pdf, pages: 1, 2, 3)</span>
 
                     Do not mention sources if not available.
 
