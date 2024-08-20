@@ -195,8 +195,14 @@ class ChatBuddy extends Component
             //$textSplits = str_split($text, 1000);
             $textSplits = $this->splitTextIntoChunks($text, 1000);
 
-            $textEmbeddings = $llm->embed($textSplits, 'embedding-001');
             $queryEmbeddings = $llm->embed([$userQuery->body], 'embedding-001');
+
+            if (session()->has('textEmbeddings' . $conversation->id)) {
+                $textEmbeddings = session()->get('textEmbeddings' . $conversation->id);
+            } else {
+                $textEmbeddings = $llm->embed($textSplits, 'embedding-001');
+                session(['textEmbeddings' . $conversation->id => $textEmbeddings]);
+            }
 
             // loops throuogh all the inputs and compare on a cosine similarity to the question and output the correct answer
             $results = [];
