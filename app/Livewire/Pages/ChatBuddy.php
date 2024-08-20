@@ -266,6 +266,7 @@ class ChatBuddy extends Component
             ->whereNot(function ($query) {
                 $query
                     ->where('body', 'like', '%conversation history%')
+                    ->orWhere('body', 'like', '%have enough information to answer this question accurately%')
                     ->orWhere('body', 'like', '%provided context%');
             })
             ->latest()
