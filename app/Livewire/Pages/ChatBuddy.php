@@ -192,7 +192,7 @@ class ChatBuddy extends Component
                     First, carefully read and analyze the following context:
 
                     <context>
-                    You have been provided context from $attachedFilesCount document(s) named $attachedFiles.\n
+                    You have been provided below context from $attachedFilesCount document(s) named $attachedFiles.\n
                     $context
                     </context>
 
