@@ -179,13 +179,16 @@ class ChatBuddy extends Component
                     $context .= $result['text'] . "\nMetadata:" . json_encode($result['source']) . "," . json_encode($result['metadata']) . "\n\n";
                 }
 
+                $attachedFiles = implode(',', array_map(fn($file) => basename($file), $files));
+                $attachedFilesCount = count(array_map(fn($file) => basename($file), $files));
                 $latestMessages = $this->getLatestMessages($conversation);
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
                 $conversationHistory = implode("\n", $uniqueMessages);
 
                 $prompt = <<<PROMPT
                     You are an AI assistant designed to answer questions based on provided context and conversation history.
-                    Your task is to provide helpful and accurate answers to user queries.
+                    Your task is to provide helpful and accurate answers to user queries. You have been provided context
+                    from $attachedFilesCount document(s) named $attachedFiles.
 
                     First, carefully read and analyze the following context:
 
