@@ -15,10 +15,10 @@ class DocumentSearchService
     protected Parser $parser;
     protected int $maxResults;
 
-    public function __construct(LlmProvider $llmProvider, string $key, int $chunkSize = 1000, float $similarityThreshold = 0.6, int $maxResults = 3)
+    public function __construct(LlmProvider $llmProvider, string $fileIdentifier, int $chunkSize = 1000, float $similarityThreshold = 0.6, int $maxResults = 3)
     {
         $this->llm = $llmProvider;
-        $this->key = $key;
+        $this->key = $fileIdentifier;
         $this->chunkSize = $chunkSize;
         $this->similarityThreshold = $similarityThreshold;
         $this->maxResults = $maxResults;
