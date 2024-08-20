@@ -58,9 +58,6 @@ class DocumentSearchService
         return $this->deduplicateAndAddContext($results);
     }
 
-    /**
-     * @throws Exception
-     */
     protected function performTextSearch(array $files, string $query): array
     {
         $results = [];
