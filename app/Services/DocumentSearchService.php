@@ -104,6 +104,7 @@ class DocumentSearchService
                 $contextAfter = $this->getChunkAtIndex($result['source'], $result['index'] + 1);
 
                 $result['text'] = trim($contextBefore['text'] . "\n" . $result['text'] . "\n" . $contextAfter['text']);
+
                 $result['metadata'] = array_merge(
                     $contextBefore['metadata'] ?? [],
                     $result['metadata'],
@@ -208,6 +209,7 @@ class DocumentSearchService
                 }
                 return $text;
             case 'txt':
+            case 'md':
             case 'html':
             case 'htm':
                 $content = file_get_contents($file);
