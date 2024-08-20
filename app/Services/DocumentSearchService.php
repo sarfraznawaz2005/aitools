@@ -161,6 +161,14 @@ class DocumentSearchService
         return ['text' => '', 'metadata' => []];
     }
 
+    public function isEmbdeddingDone(string $file, string $fileIdentifier): bool
+    {
+        $fileName = basename($file);
+        $path = storage_path("app/$fileName-" . $fileIdentifier . '.json');
+
+        return file_exists($path);
+    }
+
     protected function getEmbeddingsOrLoadFromCache(string $file, array $chunks): array
     {
         $fileName = basename($file);

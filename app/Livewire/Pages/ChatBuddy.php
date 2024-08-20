@@ -163,6 +163,18 @@ class ChatBuddy extends Component
 
                 //todo: what chunk size is best?
                 $searchService = new DocumentSearchService($llm, $conversation->id, 1000, 0.6, 3);
+
+                $isIndexingDone = true;
+                foreach ($files as $file) {
+                    if (!$searchService->isEmbdeddingDone($file, $conversation->id)) {
+                        $isIndexingDone = false;
+                    }
+                }
+
+                if (!$isIndexingDone) {
+                    sendStream("Indexing file data, please wait...");
+                }
+
                 $results = $searchService->searchDocuments($files, $userQuery->body);
 
                 if (!$results) {
