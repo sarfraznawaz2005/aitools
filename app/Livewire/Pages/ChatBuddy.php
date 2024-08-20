@@ -5,12 +5,14 @@ namespace App\Livewire\Pages;
 use App\Constants;
 use App\Models\Bot;
 use App\Models\Conversation;
+use App\Models\Message;
 use App\Services\DocumentSearchService;
 use App\Traits\InteractsWithToast;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -44,44 +46,33 @@ class ChatBuddy extends Component
 
         return response()->stream(function () use ($conversation) {
 
+            $latestMessage = $conversation
+                ->messages()
+                ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
+                ->latest()
+                ->first();
+
             try {
 
                 $prompt = $conversation->bot->prompt;
                 $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
 
-                $latestMessage = $conversation
-                    ->messages()
-                    ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
-                    ->latest()
-                    ->first();
+                $markdown = app(MarkdownRenderer::class);
 
-                $latestMessages = $conversation
-                    ->messages()
-                    ->where('body', '!=', Constants::CHATBUDDY_LOADING_STRING)
-                    ->whereNot(function ($query) {
-                        $query
-                            ->where('body', 'like', '%conversation history%')
-                            ->orWhere('body', 'like', '%provided context%');
-                    })
-                    ->latest()
-                    ->limit(Constants::CHATBUDDY_TOTAL_CONVERSATION_HISTORY)
-                    ->get()
-                    ->sortBy('id');
+                if (Constants::TEST_MODE) {
+                    sleep(1);
 
-                $uniqueMessages = [];
-                foreach ($latestMessages as $message) {
+                    $text = Constants::TEST_MESSAGE;
 
-                    if ($message->id === $userQuery->id) {
-                        continue;
-                    }
+                    sendStream($text);
 
-                    $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
+                    $latestMessage->update(['body' => $markdown->toHtml($text)]);
 
-                    if (!in_array($formattedMessage, $uniqueMessages)) {
-                        $uniqueMessages[] = htmlToText($formattedMessage);
-                    }
+                    return;
                 }
 
+                $latestMessages = $this->getLatestMessages($conversation);
+                $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
                 $conversationHistory = implode("\n", $uniqueMessages);
 
                 // switch to general bot temporarily in case of forced mode
@@ -97,20 +88,6 @@ class ChatBuddy extends Component
                 $prompt = makePromopt($userQuery->body, $conversationHistory, $prompt, 2);
 
                 Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
-
-                $markdown = app(MarkdownRenderer::class);
-
-                if (Constants::TEST_MODE) {
-                    sleep(1);
-
-                    $text = Constants::TEST_MESSAGE;
-
-                    sendStream($text);
-
-                    $latestMessage->update(['body' => $markdown->toHtml($text)]);
-
-                    return;
-                }
 
                 $consolidatedResponse = '';
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
@@ -161,15 +138,6 @@ class ChatBuddy extends Component
     {
         return response()->stream(function () use ($conversation) {
 
-            $prompt = $conversation->bot->prompt;
-            $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
-
-            $latestMessage = $conversation
-                ->messages()
-                ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
-                ->latest()
-                ->first();
-
             $files = $conversation->bot->files();
 
             if (!$files) {
@@ -178,9 +146,20 @@ class ChatBuddy extends Component
                 return;
             }
 
+            $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
+
+            $latestMessage = $conversation
+                ->messages()
+                ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
+                ->latest()
+                ->first();
+
             try {
 
+                $markdown = app(MarkdownRenderer::class);
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+
+                // todo: add stand alone llm answer?
 
                 //todo: what chunk size is best?
                 $searchService = new DocumentSearchService($llm, $conversation->id, 1000, 0.6, 3);
@@ -195,13 +174,68 @@ class ChatBuddy extends Component
                     return;
                 }
 
-                $answer = '';
+                $context = '';
                 foreach ($results as $result) {
-                    $answer .= $result['text'] . '<span class="text-xs"><hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong></span><br><br>';
-                    sendStream($answer);
+                    $context .= $result['text'] .
+                        "\nMetadata: Source Document" . json_encode($result['source']) .
+                        "\nPages: Source Document" . json_encode($result['metadata']) .
+                        "\n\n";
                 }
 
-                $latestMessage->update(['body' => $answer]);
+                $latestMessages = $this->getLatestMessages($conversation);
+                $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
+                $conversationHistory = implode("\n", $uniqueMessages);
+
+                $prompt = <<<PROMPT
+                    You are an AI assistant designed to answer questions based on provided context and conversation history.
+                    Your task is to provide helpful and accurate answers to user queries.
+
+                    First, carefully read and analyze the following context:
+
+                    <context>
+                    $context
+                    </context>
+
+                    Now, consider the conversation history:
+
+                    <conversation_history>
+                    $conversationHistory
+                    </conversation_history>
+
+                    Here is the user's current query:
+
+                    <query>
+                    $userQuery->body
+                    </query>
+
+                    Using the provided context and conversation history, formulate a helpful answer to the query.
+                    Follow these guidelines:
+
+                    1. Base your answer primarily on the information given in the context.
+                    2. Use the conversation history to maintain consistency and provide relevant follow-ups if applicable.
+                    3. Ensure your answer is clear, concise, and directly addresses the query.
+                    4. If the answer can be found in the context, provide specific details and explanations.
+                    5. If you need to make any assumptions or inferences, clearly state them as such.
+                    6. If source and metadata information is provided, include references or citations where appropriate.
+
+                    If the information needed to answer the query is not present in the context or conversation history,
+                    or if you are unsure about the answer, respond with "I don't have enough information to answer this
+                    question accurately." Do not attempt to make up or guess an answer.
+
+                    Your Answer:
+                PROMPT;
+
+                Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+
+                $consolidatedResponse = '';
+
+                $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
+                    $consolidatedResponse .= $chunk;
+
+                    sendStream($chunk);
+                });
+
+                $latestMessage->update(['body' => $markdown->toHtml($consolidatedResponse)]);
 
             } catch (Exception $e) {
                 Log::error($e->getFile() . ' - Query: "' . $userQuery->body . '" - Error: ' . $e->getMessage() . ' on line ' . $e->getLine());
@@ -222,57 +256,37 @@ class ChatBuddy extends Component
         ]);
     }
 
-    function splitTextIntoChunks($text, $chunkSize = 1000): array
+    function getLatestMessages(Conversation $conversation): Collection|\Illuminate\Database\Eloquent\Collection
     {
-        $chunks = [];
-        $currentChunk = "";
-        $currentLength = 0;
+        return $conversation
+            ->messages()
+            ->where('body', '!=', Constants::CHATBUDDY_LOADING_STRING)
+            ->whereNot(function ($query) {
+                $query
+                    ->where('body', 'like', '%conversation history%')
+                    ->orWhere('body', 'like', '%provided context%');
+            })
+            ->latest()
+            ->limit(Constants::CHATBUDDY_TOTAL_CONVERSATION_HISTORY)
+            ->get()
+            ->sortBy('id');
+    }
 
-        for ($i = 0; $i < strlen($text); $i++) {
-            $currentChunk .= $text[$i];
-            $currentLength++;
+    function getUniqueMessages($latestMessages, Message $userQuery): array
+    {
+        $uniqueMessages = [];
+        foreach ($latestMessages as $message) {
 
-            if ($currentLength >= $chunkSize) {
-                $chunks[] = trim($currentChunk);
-                $currentChunk = "";
-                $currentLength = 0;
+            if ($message->id === $userQuery->id) {
+                continue;
+            }
+
+            $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
+
+            if (!in_array($formattedMessage, $uniqueMessages)) {
+                $uniqueMessages[] = htmlToText($formattedMessage);
             }
         }
-
-        // Add the last chunk
-        if (!empty($currentChunk)) {
-            $chunks[] = trim($currentChunk);
-        }
-
-        return $chunks;
-    }
-
-    protected function cosineSimilarity($u, $v): float|int
-    {
-        $dotProduct = 0;
-        $uLength = 0;
-        $vLength = 0;
-
-        for ($i = 0; $i < count($u); $i++) {
-            $dotProduct += $u[$i] * $v[$i];
-            $uLength += $u[$i] * $u[$i];
-            $vLength += $v[$i] * $v[$i];
-        }
-
-        $uLength = sqrt($uLength);
-        $vLength = sqrt($vLength);
-
-        return $dotProduct / ($uLength * $vLength);
-    }
-
-    function getCleanedText(string $text): string|array|null
-    {
-        $cleanedText = strip_tags($text);
-        $cleanedText = preg_replace('/\s+/', ' ', $cleanedText);
-        $cleanedText = preg_replace('/\r\n|\r/', "\n", $cleanedText);
-        $cleanedText = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $cleanedText);
-        $cleanedText = str_replace(["\r\n", "\r", "\n"], ' ', $cleanedText);
-
-        return trim($cleanedText);
+        return $uniqueMessages;
     }
 }

@@ -213,7 +213,7 @@ class DocumentSearchService
             case 'html':
             case 'htm':
                 $content = file_get_contents($file);
-                $lines = explode("\n", $content);
+                $lines = explode("\n", htmlToText($content));
                 $text = [];
                 foreach ($lines as $lineNumber => $line) {
                     $text[] = [
