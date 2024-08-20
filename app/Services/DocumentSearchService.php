@@ -15,7 +15,7 @@ class DocumentSearchService
     protected Parser $parser;
     protected int $maxResults;
 
-    public function __construct($llmProvider, string $key, int $chunkSize = 1000, float $similarityThreshold = 0.6, int $maxResults = 3)
+    public function __construct(LlmProvider $llmProvider, string $key, int $chunkSize = 1000, float $similarityThreshold = 0.6, int $maxResults = 3)
     {
         $this->llm = $llmProvider;
         $this->key = $key;
@@ -30,6 +30,20 @@ class DocumentSearchService
      */
     public function searchDocuments(array $files, string $query): array
     {
+        $results = $this->performCosineSimilaritySearch($files, $query);
+
+        if (empty($results)) {
+            $results = $this->performTextSearch($files, $query);
+        }
+
+        return $this->getTopResults($query, $results);
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function performCosineSimilaritySearch(array $files, string $query): array
+    {
         $results = [];
 
         $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query)], 'embedding-001');
@@ -39,11 +53,38 @@ class DocumentSearchService
             $results = array_merge($results, $this->compareEmbeddings($textEmbedding, $queryEmbeddings));
         }
 
-        usort($results, function ($a, $b) {
-            return $a['similarity'] <=> $b['similarity'];
-        });
+        usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
-        return $this->getTopResults($query, $results);
+        return $results;
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function performTextSearch(array $files, string $query): array
+    {
+        $results = [];
+        $cleanedQuery = $this->getCleanedText($query);
+
+        foreach ($files as $file) {
+            $text = $this->extractTextFromFile($file);
+            $textSplits = $this->splitTextIntoChunks($this->getCleanedText($text));
+
+            foreach ($textSplits as $index => $chunk) {
+                if (stripos($chunk, $cleanedQuery) !== false) {
+                    $results[] = [
+                        'similarity' => 1 - (levenshtein($cleanedQuery, $chunk) / max(strlen($cleanedQuery), strlen($chunk))),
+                        'index' => $index,
+                        'text' => $chunk,
+                        'source' => basename($file),
+                    ];
+                }
+            }
+        }
+
+        usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
+
+        return $results;
     }
 
     /**
@@ -73,13 +114,13 @@ class DocumentSearchService
      */
     protected function extractTextFromFile(string $file): string
     {
-        if (str_contains($file, '.pdf')) {
-            $pdf = $this->parser->parseFile($file);
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
 
-            return $pdf->getText();
-        }
-
-        return file_get_contents($file);
+        return match (strtolower($extension)) {
+            'pdf' => $this->parser->parseFile($file)->getText(),
+            'txt', 'html', 'htm' => file_get_contents($file),
+            default => throw new Exception("Unsupported file type: $extension"),
+        };
     }
 
     protected function getEmbeddingsOrLoadFromCache(string $file, array $textSplits): array
@@ -103,21 +144,20 @@ class DocumentSearchService
     protected function compareEmbeddings(array $textEmbedding, array $queryEmbeddings): array
     {
         $results = [];
-
         $textSplits = $textEmbedding['textSplits'];
 
         if (count($textSplits) !== count($textEmbedding['embeddings']['embeddings'])) {
             throw new Exception("Splits and embeddings count mismatch!");
         }
 
-        for ($i = 0; $i < count($textSplits); $i++) {
-            $similarity = $this->cosineSimilarity($textEmbedding['embeddings']['embeddings'][$i]['values'], $queryEmbeddings['embeddings'][0]['values']);
+        foreach ($textEmbedding['embeddings']['embeddings'] as $index => $embedding) {
+            $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
 
             if ($similarity >= $this->similarityThreshold) {
                 $results[] = [
                     'similarity' => $similarity,
-                    'index' => $i,
-                    'text' => $textSplits[$i],
+                    'index' => $index,
+                    'text' => $textSplits[$index],
                     'source' => $textEmbedding['source'],
                 ];
             }
@@ -130,59 +170,24 @@ class DocumentSearchService
     {
         $topResults = array_slice($results, 0, $this->maxResults);
 
-        $bestResult = null;
-        $bestDistance = PHP_INT_MAX;
-
-        foreach ($topResults as $result) {
+        $bestResult = array_reduce($topResults, function ($carry, $result) use ($query) {
             $distance = levenshtein($this->getCleanedText($query), $result['text']);
+            return (!$carry || $distance < $carry['distance']) ? ['distance' => $distance, 'result' => $result] : $carry;
+        });
 
-            if ($distance < $bestDistance) {
-                $bestDistance = $distance;
-                $bestResult = $result;
-            }
-        }
-
-        return $bestResult ?? ($topResults[0] ?? []);
+        return $bestResult ? [$bestResult['result']] : ($topResults[0] ? [$topResults[0]] : []);
     }
 
     protected function splitTextIntoChunks(string $text): array
     {
-        $chunks = [];
-        $currentChunk = "";
-        $currentLength = 0;
-
-        for ($i = 0; $i < strlen($text); $i++) {
-            $currentChunk .= $text[$i];
-            $currentLength++;
-
-            if ($currentLength >= $this->chunkSize) {
-                $chunks[] = trim($currentChunk);
-                $currentChunk = "";
-                $currentLength = 0;
-            }
-        }
-
-        if (!empty($currentChunk)) {
-            $chunks[] = trim($currentChunk);
-        }
-
-        return $chunks;
+        return array_map('trim', str_split($text, $this->chunkSize));
     }
 
     protected function cosineSimilarity(array $u, array $v): float
     {
-        $dotProduct = 0;
-        $uLength = 0;
-        $vLength = 0;
-
-        for ($i = 0; $i < count($u); $i++) {
-            $dotProduct += $u[$i] * $v[$i];
-            $uLength += $u[$i] * $u[$i];
-            $vLength += $v[$i] * $v[$i];
-        }
-
-        $uLength = sqrt($uLength);
-        $vLength = sqrt($vLength);
+        $dotProduct = array_sum(array_map(fn($x, $y) => $x * $y, $u, $v));
+        $uLength = sqrt(array_sum(array_map(fn($x) => $x * $x, $u)));
+        $vLength = sqrt(array_sum(array_map(fn($x) => $x * $x, $v)));
 
         return $dotProduct / ($uLength * $vLength);
     }

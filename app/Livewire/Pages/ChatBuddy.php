@@ -183,9 +183,9 @@ class ChatBuddy extends Component
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
                 $searchService = new DocumentSearchService($llm, $conversation->id, 1000, 0.6, 3);
-                $result = $searchService->searchDocuments($files, $userQuery->body);
+                $results = $searchService->searchDocuments($files, $userQuery->body);
 
-                if (!$result) {
+                if (!$results) {
                     $message = "Sorry, no results found for given query!";
                     sendStream($message);
 
@@ -194,9 +194,11 @@ class ChatBuddy extends Component
                     return;
                 }
 
-                $answer = $result['text'] . '<hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong>';
-
-                sendStream($answer);
+                $answer = '';
+                foreach ($results as $result) {
+                    $answer .= $result['text'];
+                    sendStream($result['text'] . '<hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong>');
+                }
 
                 $latestMessage->update(['body' => $answer]);
 
