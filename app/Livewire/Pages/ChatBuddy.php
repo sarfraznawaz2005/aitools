@@ -182,6 +182,7 @@ class ChatBuddy extends Component
 
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
+                //todo: what chunk size is best?
                 $searchService = new DocumentSearchService($llm, $conversation->id, 1000, 0.6, 3);
                 $results = $searchService->searchDocuments($files, $userQuery->body);
 
@@ -196,7 +197,7 @@ class ChatBuddy extends Component
 
                 $answer = '';
                 foreach ($results as $result) {
-                    $answer .= $result['text'] . '<hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong>';
+                    $answer .= $result['text'] . '<span class="text-xs"><hr style="margin:10px 0;">Source: <strong>' . $result['source'] . '</strong></span>';
                     sendStream($answer);
                 }
 

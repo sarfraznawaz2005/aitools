@@ -2,9 +2,10 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * new lines not shwoing pdf
+ * openai/ollama chat pdf
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
- * chat with pdf
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator

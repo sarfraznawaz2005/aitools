@@ -146,6 +146,10 @@ class DocumentSearchService
         $results = [];
         $textSplits = $textEmbedding['textSplits'];
 
+//        dump($textSplits);
+//        dump($textEmbedding['embeddings']['embeddings']);
+//        exit;
+
         if (count($textSplits) !== count($textEmbedding['embeddings']['embeddings'])) {
             throw new Exception("Splits and embeddings count mismatch!");
         }
