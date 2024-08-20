@@ -8,20 +8,16 @@ use Smalot\PdfParser\Parser;
 
 class DocumentSearchService
 {
-    protected LlmProvider $llm;
-    protected float $similarityThreshold = 0.6;
-    protected int $chunkSize = 1000;
-    protected string $key = '';
     protected Parser $parser;
-    protected int $maxResults;
 
-    public function __construct(LlmProvider $llmProvider, string $fileIdentifier, int $chunkSize = 1000, float $similarityThreshold = 0.6, int $maxResults = 3)
+    public function __construct(
+        protected LlmProvider $llm,
+        protected string      $fileIdentifier,
+        protected int         $chunkSize = 1000,
+        protected float       $similarityThreshold = 0.6,
+        protected int         $maxResults = 3,
+    )
     {
-        $this->llm = $llmProvider;
-        $this->key = $fileIdentifier;
-        $this->chunkSize = $chunkSize;
-        $this->similarityThreshold = $similarityThreshold;
-        $this->maxResults = $maxResults;
         $this->parser = new Parser();
     }
 
@@ -125,7 +121,7 @@ class DocumentSearchService
     protected function getChunkAtIndex(string $source, int $index): array
     {
         $fileName = $source;
-        $path = storage_path("app/$fileName-" . $this->key . '.json');
+        $path = storage_path("app/$fileName-" . $this->fileIdentifier . '.json');
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
@@ -142,7 +138,7 @@ class DocumentSearchService
     protected function getEmbeddingsOrLoadFromCache(string $file, array $chunks): array
     {
         $fileName = basename($file);
-        $path = storage_path("app/$fileName-" . $this->key . '.json');
+        $path = storage_path("app/$fileName-" . $this->fileIdentifier . '.json');
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
