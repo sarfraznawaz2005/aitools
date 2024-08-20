@@ -269,7 +269,7 @@ class DocumentSearchService
     protected function splitTextIntoChunks(array $textWithMetadata): array
     {
         $chunks = [];
-        $overlap = $this->chunkSize * 0.2; // 20% overlap
+        $overlap = $this->chunkSize * 0.3; // 30% overlap
 
         $fullText = implode("\n", array_column($textWithMetadata, 'content'));
         $totalLength = strlen($fullText);
