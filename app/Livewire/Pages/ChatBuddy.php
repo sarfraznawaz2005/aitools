@@ -214,7 +214,7 @@ class ChatBuddy extends Component
                     3. Ensure your answer is clear, concise, and directly addresses the query.
                     4. If the answer can be found in the context, provide specific details and explanations.
                     5. If you need to make any assumptions or inferences, clearly state them as such.
-                    6. If source and metadata information is provided, include references or citations where appropriate.
+                    6. Please always try to provide Metadata information along with the answer.
 
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "I don't have enough information to answer this
