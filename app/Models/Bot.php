@@ -26,11 +26,6 @@ class Bot extends Model
 
     public function files(): array
     {
-        return array_map(fn($file) => basename($file), glob(base_path('storage/app/files/') . strtolower(Str::slug($this->name)) . '/*'));
-    }
-
-    public function filesWithFullPath(): array
-    {
         return glob(base_path('storage/app/files/') . strtolower(Str::slug($this->name)) . '/*');
     }
 

@@ -422,8 +422,8 @@
                                         </legend>
                                         @foreach($botFiles as $file)
                                             <div class="flex items center justify-between mb-2" style="font-size: .8rem;">
-                                                <div>{{$file}}</div>
-                                                <div class="cursor-pointer" wire:click="deleteFile('{{$file}}')">
+                                                <div>{{basename($file)}}</div>
+                                                <div class="cursor-pointer" wire:click="deleteFile('{{basename($file)}}')">
                                                     <x-icons.delete class="text-red-500"/>
                                                 </div>
                                             </div>

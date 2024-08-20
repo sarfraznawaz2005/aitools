@@ -171,7 +171,7 @@ class ChatBuddy extends Component
                 ->latest()
                 ->first();
 
-            $files = $conversation->bot->filesWithFullPath();
+            $files = $conversation->bot->files();
 
             if (!$files) {
                 sendStream("No files found!");

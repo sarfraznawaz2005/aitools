@@ -54,7 +54,7 @@
                         </legend>
                         @foreach($botFiles as $file)
                             <div class="text-center mb-2" style="font-size: .8rem;">
-                                <div>{{$file}}</div>
+                                <div>{{basename($file)}}</div>
                             </div>
                         @endforeach
                     </fieldset>
