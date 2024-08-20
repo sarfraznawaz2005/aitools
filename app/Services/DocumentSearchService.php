@@ -55,7 +55,7 @@ class DocumentSearchService
 
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
-        return $results;
+        return $this->deduplicateAndAddContext($results);
     }
 
     /**
@@ -84,7 +84,72 @@ class DocumentSearchService
 
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
-        return $results;
+        return $this->deduplicateAndAddContext($results);
+    }
+
+    protected function deduplicateAndAddContext(array $results): array
+    {
+        $deduplicatedResults = [];
+        $seenContent = [];
+
+        foreach ($results as $result) {
+            $hash = md5($result['text']);
+
+            if (!isset($seenContent[$hash])) {
+                $seenContent[$hash] = true;
+
+                // Add context by including surrounding chunks
+                $contextBefore = $this->getChunkAtIndex($result['source'], $result['index'] - 1);
+                $contextAfter = $this->getChunkAtIndex($result['source'], $result['index'] + 1);
+
+                $result['text'] = trim($contextBefore . "\n" . $result['text'] . "\n" . $contextAfter);
+
+                $deduplicatedResults[] = $result;
+
+                if (count($deduplicatedResults) >= $this->maxResults) {
+                    break;
+                }
+            }
+        }
+
+        return $deduplicatedResults;
+    }
+
+    protected function getChunkAtIndex(string $source, int $index): string
+    {
+        $fileName = $source;
+        $path = storage_path("app/$fileName-" . $this->key . '.json');
+
+        if (file_exists($path)) {
+            $data = json_decode(file_get_contents($path), true);
+            $textSplits = $data['text_splits'] ?? [];
+
+            if (isset($textSplits[$index])) {
+                return $textSplits[$index];
+            }
+        }
+
+        return '';
+    }
+
+    protected function getEmbeddingsOrLoadFromCache(string $file, array $textSplits): array
+    {
+        $fileName = basename($file);
+        $path = storage_path("app/$fileName-" . $this->key . '.json');
+
+        if (file_exists($path)) {
+            $data = json_decode(file_get_contents($path), true);
+            return $data['embeddings'];
+        }
+
+        $embeddings = $this->llm->embed($textSplits, 'embedding-001');
+        $data = [
+            'embeddings' => $embeddings,
+            'text_splits' => $textSplits
+        ];
+        file_put_contents($path, json_encode($data));
+
+        return $embeddings;
     }
 
     /**
@@ -121,21 +186,6 @@ class DocumentSearchService
             'txt', 'html', 'htm' => file_get_contents($file),
             default => throw new Exception("Unsupported file type: $extension"),
         };
-    }
-
-    protected function getEmbeddingsOrLoadFromCache(string $file, array $textSplits): array
-    {
-        $fileName = basename($file);
-        $path = storage_path("app/$fileName-" . $this->key . '.json');
-
-        if (file_exists($path)) {
-            return json_decode(file_get_contents($path), true);
-        }
-
-        $embeddings = $this->llm->embed($textSplits, 'embedding-001');
-        file_put_contents($path, json_encode($embeddings));
-
-        return $embeddings;
     }
 
     /**
