@@ -2,7 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * related_questions - which system bot should not have it, add to seeder
  * openai/ollama chat pdf
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
