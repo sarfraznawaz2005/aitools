@@ -376,7 +376,12 @@ class DocumentSearchService
             'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why',
             'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other',
             'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than',
-            'too', 'very', 'can', 'will', 'just', 'don', 'should', 'now', 'what', 'is'
+            'too', 'very', 'can', 'will', 'just', 'don', 'should', 'now', 'what',
+            'is', 'am', 'are', 'was', 'were', 'be', 'been', 'being', 'has', 'have',
+            'had', 'do', 'does', 'did', 'having', 'he', 'she', 'it', 'they', 'them',
+            'his', 'her', 'its', 'their', 'my', 'your', 'our', 'we', 'you', 'who',
+            'whom', 'which', 'this', 'that', 'these', 'those', 'I', 'me', 'mine',
+            'yours', 'ours', 'himself', 'herself', 'itself', 'themselves'
         ];
 
         $words = explode(' ', $text);
