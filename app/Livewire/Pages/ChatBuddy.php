@@ -163,7 +163,7 @@ class ChatBuddy extends Component
 
                 // todo: add stand alone llm answer?
                 // todo: what chunk size is best?
-                $searchService = new DocumentSearchService($llm, $conversation->id, 1000, $batchSize, 0.6, 3);
+                $searchService = new DocumentSearchService($llm, $conversation->id, 5000, $batchSize, 0.6, 3);
 
                 $isIndexingDone = true;
                 foreach ($files as $file) {
@@ -177,15 +177,6 @@ class ChatBuddy extends Component
                 }
 
                 $results = $searchService->searchDocuments($files, $userQuery->body);
-
-                if (!$results) {
-                    $message = "Sorry, I don’t have enough information to answer this question accurately.";
-                    sendStream($message);
-
-                    $latestMessage->update(['body' => $message]);
-
-                    return;
-                }
 
                 $context = '';
                 foreach ($results as $result) {
@@ -225,12 +216,13 @@ class ChatBuddy extends Component
                     Follow these guidelines:
 
                     1. Base your answer primarily on the information given in the context.
-                    2. Use the conversation history to maintain consistency and provide relevant follow-ups if applicable.
-                    3. Ensure your answer is clear, detailed, and directly addresses the query.
-                    4. If the answer can be found in the context, provide specific details and explanations.
-                    5. If you need to make any assumptions or inferences, clearly state them as such.
-                    6. The most relevant information in context will be given on top of it, but you can consider the whole context.
-                    7. For conversation history, consider messages present at bottom as most recent and top as oldest.
+                    2. If the information needed to answer the query is not present in the context, look for relevant details in the conversation history.
+                    3. Always use the conversation history to maintain consistency and provide relevant follow-ups if applicable.
+                    4. Ensure your answer is clear, detailed, and directly addresses the query.
+                    5. If the answer can be found in the context, provide specific details and explanations.
+                    6. If you need to make any assumptions or inferences, clearly state them as such.
+                    7. The most relevant information in context will be given on top of it, but you can consider the whole context.
+                    8. For conversation history, consider messages present at bottom as most recent and top as oldest.
                     Prioritize recent messages.
 
                     Please always try to provide Metadata information along with the answer in format:
@@ -242,7 +234,8 @@ class ChatBuddy extends Component
 
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
-                    this question accurately." Do not attempt to make up or guess an answer.
+                    this question accurately." and then give few suggested queries for user to be specific based
+                    on current query, context and converation history. DO NOT ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
 
                     Your Answer:
                 PROMPT;
