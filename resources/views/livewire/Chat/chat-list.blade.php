@@ -393,7 +393,6 @@
 
     <script>
         function setupSuggestedLinks() {
-            // Function to attach event listeners to the links
             function attachLinkEventListeners() {
                 document.querySelectorAll('.ai-suggested-answer').forEach(link => {
                     link.removeEventListener('click', handleLinkClick); // Remove existing listener to avoid duplicates
@@ -401,7 +400,6 @@
                 });
             }
 
-            // Event handler function
             function handleLinkClick(e) {
                 e.preventDefault();
                 Livewire.dispatch('suggestedAnswerClicked', [e.target.textContent]);
@@ -421,14 +419,8 @@
 
             // Start observing the document body for changes
             observer.observe(document.body, { childList: true, subtree: true });
-
-            // Reattach event listeners after Livewire navigation
-            document.addEventListener('livewire:navigated', () => {
-                attachLinkEventListeners();
-            });
         }
 
-        // Call the function to set up the links and observer
         setupSuggestedLinks();
     </script>
 

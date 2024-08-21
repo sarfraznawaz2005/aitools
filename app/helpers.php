@@ -3,6 +3,7 @@
  * TODO
  * global disabler until api key is saved
  * one pdf for best results info tip
+ * checkbox for related questions and also decide which system bot should not have it
  * mimes:txt,pdf|max:10240 overall or per file?
  * openai/ollama chat pdf
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
