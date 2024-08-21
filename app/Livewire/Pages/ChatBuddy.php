@@ -239,7 +239,7 @@ class ChatBuddy extends Component
                     this question accurately." NEVER ATTEMPT TO MAKE UP OR GUESS AN ANSWER. Finally, follow below steps:
 
                     1. Read the context and conversation history provided carefully.
-                    2. Build few questions only of the context and conversation history only and nothing else.
+                    2. Build few questions only & strictly out of the context and the conversation history only and nothing else.
                     3. Suggest the user those question in below format:
 
                     *Suggested Questions Ideas:*
@@ -258,10 +258,7 @@ class ChatBuddy extends Component
                         - Don't build question from your own knowledge base.
                         - Don't build question from the user's current query.
                         - Don't build question from the user's previous queries.
-                        - Don't build question that might already be in conversation history.
-
-                    Remember, never ever build a suggested question you cannot answer from the context and conversation
-                    history provided. Also, never build a question from the user's current query or previous queries.
+                        - Don't build question that are present in conversation history.
 
                     Your Answer:
                 PROMPT;
