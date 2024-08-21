@@ -253,13 +253,15 @@ class ChatBuddy extends Component
                     </ul>
 
                     4. Strictly follow below guidelines for suggested questions:
-                        - Only build questions from the context and conversation history provided that you can ACTUALLY answer.
-                        - Do not build questions from your own knowledge base.
-                        - Do not build questions from the user's current question.
-                        - Do not build questions from the user's previous questions.
-                        - Do not build questions you have already answered in the conversation history.
-                        - Do not build questions you have already suggested in the conversation history.
-                        - Do not build questions you cannot answer from the context and conversation history provided.
+                        - Only build question from the context and conversation history provided.
+                        - Don't build question unless you can answer them from the context and conversation history.
+                        - Don't build question from your own knowledge base.
+                        - Don't build question from the user's current query.
+                        - Don't build question from the user's previous queries.
+                        - Don't build question that might already be in conversation history.
+
+                    Remember, never ever build a suggested question you cannot answer from the context and conversation
+                    history provided. Also, never build a question from the user's current query or previous queries.
 
                     Your Answer:
                 PROMPT;
