@@ -40,6 +40,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🤖',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -64,6 +65,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '👨‍⚕️',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -86,6 +88,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '✨',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -102,6 +105,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '💡',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -115,6 +119,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🦸‍',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -128,6 +133,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🕌',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -141,6 +147,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🫂',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -183,6 +190,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '✍️',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -245,6 +253,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '💰',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -259,6 +268,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '💵',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -316,6 +326,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '👨‍💻',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -386,6 +397,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🔢',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -493,6 +505,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '😎',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -534,6 +547,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🗄️',
+            'related_questions' => true,
             'system' => true,
         ]);
 
@@ -574,6 +588,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '💻',
+            'related_questions' => true,
             'system' => true,
         ]);
     }
