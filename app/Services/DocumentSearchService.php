@@ -100,6 +100,9 @@ class DocumentSearchService
                     ];
                 }
             }
+
+            // Free memory after processing each file
+            unset($textWithMetadata, $chunks);
         }
 
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
@@ -109,11 +112,7 @@ class DocumentSearchService
 
     protected function calculateExactMatchScore(string $query, string $text): float
     {
-        if (stripos($text, $query) !== false) {
-            return $this->similarityThreshold;
-        }
-
-        return 0.0;
+        return stripos($text, $query) !== false ? $this->similarityThreshold : 0.0;
     }
 
     protected function calculateFuzzyMatchScore(string $query, string $text): float
@@ -121,11 +120,7 @@ class DocumentSearchService
         $distance = levenshtein($query, $text);
         $maxLength = max(strlen($query), strlen($text));
 
-        if ($maxLength === 0) {
-            return $this->similarityThreshold;
-        }
-
-        return 1 - ($distance / $maxLength);
+        return $maxLength === 0 ? $this->similarityThreshold : 1 - ($distance / $maxLength);
     }
 
     public function isEmbdeddingDone(string $file, string $fileIdentifier): bool
@@ -202,6 +197,9 @@ class DocumentSearchService
 
             $this->textSplits[$file] = $chunkedTextSplits;
             $this->embeddings[$file] = $chunkedEmbeddings;
+
+            // Free memory after processing each file
+            unset($textWithMetadata, $chunks, $chunkedTextArray, $chunkedEmbeddings, $chunkedTextSplits);
         }
     }
 
@@ -294,11 +292,6 @@ class DocumentSearchService
 
     protected function getTopResults(array $results): array
     {
-        if (count($results) <= $this->maxResults) {
-            return $results;
-        }
-
-        // return the top $maxResults
         return array_slice($results, 0, $this->maxResults);
     }
 
@@ -355,37 +348,28 @@ class DocumentSearchService
 
     protected function cosineSimilarity(array $u, array $v): float
     {
-        $dotProduct = array_sum(array_map(fn($x, $y) => $x * $y, $u, $v));
-        $uLength = sqrt(array_sum(array_map(fn($x) => $x * $x, $u)));
-        $vLength = sqrt(array_sum(array_map(fn($x) => $x * $x, $v)));
+        $dotProduct = 0.0;
+        $uLength = 0.0;
+        $vLength = 0.0;
 
-        return $dotProduct / ($uLength * $vLength);
+        foreach ($u as $i => $value) {
+            $dotProduct += $value * $v[$i];
+            $uLength += $value * $value;
+            $vLength += $v[$i] * $v[$i];
+        }
+
+        return $dotProduct / (sqrt($uLength) * sqrt($vLength));
     }
 
     protected function getCleanedText(string $text, bool $removeStopWords = false): string
     {
-        // Replace <br> tags with newlines
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
-
-        // Replace </p> tags with double newlines
         $text = preg_replace('/<\/p>/i', "\n\n", $text);
-
-        // Remove all remaining HTML tags
         $text = strip_tags($text);
-
-        // Decode HTML entities
         $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-        // Normalize line breaks
         $text = preg_replace('/\r\n|\r/', "\n", $text);
-
-        // Replace any combination of more than two newlines and whitespace with two newlines
         $text = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $text);
-
-        // Remove extra whitespace
         $text = preg_replace('/\s+/', ' ', $text);
-
-        // remove punctuation symbols
         $text = preg_replace('/[^\w\s\-_.&*$@]/', '', $text);
 
         if ($removeStopWords) {
