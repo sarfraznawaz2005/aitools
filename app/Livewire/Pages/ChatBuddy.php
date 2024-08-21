@@ -243,9 +243,9 @@ class ChatBuddy extends Component
                     3. Suggest the user those question in below format:
 
                     *Suggested Questions Ideas:*
-                    1. <question1>
-                    2. <question2>
-                    3. <question3>
+                    1. *<question1>*
+                    2. *<question2>*
+                    3. *<question3>*
 
                     Important: Your suggestions must be different from your current anwer and any similar questions user
                     has asked in the conversation history already.
