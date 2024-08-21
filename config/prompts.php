@@ -85,7 +85,7 @@ EOF,
 
     Follow below format for suggested questions:
 
-    *Suggested Questions Ideas:*
+    *Related Questions:*
 
     Please provide hyperlinks for the following suggested questions:
 
@@ -103,7 +103,7 @@ EOF,
     2. Build few questions only & strictly out of the context and the conversation history only and nothing else.
     3. Suggest the user those question in below format:
 
-    *Suggested Questions Ideas:*
+    *Related Questions:*
 
     Please provide hyperlinks for the following suggested questions:
 
