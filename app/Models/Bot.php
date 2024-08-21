@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants;
 use App\Enums\BotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,11 @@ class Bot extends Model
 
     public function showRelatedQuestions(): bool
     {
-        return (bool)$this->related_questions;
+        if (Constants::RELATED_QUESTIONS_ENABLED) {
+            return (bool)$this->related_questions;
+        }
+
+        return false;
     }
 
     public function files(): array

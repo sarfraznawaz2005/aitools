@@ -55,7 +55,6 @@ class ChatBuddy extends Component
 
             try {
 
-                $prompt = $conversation->bot->prompt;
                 $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
 
                 $markdown = app(MarkdownRenderer::class);
@@ -86,7 +85,7 @@ class ChatBuddy extends Component
                 // add user's current question
                 $conversationHistory .= "\nUSER:" . $userQuery->body;
 
-                $prompt = makePromopt($userQuery->body, $conversationHistory, $prompt, 2);
+                $prompt = makePromopt($conversation->bot, $userQuery->body, $conversationHistory, 2);
 
                 Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
 

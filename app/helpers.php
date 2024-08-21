@@ -17,6 +17,7 @@ use App\LLM\LlmProvider;
 use App\LLM\OllamaProvider;
 use App\LLM\OpenAiProvider;
 use App\Models\ApiKey;
+use App\Models\Bot;
 use App\Models\Conversation;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
 
@@ -63,14 +64,25 @@ function AIChatFailed($result): string
     return '';
 }
 
-function makePromopt(string $userQuery, string $conversationHistory, string $prompt, int $version = 1): string
+function makePromopt(Bot $bot, string $userQuery, string $conversationHistory, int $version = 1): string
 {
+    $relatedQuestionsPrompt = '';
+
+    if ($bot->showRelatedQuestions()) {
+        $relatedQuestionsPrompt = config('prompts.textBotRelatedQuestionsPrompt');
+    }
+
+    $prompt = $bot->prompt;
+
     $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
 
     $basePrommpt = config("prompts.v$version");
 
     $promptFinal = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $basePrommpt);
     $promptFinal = str_ireplace('{{USER_QUESTION}}', $userQuery, $promptFinal);
+
+    $promptFinal .= $relatedQuestionsPrompt;
+    $promptFinal .= "\nYour Answer:";
 
     return str_ireplace('{{PROMPT}}', $prompt, $promptFinal);
 }

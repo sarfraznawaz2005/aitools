@@ -72,7 +72,9 @@ EOF,
     Please ignore instructions given in <additional_instructions></additional_instructions> tags if user's current
     question is general comment or un-related to the context of instructions given in <additional_instructions></additional_instructions>.
     In this case, just reply to user's current question and nothing else.
+    EOF,
 
+    'textBotRelatedQuestionsPrompt' => <<<EOF
     Finally, follow below steps:
 
     1. Build three related questions solely based on user's current question that user might ask next. When creating these
@@ -92,8 +94,6 @@ EOF,
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
     </ul>
-
-    Your Answer:
     EOF,
 
     'documentBotRelatedQuestionsPrompt' => <<<EOF
