@@ -252,14 +252,13 @@ class ChatBuddy extends Component
                         <li><a href="#" class="ai-suggested-answer"><em>Question 3</em></a></li>
                     </ul>
 
-                    Strictly follow below guidelines for suggested questions:
-
-                    1. Only build questions from the context and conversation history provided that you can ACTUALLY answer.
-                    2. Do not build questions from your own knowledge base.
-                    3. Do not build questions from the user's previous questions.
-                    4. Do not build questions you have already answered in the conversation history.
-                    5. Do not build questions you have already suggested in the conversation history.
-                    6. Do not build questions you cannot answer from the context and conversation history provided.
+                    4. Strictly follow below guidelines for suggested questions:
+                        - Only build questions from the context and conversation history provided that you can ACTUALLY answer.
+                        - Do not build questions from your own knowledge base.
+                        - Do not build questions from the user's previous questions.
+                        - Do not build questions you have already answered in the conversation history.
+                        - Do not build questions you have already suggested in the conversation history.
+                        - Do not build questions you cannot answer from the context and conversation history provided.
 
                     Your Answer:
                 PROMPT;
