@@ -382,6 +382,8 @@
                                         <span class="text-xs">(PDFs, TXTs, etc)</span>
                                     </legend>
 
+                                    <p class="text-xs">For best results, it's recommmnded to have one file per bot.</p>
+
                                     <div class="relative w-full">
                                         <div
                                             x-data="{ uploading: false, progress: 0 }"
