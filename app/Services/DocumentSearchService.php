@@ -79,8 +79,7 @@ class DocumentSearchService
                     $results[] = [
                         'similarity' => $maxScore,
                         'index' => $index,
-                        'text' => $chunk['text'],
-                        'metadata' => $chunk['metadata'],
+                        'matchedChunk' => $chunk,
                     ];
                 }
             }
