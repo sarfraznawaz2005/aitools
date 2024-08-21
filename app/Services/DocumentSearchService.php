@@ -46,7 +46,7 @@ class DocumentSearchService
     {
         $results = [];
 
-        $queryEmbeddings = $this->llm->embed([$query], 'embedding-001');
+        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query)], 'embedding-001');
 
         $this->setTextEmbeddingsFromFiles($files);
 
@@ -63,7 +63,7 @@ class DocumentSearchService
     protected function performTextSearch(array $files, string $query): array
     {
         $results = [];
-        $cleanedQuery = $query;
+        $cleanedQuery = $this->getCleanedText($query);
 
         foreach ($files as $file) {
             $textWithMetadata = $this->extractTextFromFile($file);
@@ -333,7 +333,7 @@ class DocumentSearchService
         return $dotProduct / ($uLength * $vLength);
     }
 
-    protected function getCleanedText(string $text): string
+    protected function getCleanedText(string $text, bool $removeStopWords = true): string
     {
         // Replace <br> tags with newlines
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
@@ -359,6 +359,29 @@ class DocumentSearchService
         // remove punctuation symbols
         $text = preg_replace('/[^\w\s\-_.&*$@]/', '', $text);
 
+        if ($removeStopWords) {
+            $text = $this->removeStopwords($text);
+        }
+
         return trim($text);
+    }
+
+    protected function removeStopwords(string $text): string
+    {
+        $stopwords = [
+            'the', 'a', 'an', 'and', 'but', 'if', 'or', 'because', 'as', 'until',
+            'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between',
+            'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to',
+            'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again',
+            'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why',
+            'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other',
+            'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than',
+            'too', 'very', 'can', 'will', 'just', 'don', 'should', 'now', 'what', 'is'
+        ];
+
+        $words = explode(' ', $text);
+        $filteredWords = array_diff($words, $stopwords);
+
+        return implode(' ', $filteredWords);
     }
 }
