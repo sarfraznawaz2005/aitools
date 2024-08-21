@@ -110,8 +110,14 @@ EOF,
     Finally, follow below steps:
 
     1. Read the context and conversation history provided carefully.
-    2. Build few related questions only & strictly out of the context and the conversation history only and nothing else.
-    3. Suggest the user those question in below format:
+    2. Build few related questions only & strictly out of the context and the conversation history and nothing else.
+    3. Think through the questions you built and see if you can answer them from the context and conversation history
+    and only then follow below steps:
+
+    a. If you can't answer them, then ignore any further instructions and stop here.
+    b. If you can answer them, then follow below instructions further:
+
+    Suggest the user related questions (not more than 3) in below format:
 
     *Related Questions:*
 
@@ -123,7 +129,7 @@ EOF,
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
     </ul>
 
-    4. Strictly follow below guidelines for suggested questions:
+    4. Strictly follow below guidelines for related questions:
         - Build question solely from the context and conversation history provided.
         - Don't build question unless you can answer them from the context and conversation history.
         - Don't build question from your own knowledge base.
