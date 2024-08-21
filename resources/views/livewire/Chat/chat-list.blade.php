@@ -60,7 +60,6 @@
                     </fieldset>
                 @endif
 
-
                 @if (count($messages) > 1 && isset($conversation) && $conversation)
                     <li class="flex justify-center ignore-mutation">
                         <div class="flex justify-end w-full fixed top-16 right-10 gap-x-2">

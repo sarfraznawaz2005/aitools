@@ -17,11 +17,22 @@ class Sidebar extends Component
     public ?Conversation $conversation = null;
     public Collection $conversations;
 
+    public string $search = '';
+
     protected $listeners = ['conversationsUpdated' => '$refresh'];
+
+    public function updated(): void
+    {
+
+
+    }
 
     public function render(): View|Application|Factory
     {
         $this->conversations = Conversation::query()
+            ->when($this->search, function ($query) {
+                $query->where('title', 'like', '%' . $this->search . '%');
+            })
             ->orderByDesc('updated_at')
             ->orderByDesc('id')
             ->get();
