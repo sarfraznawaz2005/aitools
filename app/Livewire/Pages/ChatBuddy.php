@@ -247,6 +247,9 @@ class ChatBuddy extends Component
                     2. <question2>
                     3. <question3>
 
+                    Important: Your suggestions must be different from your current anwer and any questions user has asked in the
+                    conversation history.
+
                     Your Answer:
                 PROMPT;
 
