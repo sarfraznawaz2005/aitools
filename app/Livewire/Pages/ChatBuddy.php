@@ -231,8 +231,8 @@ class ChatBuddy extends Component
 
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
-                    this question accurately." and then give few suggested queries for user to be specific based
-                    on current query, context and converation history. DO NOT ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
+                    this question accurately." and then give few suggested queries for user to ask or be specific about
+                    their current query based on context and converation history. DO NOT ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
 
                     Your Answer:
                 PROMPT;
