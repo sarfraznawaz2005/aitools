@@ -2,12 +2,9 @@
 /*
  * TODO
  * global disabler until api key is saved
- * speed up for bigger files
- * bot type dropdown, add Doc type bot
  * one pdf for best results info tip
- * html, htm, markdown
- * openai/ollama chat pdf
  * mimes:txt,pdf|max:10240 overall or per file?
+ * openai/ollama chat pdf
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * Researcher Agent

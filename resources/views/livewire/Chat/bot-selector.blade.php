@@ -132,7 +132,7 @@
 
             <x-flash/>
 
-            <div class="max-w-lg mx-auto p-3">
+            <div class="max-w-lg mx-auto p-3" x-data="{ botType: @entangle('type') }">
 
                 <div class="relative mb-3">
                     <input type="text"
@@ -150,7 +150,7 @@
                            class="peer py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                 </div>
 
-                <div class="relative mb-3">
+                <div class="relative mb-3" x-show="botType == '{{App\Enums\BotTypeEnum::TEXT->value}}'">
                     <!-- Textarea -->
                     <div class="relative">
                         <textarea
@@ -323,15 +323,15 @@
                         wire:model="type"
                         class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         {{--<option value="">Bot Type</option>--}}
-                        <option class="text-base" value="{{App\Enums\BotTypeEnum::TEXT}}">
-                            📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
-                        {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::IMAGE}}">🖼️ {{App\Enums\BotTypeEnum::IMAGE}}</option>--}}
-                        {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::VIDEO}}">🎬 {{App\Enums\BotTypeEnum::VIDEO}}</option>--}}
+                        <option class="text-base" value="{{App\Enums\BotTypeEnum::TEXT->value}}">📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
+                        <option class="text-base" value="{{App\Enums\BotTypeEnum::DOCUMENT->value}}">📚 {{App\Enums\BotTypeEnum::DOCUMENT}}</option>
+                        {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::IMAGE->value}}">🖼️ {{App\Enums\BotTypeEnum::IMAGE}}</option>--}}
+                        {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::VIDEO->value}}">🎬 {{App\Enums\BotTypeEnum::VIDEO}}</option>--}}
                     </select>
                 </div>
 
-                <div class="hs-accordion-group">
-                    <div class="hs-accordion" id="knowledge-sources-accordian">
+                <div class="hs-accordion-group" x-show="botType == '{{App\Enums\BotTypeEnum::DOCUMENT->value}}'">
+                    <div class="hs-accordion active" id="knowledge-sources-accordian">
                         <button
                             class="hs-accordion-toggle hs-accordion-active:text-gray-600 inline-flex items-center gap-x-3 w-full text-start text-gray-600 focus:outline-none rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                         >
@@ -372,7 +372,7 @@
 
                         <div class="hs-accordion-group">
                             <div id="hs-basic-with-arrow-collapse-one"
-                                 class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+                                 class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
                                  role="region" aria-labelledby="knowledge-sources-accordian">
 
                                 <fieldset
@@ -381,12 +381,6 @@
                                         Add Knowledge Sources
                                         <span class="text-xs">(PDFs, TXTs, etc)</span>
                                     </legend>
-
-                                    @if(!$isNodeInstalled)
-                                        <div class="text-red-500 text-xs mb-2">Sorry, NodeJS is not installed on your
-                                            system.
-                                        </div>
-                                    @endif
 
                                     <div class="relative w-full">
                                         <div
@@ -400,7 +394,7 @@
                                             <!-- File Input -->
                                             <label for="file-input" class="sr-only">Choose files</label>
                                             <input type="file" wire:model="files" id="{{uniqid()}}" multiple
-                                                   {{!$isNodeInstalled ? 'disabled' : ''}} class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
+                                                    class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
                                                 file:bg-gray-50 file:border-0
                                                 file:me-4
                                                 file:py-3 file:px-4

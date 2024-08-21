@@ -23,29 +23,37 @@ class BotSelector extends Component
 
     public string $name;
     public string $bio;
-    public string $prompt;
     public string $icon;
     public string $type;
 
-    #[Validate(['files.*' => 'mimes:txt,pdf|max:20480'])]
+    public string $prompt;
+
+    #[Validate(['files.*' => 'mimes:txt,pdf,md,html,htm|max:20480'])]
     public array $files = [];
 
     public array $botFiles = [];
 
     public int $newBotId = 0;
 
-    public bool $isNodeInstalled = true;
-
     protected $listeners = ['refreshBot' => '$refresh'];
 
     protected function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|min:5|max:25|unique:bots,name,' . ($this->model->id ?? 'NULL') . ',id',
             'bio' => 'required|min:5|max:500',
-            'prompt' => 'required|min:3|max:2500',
             'icon' => 'required',
         ];
+
+        if (!$this->model->exists && $this->type === BotTypeEnum::DOCUMENT->value) {
+            $rules['files'] = 'required';
+        }
+
+        if ($this->type === BotTypeEnum::TEXT->value) {
+            $rules['prompt'] = 'min:3|max:2500';
+        }
+
+        return $rules;
     }
 
     protected function messages(): array
@@ -61,12 +69,9 @@ class BotSelector extends Component
     {
         $this->model = $bot ?? new Bot();
 
-        $this->files = [];
-        $this->botFiles = [];
+        $this->resetForm();
 
         $this->fill($this->model->toArray());
-
-        $this->isNodeInstalled = preg_match('/v\d+(\.\d+)*\b/', shell_exec('node -v')) === 1;
     }
 
     public function selectBot(Bot $bot): void
@@ -81,9 +86,9 @@ class BotSelector extends Component
         $this->model->fill([
             'name' => $this->name,
             'bio' => $this->bio,
-            'prompt' => $this->prompt,
+            'prompt' => $this->prompt ?? '',
             'icon' => $this->icon,
-            'type' => $this->type ?? BotTypeEnum::TEXT,
+            'type' => $this->type,
         ])->save();
 
         //dd($this->model);
@@ -155,6 +160,8 @@ class BotSelector extends Component
         $this->reset(['name', 'bio', 'prompt', 'icon', 'type', 'files']);
 
         $this->resetErrorBag();
+
+        $this->type = BotTypeEnum::TEXT->value;
 
         $this->files = [];
         $this->botFiles = [];

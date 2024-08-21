@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,7 +22,7 @@ class Bot extends Model
 
     public function isDocumentBot(): bool
     {
-        return count(glob(base_path('storage/app/files/') . strtolower(Str::slug($this->name)) . '/*')) > 0;
+        return $this->type === BotTypeEnum::DOCUMENT->value;
     }
 
     public function files(): array

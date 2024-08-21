@@ -138,13 +138,13 @@ class DocumentSearchService
         $cacheKey = "$fileName-" . $this->fileIdentifier;
 
         if (array_key_exists($cacheKey, $this->embeddingsCache)) {
-            Log::info("Loaded embeddings from cache for $fileName");
+            //Log::info("Loaded embeddings from cache for $fileName");
             return $this->embeddingsCache[$cacheKey]['embeddings'];
         }
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
-            Log::info("Loaded embeddings from file for $fileName");
+            //Log::info("Loaded embeddings from file for $fileName");
             return $data['embeddings'];
         }
 

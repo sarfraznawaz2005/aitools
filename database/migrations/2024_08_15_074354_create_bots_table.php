@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('bio');
-            $table->text('prompt');
+            $table->text('prompt')->nullable();
             $table->string('type')->default(BotTypeEnum::TEXT);
             $table->string('icon')->nullable();
             $table->boolean('system')->default(false);
