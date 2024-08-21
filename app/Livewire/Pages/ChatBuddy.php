@@ -247,9 +247,9 @@ class ChatBuddy extends Component
                     Please provide hyperlinks for the following suggested questions:
 
                     <ul>
-                        <li><a href="#" class="ai-suggested-answer"><em>Question 1</em></a></li>
-                        <li><a href="#" class="ai-suggested-answer"><em>Question 2</em></a></li>
-                        <li><a href="#" class="ai-suggested-answer"><em>Question 3</em></a></li>
+                        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem">Question 1</a></li>
+                        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
+                        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
                     </ul>
 
                     4. Strictly follow below guidelines for suggested questions:
