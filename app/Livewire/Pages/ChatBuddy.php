@@ -245,7 +245,7 @@ class ChatBuddy extends Component
 
                     $relatedQuestionsPrompt
 
-                    Your Answer:
+                    Your Answer Here:
                 PROMPT;
 
                 Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");

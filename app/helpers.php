@@ -82,7 +82,7 @@ function makePromopt(Bot $bot, string $userQuery, string $conversationHistory, i
     $promptFinal = str_ireplace('{{USER_QUESTION}}', $userQuery, $promptFinal);
 
     $promptFinal .= $relatedQuestionsPrompt;
-    $promptFinal .= "\nYour Answer:";
+    $promptFinal .= "\nYour Answer Here:";
 
     return str_ireplace('{{PROMPT}}', $prompt, $promptFinal);
 }
