@@ -28,7 +28,7 @@ class BotSelector extends Component
 
     public string $prompt;
 
-    #[Validate(['files.*' => 'mimes:txt,pdf,md,html,htm|max:20480'])]
+    #[Validate(['files.*' => 'mimes:txt,pdf,md,html,htm'])]
     public array $files = [];
 
     public array $botFiles = [];
@@ -43,6 +43,7 @@ class BotSelector extends Component
             'name' => 'required|min:5|max:25|unique:bots,name,' . ($this->model->id ?? 'NULL') . ',id',
             'bio' => 'required|min:5|max:500',
             'icon' => 'required',
+            'files' => 'max_combined_size:25600', // Custom rule for combined size
         ];
 
         if (!$this->model->exists && $this->type === BotTypeEnum::DOCUMENT->value) {
@@ -62,6 +63,7 @@ class BotSelector extends Component
             'bio.required' => 'The description field is required.',
             'bio.min' => 'The description must be at least 5 characters long.',
             'bio.max' => 'The description must not exceed 500 characters.',
+            'files.max_combined_size' => 'The total size of the files must not exceed 25 MB.',
         ];
     }
 
@@ -90,8 +92,6 @@ class BotSelector extends Component
             'icon' => $this->icon,
             'type' => $this->type,
         ])->save();
-
-        //dd($this->model);
 
         foreach ($this->files as $file) {
             $file->storeAs(path: 'files/' . strtolower(Str::slug($this->model->name)), name: $file->getClientOriginalName());
@@ -176,3 +176,4 @@ class BotSelector extends Component
         ]);
     }
 }
+
