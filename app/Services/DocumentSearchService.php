@@ -363,10 +363,9 @@ class DocumentSearchService
 
     protected function getCleanedText(string $text, bool $removeStopWords = false): string
     {
+        $text = strip_tags($text);
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
         $text = preg_replace('/<\/p>/i', "\n\n", $text);
-        $text = strip_tags($text);
-        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $text = preg_replace('/\r\n|\r/', "\n", $text);
         $text = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $text);
         $text = preg_replace('/\s+/', ' ', $text);
