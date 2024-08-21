@@ -87,7 +87,9 @@ class ChatBuddy extends Component
 
                 $prompt = makePromopt($conversation->bot, $userQuery->body, $conversationHistory, 2);
 
-                Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+                if (app()->environment('local')) {
+                    Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+                }
 
                 $consolidatedResponse = '';
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
@@ -248,7 +250,9 @@ class ChatBuddy extends Component
                     Your Answer Here:
                 PROMPT;
 
-                Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+                if (app()->environment('local')) {
+                    Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+                }
 
                 $consolidatedResponse = '';
 
