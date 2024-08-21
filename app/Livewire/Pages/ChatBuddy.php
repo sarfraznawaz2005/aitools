@@ -242,7 +242,7 @@ class ChatBuddy extends Component
                     2. Build few questions out of the context and conversation history.
                     3. Suggest the user those question in below format:
 
-                    **Suggested Questions Ideas:**
+                    *Suggested Questions Ideas:*
                     1. <question1>
                     2. <question2>
                     3. <question3>
