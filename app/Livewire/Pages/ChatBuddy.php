@@ -227,12 +227,17 @@ class ChatBuddy extends Component
                     <span class="text-xs">Sources: <source document here, Pages></span>
                     <span class="text-xs">Example: (Document1.pdf, pages: 1, 2, 3)</span>
 
+                    of below format if pages are not mentioned or available:
+
+                    <span class="text-xs">Sources: <source document here></span>
+                    <span class="text-xs">Example: (Document1.txt)</span>
+
                     Do not mention sources if not available.
 
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
-                    this question accurately." and then give few suggested queries for user to ask or be specific about
-                    their current query based on context and converation history. DO NOT ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
+                    this question accurately." and then build few suggested queries for user to ask out of context and
+                    converation history. DO NOT ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
 
                     Your Answer:
                 PROMPT;
