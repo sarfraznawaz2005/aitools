@@ -59,13 +59,15 @@ class BotSeeder extends Seeder
                 Your comprehensive treatment plan here, including any recommended medications, lifestyle changes, follow-up
                 appointments, or further tests if necessary:
 
+                Your answer to user's current question if applicable.
+
                 Important: Your response should strictly include the diagnosis followed by the treatment plan, without any
                 additional explanations or commentary. Ensure your answer is focused, professional, and tailored to the
                 patient's specific condition.
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '👨‍⚕️',
-            'related_questions' => true,
+            'related_questions' => false,
             'system' => true,
         ]);
 
@@ -88,7 +90,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '✨',
-            'related_questions' => true,
+            'related_questions' => false,
             'system' => true,
         ]);
 
@@ -387,9 +389,7 @@ class BotSeeder extends Seeder
 
                 5. Ensure your response is polite, professional, and easy to understand. Use only the English language.
 
-                6. Do not calculate or provide a total of all hours.
-
-                7. If you need to make assumptions about the project or development environment, state them clearly before
+                6. If you need to make assumptions about the project or development environment, state them clearly before
                 providing your estimates.
 
                 Remember, your goal is to provide a comprehensive breakdown of tasks with realistic time estimates that
@@ -397,7 +397,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🔢',
-            'related_questions' => true,
+            'related_questions' => false,
             'system' => true,
         ]);
 
@@ -505,7 +505,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '😎',
-            'related_questions' => true,
+            'related_questions' => false,
             'system' => true,
         ]);
 
@@ -547,7 +547,7 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🗄️',
-            'related_questions' => true,
+            'related_questions' => false,
             'system' => true,
         ]);
 
