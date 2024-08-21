@@ -188,7 +188,6 @@ class ChatBuddy extends Component
                 $latestMessages = $this->getLatestMessages($conversation);
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
                 $conversationHistory = implode("\n", $uniqueMessages);
-                $route = route(config('tools.chat-buddy.route') . 'load-conversation', $conversation->id);
 
                 $prompt = <<<PROMPT
                     You are an AI assistant designed to answer questions based on provided context and conversation history.
