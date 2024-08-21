@@ -2,6 +2,7 @@
 /*
  * TODO
  * global disabler until api key is saved
+ * filter conversations
  * checkbox for related questions and also decide which system bot should not have it
  * openai/ollama chat pdf
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
