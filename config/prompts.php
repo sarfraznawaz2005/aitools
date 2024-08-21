@@ -87,6 +87,8 @@ EOF,
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
     </ul>
 
+    When building the questions, assume you are the user, not the AI assistant.
+
     Your Answer:
 EOF,
 

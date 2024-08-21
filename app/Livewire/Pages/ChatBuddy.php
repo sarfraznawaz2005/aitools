@@ -260,6 +260,7 @@ class ChatBuddy extends Component
                         - Don't build question from the user's current query.
                         - Don't build question from the user's previous queries.
                         - Don't build question that are present in conversation history.
+                        - When building the questions, assume you are the user, not the AI assistant.
 
                     Your Answer:
                 PROMPT;
