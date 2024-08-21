@@ -46,7 +46,7 @@ class DocumentSearchService
     {
         $results = [];
 
-        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query)], 'embedding-001');
+        $queryEmbeddings = $this->llm->embed([$query], 'embedding-001');
 
         $this->setTextEmbeddingsFromFiles($files);
 
@@ -63,7 +63,7 @@ class DocumentSearchService
     protected function performTextSearch(array $files, string $query): array
     {
         $results = [];
-        $cleanedQuery = $this->getCleanedText($query);
+        $cleanedQuery = $query;
 
         foreach ($files as $file) {
             $textWithMetadata = $this->extractTextFromFile($file);
