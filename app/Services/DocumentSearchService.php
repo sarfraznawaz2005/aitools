@@ -9,20 +9,37 @@ use Smalot\PdfParser\Parser;
 
 class DocumentSearchService
 {
+    private static ?DocumentSearchService $instance = null;
+
     protected Parser $parser;
     protected array $embeddings = [];
+    private array $embeddingsCache = [];
     protected array $textSplits = [];
 
-    public function __construct(
-        protected LlmProvider $llm,
-        protected string      $fileIdentifier,
-        protected int         $chunkSize = 500,
-        protected int         $embdeddingsBatchSize = 100,
-        protected float       $similarityThreshold = 0.6,
-        protected int         $maxResults = 3,
-    )
+    private function __construct(protected LlmProvider $llm,
+                                 protected string      $fileIdentifier,
+                                 protected int         $chunkSize = 500,
+                                 protected int         $embdeddingsBatchSize = 100,
+                                 protected float       $similarityThreshold = 0.6,
+                                 protected int         $maxResults = 3,)
     {
         $this->parser = new Parser();
+    }
+
+    public static function getInstance(
+        LlmProvider $llm,
+        string      $fileIdentifier,
+        int         $chunkSize = 500,
+        int         $embdeddingsBatchSize = 100,
+        float       $similarityThreshold = 0.6,
+        int         $maxResults = 3
+    ): DocumentSearchService
+    {
+        if (self::$instance === null) {
+            self::$instance = new self($llm, $fileIdentifier, $chunkSize, $embdeddingsBatchSize, $similarityThreshold, $maxResults);
+        }
+
+        return self::$instance;
     }
 
     /**
@@ -123,10 +140,16 @@ class DocumentSearchService
     {
         $fileName = basename($file);
         $path = storage_path("app/$fileName-" . $this->fileIdentifier . '.json');
+        $cacheKey = "$fileName-" . $this->fileIdentifier;
+
+        if (array_key_exists($cacheKey, $this->embeddingsCache)) {
+            Log::info("Loaded embeddings from cache for $fileName");
+            return $this->embeddingsCache[$cacheKey]['embeddings'];
+        }
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
-            //Log::info("Loaded embeddings from cache for $fileName");
+            Log::info("Loaded embeddings from file for $fileName");
             return $data['embeddings'];
         }
 
@@ -142,6 +165,8 @@ class DocumentSearchService
             'embeddings' => $embeddings,
             'chunks' => $chunks
         ];
+
+        $this->embeddingsCache[$cacheKey] = $data;
 
         file_put_contents($path, json_encode($data));
 
