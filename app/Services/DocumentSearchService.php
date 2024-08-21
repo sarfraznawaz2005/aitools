@@ -10,8 +10,8 @@ use Smalot\PdfParser\Parser;
 class DocumentSearchService
 {
     protected Parser $parser;
-    protected $embeddings = [];
-    protected $textSplits = [];
+    protected array $embeddings = [];
+    protected array $textSplits = [];
 
     public function __construct(
         protected LlmProvider $llm,
@@ -300,12 +300,15 @@ class DocumentSearchService
 
         foreach ($textWithMetadata as $item) {
             $length = strlen($item['text']);
+
             if ($currentPosition + $length >= $start && $currentPosition <= $end) {
                 $metadata[] = $item['metadata'];
             }
+
             if ($currentPosition > $end) {
                 break;
             }
+
             $currentPosition += $length + 1; // +1 for the newline
         }
 
