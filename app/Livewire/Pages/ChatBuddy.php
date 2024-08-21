@@ -253,7 +253,7 @@ class ChatBuddy extends Component
                     </ul>
 
                     4. Strictly follow below guidelines for suggested questions:
-                        - Only build question from the context and conversation history provided.
+                        - Build question solely from the context and conversation history provided.
                         - Don't build question unless you can answer them from the context and conversation history.
                         - Don't build question from your own knowledge base.
                         - Don't build question from the user's current query.
