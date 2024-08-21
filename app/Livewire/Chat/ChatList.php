@@ -72,12 +72,7 @@ class ChatList extends Component
 
         $message->delete();
 
-        $this->conversation->createTempAImessage();
-
-        $this->refresh();
-
-        sleep(1);
-        $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
+        $this->dispatch('createTempAImessage')->self();
     }
 
     #[On('suggestedAnswerClicked')]
@@ -85,11 +80,7 @@ class ChatList extends Component
     {
         $this->conversation->addChatMessage($linkText);
 
-        $this->conversation->createTempAImessage();
-
-        $this->refresh();
-
-        $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
+        $this->dispatch('createTempAImessage')->self();
     }
 
     public function deleteMessage(Message $message): void
