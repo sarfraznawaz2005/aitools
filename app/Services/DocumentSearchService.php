@@ -247,7 +247,7 @@ class DocumentSearchService
 
                 foreach ($pages as $pageNumber => $page) {
                     $text[] = [
-                        'content' => $this->getCleanedText($page->getText(), true),
+                        'content' => $this->getCleanedText($page->getText()),
                         'metadata' => ['page' => $pageNumber + 1]
                     ];
                 }
@@ -263,7 +263,7 @@ class DocumentSearchService
 
                 foreach ($lines as $lineNumber => $line) {
                     $text[] = [
-                        'content' => $this->getCleanedText($line, true),
+                        'content' => $this->getCleanedText($line),
                         'metadata' => ['line' => $lineNumber + 1]
                     ];
                 }
@@ -366,7 +366,7 @@ class DocumentSearchService
         return $dotProduct / ($uLength * $vLength);
     }
 
-    protected function getCleanedText(string $text, bool $removeStopWords = false): string
+    protected function getCleanedText(string $text): string
     {
         // Replace <br> tags with newlines
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
@@ -392,29 +392,6 @@ class DocumentSearchService
         // remove punctuation symbols
         $text = preg_replace('/[^\w\s\-_.&*$@]/', '', $text);
 
-        if ($removeStopWords) {
-            $text = $this->removeStopwords($text);
-        }
-
         return trim($text);
-    }
-
-    protected function removeStopwords(string $text): string
-    {
-        $stopwords = [
-            'the', 'a', 'an', 'and', 'but', 'if', 'or', 'because', 'as', 'until',
-            'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between',
-            'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to',
-            'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again',
-            'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why',
-            'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other',
-            'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than',
-            'too', 'very', 'can', 'will', 'just', 'don', 'should', 'now'
-        ];
-
-        $words = explode(' ', $text);
-        $filteredWords = array_diff($words, $stopwords);
-
-        return implode(' ', $filteredWords);
     }
 }
