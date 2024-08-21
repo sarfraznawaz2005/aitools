@@ -83,6 +83,23 @@ class BotSelector extends Component
 
     public function save(): void
     {
+        // Combine existing bot files with newly uploaded files
+        $totalSize = 0;
+
+        foreach ($this->botFiles as $botFile) {
+            $totalSize += File::size($botFile);
+        }
+
+        foreach ($this->files as $file) {
+            $totalSize += $file->getSize();
+        }
+
+        // 25 MB limit in bytes (25 * 1024 * 1024)
+        if ($totalSize > 25 * 1024 * 1024) {
+            $this->addError('files', 'The total size of the files must not exceed 25 MB.');
+            return;
+        }
+
         $this->validate();
 
         $this->model->fill([
