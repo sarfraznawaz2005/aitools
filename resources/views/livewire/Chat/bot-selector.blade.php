@@ -362,7 +362,7 @@
                                                 class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
                                                 role="tooltip">
                                                 If knowledge source files are uploaded, bot will be limited to them only
-                                                allowing you to talk to uploaded files only. This means, this option allows you to create talk to documents
+                                                allowing you to talk to uploaded files only. This means, this option allows you to create talk to document
                                                 bots.
                                             </span>
                                         </span>
