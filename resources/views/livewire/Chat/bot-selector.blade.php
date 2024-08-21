@@ -363,7 +363,7 @@
                                                 role="tooltip">
                                                 If knowledge source files are uploaded, bot will be limited to them only
                                                 allowing you to talk to uploaded files only. This means, this option allows you to create talk to documents
-                                                bots. For this option to work, NodeJS must be installed on your system and added to PATH environment variable.
+                                                bots.
                                             </span>
                                         </span>
                             </div>
