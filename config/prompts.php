@@ -75,6 +75,10 @@ EOF,
     EOF,
 
     'textBotRelatedQuestionsPrompt' => <<<EOF
+
+    Finally, see and think if the basic information you need as per instructions in <additional_instructions></additional_instructions>
+    has been provided or not. If not, then ignore below instructions completely. If provided, only then follow below steps:
+
     Finally, follow below steps:
 
     1. Build three related questions solely based on user's current question that user might ask next. When creating these
@@ -94,13 +98,14 @@ EOF,
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
     </ul>
+
     EOF,
 
     'documentBotRelatedQuestionsPrompt' => <<<EOF
     Finally, follow below steps:
 
     1. Read the context and conversation history provided carefully.
-    2. Build few questions only & strictly out of the context and the conversation history only and nothing else.
+    2. Build few related questions only & strictly out of the context and the conversation history only and nothing else.
     3. Suggest the user those question in below format:
 
     *Related Questions:*
