@@ -222,7 +222,7 @@ class ChatBuddy extends Component
                     5. If the answer can be found in the context, provide specific details and explanations.
                     6. If you need to make any assumptions or inferences, clearly state them as such.
 
-                    Please always try to provide Metadata information along with the answer in format:
+                    Please always try to provide Metadata information below your answer in format:
 
                     <span class="text-xs">Sources: <source document here, Pages></span>
                     <span class="text-xs">Example: (Document1.pdf, pages: 1, 2, 3)</span>
@@ -236,8 +236,16 @@ class ChatBuddy extends Component
 
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
-                    this question accurately." and then build few suggested queries for user to ask out of context and
-                    converation history. DO NOT ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
+                    this question accurately." NEVER ATTEMPT TO MAKE UP OR GUESS AN ANSWER. Finally, follow below steps:
+
+                    1. Read the context and conversation history provided carefully.
+                    2. Build few questions out of the context and conversation history.
+                    3. Suggest the user those question in below format:
+
+                    **Suggested Questions Ideas:**
+                    1. <question1>
+                    2. <question2>
+                    3. <question3>
 
                     Your Answer:
                 PROMPT;
