@@ -75,7 +75,13 @@ EOF,
 
     Finally, follow below steps:
 
-    1. Build three related solely questions based on user's current question in below format:
+    1. Build three related questions solely based on user's current question that user might ask next. When creating these
+    questions, follow these important guidelines:
+
+    a. Assume you are the user who might ask these questions next.
+    b. Ensure the questions are directly related to the topic of the user's current question.
+
+    Follow below format for suggested questions:
 
     *Suggested Questions Ideas:*
 
@@ -86,8 +92,6 @@ EOF,
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
     </ul>
-
-    When building the questions, assume you are the user, not the AI assistant.
 
     Your Answer:
 EOF,
