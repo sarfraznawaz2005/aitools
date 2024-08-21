@@ -6,7 +6,6 @@
  * bot type dropdown, add Doc type bot
  * one pdf for best results info tip
  * html, htm, markdown
- * new lines not shwoing pdf
  * openai/ollama chat pdf
  * mimes:txt,pdf|max:10240 overall or per file?
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
