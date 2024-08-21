@@ -258,9 +258,8 @@ class ChatBuddy extends Component
                     - Only build suggesstions from the context and conversation history provided that you can ACTUALLY answer.
                     - Do not build suggestions from your own knowledge base.
                     - Do not build suggestions from the user's previous questions.
-                    - Do not build suggestions from the user's previous answers.
-                    - Do not build suggestions you have already answered in the conversation history.
-                    - Do not build suggestions you have already suggested in the conversation history.
+                    - Do not repeat suggestions you have already answered in the conversation history.
+                    - Do not repeat suggestions you have already suggested in the conversation history.
                     - Do not build suggestions you cannot answer from the context and conversation history provided.
 
                     Your Answer:
