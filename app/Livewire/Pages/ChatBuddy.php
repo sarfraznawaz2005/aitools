@@ -184,11 +184,16 @@ class ChatBuddy extends Component
                     $context .= $result['matchedChunk']['text'] . "\nMetadata:" . json_encode($result['matchedChunk']['metadata']) . "\n\n";
                 }
 
+                $relatedQuestionsPrompt = '';
                 $attachedFiles = implode(',', array_map(fn($file) => basename($file), $files));
                 $attachedFilesCount = count(array_map(fn($file) => basename($file), $files));
                 $latestMessages = $this->getLatestMessages($conversation);
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
                 $conversationHistory = implode("\n", $uniqueMessages);
+
+                if ($conversation->bot->showRelatedQuestions()) {
+                    $relatedQuestionsPrompt = config('prompts.documentBotRelatedQuestionsPrompt');
+                }
 
                 $prompt = <<<PROMPT
                     You are an AI assistant designed to answer questions based on provided context and conversation history.
@@ -237,30 +242,9 @@ class ChatBuddy extends Component
 
                     If the information needed to answer the query is not present in the context or conversation history,
                     or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
-                    this question accurately." NEVER ATTEMPT TO MAKE UP OR GUESS AN ANSWER. Finally, follow below steps:
+                    this question accurately." NEVER ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
 
-                    1. Read the context and conversation history provided carefully.
-                    2. Build few questions only & strictly out of the context and the conversation history only and nothing else.
-                    3. Suggest the user those question in below format:
-
-                    *Suggested Questions Ideas:*
-
-                    Please provide hyperlinks for the following suggested questions:
-
-                    <ul>
-                        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem">Question 1</a></li>
-                        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
-                        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
-                    </ul>
-
-                    4. Strictly follow below guidelines for suggested questions:
-                        - Build question solely from the context and conversation history provided.
-                        - Don't build question unless you can answer them from the context and conversation history.
-                        - Don't build question from your own knowledge base.
-                        - Don't build question from the user's current query.
-                        - Don't build question from the user's previous queries.
-                        - Don't build question that are present in conversation history.
-                        - When building the questions, assume you are the user, not the AI assistant.
+                    $relatedQuestionsPrompt
 
                     Your Answer:
                 PROMPT;

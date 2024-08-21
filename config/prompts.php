@@ -94,6 +94,33 @@ EOF,
     </ul>
 
     Your Answer:
-EOF,
+    EOF,
+
+    'documentBotRelatedQuestionsPrompt' => <<<EOF
+    Finally, follow below steps:
+
+    1. Read the context and conversation history provided carefully.
+    2. Build few questions only & strictly out of the context and the conversation history only and nothing else.
+    3. Suggest the user those question in below format:
+
+    *Suggested Questions Ideas:*
+
+    Please provide hyperlinks for the following suggested questions:
+
+    <ul>
+        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem">Question 1</a></li>
+        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
+        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
+    </ul>
+
+    4. Strictly follow below guidelines for suggested questions:
+        - Build question solely from the context and conversation history provided.
+        - Don't build question unless you can answer them from the context and conversation history.
+        - Don't build question from your own knowledge base.
+        - Don't build question from the user's current query.
+        - Don't build question from the user's previous queries.
+        - Don't build question that are present in conversation history.
+        - When building the questions, assume you are the user, not the AI assistant.
+    EOF,
 
 ];
