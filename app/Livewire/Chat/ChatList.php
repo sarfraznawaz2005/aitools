@@ -80,6 +80,18 @@ class ChatList extends Component
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
     }
 
+    #[On('suggestedAnswerClicked')]
+    function suggestedAnswerClicked(string $linkText): void
+    {
+        $this->conversation->addChatMessage($linkText);
+
+        $this->conversation->createTempAImessage();
+
+        $this->refresh();
+
+        $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
+    }
+
     public function deleteMessage(Message $message): void
     {
         if ($message->delete()) {

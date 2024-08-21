@@ -188,6 +188,7 @@ class ChatBuddy extends Component
                 $latestMessages = $this->getLatestMessages($conversation);
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
                 $conversationHistory = implode("\n", $uniqueMessages);
+                $route = route(config('tools.chat-buddy.route') . 'load-conversation', $conversation->id);
 
                 $prompt = <<<PROMPT
                     You are an AI assistant designed to answer questions based on provided context and conversation history.
@@ -239,16 +240,28 @@ class ChatBuddy extends Component
                     this question accurately." NEVER ATTEMPT TO MAKE UP OR GUESS AN ANSWER. Finally, follow below steps:
 
                     1. Read the context and conversation history provided carefully.
-                    2. Build few questions out of the context and conversation history.
+                    2. Build few questions only of the context and conversation history only and nothing else.
                     3. Suggest the user those question in below format:
 
                     *Suggested Questions Ideas:*
-                    1. *<question1>*
-                    2. *<question2>*
-                    3. *<question3>*
 
-                    Important: Your suggestions must be different from your current anwer and any similar questions user
-                    has asked in the conversation history already.
+                    Please provide hyperlinks for the following suggested questions:
+
+                    <ul>
+                        <li><a href="#" class="ai-suggested-answer"><em>Question 1</em></a></li>
+                        <li><a href="#" class="ai-suggested-answer"><em>Question 2</em></a></li>
+                        <li><a href="#" class="ai-suggested-answer"><em>Question 3</em></a></li>
+                    </ul>
+
+                    Follow below guidelines for suggested questions:
+
+                    - Only build suggesstions from the context and conversation history provided that you can ACTUALLY answer.
+                    - Do not build suggestions from your own knowledge base.
+                    - Do not build suggestions from the user's previous questions.
+                    - Do not build suggestions from the user's previous answers.
+                    - Do not build suggestions you have already answered in the conversation history.
+                    - Do not build suggestions you have already suggested in the conversation history.
+                    - Do not build suggestions you cannot answer from the context and conversation history provided.
 
                     Your Answer:
                 PROMPT;
