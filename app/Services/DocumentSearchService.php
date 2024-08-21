@@ -248,7 +248,7 @@ class DocumentSearchService
                         if (!isset($alreadyAdded[$hash])) {
                             $alreadyAdded[$hash] = true;
 
-                            Log::info("TEXT@$index:" . $matchedText['text']);
+                            //Log::info("TEXT@$index:" . $matchedText['text']);
 
                             $results[] = [
                                 'similarity' => $similarity,
