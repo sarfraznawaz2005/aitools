@@ -10,6 +10,8 @@ use Smalot\PdfParser\Parser;
 class DocumentSearchService
 {
     protected Parser $parser;
+    protected $embeddings = [];
+    protected $textSplits = [];
 
     public function __construct(
         protected LlmProvider $llm,
@@ -45,15 +47,14 @@ class DocumentSearchService
         $results = [];
 
         $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query)], 'embedding-001');
-        $textEmbeddingsArray = $this->getTextEmbeddingsFromFiles($files);
 
-        foreach ($textEmbeddingsArray as $textEmbedding) {
-            $results = array_merge($results, $this->compareEmbeddings($textEmbedding, $queryEmbeddings));
-        }
+        $this->setTextEmbeddingsFromFiles($files);
+
+        $results = array_merge($results, $this->compareEmbeddings($queryEmbeddings));
 
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
-        return $this->deduplicateAndAddContext($results);
+        return $results;
     }
 
     /**
@@ -79,7 +80,6 @@ class DocumentSearchService
                         'similarity' => $maxScore,
                         'index' => $index,
                         'text' => $chunk['text'],
-                        'source' => 'example.txt',
                         'metadata' => $chunk['metadata'],
                     ];
                 }
@@ -88,7 +88,7 @@ class DocumentSearchService
 
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
-        return $this->deduplicateAndAddContext($results);
+        return $results;
     }
 
     protected function calculateExactMatchScore(string $query, string $text): float
@@ -110,57 +110,6 @@ class DocumentSearchService
         }
 
         return 1 - ($distance / $maxLength);
-    }
-
-    protected function deduplicateAndAddContext(array $results): array
-    {
-        $deduplicatedResults = [];
-        $seenContent = [];
-
-        foreach ($results as $result) {
-            $hash = md5($result['text']);
-
-            if (!isset($seenContent[$hash])) {
-                $seenContent[$hash] = true;
-
-                // Add context by including surrounding chunks
-                $contextBefore = $this->getChunkAtIndex($result['source'], $result['index'] - 1);
-                $contextAfter = $this->getChunkAtIndex($result['source'], $result['index'] + 1);
-
-                $result['text'] = trim($contextBefore['text'] . "\n" . $result['text'] . "\n" . $contextAfter['text']);
-
-                $result['metadata'] = array_merge(
-                    $contextBefore['metadata'] ?? [],
-                    $result['metadata'],
-                    $contextAfter['metadata'] ?? []
-                );
-
-                $deduplicatedResults[] = $result;
-
-                if (count($deduplicatedResults) >= $this->maxResults) {
-                    break;
-                }
-            }
-        }
-
-        return $deduplicatedResults;
-    }
-
-    protected function getChunkAtIndex(string $source, int $index): array
-    {
-        $fileName = $source;
-        $path = storage_path("app/$fileName-" . $this->fileIdentifier . '.json');
-
-        if (file_exists($path)) {
-            $data = json_decode(file_get_contents($path), true);
-            $chunks = $data['chunks'] ?? [];
-
-            if (isset($chunks[$index])) {
-                return $chunks[$index];
-            }
-        }
-
-        return ['text' => '', 'metadata' => []];
     }
 
     public function isEmbdeddingDone(string $file, string $fileIdentifier): bool
@@ -204,11 +153,15 @@ class DocumentSearchService
     /**
      * @throws Exception
      */
-    protected function getTextEmbeddingsFromFiles(array $files): array
+    protected function setTextEmbeddingsFromFiles(array $files): void
     {
-        $textEmbeddingsArray = [];
-
         foreach ($files as $file) {
+
+            // already set
+            if (isset($this->textSplits[$file]) && $this->textSplits[$file]) {
+                continue;
+            }
+
             $textWithMetadata = $this->extractTextFromFile($file);
             $chunks = $this->splitTextIntoChunks($textWithMetadata);
 
@@ -216,20 +169,16 @@ class DocumentSearchService
             $chunkedTextArray = array_chunk($chunks, $this->embdeddingsBatchSize);
 
             $chunkedEmbeddings = [];
+            $chunkedTextSplits = [];
             foreach ($chunkedTextArray as $chunkIndex => $chunkedText) {
                 $embeddings = $this->getEmbeddingsOrLoadFromCache($file, $chunkedText);
                 $chunkedEmbeddings[$chunkIndex] = $embeddings;
+                $chunkedTextSplits[$chunkIndex] = $chunkedText;
             }
 
-            $textEmbeddingsArray[] = [
-                'textSplits' => array_column($chunks, 'text'),
-                'embeddings' => $chunkedEmbeddings,
-                'source' => basename($file),
-                'metadata' => array_column($chunks, 'metadata'),
-            ];
+            $this->textSplits[$file] = $chunkedTextSplits;
+            $this->embeddings[$file] = $chunkedEmbeddings;
         }
-
-        return $textEmbeddingsArray;
     }
 
     /**
@@ -248,7 +197,7 @@ class DocumentSearchService
                 foreach ($pages as $pageNumber => $page) {
                     $text[] = [
                         'content' => $this->getCleanedText($page->getText()),
-                        'metadata' => ['page' => $pageNumber + 1]
+                        'metadata' => ['source' => basename($file), 'page' => $pageNumber + 1]
                     ];
                 }
 
@@ -264,7 +213,7 @@ class DocumentSearchService
                 foreach ($lines as $lineNumber => $line) {
                     $text[] = [
                         'content' => $this->getCleanedText($line),
-                        'metadata' => ['line' => $lineNumber + 1]
+                        'metadata' => ['source' => basename($file), 'line' => $lineNumber + 1]
                     ];
                 }
 
@@ -277,31 +226,37 @@ class DocumentSearchService
     /**
      * @throws Exception
      */
-    protected function compareEmbeddings(array $textEmbedding, array $queryEmbeddings): array
+    protected function compareEmbeddings(array $queryEmbeddings): array
     {
         $results = [];
-        $textSplits = $textEmbedding['textSplits'];
-        $chunkedEmbeddings = $textEmbedding['embeddings'];
+        $alreadyAdded = [];
 
-        foreach ($chunkedEmbeddings as $embeddings) {
+        if (count($this->textSplits) !== count($this->embeddings)) {
+            throw new Exception("Splits and embeddings count mismatch!");
+        }
 
-//            if (count($textSplits) !== count($embeddings['embeddings'])) {
-//                throw new Exception("Splits and embeddings count mismatch!");
-//            }
+        foreach ($this->embeddings as $file => $fileEmbeddings) {
+            foreach ($fileEmbeddings as $mainIndex => $embeddings) {
 
-            foreach ($embeddings['embeddings'] as $index => $embedding) {
-                $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
+                foreach ($embeddings['embeddings'] as $index => $embedding) {
+                    $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
 
-                if ($similarity >= $this->similarityThreshold) {
-                    Log::info("TEXT@$index:" . $textSplits[$index]);
+                    if ($similarity >= $this->similarityThreshold) {
+                        $matchedText = $this->textSplits[$file][$mainIndex][$index];
+                        $hash = md5($matchedText['text']);
 
-                    $results[] = [
-                        'similarity' => $similarity,
-                        'index' => $index,
-                        'text' => $textSplits[$index],
-                        'source' => $textEmbedding['source'],
-                        'metadata' => $textEmbedding['metadata'][$index],
-                    ];
+                        if (!isset($alreadyAdded[$hash])) {
+                            $alreadyAdded[$hash] = true;
+
+                            Log::info("TEXT@$index:" . $matchedText['text']);
+
+                            $results[] = [
+                                'similarity' => $similarity,
+                                'index' => $index,
+                                'matchedChunk' => $matchedText,
+                            ];
+                        }
+                    }
                 }
             }
         }

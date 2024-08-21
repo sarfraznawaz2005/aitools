@@ -189,7 +189,7 @@ class ChatBuddy extends Component
 
                 $context = '';
                 foreach ($results as $result) {
-                    $context .= $result['text'] . "\nMetadata:" . json_encode($result['source']) . "," . json_encode($result['metadata']) . "\n\n";
+                    $context .= $result['matchedChunk']['text'] . "\nMetadata:" . json_encode($result['matchedChunk']['metadata']) . "\n\n";
                 }
 
                 $attachedFiles = implode(',', array_map(fn($file) => basename($file), $files));
