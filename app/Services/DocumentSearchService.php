@@ -277,17 +277,27 @@ class DocumentSearchService
     protected function splitTextIntoChunks(array $textWithMetadata): array
     {
         $chunks = [];
-        $overlap = $this->chunkSize * 0.3; // 30% overlap
+        $overlapPercentage = 30; // 30% overlap, adjust as needed
+        $overlapSize = max(1, (int)($this->chunkSize * ($overlapPercentage / 100)));
 
         $fullText = implode("\n", array_column($textWithMetadata, 'text'));
         $totalLength = strlen($fullText);
 
-        for ($i = 0; $i < $totalLength; $i += ($this->chunkSize - $overlap)) {
-            $chunk = substr($fullText, $i, $this->chunkSize);
+        $chunkStart = 0;
+        while ($chunkStart < $totalLength) {
+            $chunkEnd = min($chunkStart + $this->chunkSize, $totalLength);
+            $chunk = substr($fullText, $chunkStart, $chunkEnd - $chunkStart);
+
             $chunks[] = [
                 'text' => trim($chunk),
-                'metadata' => $this->getMetadataForChunk($textWithMetadata, $i, $i + strlen($chunk))
+                'metadata' => $this->getMetadataForChunk($textWithMetadata, $chunkStart, $chunkEnd - 1)
             ];
+
+            if ($chunkEnd == $totalLength) {
+                break;
+            }
+
+            $chunkStart += max(1, $this->chunkSize - $overlapSize);
         }
 
         return $chunks;
