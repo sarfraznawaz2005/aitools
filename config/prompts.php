@@ -76,16 +76,21 @@ EOF,
 
     'textBotRelatedQuestionsPrompt' => <<<EOF
 
-    Finally, see and think if the basic information you need as per instructions in <additional_instructions></additional_instructions>
-    has been provided or not. If not, then ignore below instructions completely. If provided, only then follow below steps:
-
     Finally, follow below steps:
 
-    1. Build three related questions solely based on user's current question that user might ask next. When creating these
+    1. Carefully think and see what information you need from user based on instructions given in
+    <additional_instructions></additional_instructions> tags.
+
+    a. If user has not fullfilled all your requirements (see user's current question), then ignore any further
+    instructions and stop here.
+
+    b. If user has fullfilled all your requirements, then follow below instructions further:
+
+    Build three related questions solely based on user's current question that user might ask next. When creating these
     questions, follow these important guidelines:
 
-    a. Assume you are the user who might ask these questions next.
-    b. Ensure the questions are directly related to the topic of the user's current question.
+    - Assume you are the user who might ask these questions next.
+    - Ensure the questions are directly related to the topic of the user's current question.
 
     Follow below format for suggested questions:
 
