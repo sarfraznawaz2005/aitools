@@ -25,6 +25,7 @@ class BotSelector extends Component
     public string $bio;
     public string $icon;
     public string $type;
+    public bool $related_questions;
 
     public string $prompt;
 
@@ -106,8 +107,9 @@ class BotSelector extends Component
             'name' => $this->name,
             'bio' => $this->bio,
             'prompt' => $this->prompt ?? '',
-            'icon' => $this->icon,
             'type' => $this->type,
+            'icon' => $this->icon,
+            'related_questions' => $this->related_questions,
         ])->save();
 
         foreach ($this->files as $file) {
@@ -178,6 +180,7 @@ class BotSelector extends Component
         $this->resetErrorBag();
 
         $this->type = BotTypeEnum::TEXT->value;
+        $this->related_questions = true;
 
         $this->files = [];
         $this->botFiles = [];

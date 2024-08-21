@@ -323,8 +323,10 @@
                         wire:model="type"
                         class="py-3 px-4 pe-9 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         {{--<option value="">Bot Type</option>--}}
-                        <option class="text-base" value="{{App\Enums\BotTypeEnum::TEXT->value}}">📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
-                        <option class="text-base" value="{{App\Enums\BotTypeEnum::DOCUMENT->value}}">📚 {{App\Enums\BotTypeEnum::DOCUMENT}}</option>
+                        <option class="text-base" value="{{App\Enums\BotTypeEnum::TEXT->value}}">
+                            📝 {{App\Enums\BotTypeEnum::TEXT}}</option>
+                        <option class="text-base" value="{{App\Enums\BotTypeEnum::DOCUMENT->value}}">
+                            📚 {{App\Enums\BotTypeEnum::DOCUMENT}}</option>
                         {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::IMAGE->value}}">🖼️ {{App\Enums\BotTypeEnum::IMAGE}}</option>--}}
                         {{--<option class="text-base" value="{{App\Enums\BotTypeEnum::VIDEO->value}}">🎬 {{App\Enums\BotTypeEnum::VIDEO}}</option>--}}
                     </select>
@@ -396,7 +398,7 @@
                                             <!-- File Input -->
                                             <label for="file-input" class="sr-only">Choose files</label>
                                             <input type="file" wire:model="files" id="{{uniqid()}}" multiple
-                                                    class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
+                                                   class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
                                                 file:bg-gray-50 file:border-0
                                                 file:me-4
                                                 file:py-3 file:px-4
@@ -419,9 +421,11 @@
                                             Uploaded Files
                                         </legend>
                                         @foreach($botFiles as $file)
-                                            <div class="flex items center justify-between mb-2" style="font-size: .8rem;">
+                                            <div class="flex items center justify-between mb-2"
+                                                 style="font-size: .8rem;">
                                                 <div>{{basename($file)}}</div>
-                                                <div class="cursor-pointer" wire:click="deleteFile('{{basename($file)}}')">
+                                                <div class="cursor-pointer"
+                                                     wire:click="deleteFile('{{basename($file)}}')">
                                                     <x-icons.delete class="text-red-500"/>
                                                 </div>
                                             </div>
@@ -433,6 +437,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="relative mb-3">
+                    <div class="flex">
+                        <input type="checkbox"
+                               wire:model="related_questions"
+                               class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                               id="hs-default-checkbox">
+                        <label for="hs-default-checkbox" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Allow
+                            Related Questions</label>
+                    </div>
+                </div>
+
             </div>
 
             <div

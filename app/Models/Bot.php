@@ -18,11 +18,17 @@ class Bot extends Model
         'prompt',
         'type',
         'icon',
+        'related_questions',
     ];
 
     public function isDocumentBot(): bool
     {
         return $this->type === BotTypeEnum::DOCUMENT->value;
+    }
+
+    public function showRelatedQuestions(): bool
+    {
+        return (bool)$this->related_questions;
     }
 
     public function files(): array
