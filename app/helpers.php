@@ -2,8 +2,6 @@
 /*
  * TODO
  * global disabler until api key is saved
- * mimes:txt,pdf|max:10240 overall or per file?
- * tell about file size limit
  * checkbox for related questions and also decide which system bot should not have it
  * openai/ollama chat pdf
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests

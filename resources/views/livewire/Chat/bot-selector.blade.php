@@ -402,6 +402,8 @@
                                                 file:py-3 file:px-4
                                                 dark:file:bg-neutral-700 dark:file:text-neutral-400">
 
+                                            <span class="text-xs ml-2">Max Size: 25MB</span>
+
                                             <!-- Progress Bar -->
                                             <div x-show="uploading">
                                                 <progress max="100" x-bind:value="progress"></progress>
