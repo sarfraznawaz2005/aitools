@@ -196,7 +196,7 @@ class DocumentSearchService
 
                 foreach ($pages as $pageNumber => $page) {
                     $text[] = [
-                        'content' => $this->getCleanedText($page->getText()),
+                        'text' => $this->getCleanedText($page->getText()),
                         'metadata' => ['source' => basename($file), 'page' => $pageNumber + 1]
                     ];
                 }
@@ -212,7 +212,7 @@ class DocumentSearchService
 
                 foreach ($lines as $lineNumber => $line) {
                     $text[] = [
-                        'content' => $this->getCleanedText($line),
+                        'text' => $this->getCleanedText($line),
                         'metadata' => ['source' => basename($file), 'line' => $lineNumber + 1]
                     ];
                 }
@@ -279,7 +279,7 @@ class DocumentSearchService
         $chunks = [];
         $overlap = $this->chunkSize * 0.3; // 30% overlap
 
-        $fullText = implode("\n", array_column($textWithMetadata, 'content'));
+        $fullText = implode("\n", array_column($textWithMetadata, 'text'));
         $totalLength = strlen($fullText);
 
         for ($i = 0; $i < $totalLength; $i += ($this->chunkSize - $overlap)) {
@@ -299,7 +299,7 @@ class DocumentSearchService
         $currentPosition = 0;
 
         foreach ($textWithMetadata as $item) {
-            $length = strlen($item['content']);
+            $length = strlen($item['text']);
             if ($currentPosition + $length >= $start && $currentPosition <= $end) {
                 $metadata[] = $item['metadata'];
             }
