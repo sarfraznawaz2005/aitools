@@ -221,9 +221,6 @@ class ChatBuddy extends Component
                     4. Ensure your answer is clear, detailed, and directly addresses the query.
                     5. If the answer can be found in the context, provide specific details and explanations.
                     6. If you need to make any assumptions or inferences, clearly state them as such.
-                    7. The most relevant information in context will be given on top of it, but you can consider the whole context.
-                    8. For conversation history, consider messages present at bottom as most recent and top as oldest.
-                    Prioritize recent messages.
 
                     Please always try to provide Metadata information along with the answer in format:
 
