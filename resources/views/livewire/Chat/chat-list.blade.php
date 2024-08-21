@@ -61,89 +61,85 @@
                 @endif
 
 
-                @if (count($messages) > 1)
+                @if (count($messages) > 1 && isset($conversation) && $conversation)
                     <li class="flex justify-center ignore-mutation">
+                        <div class="flex justify-end w-full fixed top-16 right-10 gap-x-2">
 
-                        @if(isset($conversation) && $conversation)
-
-                            <div class="flex justify-end w-full fixed top-16 right-10 gap-x-2">
-
-                                <button type="button"
-                                        x-tooltip.raw="Clear Conversation"
-                                        x-data="{ isConfirming: false }"
-                                        @click="isConfirming ? $wire.clearConversation() : isConfirming = true"
-                                        @click.outside="isConfirming = false"
-                                        :class="{
+                            <button type="button"
+                                    x-tooltip.raw="Clear Conversation"
+                                    x-data="{ isConfirming: false }"
+                                    @click="isConfirming ? $wire.clearConversation() : isConfirming = true"
+                                    @click.outside="isConfirming = false"
+                                    :class="{
                                              'bg-white text-gray-800 hover:bg-gray-50': !isConfirming,
                                              'bg-red-500 text-white hover:bg-red-500': isConfirming
                                         }"
-                                        class="py-2 px-4 flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
-                                    <x-icons.delete class="flex-shrink-0"/>
-                                    <span
-                                          x-text="isConfirming ? 'Confirm?' : 'Clear'"
-                                          class="flex-grow text-center" :class="{'pr-6': isConfirming}"></span>
+                                    class="py-2 px-4 flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
+                                <x-icons.delete class="flex-shrink-0"/>
+                                <span
+                                    x-text="isConfirming ? 'Confirm?' : 'Clear'"
+                                    class="flex-grow text-center" :class="{'pr-6': isConfirming}"></span>
+                            </button>
+
+                            <div x-data="{ open: false }" class="relative">
+                                <button
+                                    @click="open = !open"
+                                    type="button"
+                                    class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                                >
+                                    <x-icons.export class="shrink-0 size-4"/>
+                                    Export
+                                    <svg
+                                        class="size-4"
+                                        :class="{ 'rotate-180': open }"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="m6 9 6 6 6-6"/>
+                                    </svg>
                                 </button>
 
-                                <div x-data="{ open: false }" class="relative">
-                                    <button
-                                        @click="open = !open"
-                                        type="button"
-                                        class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                                    >
-                                        <x-icons.export class="shrink-0 size-4"/>
-                                        Export
-                                        <svg
-                                            class="size-4"
-                                            :class="{ 'rotate-180': open }"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
+                                <div
+                                    x-cloak
+                                    x-show="open"
+                                    @click.away="open = false"
+                                    x-transition:enter="transition ease-out duration-200"
+                                    x-transition:enter-start="opacity-0 scale-95"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-150"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-95"
+                                    class="absolute right-0 mt-2 min-w-28 rounded-lg bg-gray-50 shadow-md space-y-0.5 divide-y divide-gray-200"
+                                    role="menu"
+                                >
+                                    <div class="py-2 first:pt-0 last:pb-0">
+                                        <a
+                                            @click.prevent="$wire.export('html')"
+                                            class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            href="#"
                                         >
-                                            <path d="m6 9 6 6 6-6"/>
-                                        </svg>
-                                    </button>
-
-                                    <div
-                                        x-cloak
-                                        x-show="open"
-                                        @click.away="open = false"
-                                        x-transition:enter="transition ease-out duration-200"
-                                        x-transition:enter-start="opacity-0 scale-95"
-                                        x-transition:enter-end="opacity-100 scale-100"
-                                        x-transition:leave="transition ease-in duration-150"
-                                        x-transition:leave-start="opacity-100 scale-100"
-                                        x-transition:leave-end="opacity-0 scale-95"
-                                        class="absolute right-0 mt-2 min-w-28 rounded-lg bg-gray-50 shadow-md space-y-0.5 divide-y divide-gray-200"
-                                        role="menu"
-                                    >
-                                        <div class="py-2 first:pt-0 last:pb-0">
-                                            <a
-                                                @click.prevent="$wire.export('html')"
-                                                class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                                href="#"
-                                            >
-                                                <x-icons.code class="shrink-0 size-4"/>
-                                                HTML
-                                            </a>
-                                            <a
-                                                @click.prevent="$wire.export('txt')"
-                                                class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                                href="#"
-                                            >
-                                                <x-icons.text class="shrink-0 size-4"/>
-                                                TEXT
-                                            </a>
-                                        </div>
+                                            <x-icons.code class="shrink-0 size-4"/>
+                                            HTML
+                                        </a>
+                                        <a
+                                            @click.prevent="$wire.export('txt')"
+                                            class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            href="#"
+                                        >
+                                            <x-icons.text class="shrink-0 size-4"/>
+                                            TEXT
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        @endif
+                        </div>
                     </li>
                 @endif
 
