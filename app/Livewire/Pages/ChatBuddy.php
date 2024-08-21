@@ -139,21 +139,22 @@ class ChatBuddy extends Component
     {
         return response()->stream(function () use ($conversation) {
 
-            $files = $conversation->bot->files();
-
-            if (!$files) {
-                sendStream("No files found!");
-                sendStream("", true);
-                return;
-            }
-
-            $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
-
             $latestMessage = $conversation
                 ->messages()
                 ->where('body', '=', Constants::CHATBUDDY_LOADING_STRING)
                 ->latest()
                 ->first();
+
+            $files = $conversation->bot->files();
+
+            if (!$files) {
+                sendStream("No files found!");
+                sendStream("", true);
+                $latestMessage->update(['body' => "No files found!"]);
+                return;
+            }
+
+            $userQuery = $conversation->messages()->where('is_ai', false)->latest()->first();
 
             try {
 
