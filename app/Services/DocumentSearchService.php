@@ -46,7 +46,7 @@ class DocumentSearchService
     {
         $results = [];
 
-        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query)], 'embedding-001');
+        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], 'embedding-001');
 
         $this->setTextEmbeddingsFromFiles($files);
 
@@ -63,7 +63,7 @@ class DocumentSearchService
     protected function performTextSearch(array $files, string $query): array
     {
         $results = [];
-        $cleanedQuery = $this->getCleanedText($query);
+        $cleanedQuery = $this->getCleanedText($query, true);
 
         foreach ($files as $file) {
             $textWithMetadata = $this->extractTextFromFile($file);
@@ -333,7 +333,7 @@ class DocumentSearchService
         return $dotProduct / ($uLength * $vLength);
     }
 
-    protected function getCleanedText(string $text, bool $removeStopWords = true): string
+    protected function getCleanedText(string $text, bool $removeStopWords = false): string
     {
         // Replace <br> tags with newlines
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
