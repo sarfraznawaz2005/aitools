@@ -241,20 +241,24 @@ class DocumentSearchService
                     $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
 
                     if ($similarity >= $this->similarityThreshold) {
-                        $matchedText = $this->textSplits[$file][$mainIndex][$index];
-                        $hash = md5($matchedText['text']);
 
-                        if (!isset($alreadyAdded[$hash])) {
-                            $alreadyAdded[$hash] = true;
+                        if (isset($this->textSplits[$file][$mainIndex][$index])) {
+                            $matchedText = $this->textSplits[$file][$mainIndex][$index];
+                            $hash = md5($matchedText['text']);
 
-                            //Log::info("TEXT@$index:" . $matchedText['text']);
+                            if (!isset($alreadyAdded[$hash])) {
+                                $alreadyAdded[$hash] = true;
 
-                            $results[] = [
-                                'similarity' => $similarity,
-                                'index' => $index,
-                                'matchedChunk' => $matchedText,
-                            ];
+                                //Log::info("TEXT@$index:" . $matchedText['text']);
+
+                                $results[] = [
+                                    'similarity' => $similarity,
+                                    'index' => $index,
+                                    'matchedChunk' => $matchedText,
+                                ];
+                            }
                         }
+
                     }
                 }
             }
