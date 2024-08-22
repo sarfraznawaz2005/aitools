@@ -165,7 +165,7 @@ class ChatBuddy extends Component
 
                 // todo: add stand alone llm answer?
                 // todo: what chunk size is best?
-                $searchService = DocumentSearchService::getInstance($llm, $conversation->id, 5000, $batchSize);
+                $searchService = DocumentSearchService::getInstance($llm, $conversation->id, 2000, $batchSize);
 
                 $isIndexingDone = true;
                 foreach ($files as $file) {
