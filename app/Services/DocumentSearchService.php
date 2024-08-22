@@ -21,7 +21,7 @@ class DocumentSearchService
                                  protected int         $chunkSize = 500,
                                  protected int         $embdeddingsBatchSize = 100,
                                  protected float       $similarityThreshold = 0.6,
-                                 protected int         $maxResults = 3,)
+                                 protected int         $maxResults = 3)
     {
         $this->parser = new Parser();
     }
@@ -49,11 +49,29 @@ class DocumentSearchService
     {
         $results = $this->performCosineSimilaritySearch($files, $query);
 
-        if (empty($results)) {
-            $results = $this->performTextSearch($files, $query);
+        if (!empty($results)) {
+            if (app()->environment('local')) {
+                Log::info('Resutls found via cosine similarity');
+            }
+
+            return $this->getTopResults($results);
         }
 
-        return $this->getTopResults($results);
+        $results = $this->performTextSearch($files, $query);
+
+        if (!empty($results)) {
+            if (app()->environment('local')) {
+                Log::info('Resutls found via text search');
+            }
+
+            return $this->getTopResults($results);
+        }
+
+        if (app()->environment('local')) {
+            Log::info('No results found, giving suggested topics');
+        }
+
+        return $this->getListOfIdeas($files);
     }
 
     /**
@@ -83,31 +101,60 @@ class DocumentSearchService
         $cleanedQuery = $this->getCleanedText($query, true);
 
         foreach ($files as $file) {
-            $textWithMetadata = $this->extractTextFromFile($file);
-            $chunks = $this->splitTextIntoChunks($textWithMetadata);
+            foreach ($this->textSplits[$file] as $chunks) {
+                foreach ($chunks as $index => $chunk) {
+                    $exactMatchScore = $this->calculateExactMatchScore($cleanedQuery, $chunk['text']);
+                    $fuzzyMatchScore = $this->calculateFuzzyMatchScore($cleanedQuery, $chunk['text']);
 
-            foreach ($chunks as $index => $chunk) {
-                $exactMatchScore = $this->calculateExactMatchScore($cleanedQuery, $chunk['text']);
-                $fuzzyMatchScore = $this->calculateFuzzyMatchScore($cleanedQuery, $chunk['text']);
+                    $maxScore = max($exactMatchScore, $fuzzyMatchScore);
 
-                $maxScore = max($exactMatchScore, $fuzzyMatchScore);
-
-                if ($maxScore >= $this->similarityThreshold) {
-                    $results[] = [
-                        'similarity' => $maxScore,
-                        'index' => $index,
-                        'matchedChunk' => $chunk,
-                    ];
+                    if ($maxScore >= $this->similarityThreshold) {
+                        $results[] = [
+                            'similarity' => $maxScore,
+                            'index' => $index,
+                            'matchedChunk' => ['text' => $chunk['text'], 'metadata' => $chunk['metadata']],
+                        ];
+                    }
                 }
             }
-
-            // Free memory after processing each file
-            unset($textWithMetadata, $chunks);
         }
 
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
         return $results;
+    }
+
+    protected function getListOfIdeas(array $files): array
+    {
+        $prompt = <<<EOF
+        Please convert following piece of text into brief list of topics user can ask questions about.
+        Do not mention anything else except for providing list of topics in following format:
+
+        - TOPIC 1
+        - TOPIC 2
+        - TOPIC 3
+
+        {{TEXT}}
+        EOF;
+
+        $result = '';
+        foreach ($files as $file) {
+            foreach ($this->textSplits[$file] as $chunks) {
+                foreach ($chunks as $chunk) {
+                    $result .= $chunk['text'] . "\n";
+                }
+            }
+        }
+
+        $prompt = str_replace('{{TEXT}}', $this->getCleanedText($result), $prompt);
+
+        $llmResult = $this->llm->chat($prompt);
+
+        return [[
+            'similarity' => $this->similarityThreshold,
+            'index' => 0,
+            'matchedChunk' => ['text' => $llmResult, 'metadata' => []],
+        ]];
     }
 
     protected function calculateExactMatchScore(string $query, string $text): float

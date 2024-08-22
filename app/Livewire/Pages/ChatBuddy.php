@@ -179,6 +179,7 @@ class ChatBuddy extends Component
                 }
 
                 $results = $searchService->searchDocuments($files, $userQuery->body);
+                //dd($results);
 
                 $context = '';
                 foreach ($results as $result) {
