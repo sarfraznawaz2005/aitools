@@ -2,17 +2,14 @@
 
 namespace App\Livewire\ApiKeys;
 
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class ApiKeyBanner extends Component
 {
-    public function render(): View|Factory|Application
+    #[Computed]
+    public function hasApiKeys()
     {
-        $hasApiKeys = hasApiKeysCreated();
-
-        return view('livewire.apikeys.api-key-banner', compact('hasApiKeys'));
+        return hasApiKeysCreated();
     }
 }
