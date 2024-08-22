@@ -325,7 +325,7 @@ class DocumentSearchService
                         // OpenAI structure for queryEmbeddings
                         $queryEmbeddingValues = $queryEmbeddings;
                     }
-                    
+
                     $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
 
                     if ($similarity >= $this->similarityThreshold) {
@@ -411,17 +411,21 @@ class DocumentSearchService
 
     protected function cosineSimilarity(array $u, array $v): float
     {
-        $dotProduct = 0.0;
-        $uLength = 0.0;
-        $vLength = 0.0;
+        try {
+            $dotProduct = 0.0;
+            $uLength = 0.0;
+            $vLength = 0.0;
 
-        foreach ($u as $i => $value) {
-            $dotProduct += $value * $v[$i];
-            $uLength += $value * $value;
-            $vLength += $v[$i] * $v[$i];
+            foreach ($u as $i => $value) {
+                $dotProduct += $value * $v[$i];
+                $uLength += $value * $value;
+                $vLength += $v[$i] * $v[$i];
+            }
+
+            return $dotProduct / (sqrt($uLength) * sqrt($vLength));
+        } catch (Exception $e) {
+            return 0;
         }
-
-        return $dotProduct / (sqrt($uLength) * sqrt($vLength));
     }
 
     protected function getCleanedText(string $text, bool $removeStopWords = false): string
