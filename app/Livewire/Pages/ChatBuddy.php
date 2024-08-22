@@ -75,17 +75,17 @@ class ChatBuddy extends Component
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
                 $conversationHistory = implode("\n", $uniqueMessages);
 
+                // add user's current question
+                $conversationHistory .= "\nUSER:" . $userQuery->body;
+
+                $prompt = makePromptForTextBot($conversation->bot, $userQuery->body, $conversationHistory, 2);
+
                 // switch to general bot temporarily in case of forced mode
                 if (file_exists('forceAnswer')) {
                     $generalBotPrompt = Bot::query()->where('name', 'General')->first()->prompt;
                     $prompt = $generalBotPrompt;
                     @unlink('forceAnswer');
                 }
-
-                // add user's current question
-                $conversationHistory .= "\nUSER:" . $userQuery->body;
-
-                $prompt = makePromptForTextBot($conversation->bot, $userQuery->body, $conversationHistory, 2);
 
                 $consolidatedResponse = '';
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
