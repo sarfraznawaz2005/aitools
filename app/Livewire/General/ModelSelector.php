@@ -37,6 +37,8 @@ class ModelSelector extends Component
     public function updated(): void
     {
         Setting::select($this->for)->set('selectedModel', $this->selectedModel);
+
+        $this->dispatch('modelChanged', $this->selectedModel);
     }
 
     public function render(): Application|View|Factory

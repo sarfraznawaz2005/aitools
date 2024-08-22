@@ -66,6 +66,20 @@ class ChatList extends Component
         }
     }
 
+    #[On('modelChanged')]
+    function modelChanged(): void
+    {
+        if ($this->conversation && $this->conversation->bot->isDocumentBot()) {
+            $files = $this->conversation->bot->files();
+
+            foreach ($files as $file) {
+                $fileName = basename($file);
+                $path = storage_path("app/$fileName-" . $this->conversation->id . '.json');
+                @unlink($path);
+            }
+        }
+    }
+
     public function forceAnswer(Message $message): void
     {
         touch('forceAnswer');
