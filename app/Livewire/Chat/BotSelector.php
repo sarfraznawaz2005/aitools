@@ -51,7 +51,7 @@ class BotSelector extends Component
         }
 
         if ($this->type === BotTypeEnum::TEXT->value) {
-            $rules['prompt'] = 'min:3|max:2500';
+            $rules['prompt'] = 'min:3|max:5000';
         }
 
         return $rules;
