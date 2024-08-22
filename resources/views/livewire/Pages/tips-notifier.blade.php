@@ -36,8 +36,7 @@
         @if($schedule_type === 'custom')
             <div>
                 <label for="minute" class="block text-sm font-medium text-gray-700">Minute</label>
-
-                <select id="minute" wire:model="minute"
+                <select id="minute" wire:model.change="minute"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     @for ($i = 0; $i < 60; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
@@ -47,7 +46,7 @@
 
             <div>
                 <label for="hour" class="block text-sm font-medium text-gray-700">Hour</label>
-                <select id="hour" wire:model="hour"
+                <select id="hour" wire:model.change="hour"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     @for ($i = 0; $i < 24; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
@@ -57,28 +56,28 @@
 
             <div>
                 <label for="day_of_week" class="block text-sm font-medium text-gray-700">Day of Week</label>
-                <select id="day_of_week" wire:model="day_of_week"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo 200 focus:ring-opacity-50">
+                <select id="day_of_week" wire:model.change="day_of_week"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     @for ($i = 0; $i < 7; $i++)
-                        <option value="{{ $i }}">{{ \Carbon\Carbon::createFromFormat('w', $i)->format('l') }}</option>
+                        <option
+                            value="{{ $i }}">{{ \Carbon\Carbon::create()->startOfWeek()->addDays($i)->format('l') }}</option>
                     @endfor
                 </select>
             </div>
 
             <div>
                 <label for="month" class="block text-sm font-medium text-gray-700">Month</label>
-                <select id="month" wire:model="month"
+                <select id="month" wire:model.change="month"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     @for ($i = 1; $i <= 12; $i++)
-                        <option
-                            value="{{ $i }}">{{ \Carbon\Carbon::createFromFormat('m', $i)->format('F') }}</option>
+                        <option value="{{ $i }}">{{ \Carbon\Carbon::create()->month($i)->format('F') }}</option>
                     @endfor
                 </select>
             </div>
 
             <div>
                 <label for="day_of_month" class="block text-sm font-medium text-gray-700">Day of Month</label>
-                <select id="day_of_month" wire:model="day_of_month"
+                <select id="day_of_month" wire:model.change="day_of_month"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     @for ($i = 1; $i <= $this->daysInMonth; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
@@ -87,10 +86,11 @@
             </div>
         @endif
 
+
         @if($schedule_type === 'recurring')
             <div>
                 <label for="recurring_days" class="block text-sm font-medium text-gray-700">Recurring Days</label>
-                <select id="recurring_days" wire:model="recurring_days" multiple
+                <select id="recurring_days" wire:model.change="recurring_days" multiple
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     @for ($i = 1; $i <= 31; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
