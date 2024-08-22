@@ -229,7 +229,7 @@
                                 },
                                 {
                                     title: 'Animals',
-                                    icons: ['🐼', '🦁', '🦜']
+                                    icons: ['🐼', '🦁', '🦜', '🦄']
                                 },
                                 {
                                     title: 'Places & Transportation',
