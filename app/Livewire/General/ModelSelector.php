@@ -19,11 +19,6 @@ class ModelSelector extends Component
     #[Computed]
     public function apiKeys()
     {
-        return ApiKey::all()->sortBy('model_name');
-    }
-
-    public function mount(): void
-    {
         if (
             Setting::select($this->for)->has('selectedModel') &&
             ApiKey::where('model_name', Setting::select($this->for)->get('selectedModel'))->exists()
@@ -36,6 +31,8 @@ class ModelSelector extends Component
                 Setting::select($this->for)->set('selectedModel', $this->selectedModel);
             }
         }
+
+        return ApiKey::all()->sortBy('model_name');
     }
 
     public function updated(): void
