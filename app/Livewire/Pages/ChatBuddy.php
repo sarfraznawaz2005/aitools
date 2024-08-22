@@ -161,11 +161,12 @@ class ChatBuddy extends Component
 
                 $markdown = app(MarkdownRenderer::class);
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
-                $batchSize = $this->getEmbeddingsBatchSize();
+                $embeddingModel = $this->getEmbeddingsModel();
+                $embdeddingsBatchSize = $this->getEmbeddingsBatchSize();
 
                 // About Chunk Size: if too long, it will not answer granular details, and if it is too short, it will
                 // not answer long details so this is trade off.
-                $searchService = DocumentSearchService::getInstance($llm, $conversation->id, 2000, $batchSize);
+                $searchService = DocumentSearchService::getInstance($llm, $conversation->id, $embeddingModel, $embdeddingsBatchSize, 2000);
 
                 $isIndexingDone = true;
                 foreach ($files as $file) {
@@ -317,7 +318,19 @@ class ChatBuddy extends Component
                 $uniqueMessages[] = htmlToText($formattedMessage);
             }
         }
+
         return $uniqueMessages;
+    }
+
+    protected function getEmbeddingsModel($modelName = ''): string
+    {
+        $llmModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+
+        return match ($llmModel->llm_type) {
+            ApiKeyTypeEnum::GEMINI->value => !empty($modelName) ? $modelName : 'embedding-001',
+            ApiKeyTypeEnum::OPENAI->value => !empty($modelName) ? $modelName : 'text-embedding-ada-002',
+            default => $modelName,
+        };
     }
 
     protected function getEmbeddingsBatchSize(): int
@@ -326,8 +339,8 @@ class ChatBuddy extends Component
 
         return match ($llmModel->llm_type) {
             ApiKeyTypeEnum::GEMINI->value => 100,
-            ApiKeyTypeEnum::OPENAI->value => 2000,
-            default => 50,
+            ApiKeyTypeEnum::OPENAI->value => 2048,
+            default => 1000,
         };
     }
 }

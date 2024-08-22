@@ -18,8 +18,9 @@ class DocumentSearchService
 
     private function __construct(protected LlmProvider $llm,
                                  protected string      $fileIdentifier,
-                                 protected int         $chunkSize = 500,
+                                 protected string      $embdeddingModel,
                                  protected int         $embdeddingsBatchSize = 100,
+                                 protected int         $chunkSize = 500,
                                  protected float       $similarityThreshold = 0.6,
                                  protected int         $maxResults = 3)
     {
@@ -29,14 +30,15 @@ class DocumentSearchService
     public static function getInstance(
         LlmProvider $llm,
         string      $fileIdentifier,
-        int         $chunkSize = 500,
+        string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
+        int         $chunkSize = 500,
         float       $similarityThreshold = 0.6,
         int         $maxResults = 3
     ): DocumentSearchService
     {
         if (self::$instance === null) {
-            self::$instance = new self($llm, $fileIdentifier, $chunkSize, $embdeddingsBatchSize, $similarityThreshold, $maxResults);
+            self::$instance = new self($llm, $fileIdentifier, $embdeddingModel, $embdeddingsBatchSize, $chunkSize, $similarityThreshold, $maxResults);
         }
 
         return self::$instance;
@@ -81,7 +83,7 @@ class DocumentSearchService
     {
         $results = [];
 
-        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], 'embedding-001');
+        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->embdeddingModel);
 
         $this->setTextEmbeddingsFromFiles($files);
 
@@ -201,7 +203,7 @@ class DocumentSearchService
 
         $textSplits = array_filter($textSplits);
 
-        $embeddings = $this->llm->embed($textSplits, 'embedding-001');
+        $embeddings = $this->llm->embed($textSplits, $this->embdeddingModel);
 
         $data = [
             'embeddings' => $embeddings,
@@ -307,8 +309,24 @@ class DocumentSearchService
         foreach ($this->embeddings as $file => $fileEmbeddings) {
             foreach ($fileEmbeddings as $mainIndex => $embeddings) {
 
-                foreach ($embeddings['embeddings'] as $index => $embedding) {
-                    $similarity = $this->cosineSimilarity($embedding['values'], $queryEmbeddings['embeddings'][0]['values']);
+                if (isset($embeddings['embeddings'])) {
+                    // Gemini structure: 'embeddings' => array of arrays with 'values'
+                    $embeddingValues = array_column($embeddings['embeddings'], 'values');
+                } else {
+                    // OpenAI structure: direct array of embedding values
+                    $embeddingValues = [$embeddings];
+                }
+
+                foreach ($embeddingValues as $index => $embedding) {
+                    // Gemini structure for queryEmbeddings
+                    if (isset($queryEmbeddings['embeddings'])) {
+                        $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
+                    } else {
+                        // OpenAI structure for queryEmbeddings
+                        $queryEmbeddingValues = $queryEmbeddings;
+                    }
+                    
+                    $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
 
                     if ($similarity >= $this->similarityThreshold) {
 
@@ -318,8 +336,6 @@ class DocumentSearchService
 
                             if (!isset($alreadyAdded[$hash])) {
                                 $alreadyAdded[$hash] = true;
-
-                                //Log::info("TEXT@$index:" . $matchedText['text']);
 
                                 $results[] = [
                                     'similarity' => $similarity,

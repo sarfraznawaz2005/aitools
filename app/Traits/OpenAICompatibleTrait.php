@@ -53,22 +53,19 @@ trait OpenAICompatibleTrait
         return isset($response) ? $this->getResult($response) : '';
     }
 
-    public function embed(string $text, string $embeddingModel): array|string
+    /**
+     * @throws Exception
+     */
+    public function embed(array $texts, string $embeddingModel): array|string
     {
-        // openai also has batch embed content which should be used instead for multiple texts
-
         $url = $this->baseUrl . 'embeddings';
 
-        try {
-            $response = $this->makeRequest($url, [
-                'input' => $text,
-                'model' => $embeddingModel
-            ], false, true);
+        $response = $this->makeRequest($url, [
+            'input' => $texts,
+            'model' => $embeddingModel
+        ], false, true);
 
-            return $response['data'][0]['embedding'];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        return $response['data'][0]['embedding'] ?? [];
     }
 
     protected function getResult(array $response): string
