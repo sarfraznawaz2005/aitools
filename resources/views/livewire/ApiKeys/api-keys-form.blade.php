@@ -1,6 +1,6 @@
 <div>
 
-    @if ($apiKeys && count($apiKeys))
+    @if ($this->apiKeys && count($this->apiKeys))
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
             <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">SAVED API KEYS</legend>
 
@@ -22,7 +22,7 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
-                @foreach($apiKeys as $apiKey)
+                @foreach($this->apiKeys as $apiKey)
                     <tr wire:key="apikeyrow-{{ $apiKey->id }}">
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
                             {{ $apiKey->model_name }}

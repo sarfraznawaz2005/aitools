@@ -6,15 +6,10 @@ use Livewire\Component;
 
 class Header extends Component
 {
-    public $title;
+    public string $title;
 
-    public function mount($title)
+    public function mount($title): void
     {
         $this->title = $title;
-    }
-
-    public function render()
-    {
-        return view('livewire.general.header');
     }
 }

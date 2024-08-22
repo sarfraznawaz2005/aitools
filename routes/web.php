@@ -1,7 +1,5 @@
 <?php
 
-use App\Actions\ChatBuddyChatAction;
-use App\Actions\TextStylerAction;
 use App\Livewire\Pages\ChatBuddy;
 use App\Livewire\Pages\TextStyler;
 use App\Livewire\Pages\TipsNotifier;

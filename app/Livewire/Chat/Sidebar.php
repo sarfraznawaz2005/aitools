@@ -4,10 +4,7 @@ namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Traits\InteractsWithToast;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Sidebar extends Component
@@ -15,29 +12,21 @@ class Sidebar extends Component
     use InteractsWithToast;
 
     public ?Conversation $conversation = null;
-    public Collection $conversations;
 
     public string $search = '';
 
     protected $listeners = ['conversationsUpdated' => '$refresh'];
 
-    public function updated(): void
+    #[Computed]
+    public function conversations(): \Illuminate\Database\Eloquent\Collection
     {
-
-
-    }
-
-    public function render(): View|Application|Factory
-    {
-        $this->conversations = Conversation::query()
+        return Conversation::query()
             ->when($this->search, function ($query) {
                 $query->where('title', 'like', '%' . $this->search . '%');
             })
             ->orderByDesc('updated_at')
             ->orderByDesc('id')
             ->get();
-
-        return view('livewire.chat.sidebar');
     }
 
     public function toggleFavorite(Conversation $conversation): void

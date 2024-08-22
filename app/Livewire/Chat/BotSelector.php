@@ -5,11 +5,10 @@ namespace App\Livewire\Chat;
 use App\Enums\BotTypeEnum;
 use App\Models\Bot;
 use App\Traits\InteractsWithToast;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -66,6 +65,12 @@ class BotSelector extends Component
             'bio.max' => 'The description must not exceed 500 characters.',
             'files.max_combined_size' => 'The total size of the files must not exceed 25 MB.',
         ];
+    }
+
+    #[Computed]
+    public function bots(): Collection
+    {
+        return Bot::query()->orderBy('name')->get();
     }
 
     public function mount(Bot $bot = null): void
@@ -186,13 +191,6 @@ class BotSelector extends Component
         $this->botFiles = [];
 
         $this->model = new Bot();
-    }
-
-    public function render(): View|Factory|Application
-    {
-        return view('livewire.chat.bot-selector', [
-            'bots' => Bot::query()->orderBy('name')->get(),
-        ]);
     }
 }
 

@@ -3,9 +3,6 @@
 namespace App\Livewire\Settings;
 
 use App\Models\Conversation;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
@@ -40,10 +37,5 @@ class ChatBuddySettings extends Component
         session()->flash('conversationsDeleted', 'Conversations deleted successfully.');
 
         $this->redirect(route(config('tools.chat-buddy.route')));
-    }
-
-    public function render(): Application|View|Factory
-    {
-        return view('livewire.settings.chat-buddy-settings');
     }
 }

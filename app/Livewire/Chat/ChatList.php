@@ -9,9 +9,9 @@ use App\Models\Message;
 use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -22,7 +22,6 @@ class ChatList extends Component
 
     public ?Conversation $conversation = null;
     public ?Message $lastMessage = null;
-    public Collection $messages;
     public array $botFiles = [];
 
     protected $listeners = ['refreshChatList' => '$refresh'];
@@ -48,10 +47,17 @@ class ChatList extends Component
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
     }
 
+    #[Computed]
+    public function messages()
+    {
+        if ($this->conversation) {
+            return $this->conversation->messages->sortBy('id');
+        }
+    }
+
     protected function refresh(): void
     {
         if ($this->conversation) {
-            $this->messages = $this->conversation->messages->sortBy('id');
 
             if (!$this->conversation->bot) {
                 $this->conversation->bot()->associate(Bot::where('name', 'General')->first());

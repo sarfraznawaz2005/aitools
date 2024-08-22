@@ -20,7 +20,7 @@
 
                     <div
                         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 font-medium">
-                        @foreach($bots as $bot)
+                        @foreach($this->bots as $bot)
                             @if($bot->system)
                                 <button
                                     type="button"
@@ -59,7 +59,7 @@
 
                     <div
                         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 font-medium">
-                        @foreach($bots as $bot)
+                        @foreach($this->bots as $bot)
                             @if(!$bot->system)
                                 <div
                                     class="flex w-full {{$bot->id === $newBotId ? 'animate-jump animate-delay-500' : ''}}">
@@ -102,7 +102,7 @@
                         @endforeach
                     </div>
 
-                    <div class="flex justify-center {{$bots->where('system', false)->count() > 0 ? 'mt-8' : ''}}">
+                    <div class="flex justify-center {{$this->bots->where('system', false)->count() > 0 ? 'mt-8' : ''}}">
                         <x-gradient-button data-hs-overlay="#botModal" wire:click="resetForm">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

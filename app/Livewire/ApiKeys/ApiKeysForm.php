@@ -3,9 +3,7 @@
 namespace App\Livewire\ApiKeys;
 
 use App\Models\ApiKey;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class ApiKeysForm extends Component
@@ -25,6 +23,12 @@ class ApiKeysForm extends Component
             'api_key' => 'required|min:3|regex:/^\S*$/u',
             'model_name' => 'required|min:3|unique:api_keys,model_name,' . ($this->model->id ?? 'NULL') . ',id|regex:/^\S*$/u',
         ];
+    }
+
+    #[Computed]
+    public function apiKeys()
+    {
+        return ApiKey::all()->sortBy('model_name');
     }
 
     public function mount(ApiKey $apiKey = null): void
@@ -95,12 +99,5 @@ class ApiKeysForm extends Component
         $this->model = new ApiKey();
 
         $this->dispatch('apiKeysUpdated');
-    }
-
-    public function render(): View|Application|Factory
-    {
-        return view('livewire.apikeys.api-keys-form', [
-            'apiKeys' => ApiKey::all()->sortBy('model_name'),
-        ]);
     }
 }

@@ -3,9 +3,7 @@
 namespace App\Livewire\General;
 
 use App\Models\ApiKey;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
 
@@ -17,6 +15,12 @@ class ModelSelector extends Component
     public string $selectedModel;
 
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
+
+    #[Computed]
+    public function apiKeys()
+    {
+        return ApiKey::all()->sortBy('model_name');
+    }
 
     public function mount(): void
     {
@@ -39,12 +43,5 @@ class ModelSelector extends Component
         Setting::select($this->for)->set('selectedModel', $this->selectedModel);
 
         $this->dispatch('modelChanged', $this->selectedModel);
-    }
-
-    public function render(): Application|View|Factory
-    {
-        return view('livewire.general.model-selector', [
-            'apiKeys' => ApiKey::all()->sortBy('model_name'),
-        ]);
     }
 }

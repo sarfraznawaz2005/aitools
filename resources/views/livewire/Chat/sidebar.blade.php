@@ -26,16 +26,14 @@
                     </li>
                 @endif
 
-                @if (count($conversations) > 0)
-                    <li class="pb-2">
-                        <input wire:model.live.debounce.500ms.throttle.1000ms="search"
-                               type="text"
-                               placeholder="Search Conversations"
-                               class="w-full px-3 py-1 text-sm text-gray-700 placeholder-gray-400 border-0 text-center focus:ring-0"/>
-                    </li>
-                @endif
+                <li class="pb-2">
+                    <input wire:model.live.debounce.500ms="search"
+                           type="text"
+                           placeholder="Search Conversations"
+                           class="w-full px-3 py-1 text-sm text-gray-700 placeholder-gray-400 border-0 text-center focus:ring-0"/>
+                </li>
 
-                @foreach($conversations as $conversationItem)
+                @foreach($this->conversations as $conversationItem)
                     <li x-cloak wire:key="conv-{{$conversationItem->id}}"
                         x-data="{
                                 editable: false,

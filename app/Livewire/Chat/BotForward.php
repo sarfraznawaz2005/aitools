@@ -6,9 +6,8 @@ use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Traits\InteractsWithToast;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
+use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -18,6 +17,12 @@ class BotForward extends Component
 
     public ?Message $message = null;
     public ?Bot $bot = null;
+
+    #[Computed]
+    public function bots(): Collection
+    {
+        return Bot::query()->orderBy('name')->get();
+    }
 
     #[On('startFoward')]
     public function startFoward(Message $message): void
@@ -68,12 +73,5 @@ class BotForward extends Component
         session()->flash('addBotMessage', $conversation->id);
 
         $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $conversation), true);
-    }
-
-    public function render(): View|Factory|Application
-    {
-        return view('livewire.chat.bot-forward', [
-            'bots' => Bot::query()->orderBy('name')->get(),
-        ]);
     }
 }

@@ -18,7 +18,7 @@
 
             <livewire:chat.bot-forward wire:key="chatbuddy-bot-forward"/>
 
-            @unless (isset($messages))
+            @unless (isset($this->messages))
                 <livewire:chat.bot-selector wire:key="chatbuddy-bot-selector"/>
 
                 <script>
@@ -27,24 +27,6 @@
                     }
                 </script>
             @else
-
-                <script>
-                    function scrollToBottom() {
-                        window.scrollTo({
-                            top: document.body.scrollHeight + 10000,
-                            behavior: 'smooth'
-                        });
-                    }
-                </script>
-
-                <li>
-                    <div class="flex justify-center align-center">
-                    <span
-                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
-                        📅 Conversation created {{$conversation->created_at->diffForHumans()}}
-                    </span>
-                    </div>
-                </li>
 
                 @if($botFiles)
                     <fieldset
@@ -60,7 +42,26 @@
                     </fieldset>
                 @endif
 
-                @if (count($messages) > 1 && isset($conversation) && $conversation)
+                @if (count($this->messages) > 1 && isset($conversation) && $conversation)
+
+                        <script>
+                            function scrollToBottom() {
+                                window.scrollTo({
+                                    top: document.body.scrollHeight + 10000,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        </script>
+
+                        <li>
+                            <div class="flex justify-center align-center">
+                    <span
+                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
+                        📅 Conversation created {{$conversation->created_at->diffForHumans()}}
+                    </span>
+                            </div>
+                        </li>
+
                     <li class="flex justify-center ignore-mutation">
                         <div class="flex justify-end w-full fixed top-16 right-10 gap-x-2">
 
@@ -142,7 +143,7 @@
                     </li>
                 @endif
 
-                @foreach($messages as $message)
+                @foreach($this->messages as $message)
                     @if(!$message->is_ai)
                         <li wire:key="chatlist-message{{$message->id}}" class="my-4" x-data="{
                             copied: false,
