@@ -1,7 +1,6 @@
 <?php
 /*
  * TODO
- * openai/ollama chat pdf
  * cache https://livewire.laravel.com/docs/computed-properties#caching-between-requests
  * Tips notifier should support multiple tips
  * Researcher Agent
