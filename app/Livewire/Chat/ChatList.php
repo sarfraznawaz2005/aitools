@@ -60,7 +60,7 @@ class ChatList extends Component
         if ($this->conversation) {
 
             if (!$this->conversation->bot) {
-                $this->conversation->bot()->associate(Bot::where('name', 'General')->first());
+                $this->conversation->bot()->associate(Bot::query()->where('name', 'General')->first());
                 $this->conversation->save();
 
                 session()->flash('message', 'The Bot was not found, so the conversation was assigned to the General Bot automatically.');
