@@ -1,5 +1,5 @@
 <div
-    wire:key="autoloader-{{ uniqid() . microtime(true) }}"
+    wire:ignore
     x-data="{ loading: true }"
     x-show="loading || $store.loading"
     x-init="$nextTick(() => { loading = false; })"

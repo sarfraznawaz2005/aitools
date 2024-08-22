@@ -1,5 +1,5 @@
 <div
-    wire:key="confirm-dialog-{{ $call }}"
+    wire:ignore
     x-cloak
     class="inline"
     x-data="{ open: false }"
