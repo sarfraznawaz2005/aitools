@@ -163,8 +163,8 @@ class ChatBuddy extends Component
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
                 $batchSize = $this->getEmbeddingsBatchSize();
 
-                // todo: add stand alone llm answer?
-                // todo: what chunk size is best?
+                // About Chunk Size: if too long, it will not answer granular details, and if it is too short, it will
+                // not answer long details so this is trade off.
                 $searchService = DocumentSearchService::getInstance($llm, $conversation->id, 2000, $batchSize);
 
                 $isIndexingDone = true;
