@@ -4,6 +4,7 @@ namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Traits\InteractsWithToast;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -18,7 +19,7 @@ class Sidebar extends Component
     protected $listeners = ['conversationsUpdated' => '$refresh'];
 
     #[Computed]
-    public function conversations(): \Illuminate\Database\Eloquent\Collection
+    public function conversations(): Collection
     {
         return Conversation::query()
             ->when($this->search, function ($query) {
