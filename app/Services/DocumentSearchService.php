@@ -423,7 +423,7 @@ class DocumentSearchService
             }
 
             return $dotProduct / (sqrt($uLength) * sqrt($vLength));
-        } catch (Exception $e) {
+        } catch (Exception) {
             return 0;
         }
     }
