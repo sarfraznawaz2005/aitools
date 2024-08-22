@@ -85,11 +85,7 @@ class ChatBuddy extends Component
                 // add user's current question
                 $conversationHistory .= "\nUSER:" . $userQuery->body;
 
-                $prompt = makePromopt($conversation->bot, $userQuery->body, $conversationHistory, 2);
-
-                if (app()->environment('local')) {
-                    Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
-                }
+                $prompt = makePromptForTextBot($conversation->bot, $userQuery->body, $conversationHistory, 2);
 
                 $consolidatedResponse = '';
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
@@ -193,76 +189,14 @@ class ChatBuddy extends Component
                     $context .= $result['matchedChunk']['text'] . "\nMetadata:" . json_encode($result['matchedChunk']['metadata']) . "\n\n";
                 }
 
-                $relatedQuestionsPrompt = '';
                 $attachedFiles = implode(',', array_map(fn($file) => basename($file), $files));
                 $attachedFilesCount = count(array_map(fn($file) => basename($file), $files));
                 $latestMessages = $this->getLatestMessages($conversation);
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
                 $conversationHistory = implode("\n", $uniqueMessages);
 
-                if ($conversation->bot->showRelatedQuestions()) {
-                    $relatedQuestionsPrompt = config('prompts.documentBotRelatedQuestionsPrompt');
-                }
-
-                $prompt = <<<PROMPT
-                    You are an AI assistant designed to answer questions based on provided context and conversation history.
-                    Your task is to provide helpful and accurate answers to user queries.
-
-                    First, carefully read and analyze the following context:
-
-                    You have been provided below context and contents/details from $attachedFilesCount files/documents named $attachedFiles.\n
-
-                    <context>
-                    $context
-                    </context>
-
-                    Now, consider the conversation history:
-
-                    <conversation_history>
-                    $conversationHistory
-                    </conversation_history>
-
-                    Here is the user's current query:
-
-                    <query>
-                    $userQuery->body
-                    </query>
-
-                    Using the provided context and conversation history, formulate a helpful answer to the query.
-                    Follow these guidelines:
-
-                    1. Base your answer primarily on the information given in the context.
-                    2. If the information needed to answer the query is not present in the context, look for relevant details in the conversation history.
-                    3. Always use the conversation history to maintain consistency and provide relevant follow-ups if applicable.
-                    4. Ensure your answer is clear, detailed, and directly addresses the query.
-                    5. If the answer can be found in the context, provide specific details and explanations.
-                    6. If you need to make any assumptions or inferences, clearly state them as such.
-
-                    Please always try to extract Metadata including file names and page numbers from given context and
-                    present it below in this format. Do not assume source file name or pages numbers, always extract from
-                    metadata. Please always try to provide file names and page numbers if available in given context.
-
-                    Sources Format:
-                        <span class="text-xs">Sources: (example: Document1.pdf, Document2.pdf, pages: 1-5)</span>
-
-                        of below format if "pages" are not mentioned or available:
-
-                        <span class="text-xs">Sources: (example: Document1.txt, Document2.txt)</span>
-
-                    Do not mention sources if not available.
-
-                    If the information needed to answer the query is not present in the context or conversation history,
-                    or if you are unsure about the answer, respond with "Sorry, I don't have enough information to answer
-                    this question accurately." NEVER ATTEMPT TO MAKE UP OR GUESS AN ANSWER.
-
-                    $relatedQuestionsPrompt
-
-                    Please provide answer here:
-                PROMPT;
-
-                if (app()->environment('local')) {
-                    Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
-                }
+                $info = "You have been provided below context and contents/details from $attachedFilesCount files/documents named $attachedFiles.\n";
+                $prompt = makePromoptForDocumentBot($conversation->bot, $info, $context, $userQuery->body, $conversationHistory);
 
                 $consolidatedResponse = '';
 

@@ -17,6 +17,7 @@ use App\LLM\OpenAiProvider;
 use App\Models\ApiKey;
 use App\Models\Bot;
 use App\Models\Conversation;
+use Illuminate\Support\Facades\Log;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 function getLLM(ApiKey $model): LlmProvider
@@ -62,7 +63,7 @@ function AIChatFailed($result): string
     return '';
 }
 
-function makePromopt(Bot $bot, string $userQuery, string $conversationHistory, int $version = 1): string
+function makePromptForTextBot(Bot $bot, string $userQuery, string $conversationHistory, int $version = 1): string
 {
     $relatedQuestionsPrompt = '';
 
@@ -70,19 +71,45 @@ function makePromopt(Bot $bot, string $userQuery, string $conversationHistory, i
         $relatedQuestionsPrompt = config('prompts.textBotRelatedQuestionsPrompt');
     }
 
-    $prompt = $bot->prompt;
+    $prompt = config("prompts.v$version");
 
     $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
+    $prompt = str_ireplace('{{PROMPT}}', $bot->prompt, $prompt);
+    $prompt = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $prompt);
 
-    $basePrommpt = config("prompts.v$version");
+    $prompt .= $relatedQuestionsPrompt;
+    $prompt .= "\nPlease provide answer here:";
 
-    $promptFinal = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $basePrommpt);
-    $promptFinal = str_ireplace('{{USER_QUESTION}}', $userQuery, $promptFinal);
+    if (app()->environment('local')) {
+        Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+    }
 
-    $promptFinal .= $relatedQuestionsPrompt;
-    $promptFinal .= "\nPlease provide answer here:";
+    return $prompt;
+}
 
-    return str_ireplace('{{PROMPT}}', $prompt, $promptFinal);
+function makePromoptForDocumentBot(Bot $bot, string $infoHeader, string $context, string $userQuery, string $conversationHistory): string
+{
+    $relatedQuestionsPrompt = '';
+
+    if ($bot->showRelatedQuestions()) {
+        $relatedQuestionsPrompt = config('prompts.documentBotRelatedQuestionsPrompt');
+    }
+
+    $prompt = config('prompts.documentBotPrompt');
+
+    $prompt = str_ireplace('{{INFO}}', $infoHeader, $prompt);
+    $prompt = str_ireplace('{{CONTEXT}}', $context, $prompt);
+    $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
+    $prompt = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $prompt);
+
+    $prompt .= $relatedQuestionsPrompt;
+    $prompt .= "\nPlease provide answer here:";
+
+    if (app()->environment('local')) {
+        Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+    }
+
+    return $prompt;
 }
 
 function sendStream($text, $sendCloseSignal = false): void
