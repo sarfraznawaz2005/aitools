@@ -100,8 +100,14 @@ class ChatBuddy extends Component
                     sendStream($chunk);
                 });
 
+                $selectedModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+
                 //Log::info("consolidatedResponse: $consolidatedResponse");
-                $latestMessage->update(['body' => $markdown->toHtml($consolidatedResponse)]);
+                $latestMessage->update([
+                    'body' => $markdown->toHtml($consolidatedResponse),
+                    'llm' => $selectedModel->llm_type . ' (' . $selectedModel->model_name . ')' ?? '',
+                ]);
+
 
             } catch (Exception $e) {
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
@@ -266,7 +272,12 @@ class ChatBuddy extends Component
                     sendStream($chunk);
                 });
 
-                $latestMessage->update(['body' => $markdown->toHtml($consolidatedResponse)]);
+                $selectedModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+
+                $latestMessage->update([
+                    'body' => $markdown->toHtml($consolidatedResponse),
+                    'llm' => $selectedModel->llm_type . ' (' . $selectedModel->model_name . ')' ?? '',
+                ]);
 
             } catch (Exception $e) {
                 Log::error($e->getFile() . ' - Query: "' . $userQuery->body . '" - Error: ' . $e->getMessage() . ' on line ' . $e->getLine());
