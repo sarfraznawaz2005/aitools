@@ -218,7 +218,7 @@
                                              wire:click="forceAnswer({{$message->id}})"
                                              x-data
                                              x-tooltip.raw="Stuck with AI giving same answer repeatedly? Click to try to get forced answer.">
-                                            🧙‍♂️
+                                            ✨
                                         </div>
                                     @endif
 
