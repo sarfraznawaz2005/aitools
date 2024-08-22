@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Native\Laravel\Facades\Window;
 use Native\Laravel\Contracts\ProvidesPhpIni;
+use Native\Laravel\Facades\Window;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
 {
@@ -22,6 +22,11 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function phpIni(): array
     {
         return [
+            'memory_limit' => '2G',
+            'display_errors' => '1',
+            'error_reporting' => 'E_ALL',
+            'max_execution_time' => '0',
+            'max_input_time' => '0',
         ];
     }
 }
