@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -17,6 +18,7 @@ class TipsNotifier extends Component
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
     public $schedule_type = 'hourly';
+    public $tip = 'hi there...';
     public $minute;
     public $hour;
     public $day_of_week;
@@ -74,17 +76,20 @@ class TipsNotifier extends Component
         session()->flash('message', 'Selected tips deleted successfully!');
     }
 
-    public function getTipsProperty(): Collection
+    #[Computed]
+    public function tips(): Collection
     {
         return Tip::all();
     }
 
-    public function getDaysInMonthProperty(): int
+    #[Computed]
+    public function daysInMonth(): int
     {
         return Carbon::createFromDate(null, $this->month)->daysInMonth;
     }
 
-    public function getPreviewProperty(): string
+    #[Computed]
+    public function preview(): string
     {
         $preview = '';
 

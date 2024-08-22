@@ -22,6 +22,7 @@
                           data-tooltip="Select how often you want the tip to trigger.">[?]</span>
                 </label>
 
+                {{$schedule_type}}
                 <select id="schedule_type" wire:model="schedule_type"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo 200 focus:ring-opacity-50">
                     <option value="every_minute">Every Minute</option>
@@ -45,6 +46,7 @@
                         @endfor
                     </select>
                 </div>
+
                 <div>
                     <label for="hour" class="block text-sm font-medium text-gray-700">Hour</label>
                     <select id="hour" wire:model="hour"
@@ -54,6 +56,7 @@
                         @endfor
                     </select>
                 </div>
+
                 <div>
                     <label for="day_of_week" class="block text-sm font-medium text-gray-700">Day of Week</label>
                     <select id="day_of_week" wire:model="day_of_week"
@@ -64,6 +67,7 @@
                         @endfor
                     </select>
                 </div>
+
                 <div>
                     <label for="month" class="block text-sm font-medium text-gray-700">Month</label>
 
@@ -79,7 +83,7 @@
                     <label for="day_of_month" class="block text-sm font-medium text-gray-700">Day of Month</label>
                     <select id="day_of_month" wire:model="day_of_month"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        @for ($i = 1; $i <= $daysInMonth; $i++)
+                        @for ($i = 1; $i <= $this->daysInMonth; $i++)
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
                     </select>
@@ -99,7 +103,7 @@
             @endif
 
             <div class="mt-4">
-                <p><strong>Schedule Preview:</strong> {{ $preview }}</p>
+                <p><strong>Schedule Preview:</strong> {{ $this->preview }}</p>
             </div>
             <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 border
                 border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
@@ -117,7 +121,6 @@
                         focus:ring-opacity-50">
                         <option value="">Batch Action</option>
                         <option value="delete">Delete Selected</option>
-                        <option value="edit">Edit Selected</option>
                     </select>
                     <button wire:click.prevent="batchDelete" class="inline-flex items-center
                         px-3 py-1.5 bg-red-500 text-white text-xs font-semibold rounded-md hover:bg-red-700
@@ -132,7 +135,7 @@
                     </button>
                 </div>
 
-                @foreach($tips as $tip)
+                @foreach($this->tips as $tip)
                     <div class="p-4 bg-white shadow rounded-md">
                         <div class="flex items-start">
                             <input type="checkbox" wire:model="selected_tips" value="{{ $tip->id }}" class="mr-3 mt-1">
