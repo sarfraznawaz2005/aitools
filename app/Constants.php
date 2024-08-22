@@ -14,4 +14,8 @@ final class Constants
     const int CHATBUDDY_TOTAL_CONVERSATION_HISTORY = 50;
 
     const string TEXTSTYLER_SELECTED_LLM_KEY = 'TextStyler-LLM';
+
+    const string OPENAI_EMBEDDING_MODEL = 'text-embedding-ada-002';
+    const string GEMINI_EMBEDDING_MODEL = 'embedding-001';
+    const string OLLAMA_EMBEDDING_MODEL = 'mistral:latest';
 }

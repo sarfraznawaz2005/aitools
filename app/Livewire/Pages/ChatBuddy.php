@@ -334,14 +334,14 @@ class ChatBuddy extends Component
         return $uniqueMessages;
     }
 
-    protected function getEmbeddingsModel($modelName = ''): string
+    protected function getEmbeddingsModel(): string
     {
         $llmModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
         return match ($llmModel->llm_type) {
-            ApiKeyTypeEnum::GEMINI->value => !empty($modelName) ? $modelName : 'embedding-001',
-            ApiKeyTypeEnum::OPENAI->value => !empty($modelName) ? $modelName : 'text-embedding-ada-002',
-            default => $modelName,
+            ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
+            ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
+            default => Constants::OLLAMA_EMBEDDING_MODEL,
         };
     }
 
