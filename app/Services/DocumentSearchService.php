@@ -410,6 +410,7 @@ class DocumentSearchService
 
     protected function getCleanedText(string $text, bool $removeStopWords = false): string
     {
+        $text = strtolower($text);
         $text = strip_tags($text);
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
         $text = preg_replace('/<\/p>/i', "\n\n", $text);
