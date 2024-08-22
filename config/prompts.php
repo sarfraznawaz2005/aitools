@@ -96,7 +96,7 @@ EOF,
 
     *Related Questions:*
 
-    Please always provide hyperlinks for the following suggested questions:
+    Please always provide hyperlinks for the following related questions:
 
     <ul>
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem">Question 1</a></li>
@@ -121,7 +121,7 @@ EOF,
 
     *Related Questions:*
 
-    Please always provide hyperlinks for the following suggested questions:
+    Please always provide hyperlinks for the following related questions:
 
     <ul>
         <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem">Question 1</a></li>

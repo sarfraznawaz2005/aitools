@@ -232,15 +232,16 @@ class ChatBuddy extends Component
                     5. If the answer can be found in the context, provide specific details and explanations.
                     6. If you need to make any assumptions or inferences, clearly state them as such.
 
-                    Please always try to provide Metadata information below your answer in format:
+                    Please always try to extract Metadata including file names and page numbers from given context and
+                    present it below in this format. Do not assume source file name or pages numbers, always extract from
+                    metadata. Please always try to provide file names and page numbers if available in given context.
 
-                    <span class="text-xs">Sources: <source document here, Pages></span>
-                    <span class="text-xs">Example: (Document1.pdf, pages: 1, 2, 3)</span>
+                    Sources Format:
+                        <span class="text-xs">Sources: (example: Document1.pdf, Document2.pdf, pages: 1-5)</span>
 
-                    of below format if pages are not mentioned or available:
+                        of below format if "pages" are not mentioned or available:
 
-                    <span class="text-xs">Sources: <source document here></span>
-                    <span class="text-xs">Example: (Document1.txt)</span>
+                        <span class="text-xs">Sources: (example: Document1.txt, Document2.txt)</span>
 
                     Do not mention sources if not available.
 
