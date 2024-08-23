@@ -156,7 +156,7 @@ class TipsNotifier extends Component
         $this->resetErrorBag();
 
         $this->fill($tip->toArray());
-        $this->cronExpression = $tip->schedule_data['cron'] ?? null;
+        $this->cronExpression = $tip->schedule_data['cron'] ?? '';
 
         $this->dispatch('showModal', ['id' => 'tipModal']);
     }
