@@ -3,7 +3,16 @@
 
     <div class="px-6 py-1">
 
-        <div class="flex justify-end">
+        @unless(!$this->tips)
+            <div class="flex justify-center w-full mb-4">
+                <span
+                    class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
+                    No tips added, click button below to add a tip.
+                    </span>
+            </div>
+        @endunless
+
+        <div class="flex w-full {{count($this->tips) ? 'justify-end' : 'justify-center'}}">
             <x-gradient-button data-hs-overlay="#tipModal" wire:click="resetForm">
                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -16,56 +25,57 @@
             </x-gradient-button>
         </div>
 
-        <fieldset
-            class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-3 pt-0 dark:border-neutral-700">
-            <legend class="text-sm text-gray-500 dark:text-neutral-300">Saved Tips</legend>
+        @if (count($this->tips))
+            <fieldset
+                class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-3 pt-0 dark:border-neutral-700">
+                <legend class="text-sm text-gray-500 dark:text-neutral-300">Saved Tips</legend>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-                    <thead class="bg-gray-50 dark:bg-neutral-800">
-                    <tr>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                            Name
-                        </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                            LLM
-                        </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                            Prompt
-                        </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                            Frequency
-                        </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                            Cron Expression
-                        </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                            Status
-                        </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                            Action
-                        </th>
-                    </tr>
-                    </thead>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                        <thead class="bg-gray-50 dark:bg-neutral-800">
+                        <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                Name
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                LLM
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                Prompt
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                Frequency
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                Cron Expression
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                Status
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
 
-                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
-                    @foreach($this->tips as $tip)
-                        <tr wire:key="apikeyrow-{{ $tip->id }}">
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                {{ $tip->name }}
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                                {{ $tip->apiKey->model_name }} ({{ $tip->apiKey->llm_type }})
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 truncate text-center">
-                                <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
+                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
+                        @foreach($this->tips as $tip)
+                            <tr wire:key="apikeyrow-{{ $tip->id }}">
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                    {{ $tip->name }}
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                                    {{ $tip->apiKey->model_name }} ({{ $tip->apiKey->llm_type }})
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 truncate text-center">
+                                    <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
                                         <span
                                             class="hs-tooltip-toggle cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
                                             💡
@@ -81,52 +91,53 @@
                                                 {{ $tip->prompt }}
                                             </span>
                                         </span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                {{ ucfirst(str_replace('_', ' ', $tip->schedule_type)) }}
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                <code class="font-bold text-pink-500">{{ $tip->schedule_data['cron'] ?? '' }}</code>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
-                                @if ($tip->active)
-                                    <span
-                                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">
+                                    </div>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                    {{ ucfirst(str_replace('_', ' ', $tip->schedule_type)) }}
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                    <code class="font-bold text-pink-500">{{ $tip->schedule_data['cron'] ?? '' }}</code>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
+                                    @if ($tip->active)
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">
                                 Active
                             </span>
-                                @else
-                                    <span
-                                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">
+                                    @else
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">
                                 Inactive
                             </span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                <button x-data x-tooltip.raw="Toggle Status"
-                                        wire:click="toggleStatus({{ $tip->id }})"
-                                        class="items-center px-2 py-1 text-white rounded mr-2 {{$tip->active ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-800'}}">
-                                    <x-icons.ok class="w-4 h-4 mx-auto"/>
-                                </button>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                    <button x-data x-tooltip.raw="Toggle Status"
+                                            wire:click="toggleStatus({{ $tip->id }})"
+                                            class="items-center px-2 py-1 text-white rounded mr-2 {{$tip->active ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-800'}}">
+                                        <x-icons.ok class="w-4 h-4 mx-auto"/>
+                                    </button>
 
-                                <button
-                                    x-data x-tooltip.raw="Edit"
-                                    wire:click="edit({{ $tip->id }})"
-                                    class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
-                                    <x-icons.edit class="w-4 h-4 mx-auto"/>
-                                </button>
+                                    <button
+                                        x-data x-tooltip.raw="Edit"
+                                        wire:click="edit({{ $tip->id }})"
+                                        class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
+                                        <x-icons.edit class="w-4 h-4 mx-auto"/>
+                                    </button>
 
-                                <x-confirm-dialog call="deleteTip({{$tip->id}})" x-data x-tooltip.raw="Delete"
-                                                  class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
-                                    <x-icons.delete class="w-4 h-4 mx-auto"/>
-                                </x-confirm-dialog>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
+                                    <x-confirm-dialog call="deleteTip({{$tip->id}})" x-data x-tooltip.raw="Delete"
+                                                      class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
+                                        <x-icons.delete class="w-4 h-4 mx-auto"/>
+                                    </x-confirm-dialog>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        @endif
 
         <x-modal id="tipModal">
             <x-slot name="title">
