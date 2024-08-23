@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Native\Laravel\Notification;
 
 class TipSchedulerServiceProvider extends ServiceProvider
 {
@@ -19,13 +20,20 @@ class TipSchedulerServiceProvider extends ServiceProvider
                 if ($tip->active) {
 
                     $schedule->call(fn() => $this->processTip($tip))
+                        ->withoutOverlapping()
                         ->timezone('Asia/Karachi')
                         ->cron($tip->cron)
                         ->onSuccess(function () use ($tip) {
-                            Log::info("'{$tip->name}' ran successfully");
+                            Notification::new()
+                                ->title('✅ ' . $tip->name)
+                                ->message("[{$tip->name}] ran successfully.")
+                                ->show();
                         })
                         ->onFailure(function () use ($tip) {
-                            Log::error("'{$tip->name}' failed to run");
+                            Notification::new()
+                                ->title('🛑 ' . $tip->name)
+                                ->message("[{$tip->name}] failed to run.")
+                                ->show();
                         });
                 }
             }
@@ -34,8 +42,8 @@ class TipSchedulerServiceProvider extends ServiceProvider
         }
     }
 
-    private function processTip($tip): void
+    private function processTip($tip): true
     {
-        // do something with the tip
+        return true;
     }
 }
