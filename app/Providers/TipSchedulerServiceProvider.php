@@ -24,12 +24,16 @@ class TipSchedulerServiceProvider extends ServiceProvider
                         ->timezone('Asia/Karachi')
                         ->cron($tip->cron)
                         ->onSuccess(function () use ($tip) {
+                            Log::info("✅ [{$tip->name}] ran successfully.");
+
 //                        Notification::new()
 //                            ->title('✅ ' . $tip->name)
 //                            ->message("[{$tip->name}] ran successfully.")
 //                            ->show();
                         })
                         ->onFailure(function () use ($tip) {
+                            Log::error("🛑 [{$tip->name}] failed to run.");
+
 //                        Notification::new()
 //                            ->title('🛑 ' . $tip->name)
 //                            ->message("[{$tip->name}] failed to run.")
