@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Helpers\CronHelper;
 use App\Models\Tip;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
@@ -9,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -17,116 +19,161 @@ class TipsNotifier extends Component
 {
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
-    public $schedule_type = 'hourly';
-    public $tip = 'hi there...';
-    public $minute;
-    public $hour;
-    public $day_of_week;
-    public $day_of_month;
-    public $month;
-    public $recurring_days = [];
-    public $selected_tips = [];
-    public $batch_action = '';
+    public $content = '';
+    public $scheduleType = 'every_minute';
+    public $scheduleData = [
+        'minute' => '*',
+        'hour' => '*',
+        'day' => '*',
+        'weekday' => '*',
+        'month' => '*',
+    ];
+    public $tips = [];
 
-    protected $rules = [
-        'tip' => 'required|string',
-        'schedule_type' => 'required|string',
-        'minute' => 'nullable|integer|between:0,59',
-        'hour' => 'nullable|integer|between:0,23',
-        'day_of_week' => 'nullable|integer|between:0,6',
-        'day_of_month' => 'nullable|integer|between:1,31',
-        'month' => 'nullable|integer|between:1,12',
-        'recurring_days' => 'nullable|array',
-        'recurring_days.*' => 'integer|between:1,31',
+    public $customFieldHints = [
+        'minute' => 'Enter 0-59, */5 for every 5 minutes, or 1,11,21,31,41,51 for specific minutes',
+        'hour' => 'Enter 0-23, */2 for every 2 hours, or 9,12,15 for specific hours',
+        'day' => 'Enter 1-31, */3 for every 3 days, or 1,15 for specific days',
+        'weekday' => 'Enter 0-6 (0 is Sunday), 1-5 for weekdays, or 6,0 for weekends',
+        'month' => 'Enter 1-12, */2 for every 2 months, or 3,6,9,12 for specific months',
     ];
 
-    public function mount(): void
+    private function getCustomSchedulePreview()
     {
-        $this->month = $this->month ?? Carbon::now()->month;
-    }
+        $parts = [];
+        $cronParts = ['minute', 'hour', 'day', 'weekday', 'month'];
 
-    public function submit(): void
-    {
-        $this->validate();
-
-        Tip::query()->create(['tip' => $this->tip,
-            'schedule_type' => $this->schedule_type,
-            'minute' => $this->minute,
-            'hour' => $this->hour,
-            'day_of_week' => $this->day_of_week,
-            'day_of_month' => $this->day_of_month,
-            'month' => $this->month,
-            'recurring_days' => $this->recurring_days,
-        ]);
-
-        session()->flash('message', 'Tip scheduled successfully!');
-
-        $this->reset(['tip', 'minute', 'hour', 'day_of_week', 'day_of_month', 'recurring_days']);
-    }
-
-    public function deleteTip($id)
-    {
-        Tip::query()->find($id)->delete();
-    }
-
-    public function batchDelete(): void
-    {
-        Tip::whereIn('id', $this->selected_tips)->delete();
-        $this->reset(['selected_tips']);
-        session()->flash('message', 'Selected tips deleted successfully!');
-    }
-
-    #[Computed]
-    public function tips(): Collection
-    {
-        return Tip::all();
-    }
-
-    #[Computed]
-    public function daysInMonth(): int
-    {
-        return Carbon::createFromDate(null, $this->month)->daysInMonth;
-    }
-
-    #[Computed]
-    public function preview(): string
-    {
-        $preview = '';
-
-        if ($this->schedule_type === 'custom') {
-            $preview .= $this->hour ? "{$this->hour}:00" : '*';
-            $preview .= $this->minute ? " at :{$this->minute}" : '';
-            $preview .= $this->day_of_week !== null ? ' on ' . Carbon::createFromFormat('w', $this->day_of_week)->format('l') : '';
-            $preview .= $this->day_of_month ? " on day {$this->day_of_month}" : '';
-            $preview .= $this->month ? " of " . Carbon::createFromFormat('m', $this->month)->format('F') : '';
-        } elseif ($this->schedule_type === 'recurring') {
-            $days = implode(', ', $this->recurring_days);
-            $preview .= "Every {$days} of each month at {$this->hour}:{$this->minute}";
-        } else {
-            $preview .= ucfirst(str_replace('_', ' ', $this->schedule_type));
+        foreach ($cronParts as $part) {
+            if ($this->scheduleData[$part] !== '*') {
+                $parts[] = $this->getPartDescription($part, $this->scheduleData[$part]);
+            }
         }
+
+        return empty($parts) ? 'Every minute' : 'Every ' . implode(', ', $parts);
+    }
+
+    private function getPartDescription($part, $value)
+    {
+        if (strpos($value, '/') !== false) {
+            list($_, $step) = explode('/', $value);
+            return "every $step " . Str::plural($part);
+        }
+
+        if (strpos($value, ',') !== false) {
+            $values = explode(',', $value);
+            return $this->formatListOfValues($part, $values);
+        }
+
+        if ($part === 'weekday') {
+            return 'on ' . Carbon::create()->weekday($value)->format('l') . 's';
+        }
+
+        if ($part === 'month') {
+            return 'in ' . Carbon::create()->month($value)->format('F');
+        }
+
+        return "at $value " . Str::singular($part);
+    }
+
+    private function formatListOfValues($part, $values)
+    {
+        if ($part === 'weekday') {
+            $days = array_map(function($day) {
+                return Carbon::create()->weekday($day)->format('l');
+            }, $values);
+            return 'on ' . implode(', ', $days);
+        }
+
+        if ($part === 'month') {
+            $months = array_map(function($month) {
+                return Carbon::create()->month($month)->format('F');
+            }, $values);
+            return 'in ' . implode(', ', $months);
+        }
+
+        return "at " . implode(', ', $values) . ' ' . Str::plural($part);
+    }
+
+    #[Computed]
+    public function schedulePreview()
+    {
+        $preview = match ($this->scheduleType) {
+            'every_minute' => 'Every Minute',
+            'every_hour' => 'Every Hour',
+            'every_day' => 'Every Day',
+            'every_week' => 'Every Week',
+            'every_month' => 'Every Month',
+            'custom' => $this->getCustomSchedulePreview(),
+        };
 
         return $preview;
     }
 
-    public function triggerNotification($tip)
+    #[Computed]
+    public function nextRuns()
     {
-        // send mail or SMS notification
+        $nextRuns = [];
+        $date = now();
+        $cronExpression = $this->getCronExpression();
+
+        for ($i = 0; $i < 5; $i++) {
+            $nextRun = CronHelper::getNextRunDate($cronExpression, $date);
+            $nextRuns[] = $nextRun->format('Y-m-d H:i:s');
+            $date = $nextRun->addMinute();
+        }
+
+        return $nextRuns;
     }
 
-    public function handleFailure($reason)
+    private function getCronExpression()
     {
-        Log::error('Task scheduling failed: ' . $reason);
-        session()->flash('error', 'Task scheduling failed: ' . $reason);
+        if ($this->scheduleType === 'custom') {
+            return implode(' ', [
+                $this->scheduleData['minute'],
+                $this->scheduleData['hour'],
+                $this->scheduleData['day'],
+                $this->scheduleData['weekday'],
+                $this->scheduleData['month'],
+            ]);
+        }
+
+        return match ($this->scheduleType) {
+            'every_minute' => '* * * * *',
+            'every_hour' => '0 * * * *',
+            'every_day' => '0 0 * * *',
+            'every_week' => '0 0 * * 0',
+            'every_month' => '0 0 1 * *',
+            default => '* * * * *',
+        };
     }
 
     #[Title('Tips Notifier')]
     public function render(): View|Factory|Application
     {
-        return view('livewire.pages.tips-notifier', [
-            'tips' => $this->tips,
-            'daysInMonth' => $this->daysInMonth,
-            'preview' => $this->preview,
-        ]);
+        $this->tips = Tip::all();
+
+        return view('livewire.pages.tips-notifier');
     }
+
+    public function saveTip()
+    {
+        $this->validate([
+            'content' => 'required|min:3',
+            'scheduleType' => 'required|in:every_minute,every_hour,every_day,every_week,every_month,custom',
+        ]);
+
+        Tip::create([
+            'content' => $this->content,
+            'schedule_type' => $this->scheduleType,
+            'schedule_data' => $this->scheduleData,
+        ]);
+
+        $this->reset(['content', 'scheduleType', 'scheduleData']);
+    }
+
+    public function deleteTip($id)
+    {
+        Tip::destroy($id);
+    }
+
 }
