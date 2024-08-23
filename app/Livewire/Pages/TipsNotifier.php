@@ -22,12 +22,13 @@ class TipsNotifier extends Component
 
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
-    public string $apiKey = '';
-    public string $prompt = '';
-    public string $scheduleType = '';
-    public string $cronExpression = '';
+    public Tip $model;
 
-    public bool $isEdit = false;
+    public string $api_key_id = '';
+    public string $name = '';
+    public string $prompt = '';
+    public string $schedule_type = '';
+    public string $cronExpression = '';
 
     #[Computed]
     public function tips(): Collection
@@ -44,8 +45,8 @@ class TipsNotifier extends Component
     #[Computed]
     public function schedulePreview(): string
     {
-        if ($this->scheduleType !== 'custom') {
-            return match ($this->scheduleType) {
+        if ($this->schedule_type !== 'custom') {
+            return match ($this->schedule_type) {
                 'every_minute' => 'Every Minute',
                 'every_hour' => 'Every Hour',
                 'every_day' => 'Every Day',
@@ -92,7 +93,7 @@ class TipsNotifier extends Component
 
     private function getCronExpression(): string
     {
-        return $this->scheduleType === 'custom' ? trim($this->cronExpression) : match ($this->scheduleType) {
+        return $this->schedule_type === 'custom' ? trim($this->cronExpression) : match ($this->schedule_type) {
             'every_minute' => '* * * * *',
             'every_hour' => '0 * * * *',
             'every_day' => '0 0 * * *',
@@ -105,57 +106,57 @@ class TipsNotifier extends Component
     #[Title('Tips Notifier')]
     public function render(): View|Factory|Application
     {
-        $this->model = new Tip();
-
-        $this->fill($this->model->toArray());
-
         return view('livewire.pages.tips-notifier');
     }
 
-    public function save(Tip $tip = null): void
+    public function save(): void
     {
         $this->validate([
-            'apiKey' => 'required',
+            'api_key_id' => 'required',
+            'name' => 'required|min:5|max:25|unique:tips,name,' . ($this->model->id ?? 'NULL') . ',id',
             'prompt' => 'required|min:100',
-            'scheduleType' => 'required',
+            'schedule_type' => 'required',
             'cronExpression' => [
                 'required_if:scheduleType,custom',
                 'valid_cron'
             ],
         ], [
-            'scheduleType.required' => 'The Frequency field is required.',
-            'apiKey.required' => 'The LLM field is required.',
+            'schedule_type.required' => 'The Frequency field is required.',
+            'api_key_id.required' => 'The LLM field is required.',
             'cronExpression.valid_cron' => 'The cron expression is invalid.',
         ]);
 
-        if ($tip->exists) {
-            $tip->update([
-                'api_key_id' => $this->apiKey,
+        if ($this->model->exists) {
+            $this->model->update([
+                'api_key_id' => $this->api_key_id,
                 'prompt' => trim($this->prompt),
-                'schedule_type' => $this->scheduleType,
-                'schedule_data' => $this->scheduleType === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
+                'schedule_type' => $this->schedule_type,
+                'schedule_data' => $this->schedule_type === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
             ]);
         } else {
             Tip::query()->create([
-                'api_key_id' => $this->apiKey,
+                'api_key_id' => $this->api_key_id,
                 'prompt' => trim($this->prompt),
-                'schedule_type' => $this->scheduleType,
-                'schedule_data' => $this->scheduleType === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
+                'schedule_type' => $this->schedule_type,
+                'schedule_data' => $this->schedule_type === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
             ]);
         }
 
         $this->dispatch('closeModal', ['id' => 'tipModal']);
 
-        $this->success($tip->exists ? 'Tip saved successfully!' : 'Bot added successfully!');
+        $this->success($this->model->exists ? 'Tip saved successfully!' : 'Tip added successfully!');
 
         $this->resetForm();
     }
 
     public function edit(Tip $tip): void
     {
-        $this->isEdit = true;
+        $this->model = $tip;
 
         $this->resetErrorBag();
+
+        $this->fill($tip->toArray());
+        $this->cronExpression = $tip->schedule_data['cron'] ?? null;
 
         $this->dispatch('showModal', ['id' => 'tipModal']);
     }
@@ -164,7 +165,7 @@ class TipsNotifier extends Component
     {
         Tip::destroy($id);
 
-        $this->success('Bot deleted successfully!');
+        $this->success('Tip deleted successfully!');
     }
 
     public function resetForm(): void
@@ -173,6 +174,6 @@ class TipsNotifier extends Component
 
         $this->resetErrorBag();
 
-        $this->isEdit = false;
+        $this->model = new Tip();
     }
 }

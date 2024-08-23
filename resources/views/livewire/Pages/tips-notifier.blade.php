@@ -26,6 +26,10 @@
                     <tr>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                            Name
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
                             LLM
                         </th>
                         <th scope="col"
@@ -54,8 +58,11 @@
                     <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
                     @foreach($this->tips as $tip)
                         <tr wire:key="apikeyrow-{{ $tip->id }}">
+                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                {{ $tip->name }}
+                            </td>
                             <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                                {{ $tip->apiKey->model_name }}
+                                {{ $tip->apiKey->model_name }} ({{ $tip->apiKey->llm_type }})
                             </td>
                             <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 truncate text-center">
                                 <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
@@ -124,7 +131,7 @@
         <x-modal id="tipModal">
             <x-slot name="title">
                 <div class="flex gap-x-2">
-                    {{ $isEdit ? '✏️ Edit Tip' : '➕ Add Tip'}}
+                    {{ $model && $model->exists ? '✏️ Edit Tip' : '➕ Add Tip'}}
                 </div>
             </x-slot>
 
@@ -133,7 +140,7 @@
                 <x-flash/>
 
                 <div class="mb-4">
-                    <select wire:model="apiKey"
+                    <select wire:model="api_key_id"
                             class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
                         <option value="">Choose LLM</option>
 
@@ -150,12 +157,17 @@
                 </div>
 
                 <div class="mb-4">
+                    <input placeholder="Name" wire:model="name" type="text"
+                           class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+                </div>
+
+                <div class="mb-4">
             <textarea placeholder="Enter your prompt..." wire:model="prompt" rows="3"
                       class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"></textarea>
                 </div>
 
                 <div class="mb-4">
-                    <select id="scheduleType" wire:model.change="scheduleType"
+                    <select wire:model.change="schedule_type"
                             class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
                         <option value="">Choose Frequency</option>
                         <option value="every_minute">Every Minute</option>
@@ -167,7 +179,7 @@
                     </select>
                 </div>
 
-                @if ($scheduleType === 'custom')
+                @if ($schedule_type === 'custom')
                     <div class="mb-4">
                         <input type="text" wire:model.live="cronExpression"
                                class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"
@@ -192,7 +204,7 @@
                     </div>
                 @endif
 
-                @if ($scheduleType && $scheduleType !== 'custom')
+                @if ($schedule_type && $schedule_type !== 'custom')
                     <div class="mb-4">
                         <p class="text-sm italic font-bold mb-1">Next Runs:</p>
                         <ul class="list-disc list-inside ml-2">

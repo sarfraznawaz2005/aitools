@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('tips', function (Blueprint $table) {
             $table->id();
             $table->foreignId('api_key_id');
+            $table->string('name');
             $table->text('prompt');
             $table->string('schedule_type');
             $table->json('schedule_data')->nullable();
