@@ -2,14 +2,13 @@
 
 namespace App\Livewire\Pages;
 
-use App\Helpers\CronHelper;
 use App\Models\Tip;
-use Carbon\Carbon;
 use Cron\CronExpression;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -19,13 +18,18 @@ class TipsNotifier extends Component
 {
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
-    public $content = '';
-    public $scheduleType = 'every_minute';
-    public $cronExpression = '* * * * *';
-    public $tips = [];
+    public string $content = '';
+    public string $scheduleType = 'every_minute';
+    public string $cronExpression = '* * * * *';
 
     #[Computed]
-    public function schedulePreview()
+    public function tips(): Collection
+    {
+        return Tip::all();
+    }
+
+    #[Computed]
+    public function schedulePreview(): string
     {
         if ($this->scheduleType !== 'custom') {
             return match ($this->scheduleType) {
@@ -40,71 +44,22 @@ class TipsNotifier extends Component
         return $this->getCustomSchedulePreview();
     }
 
-
-    private function getCustomSchedulePreview()
+    private function getCustomSchedulePreview(): string
     {
         try {
             $humanReadable = CronTranslator::translate($this->cronExpression);
             return ucfirst($humanReadable);
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return 'Invalid cron expression';
         }
     }
 
-    private function getPartDescription($part, $value)
-    {
-        if (strpos($value, '/') !== false) {
-            list($_, $step) = explode('/', $value);
-            return "every $step " . Str::plural($part);
-        }
 
-        if (strpos($value, ',') !== false) {
-            $values = explode(',', $value);
-            return $this->formatListOfValues($part, $values);
-        }
-
-        if ($part === 'weekday') {
-            return 'on ' . $this->getDayName((int)$value);
-        }
-
-        if ($part === 'month') {
-            return 'in ' . $this->getMonthName((int)$value);
-        }
-
-        return "at $value " . Str::singular($part);
-    }
-
-    private function formatListOfValues($part, $values)
-    {
-        if ($part === 'weekday') {
-            $days = array_map(function($day) {
-                return $this->getDayName((int)$day);
-            }, $values);
-            return 'on ' . implode(', ', $days);
-        }
-
-        if ($part === 'month') {
-            $months = array_map(function($month) {
-                return $this->getMonthName((int)$month);
-            }, $values);
-            return 'in ' . implode(', ', $months);
-        }
-
-        return "at " . implode(', ', $values) . ' ' . Str::plural($part);
-    }
-
-    private function getDayName(int $day): string
-    {
-        return Carbon::create()->weekday($day)->format('l');
-    }
-
-    private function getMonthName(int $month): string
-    {
-        return Carbon::create()->month($month)->format('F');
-    }
-
+    /**
+     * @throws Exception
+     */
     #[Computed]
-    public function nextRuns()
+    public function nextRuns(): array
     {
         $nextRuns = [];
         $date = now();
@@ -119,7 +74,7 @@ class TipsNotifier extends Component
         return $nextRuns;
     }
 
-    private function getCronExpression()
+    private function getCronExpression(): string
     {
         return $this->scheduleType === 'custom' ? $this->cronExpression : match ($this->scheduleType) {
             'every_minute' => '* * * * *',
@@ -127,7 +82,6 @@ class TipsNotifier extends Component
             'every_day' => '0 0 * * *',
             'every_week' => '0 0 * * 0',
             'every_month' => '0 0 1 * *',
-            default => '* * * * *',
         };
     }
 
@@ -135,11 +89,10 @@ class TipsNotifier extends Component
     #[Title('Tips Notifier')]
     public function render(): View|Factory|Application
     {
-        $this->tips = Tip::all();
         return view('livewire.pages.tips-notifier');
     }
 
-    public function saveTip()
+    public function saveTip(): void
     {
         $this->validate([
             'content' => 'required|min:3',
@@ -147,7 +100,7 @@ class TipsNotifier extends Component
             'cronExpression' => 'required_if:scheduleType,custom|regex:/^(\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-3])) (\*|([1-9]|1[0-9]|2[0-9]|3[0-1])) (\*|([1-9]|1[0-2])) (\*|([0-6]))$/',
         ]);
 
-        Tip::create([
+        Tip::query()->create([
             'content' => $this->content,
             'schedule_type' => $this->scheduleType,
             'schedule_data' => $this->scheduleType === 'custom' ? ['cron' => $this->cronExpression] : null,
@@ -156,7 +109,7 @@ class TipsNotifier extends Component
         $this->reset(['content', 'scheduleType', 'cronExpression']);
     }
 
-    public function deleteTip($id)
+    public function deleteTip($id): void
     {
         Tip::destroy($id);
     }

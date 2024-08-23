@@ -55,7 +55,7 @@
 
         <h3 class="text-xl font-semibold mb-2">Saved Tips</h3>
         <ul class="space-y-4">
-            @foreach ($tips as $tip)
+            @foreach ($this->tips as $tip)
                 <li class="bg-white shadow overflow-hidden sm:rounded-lg">
                     <div class="px-4 py-5 sm:px-6">
                         <p class="text-sm font-medium text-gray-900">{{ $tip->content }}</p>
