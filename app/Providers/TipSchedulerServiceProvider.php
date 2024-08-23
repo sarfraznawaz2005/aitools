@@ -19,7 +19,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
                 $schedule->call(function () use ($tip) {
 
                     if ($tip->active) {
-                        Log::info("Running tip {$tip->id}");
+                        Log::info("Running tip $tip->id");
                     }
 
                 })->cron($this->getCronExpression($tip));
