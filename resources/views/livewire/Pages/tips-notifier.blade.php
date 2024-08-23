@@ -67,7 +67,7 @@
                                     {{ $tip->apiKey->model_name }} ({{ $tip->apiKey->llm_type }})
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                    {{ucwords(Lorisleiva\CronTranslator\CronTranslator::translate($tip->cron))}}
+                                    {{Lorisleiva\CronTranslator\CronTranslator::translate($tip->cron)}}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
                                     @if ($tip->active)
@@ -176,7 +176,7 @@
                 @if (!empty($cron))
                     <div class="mb-4">
                         <p class="text-sm">Schedule Description: <span
-                                class="text-pink-500">{{ ucwords($this->schedulePreview) }}</span>
+                                class="text-pink-500">{{ $this->schedulePreview }}</span>
                         </p>
                     </div>
                 @endif
