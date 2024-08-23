@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <div class="flex w-full {{count($this->tips) ? 'justify-end' : 'justify-center'}}">
+        <div class="flex w-full {{count($this->tips) ? '' : 'justify-center'}}">
             <x-gradient-button data-hs-overlay="#tipModal" wire:click="resetForm">
                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -27,8 +27,7 @@
 
         @if (count($this->tips))
             <fieldset
-                class="items-center justify-center font-semibold w-full border border-gray-300">
-                <legend class="text-sm text-gray-500 ml-4">Saved Tips</legend>
+                class="items-center justify-center font-semibold w-full border border-gray-300 mt-4">
 
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
