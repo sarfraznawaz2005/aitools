@@ -21,10 +21,10 @@ class TipSchedulerServiceProvider extends ServiceProvider
                     $schedule->call(fn() => $this->processTip($tip))
                         ->cron($tip->cron)
                         ->onSuccess(function () use ($tip) {
-                            Log::info("Tip {$tip->name} ran successfully");
+                            Log::info("'{$tip->name}' ran successfully");
                         })
                         ->onFailure(function () use ($tip) {
-                            Log::error("Tip {$tip->name} failed to run");
+                            Log::error("'{$tip->name}' failed to run");
                         });
                 }
             }
