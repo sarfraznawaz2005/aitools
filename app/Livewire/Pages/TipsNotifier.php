@@ -54,7 +54,6 @@ class TipsNotifier extends Component
         }
     }
 
-
     /**
      * @throws Exception
      */
