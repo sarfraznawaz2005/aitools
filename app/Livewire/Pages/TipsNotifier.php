@@ -108,12 +108,13 @@ class TipsNotifier extends Component
         $this->validate([
             'apiKey' => 'required',
             'prompt' => 'required|min:3',
-            'scheduleType' => 'required|in:every_minute,every_hour,every_day,every_week,every_month,custom',
+            'scheduleType' => 'required',
             'cronExpression' => [
                 'required_if:scheduleType,custom',
                 'valid_cron'
             ],
         ], [
+            'scheduleType.required' => 'The Frequency field is required.',
             'apiKey.required' => 'The LLM field is required.',
             'cronExpression.valid_cron' => 'The cron expression is invalid.',
         ]);

@@ -18,7 +18,7 @@
                 </th>
                 <th scope="col"
                     class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                    Schedule Type
+                    Frequency
                 </th>
                 <th scope="col"
                     class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
@@ -40,7 +40,7 @@
                         {{ $tip->prompt }}
                     </td>
                     <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 truncate">
-                        {{ $tip->schedule_type }}
+                        {{ ucfirst(str_replace('_', ' ', $tip->schedule_type)) }}
                     </td>
                     <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 truncate">
                         {{ $tip->schedule_data['cron'] ?? 'N/A' }}
@@ -96,7 +96,7 @@
         <div class="mb-4">
             <select id="scheduleType" wire:model.change="scheduleType"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                <option value="">Choose Schedule Type</option>
+                <option value="">Choose Frequency</option>
                 <option value="every_minute">Every Minute</option>
                 <option value="every_hour">Every Hour</option>
                 <option value="every_day">Every Day</option>
