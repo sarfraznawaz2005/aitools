@@ -32,7 +32,7 @@
 
 @livewireScriptConfig
 
-<script data-navigate-once>
+<script data-navigate-once wire:ignore>
     // for task scheduler
     setInterval(() => {
         fetch('/run-scheduler').catch(console.error)
