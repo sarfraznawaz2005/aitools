@@ -27,8 +27,8 @@
 
         @if (count($this->tips))
             <fieldset
-                class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-3 pt-0 dark:border-neutral-700">
-                <legend class="text-sm text-gray-500 dark:text-neutral-300">Saved Tips</legend>
+                class="items-center justify-center font-semibold w-full border border-gray-300">
+                <legend class="text-sm text-gray-500 ml-4">Saved Tips</legend>
 
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -51,7 +51,7 @@
                                 Status
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                class="px-6 py-3 w-fit text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
                                 Action
                             </th>
                         </tr>
@@ -83,7 +83,7 @@
                             </span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                <td class="px-6 py-2 whitespace-nowrap w-0 text-sm text-gray-500 dark:text-neutral-300 text-center">
                                     <button x-data x-tooltip.raw="Toggle Status"
                                             wire:click="toggleStatus({{ $tip->id }})"
                                             class="items-center px-2 py-1 text-white rounded mr-2 {{$tip->active ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-800'}}">
