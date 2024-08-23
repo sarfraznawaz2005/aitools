@@ -30,6 +30,8 @@ class TipsNotifier extends Component
     public string $schedule_type = '';
     public string $cronExpression = '';
 
+    private CronExpression $CronExp;
+
     #[Computed]
     public function tips(): Collection
     {
@@ -77,7 +79,7 @@ class TipsNotifier extends Component
         try {
             $nextRuns = [];
             $date = now();
-            $cronExpression = new CronExpression(trim($this->getCronExpression()));
+            $cronExpression = $this->CronExp->setExpression(trim($this->getCronExpression()));
 
             for ($i = 0; $i < 3; $i++) {
                 $nextRun = $cronExpression->getNextRunDate($date);
@@ -106,6 +108,8 @@ class TipsNotifier extends Component
     #[Title('Tips Notifier')]
     public function render(): View|Factory|Application
     {
+        $this->CronExp = new CronExpression('* * * * *');
+
         return view('livewire.pages.tips-notifier');
     }
 

@@ -6,7 +6,7 @@
         @unless(!$this->tips)
             <div class="flex justify-center w-full mb-4">
                 <span
-                    class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
+                        class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
                     No tips added, click button below to add a tip.
                     </span>
             </div>
@@ -27,7 +27,7 @@
 
         @if (count($this->tips))
             <fieldset
-                class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-3 pt-0 dark:border-neutral-700">
+                    class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-3 pt-0 dark:border-neutral-700">
                 <legend class="text-sm text-gray-500 dark:text-neutral-300">Saved Tips</legend>
 
                 <div class="overflow-x-auto">
@@ -67,17 +67,21 @@
                                     {{ $tip->apiKey->model_name }} ({{ $tip->apiKey->llm_type }})
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                    {{ ucfirst(str_replace('_', ' ', $tip->schedule_type)) }}
+                                    @if ($tip->schedule_type && $tip->schedule_type === 'custom')
+                                        {{ucwords(Lorisleiva\CronTranslator\CronTranslator::translate($tip->schedule_data['cron']))}}
+                                    @else
+                                        {{ ucwords(str_replace('_', ' ', $tip->schedule_type)) }}
+                                    @endif
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
                                     @if ($tip->active)
                                         <span
-                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">
+                                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">
                                 Active
                             </span>
                                     @else
                                         <span
-                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">
+                                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">
                                 Inactive
                             </span>
                                     @endif
@@ -90,9 +94,9 @@
                                     </button>
 
                                     <button
-                                        x-data x-tooltip.raw="Edit"
-                                        wire:click="edit({{ $tip->id }})"
-                                        class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
+                                            x-data x-tooltip.raw="Edit"
+                                            wire:click="edit({{ $tip->id }})"
+                                            class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
                                         <x-icons.edit class="w-4 h-4 mx-auto"/>
                                     </button>
 
@@ -129,7 +133,7 @@
                             <optgroup label="{{ $llmType }}">
                                 @foreach($groupedApiKeys as $apiKey)
                                     <option
-                                        value="{{ $apiKey->id }}">{{ $apiKey->model_name }}
+                                            value="{{ $apiKey->id }}">{{ $apiKey->model_name }}
                                     </option>
                                 @endforeach
                             </optgroup>
@@ -180,7 +184,7 @@
                 @if ($cronExpression)
                     <div class="mb-4">
                         <p class="text-sm">Schedule Description: <span
-                                class="text-pink-500">{{ $this->schedulePreview }}</span>
+                                    class="text-pink-500">{{ $this->schedulePreview }}</span>
                         </p>
                     </div>
                 @endif
