@@ -19,6 +19,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
                 if ($tip->active) {
 
                     $schedule->call(fn() => $this->processTip($tip))
+                        ->timezone('Asia/Karachi')
                         ->cron($tip->cron)
                         ->onSuccess(function () use ($tip) {
                             Log::info("'{$tip->name}' ran successfully");
