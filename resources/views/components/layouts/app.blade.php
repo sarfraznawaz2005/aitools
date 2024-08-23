@@ -36,7 +36,7 @@
     // for task scheduler
     setInterval(() => {
         fetch('/run-scheduler').catch(console.error)
-    }, 15000);
+    }, 60000);
 </script>
 </body>
 </html>
