@@ -3,6 +3,7 @@
 use App\Livewire\Pages\ChatBuddy;
 use App\Livewire\Pages\TextStyler;
 use App\Livewire\Pages\TipsNotifier;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 $tools = config('tools');
@@ -10,6 +11,10 @@ $tools = config('tools');
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/run-scheduler', function () {
+    Artisan::call('schedule:run');
+});
 
 Route::get('test', function () {
     return view('test');

@@ -17,7 +17,11 @@ class TipSchedulerServiceProvider extends ServiceProvider
 
             foreach ($tips as $tip) {
                 $schedule->call(function () use ($tip) {
-                    Log::info("Running tip {$tip->id}");
+
+                    if ($tip->active) {
+                        Log::info("Running tip {$tip->id}");
+                    }
+
                 })->cron($this->getCronExpression($tip));
             }
         } catch (Exception) {

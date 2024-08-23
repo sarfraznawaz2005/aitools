@@ -32,5 +32,11 @@
 
 @livewireScriptConfig
 
+<script>
+    // for task scheduler
+    setInterval(() => {
+        fetch('/run-scheduler').catch(console.error)
+    }, 60000);
+</script>
 </body>
 </html>
