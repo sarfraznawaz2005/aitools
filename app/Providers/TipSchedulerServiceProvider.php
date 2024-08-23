@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Tip;
+use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 
@@ -10,12 +11,16 @@ class TipSchedulerServiceProvider extends ServiceProvider
 {
     public function boot(Schedule $schedule): void
     {
-        $tips = Tip::all();
+        try {
+            $tips = Tip::all();
 
-        foreach ($tips as $tip) {
-            $schedule->call(function () use ($tip) {
-                // Implement the tip processing logic here
-            })->cron($this->getCronExpression($tip));
+            foreach ($tips as $tip) {
+                $schedule->call(function () use ($tip) {
+                    // Implement the tip processing logic here
+                })->cron($this->getCronExpression($tip));
+            }
+        } catch (Exception) {
+
         }
     }
 
