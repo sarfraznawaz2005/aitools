@@ -3,8 +3,6 @@
 
     <div class="px-6 py-1">
 
-        <x-flash/>
-
         <div class="flex justify-end">
             <x-gradient-button data-hs-overlay="#tipModal" wire:click="resetForm">
                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -14,12 +12,12 @@
                     <path d="M12 5v14"/>
                 </svg>
 
-                Create Tip
+                Add Tip
             </x-gradient-button>
         </div>
 
         <fieldset
-            class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-5 pb-7 dark:border-neutral-700 my-4">
+            class="items-center justify-center font-semibold w-full border border-gray-300 rounded-lg p-3 pt-0 dark:border-neutral-700">
             <legend class="text-sm text-gray-500 dark:text-neutral-300">Saved Tips</legend>
 
             <div class="overflow-x-auto">
@@ -123,96 +121,109 @@
             </div>
         </fieldset>
 
-
-        <x-flash/>
-
-        <div class="mb-4">
-            <select wire:model="apiKey"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                <option value="">Choose LLM</option>
-
-                @foreach($this->apiKeys->groupBy('llm_type') as $llmType => $groupedApiKeys)
-                    <optgroup label="{{ $llmType }}">
-                        @foreach($groupedApiKeys as $apiKey)
-                            <option
-                                value="{{ $apiKey->id }}">{{ $apiKey->model_name }}
-                            </option>
-                        @endforeach
-                    </optgroup>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="mb-4">
-            <textarea placeholder="Enter your prompt..." wire:model="prompt" rows="3"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
-        </div>
-
-        <div class="mb-4">
-            <select id="scheduleType" wire:model.change="scheduleType"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                <option value="">Choose Frequency</option>
-                <option value="every_minute">Every Minute</option>
-                <option value="every_hour">Every Hour</option>
-                <option value="every_day">Every Day</option>
-                <option value="every_week">Every Week</option>
-                <option value="every_month">Every Month</option>
-                <option value="custom">Custom</option>
-            </select>
-        </div>
-
-        @if ($scheduleType === 'custom')
-            <div class="mb-4">
-                <input type="text" wire:model.live="cronExpression"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                       placeholder="* * * * *">
-                <p class="mt-1 text-xs">
-                    Enter a valid cron expression (e.g., <code class="font-bold text-pink-500">*/5 * * * *</code>
-                    for every 5
-                    minutes).
-                    See <a href="https://crontab.guru" target="_blank" class="text-blue-500 hover:text-blue-700">crontab.guru</a>
-                    for more help.
-                </p>
-            </div>
-        @endif
-
-        @if ($cronExpression)
-            <div class="mb-4">
-                <p class="text-sm">Schedule Description: <span
-                        class="text-pink-500">{{ $this->schedulePreview }}</span>
-                </p>
-            </div>
-        @endif
-
-        @if ($scheduleType && $scheduleType !== 'custom')
-            <div class="mb-4">
-                <p class="text-sm italic font-bold mb-1">Next Runs:</p>
-                <ul class="list-disc list-inside ml-2">
-                    @foreach ($this->nextRuns as $run)
-                        <li class="text-sm text-pink-500">{{ $run }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @else
-            @if ($cronExpression)
-                <div class="mb-4">
-                    <p class="text-sm italic font-bold mb-1">Next Runs:</p>
-                    <ul class="list-disc list-inside ml-2">
-                        @foreach ($this->nextRuns as $run)
-                            <li class="text-sm text-pink-500">{{ $run }}</li>
-                        @endforeach
-                    </ul>
+        <x-modal id="tipModal">
+            <x-slot name="title">
+                <div class="flex gap-x-2">
+                    {{ $model->exists ? '✏️ Edit Tip' : '➕ Add Tip'}}
                 </div>
-            @endif
-        @endif
+            </x-slot>
 
-        <div
-            class="flex justify-end items-center gap-x-4 mt-4">
-            <x-gradient-button wire:click="save">
-                <x-icons.ok class="size-5"/>
-                Save
-            </x-gradient-button>
-        </div>
+            <x-slot name="body">
+
+                <x-flash/>
+
+                <div class="mb-4">
+                    <select wire:model="apiKey"
+                            class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
+                        <option value="">Choose LLM</option>
+
+                        @foreach($this->apiKeys->groupBy('llm_type') as $llmType => $groupedApiKeys)
+                            <optgroup label="{{ $llmType }}">
+                                @foreach($groupedApiKeys as $apiKey)
+                                    <option
+                                        value="{{ $apiKey->id }}">{{ $apiKey->model_name }}
+                                    </option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-4">
+            <textarea placeholder="Enter your prompt..." wire:model="prompt" rows="3"
+                      class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <select id="scheduleType" wire:model.change="scheduleType"
+                            class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
+                        <option value="">Choose Frequency</option>
+                        <option value="every_minute">Every Minute</option>
+                        <option value="every_hour">Every Hour</option>
+                        <option value="every_day">Every Day</option>
+                        <option value="every_week">Every Week</option>
+                        <option value="every_month">Every Month</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                @if ($scheduleType === 'custom')
+                    <div class="mb-4">
+                        <input type="text" wire:model.live="cronExpression"
+                               class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"
+                               placeholder="* * * * *">
+                        <p class="mt-1 text-xs">
+                            Enter a valid cron expression (e.g., <code class="font-bold text-pink-500">*/5 * * *
+                                *</code>
+                            for every 5
+                            minutes).
+                            See <a href="https://crontab.guru" target="_blank"
+                                   class="text-blue-500 hover:text-blue-700">crontab.guru</a>
+                            for more help.
+                        </p>
+                    </div>
+                @endif
+
+                @if ($cronExpression)
+                    <div class="mb-4">
+                        <p class="text-sm">Schedule Description: <span
+                                class="text-pink-500">{{ $this->schedulePreview }}</span>
+                        </p>
+                    </div>
+                @endif
+
+                @if ($scheduleType && $scheduleType !== 'custom')
+                    <div class="mb-4">
+                        <p class="text-sm italic font-bold mb-1">Next Runs:</p>
+                        <ul class="list-disc list-inside ml-2">
+                            @foreach ($this->nextRuns as $run)
+                                <li class="text-sm text-pink-500">{{ $run }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @else
+                    @if ($cronExpression)
+                        <div class="mb-4">
+                            <p class="text-sm italic font-bold mb-1">Next Runs:</p>
+                            <ul class="list-disc list-inside ml-2">
+                                @foreach ($this->nextRuns as $run)
+                                    <li class="text-sm text-pink-500">{{ $run }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                @endif
+
+                <div
+                    class="flex items-center border-t border-gray-300 pt-4 justify-end">
+                    <x-gradient-button wire:click="save">
+                        <x-icons.ok class="size-5"/>
+                        Save
+                    </x-gradient-button>
+                </div>
+
+            </x-slot>
+        </x-modal>
 
     </div>
 </div>

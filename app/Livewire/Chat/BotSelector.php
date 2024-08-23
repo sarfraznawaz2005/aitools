@@ -22,11 +22,10 @@ class BotSelector extends Component
 
     public string $name;
     public string $bio;
+    public string $prompt;
     public string $icon;
     public string $type;
     public bool $related_questions;
-
-    public string $prompt;
 
     #[Validate(['files.*' => 'mimes:txt,pdf,md,html,htm'])]
     public array $files = [];

@@ -24,6 +24,8 @@ class TipsNotifier extends Component
     public string $scheduleType = '';
     public string $cronExpression = '';
 
+    public bool $isEdit = false;
+
     #[Computed]
     public function tips(): Collection
     {
@@ -100,6 +102,10 @@ class TipsNotifier extends Component
     #[Title('Tips Notifier')]
     public function render(): View|Factory|Application
     {
+        $this->model = new Tip();
+
+        $this->fill($this->model->toArray());
+
         return view('livewire.pages.tips-notifier');
     }
 
@@ -126,11 +132,20 @@ class TipsNotifier extends Component
             'schedule_data' => $this->scheduleType === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
         ]);
 
-        $this->reset();
+        $this->resetForm();
     }
 
     public function deleteTip($id): void
     {
         Tip::destroy($id);
+    }
+
+    public function resetForm(): void
+    {
+        $this->reset();
+
+        $this->resetErrorBag();
+
+        $this->isEdit = false;
     }
 }
