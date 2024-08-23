@@ -2,73 +2,96 @@
     <livewire:apikeys.api-key-banner/>
 
     <div class="p-6">
-        <h2 class="text-2xl font-semibold mb-4">Tip Manager</h2>
 
-        <form wire:submit.prevent="saveTip" class="mb-8">
+        <x-flash/>
+
+        <div class="mb-4">
+            <select wire:model="apiKey"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                <option value="">Choose LLM</option>
+
+                @foreach($this->apiKeys->groupBy('llm_type') as $llmType => $groupedApiKeys)
+                    <optgroup label="{{ $llmType }}">
+                        @foreach($groupedApiKeys as $apiKey)
+                            <option
+                                value="{{ $apiKey->id }}">{{ $apiKey->model_name }}
+                            </option>
+                        @endforeach
+                    </optgroup>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <textarea placeholder="Enter your prompt..." wire:model="prompt" rows="3"
+                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+        </div>
+
+        <div class="mb-4">
+            <select id="scheduleType" wire:model.change="scheduleType"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                <option value="">Choose Schedule Type</option>
+                <option value="every_minute">Every Minute</option>
+                <option value="every_hour">Every Hour</option>
+                <option value="every_day">Every Day</option>
+                <option value="every_week">Every Week</option>
+                <option value="every_month">Every Month</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+
+        @if ($scheduleType === 'custom')
             <div class="mb-4">
-                <label for="content" class="block text-sm font-medium text-gray-700">Tip Content</label>
-                <textarea id="content" wire:model="content" rows="3"
-                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+                <input type="text" wire:model.live="cronExpression"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                       placeholder="* * * * *">
+                <p class="mt-1 text-xs">
+                    Enter a valid cron expression (e.g., <code class="font-bold text-pink-500">*/5 * * * *</code>
+                    for every 5
+                    minutes).
+                    See <a href="https://crontab.guru" target="_blank" class="text-blue-500 hover:text-blue-700">crontab.guru</a>
+                    for more help.
+                </p>
             </div>
+        @endif
 
+        @if ($cronExpression)
             <div class="mb-4">
-                <label for="scheduleType" class="block text-sm font-medium text-gray-700">Schedule Type</label>
-                <select id="scheduleType" wire:model.change="scheduleType"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option value="every_minute">Every Minute</option>
-                    <option value="every_hour">Every Hour</option>
-                    <option value="every_day">Every Day</option>
-                    <option value="every_week">Every Week</option>
-                    <option value="every_month">Every Month</option>
-                    <option value="custom">Custom</option>
-                </select>
+                <p class="text-sm">Schedule Description: <span
+                        class="text-pink-500">{{ $this->schedulePreview }}</span>
+                </p>
             </div>
+        @endif
 
-            @if ($scheduleType === 'custom')
-                <div class="mb-4">
-                    <label for="cronExpression" class="block text-sm font-medium text-gray-700">Cron Expression</label>
-                    <input type="text" id="cronExpression" wire:model.live="cronExpression"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                           placeholder="* * * * *">
-                    <p class="mt-1 text-xs text-gray-500">Enter a valid cron expression (e.g., "*/5 * * * *" for every 5 minutes)</p>
-                </div>
-            @endif
-
+        @if ($scheduleType && $scheduleType !== 'custom')
             <div class="mb-4">
-                <p class="text-sm font-medium text-gray-700">Schedule Preview: {{ $this->schedulePreview }}</p>
-            </div>
-
-            <div class="mb-4">
-                <p class="text-sm font-medium text-gray-700">Next Possible Runs:</p>
-                <ul class="list-disc list-inside">
+                <p class="text-sm italic font-bold mb-1">Next Runs:</p>
+                <ul class="list-disc list-inside ml-2">
                     @foreach ($this->nextRuns as $run)
-                        <li class="text-sm text-gray-600">{{ $run }}</li>
+                        <li class="text-sm text-pink-500">{{ $run }}</li>
                     @endforeach
                 </ul>
             </div>
+        @else
+            @if ($cronExpression)
+                <div class="mb-4">
+                    <p class="text-sm italic font-bold mb-1">Next Runs:</p>
+                    <ul class="list-disc list-inside ml-2">
+                        @foreach ($this->nextRuns as $run)
+                            <li class="text-sm text-pink-500">{{ $run }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        @endif
 
-            <button type="submit"
-                    class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-800 focus:outline-none focus:border-indigo-900 focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150">
-                Save Tip
-            </button>
-        </form>
+        <div
+            class="flex justify-end items-center gap-x-4 mt-4">
+            <x-gradient-button wire:click="save">
+                <x-icons.ok class="size-5"/>
+                Save
+            </x-gradient-button>
+        </div>
 
-        <h3 class="text-xl font-semibold mb-2">Saved Tips</h3>
-        <ul class="space-y-4">
-            @foreach ($this->tips as $tip)
-                <li class="bg-white shadow overflow-hidden sm:rounded-lg">
-                    <div class="px-4 py-5 sm:px-6">
-                        <p class="text-sm font-medium text-gray-900">{{ $tip->content }}</p>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                            Schedule: {{ $tip->schedule_type === 'custom' ? $tip->schedule_data['cron'] : $tip->schedule_type }}
-                        </p>
-                        <button wire:click="deleteTip({{ $tip->id }})"
-                                class="mt-2 inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                            Delete
-                        </button>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
     </div>
 </div>

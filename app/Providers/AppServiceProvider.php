@@ -2,23 +2,27 @@
 
 namespace App\Providers;
 
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Lorisleiva\CronTranslator\CronTranslator;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
+    {
+        $this->registerCustomValidators();
+    }
+
+    /**
+     * @return void
+     */
+    public function registerCustomValidators(): void
     {
         Validator::extend('max_combined_size', function ($attribute, $value, $parameters) {
             $maxSize = (int)$parameters[0] * 1024; // Convert to bytes
@@ -30,5 +34,13 @@ class AppServiceProvider extends ServiceProvider
             return $totalSize <= $maxSize;
         });
 
+        Validator::extend('valid_cron', function ($attribute, $value, $parameters) {
+            try {
+                CronTranslator::translate(trim($value));
+                return true;
+            } catch (Exception) {
+                return false;
+            }
+        });
     }
 }

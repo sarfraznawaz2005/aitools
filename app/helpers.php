@@ -1,7 +1,7 @@
 <?php
 /*
  * TODO
- * Tips notifier should support multiple tips
+ * Tips options?
  * might not need header in case of nativephp cause we can open a route via menu Window::open()->url('https://google.com');
  * option to choose which tool should open by default when user opens nativephp app
  * Researcher Agent
