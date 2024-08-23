@@ -27,7 +27,7 @@ class TipsNotifier extends Component
     #[Computed]
     public function tips(): Collection
     {
-        return Tip::all();
+        return Tip::query()->latest()->get();
     }
 
     #[Computed]
@@ -107,7 +107,7 @@ class TipsNotifier extends Component
     {
         $this->validate([
             'apiKey' => 'required',
-            'prompt' => 'required|min:3',
+            'prompt' => 'required|min:100',
             'scheduleType' => 'required',
             'cronExpression' => [
                 'required_if:scheduleType,custom',
