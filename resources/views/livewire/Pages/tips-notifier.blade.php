@@ -1,5 +1,4 @@
 <div class="py-20 px-8">
-
     <livewire:apikeys.api-key-banner/>
 
     <div class="p-6">
@@ -26,16 +25,12 @@
             </div>
 
             @if ($scheduleType === 'custom')
-                <div class="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                    @foreach (['minute', 'hour', 'day', 'month', 'weekday'] as $field)
-                        <div>
-                            <label for="{{ $field }}" class="block text-sm font-medium text-gray-700">{{ ucfirst($field) }}</label>
-                            <input type="text" id="{{ $field }}" wire:model="scheduleData.{{ $field }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                   placeholder="*">
-                            <p class="mt-1 text-xs text-gray-500">{{ $customFieldHints[$field] }}</p>
-                        </div>
-                    @endforeach
+                <div class="mb-4">
+                    <label for="cronExpression" class="block text-sm font-medium text-gray-700">Cron Expression</label>
+                    <input type="text" id="cronExpression" wire:model.live="cronExpression"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                           placeholder="* * * * *">
+                    <p class="mt-1 text-xs text-gray-500">Enter a valid cron expression (e.g., "*/5 * * * *" for every 5 minutes)</p>
                 </div>
             @endif
 
@@ -65,7 +60,8 @@
                     <div class="px-4 py-5 sm:px-6">
                         <p class="text-sm font-medium text-gray-900">{{ $tip->content }}</p>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                            Schedule: {{ json_encode($tip->schedule_data) }}</p>
+                            Schedule: {{ $tip->schedule_type === 'custom' ? $tip->schedule_data['cron'] : $tip->schedule_type }}
+                        </p>
                         <button wire:click="deleteTip({{ $tip->id }})"
                                 class="mt-2 inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                             Delete

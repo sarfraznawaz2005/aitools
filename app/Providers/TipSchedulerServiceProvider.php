@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Tip;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class TipSchedulerServiceProvider extends ServiceProvider
@@ -14,46 +13,24 @@ class TipSchedulerServiceProvider extends ServiceProvider
         $tips = Tip::all();
 
         foreach ($tips as $tip) {
-            $expression = $this->buildCronExpression($tip);
             $schedule->call(function () use ($tip) {
-                Log::info('Tip triggered: ' . $tip->tip);
-                // Implement the logic to send or display the tip
-            })->cron($expression);
+                // Implement the tip processing logic here
+            })->cron($this->getCronExpression($tip));
         }
     }
 
-    protected function buildCronExpression(Tip $tip): string
+    protected function getCronExpression(Tip $tip)
     {
-        if ($tip->schedule_type === 'every_minute') {
-            return '* * * * *';
-        }
-
-        if ($tip->schedule_type === 'hourly') {
-            return '0 * * * *';
-        }
-
-        if ($tip->schedule_type === 'daily') {
-            return '0 0 * * *';
-        }
-
-        if ($tip->schedule_type === 'weekly') {
-            return '0 0 * * ' . ($tip->day_of_week ?? 0);
-        }
-
-        if ($tip->schedule_type === 'monthly') {
-            return '0 0 ' . ($tip->day_of_month ?? 1) . ' * *';
-        }
-
         if ($tip->schedule_type === 'custom') {
-            $minute = $tip->minute ?? '*';
-            $hour = $tip->hour ?? '*';
-            $dayOfMonth = $tip->day_of_month ?? '*';
-            $month = $tip->month ?? '*';
-            $dayOfWeek = $tip->day_of_week ?? '*';
-
-            return "{$minute} {$hour} {$dayOfMonth} {$month} {$dayOfWeek}";
+            return $tip->schedule_data['cron'];
         }
 
-        return '* * * * *';
+        return match ($tip->schedule_type) {
+            'every_minute' => '* * * * *',
+            'every_hour' => '0 * * * *',
+            'every_day' => '0 0 * * *',
+            'every_week' => '0 0 * * 0',
+            'every_month' => '0 0 1 * *',
+        };
     }
 }

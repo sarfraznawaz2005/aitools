@@ -11,6 +11,7 @@
         "embed/embed": "^4.4",
         "laravel/framework": "^11.9",
         "livewire/livewire": "^3.5",
+        "lorisleiva/cron-translator": "^0.4.5",
         "nativephp/electron": "^0.6.5",
         "sajadsdi/laravel-setting-pro": "^2.0",
         "smalot/pdfparser": "^2.11",

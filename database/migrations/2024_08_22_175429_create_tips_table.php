@@ -13,13 +13,9 @@ return new class extends Migration {
         Schema::create('tips', function (Blueprint $table) {
             $table->id();
             $table->foreignId('api_key_id');
-            $table->text('tip');
+            $table->text('content');
             $table->string('schedule_type');
-            $table->integer('minute')->nullable();
-            $table->integer('hour')->nullable();
-            $table->integer('day_of_week')->nullable();
-            $table->integer('day_of_month')->nullable();
-            $table->integer('month')->nullable();
+            $table->json('schedule_data');
             $table->timestamps();
         });
     }
