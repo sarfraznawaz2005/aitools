@@ -57,7 +57,7 @@
                         </tr>
                         </thead>
 
-                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
+                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600 font-medium">
                         @foreach($this->tips as $tip)
                             <tr wire:key="apikeyrow-{{ $tip->id }}">
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
