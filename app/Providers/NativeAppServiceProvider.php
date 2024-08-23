@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\Window;
+use Native\Laravel\Menu\Menu;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
 {
@@ -13,7 +14,40 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        Window::open();
+        //MenuBar::hide();
+
+        Menu::new()->register();
+
+        Window::open()
+            ->width(1080)
+            ->minWidth(1080)
+            ->maxWidth(1080)
+            ->height(800)
+            ->minHeight(800)
+            //->showDevTools(false)
+            ->maximizable(false);
+
+        /**
+         * Dock::menu(
+         * Menu::new()
+         * ->event(DockItemClicked::class, 'Settings')
+         * ->submenu('Help',
+         * Menu::new()
+         * ->event(DockItemClicked::class, 'About')
+         * ->event(DockItemClicked::class, 'Learn Moreā¦')
+         * )
+         * );
+         *
+         * ContextMenu::register(
+         * Menu::new()
+         * ->event(ContextMenuClicked::class, 'Do something')
+         * );
+         *
+         * GlobalShortcut::new()
+         * ->key('CmdOrCtrl+Shift+I')
+         * ->event(ShortcutPressed::class)
+         * ->register();
+         */
     }
 
     /**

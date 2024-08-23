@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Native\Laravel\Notification;
 
 class TipSchedulerServiceProvider extends ServiceProvider
 {
@@ -26,27 +27,27 @@ class TipSchedulerServiceProvider extends ServiceProvider
                         ->onSuccess(function () use ($tip) {
                             Log::info("✅ [{$tip->name}] ran successfully.");
 
-//                        Notification::new()
-//                            ->title('✅ ' . $tip->name)
-//                            ->message("[{$tip->name}] ran successfully.")
-//                            ->show();
+                            Notification::new()
+                                ->title('✅ ' . $tip->name)
+                                ->message("[{$tip->name}] ran successfully.")
+                                ->show();
                         })
                         ->onFailure(function () use ($tip) {
                             Log::error("🛑 [{$tip->name}] failed to run.");
 
-//                        Notification::new()
-//                            ->title('🛑 ' . $tip->name)
-//                            ->message("[{$tip->name}] failed to run.")
-//                            ->show();
+                            Notification::new()
+                                ->title('🛑 ' . $tip->name)
+                                ->message("[{$tip->name}] failed to run.")
+                                ->show();
                         });
                 }
             }
         } catch (Exception) {
             Log::error('🛑 Error running tips');
-//                        Notification::new()
-//                            ->title('🛑 Error')
-//                            ->message('Error running tips')
-//                            ->show();
+            Notification::new()
+                ->title('🛑 Error')
+                ->message('Error running tips')
+                ->show();
         }
     }
 
