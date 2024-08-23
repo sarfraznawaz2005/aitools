@@ -4,62 +4,64 @@
         <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
             <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">SAVED API KEYS</legend>
 
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-                <thead class="bg-gray-50 dark:bg-neutral-800">
-                <tr>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                        Model Name
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                        Type
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                        Action
-                    </th>
-                </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
-                @foreach($this->apiKeys as $apiKey)
-                    <tr wire:key="apikeyrow-{{ $apiKey->id }}">
-                        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                            {{ $apiKey->model_name }}
-                        </td>
-                        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                            {{ $apiKey->llm_type }}
-                        </td>
-                        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                            @if ($apiKey->active)
-                                <button x-data x-tooltip.raw="This is currently default"
-                                        class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded mr-2">
-                                    <x-icons.ok class="w-4 h-4 mx-auto"/>
-                                </button>
-                            @else
-                                <button x-data x-tooltip.raw="Make Default"
-                                        wire:click="markDefault({{ $apiKey->id }})"
-                                        class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
-                                    <x-icons.ok class="w-4 h-4 mx-auto"/>
-                                </button>
-                            @endif
-
-                            <button
-                                x-data x-tooltip.raw="Edit"
-                                wire:click="edit({{ $apiKey->id }})"
-                                class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
-                                <x-icons.edit class="w-4 h-4 mx-auto"/>
-                            </button>
-
-                            <x-confirm-dialog call="deleteApiKey({{$apiKey->id}})" x-data x-tooltip.raw="Delete"
-                                              class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
-                                <x-icons.delete class="w-4 h-4 mx-auto"/>
-                            </x-confirm-dialog>
-                        </td>
+            <div class="items-center justify-center font-medium w-full border border-gray-300">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                    <thead class="bg-gray-50 dark:bg-neutral-800">
+                    <tr>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                            Model Name
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                            Type
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                            Action
+                        </th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600">
+                    @foreach($this->apiKeys as $apiKey)
+                        <tr wire:key="apikeyrow-{{ $apiKey->id }}">
+                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                                {{ $apiKey->model_name }}
+                            </td>
+                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                                {{ $apiKey->llm_type }}
+                            </td>
+                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                @if ($apiKey->active)
+                                    <button x-data x-tooltip.raw="This is currently default"
+                                            class="cursor-default items-center px-2 py-1 text-white bg-green-600 rounded mr-2">
+                                        <x-icons.ok class="w-4 h-4 mx-auto"/>
+                                    </button>
+                                @else
+                                    <button x-data x-tooltip.raw="Make Default"
+                                            wire:click="markDefault({{ $apiKey->id }})"
+                                            class="items-center px-2 py-1 text-white bg-gray-600 hover:bg-gray-800 rounded mr-2">
+                                        <x-icons.ok class="w-4 h-4 mx-auto"/>
+                                    </button>
+                                @endif
+
+                                <button
+                                    x-data x-tooltip.raw="Edit"
+                                    wire:click="edit({{ $apiKey->id }})"
+                                    class="items-center px-2 py-1 text-white bg-blue-600 hover:bg-blue-800 rounded mr-2">
+                                    <x-icons.edit class="w-4 h-4 mx-auto"/>
+                                </button>
+
+                                <x-confirm-dialog call="deleteApiKey({{$apiKey->id}})" x-data x-tooltip.raw="Delete"
+                                                  class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
+                                    <x-icons.delete class="w-4 h-4 mx-auto"/>
+                                </x-confirm-dialog>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
 
         </fieldset>
     @endif

@@ -26,9 +26,7 @@
         </div>
 
         @if (count($this->tips))
-            <fieldset
-                class="items-center justify-center font-semibold w-full border border-gray-300 mt-4">
-
+            <div class="items-center justify-center font-semibold w-full border border-gray-300 mt-4">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                         <thead class="bg-gray-50 dark:bg-neutral-800">
@@ -106,7 +104,7 @@
                         </tbody>
                     </table>
                 </div>
-            </fieldset>
+            </div>
         @endif
 
         <x-modal id="tipModal">
