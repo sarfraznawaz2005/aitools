@@ -18,9 +18,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
             foreach ($tips as $tip) {
                 if ($tip->active) {
 
-                    $schedule->call(function () use ($tip) {
-                        // do something
-                    })
+                    $schedule->call(fn() => $this->processTip($tip))
                         ->cron($tip->cron)
                         ->onSuccess(function () use ($tip) {
                             Log::info("Tip {$tip->name} ran successfully");
@@ -33,5 +31,10 @@ class TipSchedulerServiceProvider extends ServiceProvider
         } catch (Exception) {
             Log::error('Error running tips');
         }
+    }
+
+    private function processTip($tip): void
+    {
+        // do something with the tip
     }
 }
