@@ -4,6 +4,7 @@ namespace App\Livewire\Pages;
 
 use App\Models\ApiKey;
 use App\Models\Tip;
+use App\Traits\InteractsWithToast;
 use Cron\CronExpression;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -17,6 +18,8 @@ use Lorisleiva\CronTranslator\CronTranslator;
 
 class TipsNotifier extends Component
 {
+    use InteractsWithToast;
+
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
     public string $apiKey = '';
@@ -109,7 +112,7 @@ class TipsNotifier extends Component
         return view('livewire.pages.tips-notifier');
     }
 
-    public function save(): void
+    public function save(Tip $tip = null): void
     {
         $this->validate([
             'apiKey' => 'required',
@@ -125,19 +128,43 @@ class TipsNotifier extends Component
             'cronExpression.valid_cron' => 'The cron expression is invalid.',
         ]);
 
-        Tip::query()->create([
-            'api_key_id' => $this->apiKey,
-            'prompt' => trim($this->prompt),
-            'schedule_type' => $this->scheduleType,
-            'schedule_data' => $this->scheduleType === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
-        ]);
+        if ($tip->exists) {
+            $tip->update([
+                'api_key_id' => $this->apiKey,
+                'prompt' => trim($this->prompt),
+                'schedule_type' => $this->scheduleType,
+                'schedule_data' => $this->scheduleType === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
+            ]);
+        } else {
+            Tip::query()->create([
+                'api_key_id' => $this->apiKey,
+                'prompt' => trim($this->prompt),
+                'schedule_type' => $this->scheduleType,
+                'schedule_data' => $this->scheduleType === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
+            ]);
+        }
+
+        $this->dispatch('closeModal', ['id' => 'tipModal']);
+
+        $this->success($tip->exists ? 'Tip saved successfully!' : 'Bot added successfully!');
 
         $this->resetForm();
+    }
+
+    public function edit(Tip $tip): void
+    {
+        $this->isEdit = true;
+
+        $this->resetErrorBag();
+
+        $this->dispatch('showModal', ['id' => 'tipModal']);
     }
 
     public function deleteTip($id): void
     {
         Tip::destroy($id);
+
+        $this->success('Bot deleted successfully!');
     }
 
     public function resetForm(): void
