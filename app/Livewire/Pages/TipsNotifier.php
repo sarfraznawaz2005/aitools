@@ -27,8 +27,7 @@ class TipsNotifier extends Component
     public string $api_key_id = '';
     public string $name = '';
     public string $prompt = '';
-    public string $schedule_type = '';
-    public string $cronExpression = '';
+    public string $cron = '';
 
     private CronExpression $CronExp;
 
@@ -47,39 +46,21 @@ class TipsNotifier extends Component
     #[Computed]
     public function schedulePreview(): string
     {
-        if ($this->schedule_type !== 'custom') {
-            return match ($this->schedule_type) {
-                'every_minute' => 'Every Minute',
-                'every_hour' => 'Every Hour',
-                'every_day' => 'Every Day',
-                'every_week' => 'Every Week',
-                'every_month' => 'Every Month',
-            };
-        }
-
-        return $this->getCustomSchedulePreview();
-    }
-
-    private function getCustomSchedulePreview(): string
-    {
         try {
-            $humanReadable = CronTranslator::translate(trim($this->cronExpression));
+            $humanReadable = CronTranslator::translate(trim($this->cron));
             return ucfirst($humanReadable);
         } catch (Exception) {
             return 'Invalid cron expression';
         }
     }
 
-    /**
-     * @throws Exception
-     */
     #[Computed]
     public function nextRuns(): array
     {
         try {
             $nextRuns = [];
             $date = now();
-            $cronExpression = $this->CronExp->setExpression(trim($this->getCronExpression()));
+            $cronExpression = $this->CronExp->setExpression(trim($this->cron));
 
             for ($i = 0; $i < 3; $i++) {
                 $nextRun = $cronExpression->getNextRunDate($date);
@@ -91,18 +72,6 @@ class TipsNotifier extends Component
         } catch (Exception) {
             return [];
         }
-    }
-
-    private function getCronExpression(): string
-    {
-        return $this->schedule_type === 'custom' ? trim($this->cronExpression) : match ($this->schedule_type) {
-            'every_minute' => '* * * * *',
-            'every_hour' => '0 * * * *',
-            'every_day' => '0 0 * * *',
-            'every_week' => '0 0 * * 0',
-            'every_month' => '0 0 1 * *',
-            default => '',
-        };
     }
 
     #[Title('Tips Notifier')]
@@ -119,15 +88,11 @@ class TipsNotifier extends Component
             'api_key_id' => 'required',
             'name' => 'required|min:5|max:25|unique:tips,name,' . ($this->model->id ?? 'NULL') . ',id',
             'prompt' => 'required|min:100',
-            'schedule_type' => 'required',
-            'cronExpression' => [
-                'required_if:scheduleType,custom',
-                'valid_cron'
-            ],
+            'cron' => 'required|valid_cron',
         ], [
-            'schedule_type.required' => 'The Frequency field is required.',
             'api_key_id.required' => 'The LLM field is required.',
-            'cronExpression.valid_cron' => 'The cron expression is invalid.',
+            'cron.required' => 'The frequency field is required.',
+            'cron.valid_cron' => 'The cron expression is invalid.',
         ]);
 
         if ($this->model->exists) {
@@ -135,16 +100,14 @@ class TipsNotifier extends Component
                 'api_key_id' => $this->api_key_id,
                 'name' => $this->name,
                 'prompt' => trim($this->prompt),
-                'schedule_type' => $this->schedule_type,
-                'schedule_data' => $this->schedule_type === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
+                'cron' => $this->cron,
             ]);
         } else {
             Tip::query()->create([
                 'api_key_id' => $this->api_key_id,
                 'name' => $this->name,
                 'prompt' => trim($this->prompt),
-                'schedule_type' => $this->schedule_type,
-                'schedule_data' => $this->schedule_type === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
+                'cron' => $this->cron,
             ]);
         }
 
@@ -162,7 +125,6 @@ class TipsNotifier extends Component
         $this->resetErrorBag();
 
         $this->fill($tip->toArray());
-        $this->cronExpression = $tip->schedule_data['cron'] ?? '';
 
         $this->dispatch('showModal', ['id' => 'tipModal']);
     }

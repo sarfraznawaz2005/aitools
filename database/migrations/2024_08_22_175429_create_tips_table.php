@@ -15,8 +15,7 @@ return new class extends Migration {
             $table->foreignId('api_key_id');
             $table->string('name');
             $table->text('prompt');
-            $table->string('schedule_type');
-            $table->json('schedule_data')->nullable();
+            $table->string('cron');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

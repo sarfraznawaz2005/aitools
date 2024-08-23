@@ -22,25 +22,10 @@ class TipSchedulerServiceProvider extends ServiceProvider
                         Log::info("Running tip $tip->id");
                     }
 
-                })->cron($this->getCronExpression($tip));
+                })->cron($tip->cron);
             }
         } catch (Exception) {
-
+            Log::error('Error running tips');
         }
-    }
-
-    protected function getCronExpression(Tip $tip)
-    {
-        if ($tip->schedule_type === 'custom') {
-            return $tip->schedule_data['cron'];
-        }
-
-        return match ($tip->schedule_type) {
-            'every_minute' => '* * * * *',
-            'every_hour' => '0 * * * *',
-            'every_day' => '0 0 * * *',
-            'every_week' => '0 0 * * 0',
-            'every_month' => '0 0 1 * *',
-        };
     }
 }

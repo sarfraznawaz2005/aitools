@@ -10,11 +10,7 @@ class Tip extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['api_key_id', 'name', 'prompt', 'schedule_type', 'schedule_data', 'active'];
-
-    protected $casts = [
-        'schedule_data' => 'array',
-    ];
+    protected $fillable = ['api_key_id', 'name', 'prompt', 'cron', 'active'];
 
     public function apiKey(): BelongsTo
     {

@@ -57,7 +57,8 @@
                         </tr>
                         </thead>
 
-                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600 font-medium">
+                        <tbody
+                            class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600 font-medium">
                         @foreach($this->tips as $tip)
                             <tr wire:key="apikeyrow-{{ $tip->id }}">
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
@@ -67,11 +68,7 @@
                                     {{ $tip->apiKey->model_name }} ({{ $tip->apiKey->llm_type }})
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                    @if ($tip->schedule_type && $tip->schedule_type === 'custom')
-                                        {{ucwords(Lorisleiva\CronTranslator\CronTranslator::translate($tip->schedule_data['cron']))}}
-                                    @else
-                                        {{ ucwords(str_replace('_', ' ', $tip->schedule_type)) }}
-                                    @endif
+                                    {{ucwords(Lorisleiva\CronTranslator\CronTranslator::translate($tip->cron))}}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
                                     @if ($tip->active)
@@ -152,44 +149,40 @@
                 </div>
 
                 <div class="mb-4">
-                    <select wire:model.change="schedule_type"
+                    <select wire:model.change="cron"
                             class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
                         <option value="">Choose Frequency</option>
-                        <option value="every_minute">Every Minute</option>
-                        <option value="every_hour">Every Hour</option>
-                        <option value="every_day">Every Day</option>
-                        <option value="every_week">Every Week</option>
-                        <option value="every_month">Every Month</option>
-                        <option value="custom">Custom</option>
+                        <option value="* * * * *">Every Minute</option>
+                        <option value="0 * * * *">Every Hour</option>
+                        <option value="0 0 * * *">Every Day</option>
+                        <option value="0 0 * * 0">Every Week</option>
+                        <option value="0 0 1 * *">Every Month</option>
                     </select>
                 </div>
 
-                @if ($schedule_type === 'custom')
+                @if (!empty($cron))
                     <div class="mb-4">
-                        <input type="text" wire:model.live="cronExpression"
-                               class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"
-                               placeholder="* * * * *">
+                        <input type="text" wire:model.live="cron"
+                               class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
+
                         <p class="mt-1 text-xs">
-                            Enter a valid cron expression (e.g., <code class="font-bold text-pink-500">*/5 * * *
-                                *</code>
-                            for every 5
-                            minutes).
+                            Enter a valid cron expression
+                            (e.g., <code class="font-bold text-pink-500">*/5 * * * *</code> for every 5 minutes).
                             See <a href="https://crontab.guru" target="_blank"
-                                   class="text-blue-500 hover:text-blue-700">crontab.guru</a>
-                            for more help.
+                                   class="text-blue-500 hover:text-blue-700">crontab.guru</a> for more help.
                         </p>
                     </div>
                 @endif
 
-                @if ($cronExpression)
+                @if (!empty($cron))
                     <div class="mb-4">
                         <p class="text-sm">Schedule Description: <span
-                                class="text-pink-500">{{ $this->schedulePreview }}</span>
+                                class="text-pink-500">{{ ucwords($this->schedulePreview) }}</span>
                         </p>
                     </div>
                 @endif
 
-                @if ($schedule_type && $schedule_type !== 'custom')
+                @if (!empty($cron))
                     <div class="mb-4">
                         <p class="text-sm italic font-bold mb-1">Next Runs:</p>
                         <ul class="list-disc list-inside ml-2">
@@ -198,17 +191,6 @@
                             @endforeach
                         </ul>
                     </div>
-                @else
-                    @if ($cronExpression)
-                        <div class="mb-4">
-                            <p class="text-sm italic font-bold mb-1">Next Runs:</p>
-                            <ul class="list-disc list-inside ml-2">
-                                @foreach ($this->nextRuns as $run)
-                                    <li class="text-sm text-pink-500">{{ $run }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                 @endif
 
                 <div
