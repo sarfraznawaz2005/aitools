@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Tip;
 use Exception;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class TipSchedulerServiceProvider extends ServiceProvider
@@ -16,7 +17,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
 
             foreach ($tips as $tip) {
                 $schedule->call(function () use ($tip) {
-                    // Implement the tip processing logic here
+                    Log::info("Running tip {$tip->id}");
                 })->cron($this->getCronExpression($tip));
             }
         } catch (Exception) {
