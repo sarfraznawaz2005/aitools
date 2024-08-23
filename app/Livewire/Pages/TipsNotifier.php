@@ -129,6 +129,7 @@ class TipsNotifier extends Component
         if ($this->model->exists) {
             $this->model->update([
                 'api_key_id' => $this->api_key_id,
+                'name' => $this->name,
                 'prompt' => trim($this->prompt),
                 'schedule_type' => $this->schedule_type,
                 'schedule_data' => $this->schedule_type === 'custom' ? ['cron' => trim($this->cronExpression)] : null,
@@ -136,6 +137,7 @@ class TipsNotifier extends Component
         } else {
             Tip::query()->create([
                 'api_key_id' => $this->api_key_id,
+                'name' => $this->name,
                 'prompt' => trim($this->prompt),
                 'schedule_type' => $this->schedule_type,
                 'schedule_data' => $this->schedule_type === 'custom' ? ['cron' => trim($this->cronExpression)] : null,

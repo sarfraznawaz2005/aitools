@@ -44,15 +44,7 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                                Prompt
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
                                 Frequency
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                                Cron Expression
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
@@ -74,30 +66,8 @@
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
                                     {{ $tip->apiKey->model_name }} ({{ $tip->apiKey->llm_type }})
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 truncate text-center">
-                                    <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
-                                        <span
-                                            class="hs-tooltip-toggle cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
-                                            💡
-                                            <span
-                                                x-transition:enter="transition ease-out duration-200"
-                                                x-transition:enter-start="opacity-0 transform scale-95"
-                                                x-transition:enter-end="opacity-100 transform scale-100"
-                                                x-transition:leave="transition ease-in duration-75"
-                                                x-transition:leave-start="opacity-100 transform scale-100"
-                                                x-transition:leave-end="opacity-0 transform scale-95"
-                                                class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                                                role="tooltip">
-                                                {{ $tip->prompt }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
                                     {{ ucfirst(str_replace('_', ' ', $tip->schedule_type)) }}
-                                </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                    <code class="font-bold text-pink-500">{{ $tip->schedule_data['cron'] ?? '' }}</code>
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
                                     @if ($tip->active)
