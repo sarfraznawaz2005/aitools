@@ -42,7 +42,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
                 }
             }
         } catch (Exception) {
-            Log::error('Error running tips');
+            Log::error('🛑 Error running tips');
 //                        Notification::new()
 //                            ->title('🛑 Error')
 //                            ->message('Error running tips')
