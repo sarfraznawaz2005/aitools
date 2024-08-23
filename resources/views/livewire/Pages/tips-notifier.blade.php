@@ -159,19 +159,18 @@
                     </select>
                 </div>
 
-                @if (!empty($cron))
-                    <div class="mb-4">
-                        <input type="text" wire:model.live="cron"
-                               class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
+                <div class="mb-4">
+                    <input type="text" wire:model.live="cron"
+                           placeholder="Type cron expression or select above"
+                           class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
 
-                        <p class="mt-1 text-xs">
-                            Enter a valid cron expression
-                            (e.g., <code class="font-bold text-pink-500">*/5 * * * *</code> for every 5 minutes).
-                            See <a href="https://crontab.guru" target="_blank"
-                                   class="text-blue-500 hover:text-blue-700">crontab.guru</a> for more help.
-                        </p>
-                    </div>
-                @endif
+                    <p class="mt-1 text-xs">
+                        Enter a valid cron expression
+                        (e.g., <code class="font-bold text-pink-500">*/5 * * * *</code> for every 5 minutes).
+                        See <a href="https://crontab.guru" target="_blank"
+                               class="text-blue-500 hover:text-blue-700">crontab.guru</a> for more help.
+                    </p>
+                </div>
 
                 @if (!empty($cron))
                     <div class="mb-4">

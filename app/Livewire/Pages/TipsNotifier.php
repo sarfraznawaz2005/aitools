@@ -91,7 +91,7 @@ class TipsNotifier extends Component
             'cron' => 'required|valid_cron',
         ], [
             'api_key_id.required' => 'The LLM field is required.',
-            'cron.required' => 'The frequency field is required.',
+            'cron.required' => 'The cron expression field is required.',
             'cron.valid_cron' => 'The cron expression is invalid.',
         ]);
 
