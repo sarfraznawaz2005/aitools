@@ -167,6 +167,11 @@ class TipsNotifier extends Component
         $this->dispatch('showModal', ['id' => 'tipModal']);
     }
 
+    public function toggleStatus(Tip $tip): void
+    {
+        $tip->update(['active' => !$tip->active]);
+    }
+
     public function deleteTip($id): void
     {
         Tip::destroy($id);
