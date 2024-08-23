@@ -1,6 +1,8 @@
 <?php
 /*
  * TODO
+ * pass role to llms for chatbudy?
+ * chatbudy - replace custom prompt completely?
  * Tips options?
  * might not need header in case of nativephp cause we can open a route via menu Window::open()->url('https://google.com');
  * option to choose which tool should open by default when user opens nativephp app
