@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->text('prompt');
             $table->string('schedule_type');
             $table->json('schedule_data')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
