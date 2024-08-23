@@ -10,7 +10,7 @@ class Tip extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content', 'schedule_type', 'schedule_data'];
+    protected $fillable = ['api_key_id', 'prompt', 'schedule_type', 'schedule_data'];
 
     protected $casts = [
         'schedule_data' => 'array',
