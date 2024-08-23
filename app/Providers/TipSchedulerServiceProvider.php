@@ -16,13 +16,19 @@ class TipSchedulerServiceProvider extends ServiceProvider
             $tips = Tip::all();
 
             foreach ($tips as $tip) {
-                $schedule->call(function () use ($tip) {
+                if ($tip->active) {
 
-                    if ($tip->active) {
-                        Log::info("Running tip $tip->id");
-                    }
-
-                })->cron($tip->cron);
+                    $schedule->call(function () use ($tip) {
+                        // do something
+                    })
+                        ->cron($tip->cron)
+                        ->onSuccess(function () use ($tip) {
+                            Log::info("Tip {$tip->name} ran successfully");
+                        })
+                        ->onFailure(function () use ($tip) {
+                            Log::error("Tip {$tip->name} failed to run");
+                        });
+                }
             }
         } catch (Exception) {
             Log::error('Error running tips');
