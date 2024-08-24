@@ -16,12 +16,19 @@ class TipSucessListener
         $tip = $event->tip;
 
         $titleLimits = 100; // to avoid too much context window
-        $existingTipContents = implode('.', $tip->contents->take($titleLimits)->pluck('title')->toArray());
+        $existingTipContents = implode('', $tip->contents->take($titleLimits)->pluck('title')->toArray());
+
+        // remove empty lines
+        $existingTipContents = implode(PHP_EOL,
+            array_filter(
+                array_map('trim', explode(PHP_EOL, str_replace(["\r", "\n", "\r\n"], PHP_EOL, $existingTipContents))),
+                'strlen'
+            )
+        );
 
         $llm = getLLM($tip->apiKey);
 
-        $prompt = config('prompts.tips');
-        $prompt = str_ireplace('{{PROMPT}}', $tip->prompt, $prompt);
+        $prompt = str_ireplace('{{PROMPT}}', $tip->prompt, config('prompts.tips'));
         $prompt = str_ireplace('{{DISALLOWED}}', $existingTipContents, $prompt);
 
         $result = $llm->chat($prompt);
