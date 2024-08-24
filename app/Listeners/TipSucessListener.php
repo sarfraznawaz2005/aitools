@@ -8,7 +8,6 @@ use App\LLM\LlmProvider;
 use App\Models\Tip;
 use Illuminate\Support\Str;
 use Livewire\Features\SupportEvents\HandlesEvents;
-use Native\Laravel\Facades\Window;
 use Native\Laravel\Notification;
 
 class TipSucessListener
@@ -45,7 +44,6 @@ class TipSucessListener
 
             //Window::open()->route('test');
             //OnNotificationClicked::broadcast();
-            //$this->dispatch(OnNotificationClicked::class);
 
             Notification::new()
                 //->event(OnNotificationClicked::class)
