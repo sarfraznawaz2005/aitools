@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Events\OnNotificationClicked;
 use App\Models\ApiKey;
 use App\Models\Tip;
 use App\Traits\InteractsWithToast;
@@ -15,6 +16,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Lorisleiva\CronTranslator\CronTranslator;
+use Native\Laravel\Notification;
 
 class TipsNotifier extends Component
 {
@@ -77,6 +79,12 @@ class TipsNotifier extends Component
     #[Title('Tips Notifier')]
     public function render(): View|Factory|Application
     {
+        Notification::new()
+            ->title('✅ AiTools')
+            ->message('hi')
+            ->event(OnNotificationClicked::class)
+            ->show();
+
         $this->CronExp = new CronExpression('* * * * *');
 
         return view('livewire.pages.tips-notifier');
