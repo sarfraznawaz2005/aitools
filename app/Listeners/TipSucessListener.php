@@ -15,16 +15,18 @@ class TipSucessListener
     {
         $tip = $event->tip;
 
-        $titleLimits = 100; // to avoid too much context window
-        $existingTipContents = implode('', $tip->contents->take($titleLimits)->pluck('title')->toArray());
+        $titleLimits = 200; // to avoid too much context window
+        $existingTipContents = implode('', $tip->contents()->latest()->take($titleLimits)->pluck('title')->toArray());
 
         // remove empty lines
-        $existingTipContents = implode(PHP_EOL,
-            array_filter(
-                array_map('trim', explode(PHP_EOL, str_replace(["\r", "\n", "\r\n"], PHP_EOL, $existingTipContents))),
-                'strlen'
-            )
+        $existingTipContents = implode(PHP_EOL, array_map(function ($line) {
+                return $line . '.';
+            }, array_filter(
+                array_map(
+                    'trim', explode(PHP_EOL, str_replace(["\r", "\n", "\r\n"], PHP_EOL, $existingTipContents))
+                ), 'strlen'))
         );
+
 
         $llm = getLLM($tip->apiKey);
 
