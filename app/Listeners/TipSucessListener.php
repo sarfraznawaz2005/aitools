@@ -16,7 +16,7 @@ class TipSucessListener
         $tip = $event->tip;
 
         $titleLimits = 100; // to avoid too much context window
-        $existingTipContents = implode("\n", $tip->contents->limit($titleLimits)->pluck('title')->toArray());
+        $existingTipContents = implode("\n", $tip->contents->take($titleLimits)->pluck('title')->toArray());
 
         $llm = getLLM($tip->apiKey);
 
