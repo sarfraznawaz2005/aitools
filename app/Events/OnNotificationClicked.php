@@ -11,6 +11,11 @@ class OnNotificationClicked
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public function __construct()
+    {
+        //
+    }
+
     public function broadcastOn(): array
     {
         return [

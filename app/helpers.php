@@ -24,6 +24,7 @@ use App\Models\ApiKey;
 use App\Models\Bot;
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Log;
+use Native\Laravel\Facades\Window;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 function getLLM(ApiKey $model): LlmProvider
@@ -168,4 +169,27 @@ function getBotIcon(Conversation $conversation = null): string
 function getBotName(Conversation $conversation = null): string
 {
     return $conversation?->bot?->name ?? 'General';
+}
+
+function openWindow(string $id, string $route, bool $rememberState = false): void
+{
+    Window::open()
+        //->showDevTools(false)
+        //->frameless()
+        //->titleBarHidden()
+        //->fullscreen(true)
+        ->width(1280)
+        ->minWidth(1024)
+        ->height(800)
+        ->minHeight(800)
+        ->lightVibrancy()
+        ->focusable()
+        ->hasShadow()
+        ->maximizable();
+
+    $currentWindow = Window::current();
+
+    if ($rememberState) {
+        $currentWindow->rememberState();
+    }
 }

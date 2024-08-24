@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
-use Native\Laravel\Facades\Window;
 use Native\Laravel\Menu\Items\MenuItem;
 use Native\Laravel\Menu\Menu;
 
@@ -20,20 +19,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
 
         Menu::new()->register();
 
-        Window::open()
-            //->showDevTools(false)
-            //->frameless()
-            //->titleBarHidden()
-            //->fullscreen(true)
-            ->width(1280)
-            ->minWidth(1024)
-            ->height(800)
-            ->minHeight(800)
-            ->focusable()
-            ->hasShadow()
-            ->lightVibrancy()
-            ->rememberState()
-            ->maximizable();
+        openWindow('main', 'home', true);
 
         //todo: add tooltips
         //todo: click on notification should open corresponding tool

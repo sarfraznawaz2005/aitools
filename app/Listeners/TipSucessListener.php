@@ -7,6 +7,7 @@ use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
 use Illuminate\Support\Str;
+use Native\Laravel\Facades\Window;
 use Native\Laravel\Notification;
 
 class TipSucessListener
@@ -42,8 +43,9 @@ class TipSucessListener
             //Window::open()->route('test');
             //MenuBar::label('TEST');
 
+            OnNotificationClicked::broadcast();
+
             Notification::new()
-                ->event(OnNotificationClicked::class)
                 ->title('✅ AiTools - ' . ucwords($tip->name))
                 ->message(Str::limit($result))
                 ->show();
