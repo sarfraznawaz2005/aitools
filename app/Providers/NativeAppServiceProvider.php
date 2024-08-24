@@ -40,6 +40,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         MenuBar::create()
             ->icon(public_path('assets/icon.png'))
             ->label(config('app.name'))
+            ->route('home')
             ->showDockIcon()
             ->withContextMenu(
                 Menu::new()

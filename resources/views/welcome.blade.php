@@ -1,5 +1,5 @@
 <x-layouts.app :title="''">
-    <div class="mx-auto pt-24 px-8">
+    <div class="mx-auto pt-24 px-8" tabindex="-1">
         <x-flash/>
         <livewire:apikeys.api-key-banner />
 

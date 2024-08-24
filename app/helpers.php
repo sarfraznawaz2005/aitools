@@ -1,6 +1,7 @@
 <?php
 /*
  * TODO
+ * minimize to system tray
  * chatbuddy - save embeddings into db? Might improve performance
  * chatbuddy - use https://github.com/theodo-group/LLPhant
  * pass role to llms for chatbudy? this might solve issue of doctor related questions

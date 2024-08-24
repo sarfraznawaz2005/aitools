@@ -2,10 +2,10 @@
 
 namespace App\Listeners;
 
+use App\Events\OnNotificationClicked;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Native\Laravel\Notification;
 
@@ -34,12 +34,16 @@ class TipSucessListener
         $prompt = str_ireplace('{{DISALLOWED}}', $existingTipContents, $prompt);
 
         $result = $llm->chat($prompt);
-        Log::info($prompt);
+        //Log::info($prompt);
 
         if ($result) {
             $this->generateTitle($llm, $tip, $result);
 
+            //Window::open()->route('test');
+            //MenuBar::label('TEST');
+
             Notification::new()
+                ->event(OnNotificationClicked::class)
                 ->title('✅ AiTools - ' . ucwords($tip->name))
                 ->message(Str::limit($result))
                 ->show();

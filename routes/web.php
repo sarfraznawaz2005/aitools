@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::get('test', function () {
     return view('test');
-});
+})->name('test');
 
 Route::get($tools['chat-buddy']['route'], ChatBuddy::class)->name($tools['chat-buddy']['route']);
 Route::get($tools['chat-buddy']['route'] . '/{conversation}', ChatBuddy::class)->name($tools['chat-buddy']['route'] . 'load-conversation');
