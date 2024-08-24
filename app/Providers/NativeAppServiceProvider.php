@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
-use Native\Laravel\Menu\Items\MenuItem;
 use Native\Laravel\Menu\Menu;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
@@ -19,13 +18,12 @@ class NativeAppServiceProvider implements ProvidesPhpIni
 
         MenuBar::create()
             ->icon(public_path('assets/icon.png'))
-            ->label(config('app.name'))
+            ->label('AiTools')
+            //->onlyShowContextMenu()
+            ->showDockIcon()
             ->route('home')
             ->withContextMenu(
-                Menu::new()
-                    ->event(MenuItem::class, 'About')
-                    ->quit()
-                    ->link(route('home'), 'Home')
+                Menu::new()->quit()
             );
 
         /*

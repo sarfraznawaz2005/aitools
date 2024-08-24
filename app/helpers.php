@@ -25,6 +25,7 @@ use App\Models\Bot;
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Log;
 use Native\Laravel\Facades\Window;
+use Native\Laravel\Windows\PendingOpenWindow;
 use Sajadsdi\LaravelSettingPro\Support\Setting;
 
 function getLLM(ApiKey $model): LlmProvider
@@ -171,9 +172,9 @@ function getBotName(Conversation $conversation = null): string
     return $conversation?->bot?->name ?? 'General';
 }
 
-function openWindow(string $id, string $route, $focusable = true, $closable = true, $minimizable = true, $maximizable = true): void
+function openWindow(string $id, string $route, $focusable = true, $closable = true, $minimizable = true, $maximizable = true): PendingOpenWindow
 {
-    Window::open($id)
+    return Window::open($id)
         ->route($route) // see config.app app_url, it is set to nativephp default
         ->showDevTools(false)
         //->frameless()
