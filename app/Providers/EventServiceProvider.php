@@ -11,7 +11,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(OnNotificationShown::class, function () {
-            openWindow('tip', 'tips-notifier');
+            openWindow('tip', 'tips-notifier', false);
             //Window::close('main');
         });
     }

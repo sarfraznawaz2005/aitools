@@ -171,7 +171,7 @@ function getBotName(Conversation $conversation = null): string
     return $conversation?->bot?->name ?? 'General';
 }
 
-function openWindow(string $id, string $route): void
+function openWindow(string $id, string $route, $focusable = true, $closable = true, $minimizable = true, $maximizable = true): void
 {
     Window::open($id)
         ->route($route) // see config.app app_url, it is set to nativephp default
@@ -184,10 +184,10 @@ function openWindow(string $id, string $route): void
         ->height(800)
         ->minHeight(800)
         ->lightVibrancy()
-        ->rememberState()
-        ->focusable()
         ->hasShadow()
-        ->closable()
-        ->minimizable()
-        ->maximizable();
+        ->rememberState()
+        ->focusable($focusable)
+        ->closable($closable)
+        ->minimizable($minimizable)
+        ->maximizable($maximizable);
 }
