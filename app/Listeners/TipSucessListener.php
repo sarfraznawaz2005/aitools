@@ -7,7 +7,6 @@ use App\LLM\LlmProvider;
 use App\Models\Tip;
 use Illuminate\Support\Str;
 use Native\Laravel\Notification;
-use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 class TipSucessListener
 {
@@ -36,14 +35,13 @@ class TipSucessListener
 
     private function generateTitle(LlmProvider $llm, Tip $tip, string $result)
     {
-        $markdown = app(MarkdownRenderer::class);
-
         $resultCleaned = htmlToText($result);
-        $resultHtml = $markdown->toHtml($result);
 
         $prompt = "
         Create only a single title of max 50 characters from the provided Text, title must be of minimum 50 characters
         and must not be more than 50 characters and without punctuation characters, language must be same as Text.
+
+        Make sure title you generate is single and not more than 50 characters.
 
         Text: '$resultCleaned'
         ";
@@ -52,7 +50,7 @@ class TipSucessListener
 
         $tip->contents()->create([
             'title' => $title ?? '',
-            'content' => $resultHtml,
+            'content' => $result,
         ]);
     }
 }
