@@ -122,16 +122,28 @@ function makePromoptForDocumentBot(Bot $bot, string $infoHeader, string $context
 
 function sendStream($text, $sendCloseSignal = false): void
 {
-    try {
-        $stream = fopen('php://stdout', 'w');
-        fwrite($stream, $text . PHP_EOL);
+    $output = "event: update\n";
 
-        if ($sendCloseSignal) {
-            fclose($stream);
-        }
-    } catch (Exception) {
-        // Do nothing
+    if (!$sendCloseSignal) {
+        $output .= "data: " . json_encode($text) . "\n\n";
+    } else {
+        $output .= "data: <END_STREAMING_SSE>\n\n";
     }
+
+    // Write to stdout for NativePHP
+    $stream = fopen('php://stdout', 'w');
+    fwrite($stream, $output);
+    fflush($stream);
+
+    // Echo for browser SSE
+    echo $output;
+
+    // Attempt to flush output buffers
+    if (ob_get_level() > 0) {
+        ob_flush();
+    }
+
+    flush();
 }
 
 function htmlToText($html, $removeWhiteSpace = true): string

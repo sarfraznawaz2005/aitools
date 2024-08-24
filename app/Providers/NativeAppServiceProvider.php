@@ -17,14 +17,12 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         Menu::new()->register();
 
         MenuBar::create()
-            ->icon(public_path('assets/icon.png'))
-            ->label('AiTools')
-            //->onlyShowContextMenu()
-            ->showDockIcon()
-            ->route('home')
-            ->withContextMenu(
-                Menu::new()->quit()
-            );
+            ->width(1280)
+            ->height(700)
+            ->showDockIcon(false)
+            ->icon(public_path('assets/icon.png'));
+
+
 
         /*
         GlobalShortcut::new()
@@ -33,7 +31,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->register();
         */
 
-        openWindow('main', 'home');
+        //openWindow('main', 'home');
     }
 
     /**
