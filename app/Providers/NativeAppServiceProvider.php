@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
-use Native\Laravel\Facades\Window;
 use Native\Laravel\Menu\Items\MenuItem;
 use Native\Laravel\Menu\Menu;
 
@@ -36,22 +35,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->register();
         */
 
-        Window::open()
-            ->showDevTools(false)
-            //->frameless()
-            //->titleBarHidden()
-            //->fullscreen(true)
-            ->width(1280)
-            ->minWidth(1024)
-            ->height(800)
-            ->minHeight(800)
-            ->lightVibrancy()
-            ->rememberState()
-            ->focusable()
-            ->hasShadow()
-            ->closable()
-            ->minimizable()
-            ->maximizable();
+        openWindow('main', 'home');
     }
 
     /**
