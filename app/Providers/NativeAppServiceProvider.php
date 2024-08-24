@@ -35,6 +35,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->rememberState()
             ->maximizable();
 
+        //todo: add tooltips
+        //todo: click on notification should open corresponding tool
         MenuBar::create()
             ->icon(public_path('assets/icon.png'))
             ->label(config('app.name'))
