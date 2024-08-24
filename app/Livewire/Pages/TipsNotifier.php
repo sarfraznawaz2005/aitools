@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Request;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -33,11 +34,11 @@ class TipsNotifier extends Component
 
     private CronExpression $CronExp;
 
-    public function showContentWindow($id): View|Factory|Application
+    public function showContentWindow(): View|Factory|Application
     {
         $this->dispatch('hideHeader')->to(Header::class);
 
-        $tipContent = TipContent::query()->findOrFail($id);
+        $tipContent = TipContent::query()->findOrFail(Request::get('contentid'));
 
         return view('livewire.pages.tips-content', compact('tipContent'));
     }

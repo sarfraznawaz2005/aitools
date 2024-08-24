@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
             //Window::close('main');
 
             Window::open('tip')
-                ->route("/tip-content/$event->id")
+                ->url("/tip-content?contentid=$event->id")
                 ->showDevTools(false)
                 //->frameless()
                 //->titleBarHidden()
