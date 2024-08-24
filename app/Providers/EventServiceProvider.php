@@ -12,7 +12,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(OnNotificationShown::class, function () {
-            Log::info('Opening Tips Window');
+            //Log::info('Opening Tips Window');
 
             sleep(1);
 
