@@ -25,7 +25,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
                         ->timezone('Asia/Karachi')
                         ->cron($tip->cron)
                         ->onSuccess(function () use ($tip) {
-                            Log::info("✅ [{$tip->name}] ran successfully.");
+                            //Log::info("✅ [{$tip->name}] ran successfully.");
 
                             Notification::new()
                                 ->title('✅ ' . $tip->name)
@@ -33,7 +33,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
                                 ->show();
                         })
                         ->onFailure(function () use ($tip) {
-                            Log::error("🛑 [{$tip->name}] failed to run.");
+                            //Log::error("🛑 [{$tip->name}] failed to run.");
 
                             Notification::new()
                                 ->title('🛑 ' . $tip->name)
@@ -43,7 +43,7 @@ class TipSchedulerServiceProvider extends ServiceProvider
                 }
             }
         } catch (Exception) {
-            Log::error('🛑 Error running tips');
+            //Log::error('🛑 Error running tips');
             Notification::new()
                 ->title('🛑 Error')
                 ->message('Error running tips')

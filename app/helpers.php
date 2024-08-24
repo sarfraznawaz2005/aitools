@@ -119,16 +119,16 @@ function makePromoptForDocumentBot(Bot $bot, string $infoHeader, string $context
 
 function sendStream($text, $sendCloseSignal = false): void
 {
-    echo "event: update\n";
+    try {
+        $stream = fopen('php://stdout', 'w');
+        fwrite($stream, $text . PHP_EOL);
 
-    if ($sendCloseSignal) {
-        echo "data: <END_STREAMING_SSE>\n\n";
-    } else {
-        echo "data: " . json_encode($text) . "\n\n";
+        if ($sendCloseSignal) {
+            fclose($stream);
+        }
+    } catch (Exception) {
+        // Do nothing
     }
-
-    ob_flush();
-    flush();
 }
 
 function htmlToText($html, $removeWhiteSpace = true): string
