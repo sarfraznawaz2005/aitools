@@ -17,11 +17,11 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         Menu::new()->register();
 
         MenuBar::create()
-            ->width(1280)
-            ->height(700)
+            ->label(config('app.name'))
             ->showDockIcon(false)
-            ->icon(public_path('assets/icon.png'));
-
+            ->icon(public_path('assets/icon.png'))
+            ->width(1250)
+            ->height(760);
 
 
         /*
