@@ -173,7 +173,8 @@ function getBotName(Conversation $conversation = null): string
 
 function openWindow(string $id, string $route): void
 {
-    Window::open()
+    Window::open($id)
+        ->route($route)
         //->showDevTools(false)
         //->frameless()
         //->titleBarHidden()
