@@ -19,7 +19,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
 
         Menu::new()->register();
 
-        openWindow('main', 'home', true);
+        openWindow('main', 'home');
 
         //todo: add tooltips
         //todo: click on notification should open corresponding tool
