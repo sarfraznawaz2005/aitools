@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'system_tray' => [
-        'icon_path' => public_path('assets/icon.png'),
-    ],
     /**
      * The version of your app.
      * It is used to determine if the app needs to be updated.
