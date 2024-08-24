@@ -18,22 +18,16 @@ class TipSchedulerServiceProvider extends ServiceProvider
 
             foreach ($tips as $tip) {
                 if ($tip->active) {
-                    $schedule->call(fn() => $this->processTip($tip))
+                    $schedule->call(fn() => TipSucessEvent::broadcast($tip))
                         ->name($tip->name)
                         ->withoutOverlapping()
                         ->timezone('Asia/Karachi')
                         ->cron($tip->cron)
-                        ->onSuccess(fn() => TipSucessEvent::broadcast($tip))
                         ->onFailure(fn() => TipFailureEvent::broadcast($tip));
                 }
             }
         } catch (Exception) {
             TipFailureEvent::broadcast($tip);
         }
-    }
-
-    private function processTip($tip): true
-    {
-        return true;
     }
 }

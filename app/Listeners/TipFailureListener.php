@@ -9,9 +9,11 @@ class TipFailureListener
 {
     public function handle(TipFailureEvent $event): void
     {
+        $name = ucwords($event->tip->name);
+
         Notification::new()
-            ->title('🛑 AiTools - ' . ucwords($event->tip->name))
-            ->message("[{$event->tip->name}] failed to run.")
+            ->title("🛑 AiTools - $name")
+            ->message("$name failed to run.")
             ->show();
     }
 }
