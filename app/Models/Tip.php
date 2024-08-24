@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tip extends Model
 {
@@ -15,5 +16,10 @@ class Tip extends Model
     public function apiKey(): BelongsTo
     {
         return $this->belongsTo(ApiKey::class);
+    }
+
+    public function contents(): HasMany
+    {
+        return $this->hasMany(TipContent::class);
     }
 }

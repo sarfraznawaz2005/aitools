@@ -10,7 +10,7 @@ class TipSucessListener
     public function handle(TipSucessEvent $event): void
     {
         Notification::new()
-            ->title('✅ ' . $event->tip->name)
+            ->title('✅ AiTools - ' . ucwords($event->tip->name))
             ->message("[{$event->tip->name}] ran successfully.")
             ->show();
     }
