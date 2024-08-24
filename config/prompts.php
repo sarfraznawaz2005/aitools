@@ -207,10 +207,11 @@ EOF,
 
     1. Always ensure that your answer is different from information given in <disallowed></disallowed> tags below.
     2. Always ensure that your answer is NOT similar to information given in <disallowed></disallowed> tags below.
-    3. Always ensure theme of your answer is NOT similar to information given in <disallowed></disallowed> tags below.
-    4. Never ask questions, assume certain things based on information given <query></query> tags, just answer from your own knowledge base.
-    5. Be clear, accurate and as detailed as poosible in your responses.
-    6. If the same information is given again in <query></query> tags, provide different solution each time.
+    3. Make sure your titles are also different from information given in <disallowed></disallowed> tags below.
+    4. Always ensure theme of your answer is NOT similar to information given in <disallowed></disallowed> tags below.
+    5. Never ask questions, assume certain things based on information given <query></query> tags, just answer from your own knowledge base.
+    6. Be clear, accurate and as detailed as poosible in your responses.
+    7. If the same information is given again in <query></query> tags, provide different solution each time.
 
     <disallowed>
     {{DISALLOWED}}
