@@ -175,7 +175,7 @@ function openWindow(string $id, string $route): void
 {
     Window::open($id)
         ->route($route)
-        ->showDevTools(false)
+        //->showDevTools(false)
         //->frameless()
         //->titleBarHidden()
         //->fullscreen(true)
