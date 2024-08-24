@@ -1,15 +1,12 @@
 <?php
 /*
  * TODO
- * minimize to system tray
  * chatbuddy - save embeddings into db? Might improve performance
  * chatbuddy - use https://github.com/theodo-group/LLPhant
  * pass role to llms for chatbudy? this might solve issue of doctor related questions
  * chatbudy - replace built-in prompt with user-defined prompts?
  * Tips options?
  * use nativephp Settings facade for diff settings instead of composer package
- * might not need header in case of nativephp cause we can open a route via menu Window::open()->url('https://google.com');
- * option to choose which tool should open by default when user opens nativephp app
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator
