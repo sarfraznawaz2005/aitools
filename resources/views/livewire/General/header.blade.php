@@ -3,105 +3,110 @@
 @endphp
 
 <div>
-    <!-- header start -->
-    <header
-        class="top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm dark:bg-neutral-900 z-[80]"
-        style="position: fixed;">
-        <nav class="flex basis-full items-center w-full mx-auto">
-            <div class="w-full flex items-center ms-auto justify-between">
 
-                <div class="inline-flex items-center py-0.5">
+    @if($showHeader)
+        <!-- header start -->
+        <header
+            class="top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm dark:bg-neutral-900 z-[80]"
+            style="position: fixed;">
+            <nav class="flex basis-full items-center w-full mx-auto">
+                <div class="w-full flex items-center ms-auto justify-between">
 
-                    <a href="{{route('home')}}" wire:navigate>
-                        <div class="inline-flex items-center px-4 ml-1 mt-1">
-                            <x-icons.home
-                                class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
+                    <div class="inline-flex items-center py-0.5">
 
+                        <a href="{{route('home')}}" wire:navigate>
+                            <div class="inline-flex items-center px-4 ml-1 mt-1">
+                                <x-icons.home
+                                    class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
+
+                            </div>
+                        </a>
+
+                        <div class="inline-flex border-r py-3 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
+
+                        <!-- Dropdown -->
+                        <div class="hs-dropdown [--placement:center] relative inline-flex items-center ml-4 mt-1">
+                            <button id="hs-dropdown-account" type="button"
+                                    class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
+                                    aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                <x-icons.dots
+                                    class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
+                            </button>
+
+                            <div
+                                class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded border border-gray-300 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+                                role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
+                                <ul class="flex flex-col space-y-0.5">
+                                    @foreach(config('tools') as $tool)
+                                        <li wire:key="{{ $tool['name'] }}">
+                                            <a href="{{route($tool['route'])}}" wire:navigate
+                                               class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
+                                            >
+                                                <img width="24" height="24" alt="{{$tool['name']}}"
+                                                     src="{{$tool['icon_data']}}">
+
+                                                {{$tool['name']}}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                    </a>
+                        <!-- End Dropdown -->
+                    </div>
 
-                    <div class="inline-flex border-r py-3 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
+                    <div class="md:block">
+                        @if($currentRoute === 'home')
+                            <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24">{{ $title }}</h2>
+                        @else
+                            <a href="{{route('home')}}" wire:navigate>
+                                <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24 hover:text-gray-700 dark:hover:text-gray-500">
+                                    <img width="32" height="32" class="inline" alt="{{$title}}"
+                                         src="{{config('tools.' . Request::segment(1) . '.icon_data')}}">
+                                    {{ $title }}
+                                </h2>
+                            </a>
+                        @endif
+                    </div>
 
-                    <!-- Dropdown -->
-                    <div class="hs-dropdown [--placement:center] relative inline-flex items-center ml-4 mt-1">
-                        <button id="hs-dropdown-account" type="button"
-                                class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
-                                aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <x-icons.dots
-                                class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
+                    <div class="flex flex-row items-center justify-end gap-1">
+                        {{--
+                        <button type="button"
+                                x-data x-tooltip.raw="Change Theme"
+                                class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                data-hs-theme-click-value="dark">
+                            <span class="group inline-flex shrink-0 justify-center items-center size-9">
+                                <x-icons.moon/>
+                            </span>
                         </button>
 
-                        <div
-                            class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded border border-gray-300 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
-                            role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
-                            <ul class="flex flex-col space-y-0.5">
-                                @foreach(config('tools') as $tool)
-                                    <li wire:key="{{ $tool['name'] }}">
-                                        <a href="{{route($tool['route'])}}" wire:navigate
-                                           class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
-                                        >
-                                            <img width="24" height="24" alt="{{$tool['name']}}" src="{{$tool['icon_data']}}">
+                        <button type="button"
+                                x-data x-tooltip.raw="Change Theme"
+                                class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                data-hs-theme-click-value="light">
+                            <span class="group inline-flex shrink-0 justify-center items-center size-9">
+                                <x-icons.sun color="#FF8C33"/>
+                            </span>
+                        </button>
+                        --}}
 
-                                            {{$tool['name']}}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                        <button type="button"
+                                x-data x-tooltip.raw="Settings"
+                                class="size-[38px] relative inline-flex justify-center items-center gap-x-2 mr-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                                aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
+                                data-hs-overlay="#general-modal">
+                            <x-icons.settings
+                                class="text-gray-500 hover:text-gray-700"/>
+                            <span class="sr-only">Settings</span>
+                        </button>
+
                     </div>
-                    <!-- End Dropdown -->
                 </div>
+            </nav>
 
-                <div class="md:block">
-                    @if($currentRoute === 'home')
-                        <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24">{{ $title }}</h2>
-                    @else
-                        <a href="{{route('home')}}" wire:navigate>
-                            <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24 hover:text-gray-700 dark:hover:text-gray-500">
-                                <img width="32" height="32" class="inline" alt="{{$title}}" src="{{config('tools.' . Request::segment(1) . '.icon_data')}}">
-                                {{ $title }}
-                            </h2>
-                        </a>
-                    @endif
-                </div>
-
-                <div class="flex flex-row items-center justify-end gap-1">
-                    {{--
-                    <button type="button"
-                            x-data x-tooltip.raw="Change Theme"
-                            class="hs-dark-mode-active:hidden block hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                            data-hs-theme-click-value="dark">
-                        <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                            <x-icons.moon/>
-                        </span>
-                    </button>
-
-                    <button type="button"
-                            x-data x-tooltip.raw="Change Theme"
-                            class="hs-dark-mode-active:block hidden hs-dark-mode font-medium text-gray-800 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                            data-hs-theme-click-value="light">
-                        <span class="group inline-flex shrink-0 justify-center items-center size-9">
-                            <x-icons.sun color="#FF8C33"/>
-                        </span>
-                    </button>
-                    --}}
-
-                    <button type="button"
-                            x-data x-tooltip.raw="Settings"
-                            class="size-[38px] relative inline-flex justify-center items-center gap-x-2 mr-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                            aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal"
-                            data-hs-overlay="#general-modal">
-                        <x-icons.settings
-                            class="text-gray-500 hover:text-gray-700"/>
-                        <span class="sr-only">Settings</span>
-                    </button>
-
-                </div>
-            </div>
-        </nav>
-
-        <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
-    </header>
+            <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
+        </header>
+    @endif
     <!-- header end -->
 
     <x-modal>

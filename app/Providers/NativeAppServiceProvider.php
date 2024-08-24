@@ -10,6 +10,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
 {
     public function boot(): void
     {
+        // NOTE: see config.app app_url, it is set to nativephp default
+
         Menu::new()->register();
 
         MenuBar::create()

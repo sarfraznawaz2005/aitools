@@ -48,7 +48,7 @@ class TipSucessListener
                 ->message(Str::limit($result))
                 ->show();
 
-            OnNotificationShown::broadcast();
+            OnNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
         }
     }
 

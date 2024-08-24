@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Pages;
 
+use App\Livewire\General\Header;
 use App\Models\ApiKey;
 use App\Models\Tip;
+use App\Models\TipContent;
 use App\Traits\InteractsWithToast;
 use Cron\CronExpression;
 use Exception;
@@ -30,6 +32,15 @@ class TipsNotifier extends Component
     public string $cron = '';
 
     private CronExpression $CronExp;
+
+    public function showContentWindow($id): View|Factory|Application
+    {
+        $this->dispatch('hideHeader')->to(Header::class);
+
+        $tipContent = TipContent::query()->findOrFail($id);
+
+        return view('livewire.pages.tips-content', compact('tipContent'));
+    }
 
     #[Computed]
     public function tips(): Collection

@@ -25,5 +25,4 @@ Route::get('text-styler', TextStyler::class)->name('text-styler');
 Route::get('text-styler/chat', [TextStyler::class, 'chat']);
 
 Route::get('tips-notifier', TipsNotifier::class)->name('tips-notifier');
-
-Route::get('tip-content', TipsNotifier::class)->name('tip-content');
+Route::get('tip-content/{id}', [TipsNotifier::class, 'showContentWindow']);
