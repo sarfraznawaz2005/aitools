@@ -191,3 +191,8 @@ function openWindow(string $id, string $route, $focusable = true, $closable = tr
         ->minimizable($minimizable)
         ->maximizable($maximizable);
 }
+
+function closeWindow(string $id): void
+{
+    Window::close($id);
+}
