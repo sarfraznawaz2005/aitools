@@ -42,10 +42,10 @@ class TipSucessListener
 
             //Window::open()->route('test');
             //MenuBar::label('TEST');
-
             OnNotificationClicked::broadcast();
 
             Notification::new()
+                //->event(OnNotificationClicked::class)
                 ->title('✅ AiTools - ' . ucwords($tip->name))
                 ->message(Str::limit($result))
                 ->show();

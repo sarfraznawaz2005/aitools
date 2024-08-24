@@ -15,19 +15,12 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        //MenuBar::hide();
-
         Menu::new()->register();
 
-        openWindow('main', 'home');
-
-        //todo: add tooltips
-        //todo: click on notification should open corresponding tool
         MenuBar::create()
             ->icon(public_path('assets/icon.png'))
             ->label(config('app.name'))
             ->route('home')
-            ->showDockIcon()
             ->withContextMenu(
                 Menu::new()
                     ->event(MenuItem::class, 'About')
@@ -42,6 +35,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->register();
         */
 
+        openWindow('main', 'home');
     }
 
     /**

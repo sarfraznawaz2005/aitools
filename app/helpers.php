@@ -187,5 +187,7 @@ function openWindow(string $id, string $route): void
         ->rememberState()
         ->focusable()
         ->hasShadow()
+        ->closable(true)
+        ->minimizable()
         ->maximizable();
 }
