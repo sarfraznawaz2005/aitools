@@ -12,9 +12,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/run-scheduler', function () {
-    Artisan::call('schedule:run');
-});
+//Route::get('/run-scheduler', function () {
+//    Artisan::call('schedule:run');
+//});
 
 Route::get('test', function () {
     return view('test');
