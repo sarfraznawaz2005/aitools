@@ -11,7 +11,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(OnNotificationClicked::class, function ($event) {
-            openWindow('test', 'test');
+            // openWindow('test', 'test');
         });
     }
 }

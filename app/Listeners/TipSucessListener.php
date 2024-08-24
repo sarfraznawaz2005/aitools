@@ -7,11 +7,14 @@ use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
 use Illuminate\Support\Str;
+use Livewire\Features\SupportEvents\HandlesEvents;
 use Native\Laravel\Facades\Window;
 use Native\Laravel\Notification;
 
 class TipSucessListener
 {
+    use HandlesEvents;
+
     public function handle(TipSucessEvent $event): void
     {
         $tip = $event->tip;
@@ -41,8 +44,8 @@ class TipSucessListener
             $this->generateTitle($llm, $tip, $result);
 
             //Window::open()->route('test');
-            //MenuBar::label('TEST');
-            OnNotificationClicked::broadcast();
+            //OnNotificationClicked::broadcast();
+            //$this->dispatch(OnNotificationClicked::class);
 
             Notification::new()
                 //->event(OnNotificationClicked::class)
