@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Native\Laravel\Notification;
 
@@ -13,7 +14,9 @@ class TipSucessListener
     public function handle(TipSucessEvent $event): void
     {
         $tip = $event->tip;
-        $existingTipContents = implode("\n", $tip->contents->pluck('title')->toArray());
+
+        $titleLimits = 100; // to avoid too much context window
+        $existingTipContents = implode("\n", $tip->contents->limit($titleLimits)->pluck('title')->toArray());
 
         $llm = getLLM($tip->apiKey);
 
@@ -22,6 +25,7 @@ class TipSucessListener
         $prompt = str_ireplace('{{DISALLOWED}}', $existingTipContents, $prompt);
 
         $result = $llm->chat($prompt);
+        Log::info($prompt);
 
         if ($result) {
             $this->generateTitle($llm, $tip, $result);
@@ -33,7 +37,7 @@ class TipSucessListener
         }
     }
 
-    private function generateTitle(LlmProvider $llm, Tip $tip, string $result)
+    private function generateTitle(LlmProvider $llm, Tip $tip, string $result): void
     {
         $resultCleaned = htmlToText($result);
 

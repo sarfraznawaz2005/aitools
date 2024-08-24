@@ -196,22 +196,23 @@ EOF,
     EOF,
 
     'tips' => <<<EOF
+
     Please give an answer based on information given in <query></query> tags below.
 
     <query>
     {{PROMPT}}
     </query>
 
+    Below are more instructions you must follow:
+
+    1. Always ensure that your answer is different from information given in <disallowed></disallowed> tags below.
+    2. Never ask questions, assume certain things based on information given <query></query> tags, just answer from your own knowledge base.
+    3. Be clear, accurate and as detailed as poosible in your responses.
+    4. If the same information is given again in <query></query> tags, provide different solution each time.
+
     <disallowed>
     {{DISALLOWED}}
     </disallowed>
-
-    Please ensure that your answer is different from information given in <disallowed></disallowed> tags.
-
-    When answering, follow these guidelines:
-    1. Never ask questions, assume certain things based on information given <query></query> tags, just answer from your own knowledge base.
-    2. Be clear, accurate and as detailed as poosible in your responses.
-    3. If the same information is given again in <query></query> tags, provide different solution each time.
 
     Please provide answer here:
     EOF,
