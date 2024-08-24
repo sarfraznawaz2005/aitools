@@ -64,7 +64,7 @@ class ChatInput extends Component
 
             session()->flash('addBotMessage', $this->conversation->id);
 
-            $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $this->conversation), true);
+            $this->redirect(route('chat-buddyload-conversation', $this->conversation), true);
 
             return;
         }

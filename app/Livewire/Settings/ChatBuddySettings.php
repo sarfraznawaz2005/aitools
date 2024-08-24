@@ -36,6 +36,6 @@ class ChatBuddySettings extends Component
 
         session()->flash('conversationsDeleted', 'Conversations deleted successfully.');
 
-        $this->redirect(route(config('tools.chat-buddy.route')));
+        $this->redirect(route('chat-buddy'));
     }
 }

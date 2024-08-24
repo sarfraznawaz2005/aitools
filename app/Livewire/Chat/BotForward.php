@@ -72,6 +72,6 @@ class BotForward extends Component
 
         session()->flash('addBotMessage', $conversation->id);
 
-        $this->redirect(route(config('tools.chat-buddy.route') . 'load-conversation', $conversation), true);
+        $this->redirect(route('chat-buddyload-conversation', $conversation), true);
     }
 }
