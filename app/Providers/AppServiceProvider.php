@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Closure;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\CronTranslator\CronTranslator;
@@ -16,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        //$this->copyNativeAppIcons(); // since it does not have a way to change icon currently
+
         $this->registerCustomValidators();
     }
 
@@ -42,5 +46,15 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
         });
+    }
+
+    private function copyNativeAppIcons(): void
+    {
+        copy(public_path('assets/icon.png'), base_path('vendor/nativephp/electron/resources/js/resources/icon.png'));
+        copy(public_path('assets/menuBarIconTemplate.png'), base_path('vendor/nativephp/electron/resources/js/resources/menuBarIconTemplate.png'));
+        copy(public_path('assets/menuBarIconTemplate@2x.png'), base_path('vendor/nativephp/electron/resources/js/resources/menuBarIconTemplate@2x.png'));
+        copy(public_path('assets/menuBarIconTemplate.png'), base_path('vendor/nativephp/electron/resources/js/resources/IconTemplate.png'));
+        copy(public_path('assets/menuBarIconTemplate@2x.png'), base_path('vendor/nativephp/electron/resources/js/resources/IconTemplate@2x.png'));
+        copy(public_path('assets/icon.png'), base_path('vendor/nativephp/electron/resources/js/build/icon.png'));
     }
 }
