@@ -3,7 +3,11 @@
 namespace App\Listeners;
 
 use App\Events\TipSucessEvent;
+use App\LLM\LlmProvider;
+use App\Models\Tip;
+use Illuminate\Support\Str;
 use Native\Laravel\Notification;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 class TipSucessListener
 {
@@ -20,9 +24,35 @@ class TipSucessListener
 
         $result = $llm->chat($prompt);
 
-        Notification::new()
-            ->title('✅ AiTools - ' . ucwords($tip->name))
-            ->message($result)
-            ->show();
+        if ($result) {
+            $this->generateTitle($llm, $tip, $result);
+
+            Notification::new()
+                ->title('✅ AiTools - ' . ucwords($tip->name))
+                ->message(Str::limit($result))
+                ->show();
+        }
+    }
+
+    private function generateTitle(LlmProvider $llm, Tip $tip, string $result)
+    {
+        $markdown = app(MarkdownRenderer::class);
+
+        $resultCleaned = htmlToText($result);
+        $resultHtml = $markdown->toHtml($result);
+
+        $prompt = "
+        Create only a single title of max 50 characters from the provided Text, title must be of minimum 50 characters
+        and must not be more than 50 characters and without punctuation characters, language must be same as Text.
+
+        Text: '$resultCleaned'
+        ";
+
+        $title = $llm->chat($prompt);
+
+        $tip->contents()->create([
+            'title' => $title ?? '',
+            'content' => $resultHtml,
+        ]);
     }
 }
