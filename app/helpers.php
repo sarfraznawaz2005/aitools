@@ -171,7 +171,7 @@ function getBotName(Conversation $conversation = null): string
     return $conversation?->bot?->name ?? 'General';
 }
 
-function openWindow(string $id, string $route, bool $rememberState = false): void
+function openWindow(string $id, string $route): void
 {
     Window::open()
         //->showDevTools(false)
@@ -183,13 +183,8 @@ function openWindow(string $id, string $route, bool $rememberState = false): voi
         ->height(800)
         ->minHeight(800)
         ->lightVibrancy()
+        ->rememberState()
         ->focusable()
         ->hasShadow()
         ->maximizable();
-
-    $currentWindow = Window::current();
-
-    if ($rememberState) {
-        $currentWindow->rememberState();
-    }
 }
