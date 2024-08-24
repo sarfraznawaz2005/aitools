@@ -18,7 +18,6 @@ class TipSchedulerServiceProvider extends ServiceProvider
 
             foreach ($tips as $tip) {
                 if ($tip->active) {
-
                     $schedule->call(fn() => $this->processTip($tip))
                         ->name($tip->name)
                         ->withoutOverlapping()
