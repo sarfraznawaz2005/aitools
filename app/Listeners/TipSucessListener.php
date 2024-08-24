@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\OnNotificationClicked;
+use App\Events\OnNotificationShown;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
@@ -42,8 +42,7 @@ class TipSucessListener
         if ($result) {
             $this->generateTitle($llm, $tip, $result);
 
-            //Window::open()->route('test');
-            //OnNotificationClicked::broadcast();
+            OnNotificationShown::broadcast();
 
             Notification::new()
                 //->event(OnNotificationClicked::class)
