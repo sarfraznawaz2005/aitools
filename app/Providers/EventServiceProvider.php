@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Events\OnNotificationShown;
-use App\Events\Quit;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Native\Laravel\Client\Client;
 use Native\Laravel\Events\Windows\WindowMinimized;
 use Native\Laravel\Facades\Window;
 
@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
         });
 
         Event::listen(WindowMinimized::class, function () {
-            //Window::
+           //
         });
     }
 }

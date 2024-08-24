@@ -181,6 +181,7 @@ function openWindow(string $id, string $route, $focusable = true, $closable = tr
         //->titleBarHidden()
         //->fullscreen(true)
         ->width(1280)
+        ->hideMenu()
         ->minWidth(1024)
         ->height(800)
         ->minHeight(800)
