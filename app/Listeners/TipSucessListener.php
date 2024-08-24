@@ -42,13 +42,13 @@ class TipSucessListener
         if ($result) {
             $this->generateTitle($llm, $tip, $result);
 
-            OnNotificationShown::broadcast();
-
             Notification::new()
                 //->event(OnNotificationClicked::class)
                 ->title('✅ AiTools - ' . ucwords($tip->name))
                 ->message(Str::limit($result))
                 ->show();
+
+            OnNotificationShown::broadcast();
         }
     }
 
