@@ -170,24 +170,3 @@ function getBotName(Conversation $conversation = null): string
 {
     return $conversation?->bot?->name ?? 'General';
 }
-
-function openWindow(string $id, string $route): void
-{
-    Window::open($id)
-        ->route($route)
-        //->showDevTools(false)
-        //->frameless()
-        //->titleBarHidden()
-        //->fullscreen(true)
-        ->width(1280)
-        ->minWidth(1024)
-        ->height(800)
-        ->minHeight(800)
-        ->lightVibrancy()
-        ->rememberState()
-        ->focusable()
-        ->hasShadow()
-        ->closable(true)
-        ->minimizable()
-        ->maximizable();
-}
