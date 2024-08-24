@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Native\Laravel\Contracts\ProvidesPhpIni;
+use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Facades\Window;
+use Native\Laravel\Menu\Items\MenuItem;
 use Native\Laravel\Menu\Menu;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
@@ -19,35 +21,38 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         Menu::new()->register();
 
         Window::open()
-            ->width(1080)
-            ->minWidth(1080)
-            ->maxWidth(1080)
+            //->showDevTools(false)
+            //->frameless()
+            //->titleBarHidden()
+            //->fullscreen(true)
+            ->width(1280)
+            ->minWidth(1024)
             ->height(800)
             ->minHeight(800)
-            //->showDevTools(false)
-            ->maximizable(false);
+            ->focusable()
+            ->hasShadow()
+            ->lightVibrancy()
+            ->rememberState()
+            ->maximizable();
 
-        /**
-         * Dock::menu(
-         * Menu::new()
-         * ->event(DockItemClicked::class, 'Settings')
-         * ->submenu('Help',
-         * Menu::new()
-         * ->event(DockItemClicked::class, 'About')
-         * ->event(DockItemClicked::class, 'Learn Moreā¦')
-         * )
-         * );
-         *
-         * ContextMenu::register(
-         * Menu::new()
-         * ->event(ContextMenuClicked::class, 'Do something')
-         * );
-         *
-         * GlobalShortcut::new()
-         * ->key('CmdOrCtrl+Shift+I')
-         * ->event(ShortcutPressed::class)
-         * ->register();
-         */
+        MenuBar::create()
+            ->icon(public_path('assets/icon.png'))
+            ->label(config('app.name'))
+            ->showDockIcon()
+            ->withContextMenu(
+                Menu::new()
+                    ->event(MenuItem::class, 'About')
+                    ->quit()
+                    ->link(route('home'), 'Home')
+            );
+
+        /*
+        GlobalShortcut::new()
+            ->key('CmdOrCtrl+Shift+I')
+            //->event(ShortcutPressed::class)
+            ->register();
+        */
+
     }
 
     /**
