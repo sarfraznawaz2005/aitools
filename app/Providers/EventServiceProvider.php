@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Events\OnNotificationClicked;
 use App\Events\OnNotificationShown;
+use App\Services\NotificationManager;
 use Exception;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
+use Native\Laravel\Events\Notifications\NotificationClicked;
 use Native\Laravel\Events\Windows\WindowMinimized;
 use Native\Laravel\Facades\Window;
 
@@ -30,10 +30,14 @@ class EventServiceProvider extends ServiceProvider
             }
         });
 
-        Event::listen(OnNotificationClicked::class, function ($event) {
-            Log::info('Opening Tips Window');
+        Event::listen(NotificationClicked::class, function () {
+            $lastNotification = NotificationManager::getLastNotification();
 
-            openWindow('chatbuddy', 'chat-buddy');
+            if ($lastNotification) {
+                openWindow($lastNotification['window'], $lastNotification['route'], $lastNotification['routeParams']);
+
+                NotificationManager::clearLastNotification();
+            }
         });
     }
 }

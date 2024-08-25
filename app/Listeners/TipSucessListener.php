@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\OnNotificationClicked;
 use App\Events\OnNotificationShown;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
+use App\Services\NotificationManager;
 use Illuminate\Support\Str;
 use Livewire\Features\SupportEvents\HandlesEvents;
 use Native\Laravel\Notification;
@@ -43,8 +43,13 @@ class TipSucessListener
         if ($result) {
             $this->generateTitle($llm, $tip, $result);
 
+            NotificationManager::setLastNotification(
+                'tip',
+                'tip-content',
+                ['id' => $tip->contents()->latest()->take(1)->first()->id]
+            );
+
             Notification::new()
-                ->event(OnNotificationClicked::class)
                 ->title('✅ AiTools - ' . ucwords($tip->name))
                 ->message(Str::limit($result))
                 ->show();

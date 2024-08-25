@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Pages;
 
-use App\Events\TipContentUpdated;
 use App\Models\ApiKey;
 use App\Models\Tip;
 use App\Models\TipContent;
