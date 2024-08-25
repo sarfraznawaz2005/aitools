@@ -4,6 +4,7 @@ namespace App\Livewire\Pages;
 
 use App\Models\ApiKey;
 use App\Models\Tip;
+use App\Models\TipContent;
 use App\Traits\InteractsWithToast;
 use Cron\CronExpression;
 use Exception;
@@ -15,6 +16,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Lorisleiva\CronTranslator\CronTranslator;
+use Native\Laravel\Facades\Window;
 
 class TipsNotifier extends Component
 {
@@ -32,9 +34,20 @@ class TipsNotifier extends Component
     private CronExpression $CronExp;
 
     #[Computed]
+    public function totalContentsCount(): int
+    {
+        return $this->tips->sum(fn($tip) => $tip->contents->count());
+    }
+
+    #[Computed]
     public function tips(): Collection
     {
-        return Tip::query()->with('contents')->latest()->get();
+        return Tip::query()
+            ->with(['contents' => function ($query) {
+                $query->latest();
+            }])
+            ->orderBy('name')
+            ->get();
     }
 
     #[Computed]
@@ -139,6 +152,26 @@ class TipsNotifier extends Component
         Tip::destroy($id);
 
         $this->success('Tip deleted successfully!');
+    }
+
+    public function viewContents(TipContent $content): void
+    {
+        //Window::close('tip');
+        //openWindow('tip', 'tip-content', ['id' => $content->id]);
+
+        Window::open('viewTip')
+            ->route('tip-content', ['id' => $content->id])
+            ->showDevTools(false)
+            //->frameless()
+            //->titleBarHidden()
+            //->fullscreen(true)
+            ->width(1280)
+            ->hideMenu()
+            ->minWidth(1024)
+            ->height(800)
+            ->minHeight(800)
+            ->lightVibrancy()
+            ->hasShadow();
     }
 
     public function resetForm(): void

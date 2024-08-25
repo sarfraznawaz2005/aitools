@@ -186,7 +186,7 @@ function getBotName(Conversation $conversation = null): string
 function openWindow(string $id, string $route, array $params = [], $focusable = true, $closable = true, $minimizable = true, $maximizable = true): PendingOpenWindow
 {
     return Window::open($id)
-        ->route($route, $params) // Pass parameters to the route
+        ->route($route, $params)
         ->showDevTools(false)
         //->frameless()
         //->titleBarHidden()
