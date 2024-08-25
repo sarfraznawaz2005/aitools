@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Pages;
 
-use App\Events\ViewTipsContent;
 use App\Models\ApiKey;
 use App\Models\Tip;
 use App\Models\TipContent;
@@ -23,7 +22,10 @@ class TipsNotifier extends Component
 {
     use InteractsWithToast;
 
-    protected $listeners = ['apiKeysUpdated' => '$refresh'];
+    protected $listeners = [
+        'apiKeysUpdated' => '$refresh',
+        'native:tipContentUpdated' => '$refresh',
+    ];
 
     public Tip $model;
 

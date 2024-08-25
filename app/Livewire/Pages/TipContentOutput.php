@@ -38,6 +38,7 @@ class TipContentOutput extends Component
         $this->model->save();
 
         //$this->success($this->model->favorite ? 'Tip favorited successfully.' : 'Tip un-favorited successfully.');
+        $this->dispatch('tipContentUpdated');
 
         $this->close();
     }
@@ -47,6 +48,7 @@ class TipContentOutput extends Component
         $this->model->delete();
 
         //$this->success('Tip deleted successfully.');
+        $this->dispatch('tipContentUpdated');
 
         $this->close();
     }
