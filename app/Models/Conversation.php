@@ -30,7 +30,7 @@ class Conversation extends Model
     {
         parent::boot();
 
-        self::deleteOlderConversations();
+        self::deleteOld();
     }
 
     public function addChatMessage(string $message, bool $isAi = false): Message
@@ -92,7 +92,7 @@ class Conversation extends Model
         ]);
     }
 
-    public static function deleteOlderConversations(): void
+    public static function deleteOld(): void
     {
         $days = 30;
 

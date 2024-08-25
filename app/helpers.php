@@ -1,7 +1,6 @@
 <?php
 /*
  * TODO
- * Tips options
  * with new tip content, the page should refresh automatically
  * chatbuddy - save embeddings into db? Might improve performance
  * chatbuddy - use https://github.com/theodo-group/LLPhant
