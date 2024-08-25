@@ -57,7 +57,9 @@ class TipSucessListener
 
             OnNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
 
-            $this->dispatch(OnTipContnetSaved::class);
+            $this->dispatch('tipContentUpdated');
+
+            OnTipContnetSaved::dispatch();
         }
     }
 
