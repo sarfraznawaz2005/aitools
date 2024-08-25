@@ -18,10 +18,11 @@ use App\LLM\OpenAiProvider;
 use App\Models\ApiKey;
 use App\Models\Bot;
 use App\Models\Conversation;
+use App\Services\StreamHandler;
 use Illuminate\Support\Facades\Log;
+use Native\Laravel\Facades\Settings;
 use Native\Laravel\Facades\Window;
 use Native\Laravel\Windows\PendingOpenWindow;
-use Native\Laravel\Facades\Settings;
 
 function getLLM(ApiKey $model): LlmProvider
 {
@@ -116,28 +117,9 @@ function makePromoptForDocumentBot(Bot $bot, string $infoHeader, string $context
 
 function sendStream($text, $sendCloseSignal = false): void
 {
-    $output = "event: update\n";
+    $streamHandler = StreamHandler::getInstance();
 
-    if (!$sendCloseSignal) {
-        $output .= "data: " . json_encode($text) . "\n\n";
-    } else {
-        $output .= "data: <END_STREAMING_SSE>\n\n";
-    }
-
-    // Write to stdout for NativePHP
-    $stream = fopen('php://stdout', 'w');
-    fwrite($stream, $output);
-    fflush($stream);
-
-    // Echo for browser SSE
-    echo $output;
-
-    // Attempt to flush output buffers
-    if (ob_get_level() > 0) {
-        ob_flush();
-    }
-
-    flush();
+    $streamHandler->sendStream($text, $sendCloseSignal);
 }
 
 function htmlToText($html, $removeWhiteSpace = true): string
