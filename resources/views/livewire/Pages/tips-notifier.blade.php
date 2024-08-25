@@ -117,10 +117,10 @@
             @endif
         </fieldset>
 
-        @if (count($this->tips))
+        @if (count($this->contents))
             <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8">
                 <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips
-                    ({{ $this->totalContentsCount }})
+                    ({{ $this->contents->total() }})
                 </legend>
 
                 <div class="items-center justify-center font-semibold w-full border border-gray-300">
@@ -152,54 +152,55 @@
 
                         <tbody
                             class="bg-white divide-y divide-gray-200 dark:bg-neutral-700 dark:divide-neutral-600 font-medium">
-                        @foreach($this->tips as $tip)
-                            @foreach ($tip->contents as $content)
-                                <tr wire:key="apikeyrow-{{ $content->id }}">
-                                    <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
-                                        {{ $content->tip->name }}
-                                    </td>
-                                    <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300"
-                                        x-data x-tooltip.raw="{{$content->title}}">
-                                        {{ Str::limit($content->title, 75) }}
-                                    </td>
-                                    <td
-                                        class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center"
-                                        x-data x-tooltip.raw="View Content"
-                                    >
-                                        ️‍<span class="cursor-pointer"
-                                                wire:click="viewContents({{ $content->id }})">📑</span>
-                                    </td>
-                                    <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
-                                        @if ($content->favorite)
-                                            <span
-                                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">
-                                                Yes
-                                            </span>
-                                        @else
-                                            <span
-                                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">
-                                                No
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-2 whitespace-nowrap w-0 text-sm text-gray-500 dark:text-neutral-300 text-center">
-                                        <button x-data x-tooltip.raw="Toggle Favorite Status"
-                                                wire:click="toggleContentFavoriteStatus({{ $content->id }})"
-                                                class="items-center px-2 py-1 text-white rounded mr-2 {{$content->favorite ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-800'}}">
-                                            <x-icons.ok class="w-4 h-4 mx-auto"/>
-                                        </button>
+                        @foreach($this->contents as $content)
+                            <tr wire:key="apikeyrow-{{ $content->id }}">
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
+                                    {{ $content->tip->name }}
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300"
+                                    x-data x-tooltip.raw="{{$content->title}}">
+                                    {{ Str::limit($content->title, 75) }}
+                                </td>
+                                <td
+                                    class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center"
+                                    x-data x-tooltip.raw="View Content"
+                                >
+                                    ️‍<span class="cursor-pointer"
+                                            wire:click="viewContents({{ $content->id }})">📑</span>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
+                                    @if ($content->favorite)
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">
+                                            Yes
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">
+                                            No
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap w-0 text-sm text-gray-500 dark:text-neutral-300 text-center">
+                                    <button x-data x-tooltip.raw="Toggle Favorite Status"
+                                            wire:click="toggleContentFavoriteStatus({{ $content->id }})"
+                                            class="items-center px-2 py-1 text-white rounded mr-2 {{$content->favorite ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-800'}}">
+                                        <x-icons.ok class="w-4 h-4 mx-auto"/>
+                                    </button>
 
-                                        <x-confirm-dialog call="deleteContent({{$content->id}})" x-data
-                                                          x-tooltip.raw="Delete"
-                                                          class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
-                                            <x-icons.delete class="w-4 h-4 mx-auto"/>
-                                        </x-confirm-dialog>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                    <x-confirm-dialog call="deleteContent({{$content->id}})" x-data
+                                                      x-tooltip.raw="Delete"
+                                                      class="px-2 py-1 text-white bg-red-600 hover:bg-red-800 rounded">
+                                        <x-icons.delete class="w-4 h-4 mx-auto"/>
+                                    </x-confirm-dialog>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+                <div class="mt-4">
+                    {{ $this->contents->links() }} <!-- Single Pagination control for contents -->
                 </div>
             </fieldset>
         @endif

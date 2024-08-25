@@ -1,7 +1,7 @@
 <?php
 /*
  * TODO
- * pagination for tips
+ * search for tips
  * open window on notification click
  * Tips options
  * check all livewire events are working, might need to add "native:" prefix

@@ -9,6 +9,7 @@ use App\Models\TipContent;
 use App\Traits\InteractsWithToast;
 use Cron\CronExpression;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,11 +17,13 @@ use Illuminate\Foundation\Application;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Lorisleiva\CronTranslator\CronTranslator;
 use Native\Laravel\Facades\Window;
 
 class TipsNotifier extends Component
 {
+    use WithPagination;
     use InteractsWithToast;
 
     protected $listeners = [
@@ -46,12 +49,16 @@ class TipsNotifier extends Component
     #[Computed]
     public function tips(): Collection
     {
-        return Tip::query()
-            ->with(['contents' => function ($query) {
-                $query->latest();
-            }])
-            ->orderBy('name')
-            ->get();
+        return Tip::query()->latest()->get();
+    }
+
+    #[Computed]
+    public function contents(): LengthAwarePaginator
+    {
+        return TipContent::query()
+            ->with('tip')
+            ->latest()
+            ->paginate(10);
     }
 
     #[Computed]
