@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use Closure;
 use Exception;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\CronTranslator\CronTranslator;
+use Native\Laravel\Facades\System;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //$this->copyNativeAppIcons(); // since it does not have a way to change icon currently
+
+        config(['app.timezone' => System::timezone()]); // via nativephp
 
         $this->registerCustomValidators();
     }

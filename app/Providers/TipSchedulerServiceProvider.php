@@ -21,7 +21,6 @@ class TipSchedulerServiceProvider extends ServiceProvider
                     $schedule->call(fn() => TipSucessEvent::broadcast($tip))
                         ->name($tip->name)
                         ->withoutOverlapping()
-                        ->timezone('Asia/Karachi')
                         ->cron($tip->cron)
                         ->onFailure(fn() => TipFailureEvent::broadcast($tip));
                 }

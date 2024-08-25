@@ -30,6 +30,7 @@ class TipsNotifier extends Component
     protected $listeners = [
         'apiKeysUpdated' => '$refresh',
         'tipContentUpdated' => '$refresh',
+        'native:' . OnTipContnetSaved::class => '$refresh',
     ];
 
     public Tip $model;

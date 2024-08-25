@@ -1,7 +1,7 @@
 <?php
 /*
  * TODO
- * use nativephp Settings facade for diff settings instead of composer package
+ * menu bar icon title
  * pass role to llms for chatbudy? this might solve issue of doctor related questions
  * chatbudy - replace built-in prompt with user-defined prompts?
  * chatbuddy - use https://github.com/theodo-group/LLPhant
@@ -21,7 +21,7 @@ use App\Models\Conversation;
 use Illuminate\Support\Facades\Log;
 use Native\Laravel\Facades\Window;
 use Native\Laravel\Windows\PendingOpenWindow;
-use Sajadsdi\LaravelSettingPro\Support\Setting;
+use Native\Laravel\Facades\Settings;
 
 function getLLM(ApiKey $model): LlmProvider
 {
@@ -39,11 +39,10 @@ function hasApiKeysCreated()
 
 function getSelectedLLMModel(string $key): ApiKey
 {
-    if (
-        Setting::select($key)->has('selectedModel') &&
-        ApiKey::where('model_name', Setting::select($key)->get('selectedModel'))->exists()
-    ) {
-        $model = ApiKey::where('model_name', Setting::select($key)->get('selectedModel'))->first();
+    $selectedModel = Settings::get($key . '.selectedModel');
+
+    if ($selectedModel && ApiKey::where('model_name', $selectedModel)->exists()) {
+        $model = ApiKey::where('model_name', $selectedModel)->first();
     } else {
         $model = ApiKey::whereActive()->first();
     }

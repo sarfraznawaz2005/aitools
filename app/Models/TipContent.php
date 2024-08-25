@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Log;
-use Sajadsdi\LaravelSettingPro\Support\Setting;
+use Native\Laravel\Facades\Settings;
 
 class TipContent extends Model
 {
@@ -28,11 +28,7 @@ class TipContent extends Model
 
     public static function deleteOld(): void
     {
-        $days = 30;
-
-        if (Setting::select('TipsNotifier')->has('deleteOldDays')) {
-            $days = Setting::select('TipsNotifier')->get('deleteOldDays');
-        }
+        $days = Settings::get('TipsNotifier.deleteOldDays', 30);
 
         $oldItems = static::query()
             ->where('created_at', '<', now()->subDays($days))

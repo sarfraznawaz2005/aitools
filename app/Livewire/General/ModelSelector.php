@@ -5,7 +5,7 @@ namespace App\Livewire\General;
 use App\Models\ApiKey;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Sajadsdi\LaravelSettingPro\Support\Setting;
+use Native\Laravel\Facades\Settings;
 
 class ModelSelector extends Component
 {
@@ -19,16 +19,14 @@ class ModelSelector extends Component
     #[Computed]
     public function apiKeys()
     {
-        if (
-            Setting::select($this->for)->has('selectedModel') &&
-            ApiKey::where('model_name', Setting::select($this->for)->get('selectedModel'))->exists()
-        ) {
-            $this->selectedModel = Setting::select($this->for)->get('selectedModel');
+        $selectedModel = Settings::get($this->for . '.selectedModel');
+
+        if ($selectedModel && ApiKey::where('model_name', $selectedModel)->exists()) {
+            $this->selectedModel = $selectedModel;
         } else {
             if (ApiKey::hasApiKeys()) {
                 $this->selectedModel = ApiKey::whereActive()->first()->model_name;
-
-                Setting::select($this->for)->set('selectedModel', $this->selectedModel);
+                Settings::set($this->for . '.selectedModel', $this->selectedModel);
             }
         }
 
@@ -37,7 +35,7 @@ class ModelSelector extends Component
 
     public function updated(): void
     {
-        Setting::select($this->for)->set('selectedModel', $this->selectedModel);
+        Settings::set($this->for . '.selectedModel', $this->selectedModel);
 
         $this->dispatch('modelChanged', $this->selectedModel);
     }

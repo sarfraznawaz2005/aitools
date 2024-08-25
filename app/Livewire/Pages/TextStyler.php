@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Sajadsdi\LaravelSettingPro\Support\Setting;
+use Native\Laravel\Facades\Settings;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class TextStyler extends Component
@@ -25,8 +25,8 @@ class TextStyler extends Component
     {
         $this->validate();
 
-        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('prompt', base64_encode($prompt));
-        Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->set('text', base64_encode($this->text));
+        Settings::set(Constants::TEXTSTYLER_SELECTED_LLM_KEY . '.prompt', base64_encode($prompt));
+        Settings::set(Constants::TEXTSTYLER_SELECTED_LLM_KEY . '.text', base64_encode($this->text));
 
         $this->dispatch('getTextStylerAiResponse');
     }
@@ -45,10 +45,10 @@ class TextStyler extends Component
                     return;
                 }
 
-                $prompt = Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->get('prompt');
+                $prompt = Settings::get(Constants::TEXTSTYLER_SELECTED_LLM_KEY . '.prompt');
                 $prompt = base64_decode($prompt);
 
-                $text = Setting::select(Constants::TEXTSTYLER_SELECTED_LLM_KEY)->get('text');
+                $text = Settings::get(Constants::TEXTSTYLER_SELECTED_LLM_KEY . '.text');
                 $text = base64_decode($text);
 
                 $prompt = $prompt . "\n" . '"' . $text . '"';

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
-use Sajadsdi\LaravelSettingPro\Support\Setting;
+use Native\Laravel\Facades\Settings;
 
 class Conversation extends Model
 {
@@ -94,11 +94,7 @@ class Conversation extends Model
 
     public static function deleteOld(): void
     {
-        $days = 30;
-
-        if (Setting::select('ChatBuddy')->has('chatBuddyDeleteOldDays')) {
-            $days = Setting::select('ChatBuddy')->get('chatBuddyDeleteOldDays');
-        }
+        $days = Settings::get('ChatBuddy.chatBuddyDeleteOldDays', 30);
 
         $oldConversations = static::query()
             ->where('created_at', '<', now()->subDays($days))

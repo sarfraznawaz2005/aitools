@@ -5,7 +5,7 @@ namespace App\Livewire\Settings;
 use App\Models\Conversation;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Sajadsdi\LaravelSettingPro\Support\Setting;
+use Native\Laravel\Facades\Settings;
 
 class ChatBuddySettings extends Component
 {
@@ -14,18 +14,14 @@ class ChatBuddySettings extends Component
 
     public function mount(): void
     {
-        if (Setting::select('ChatBuddy')->has('chatBuddyDeleteOldDays')) {
-            $this->chatBuddyDeleteOldDays = Setting::select('ChatBuddy')->get('chatBuddyDeleteOldDays');
-        } else {
-            $this->chatBuddyDeleteOldDays = 30;
-        }
+        $this->chatBuddyDeleteOldDays = Settings::get('ChatBuddy.chatBuddyDeleteOldDays', 30);
     }
 
     public function saveChatBuddyOptions(): void
     {
         $this->validate();
 
-        Setting::select('ChatBuddy')->set('chatBuddyDeleteOldDays', $this->chatBuddyDeleteOldDays);
+        Settings::set('ChatBuddy.chatBuddyDeleteOldDays', $this->chatBuddyDeleteOldDays);
 
         session()->flash('message', 'Settings saved successfully.');
     }

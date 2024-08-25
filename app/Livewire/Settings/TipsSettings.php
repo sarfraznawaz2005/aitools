@@ -5,7 +5,7 @@ namespace App\Livewire\Settings;
 use App\Models\TipContent;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Sajadsdi\LaravelSettingPro\Support\Setting;
+use Native\Laravel\Facades\Settings;
 
 class TipsSettings extends Component
 {
@@ -14,18 +14,14 @@ class TipsSettings extends Component
 
     public function mount(): void
     {
-        if (Setting::select('TipsNotifier')->has('deleteOldDays')) {
-            $this->deleteOldDays = Setting::select('TipsNotifier')->get('deleteOldDays');
-        } else {
-            $this->deleteOldDays = 30;
-        }
+        $this->deleteOldDays = Settings::get('TipsNotifier.deleteOldDays', 30);
     }
 
     public function saveOptions(): void
     {
         $this->validate();
 
-        Setting::select('TipsNotifier')->set('deleteOldDays', $this->deleteOldDays);
+        Settings::set('TipsNotifier.deleteOldDays', $this->deleteOldDays);
 
         session()->flash('message', 'Settings saved successfully.');
     }
