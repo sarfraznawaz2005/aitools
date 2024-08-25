@@ -185,7 +185,7 @@
                                     <td class="px-6 py-2 whitespace-nowrap w-0 text-sm text-gray-500 dark:text-neutral-300 text-center">
                                         <button x-data x-tooltip.raw="Toggle Favorite Status"
                                                 wire:click="toggleContentFavoriteStatus({{ $content->id }})"
-                                                class="items-center px-2 py-1 text-white rounded mr-2 {{$content->active ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-800'}}">
+                                                class="items-center px-2 py-1 text-white rounded mr-2 {{$content->favorite ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-800'}}">
                                             <x-icons.ok class="w-4 h-4 mx-auto"/>
                                         </button>
 

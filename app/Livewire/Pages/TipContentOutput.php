@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Native\Laravel\Facades\Window;
@@ -39,6 +40,7 @@ class TipContentOutput extends Component
 
         //$this->success($this->model->favorite ? 'Tip favorited successfully.' : 'Tip un-favorited successfully.');
         $this->dispatch('tipContentUpdated');
+        Log::info('Tip favorited successfully.');
 
         $this->close();
     }

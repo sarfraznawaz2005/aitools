@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Events\TipContentUpdated;
 use App\Models\ApiKey;
 use App\Models\Tip;
 use App\Models\TipContent;
@@ -24,7 +25,7 @@ class TipsNotifier extends Component
 
     protected $listeners = [
         'apiKeysUpdated' => '$refresh',
-        'native:tipContentUpdated' => '$refresh',
+        'tipContentUpdated' => '$refresh',
     ];
 
     public Tip $model;
@@ -148,6 +149,20 @@ class TipsNotifier extends Component
     public function toggleStatus(Tip $tip): void
     {
         $tip->update(['active' => !$tip->active]);
+    }
+
+    public function toggleContentFavoriteStatus(TipContent $tipContent): void
+    {
+        $tipContent->favorite = !$tipContent->favorite;
+
+        $tipContent->save();
+    }
+
+    public function deleteContent(TipContent $tipContent): void
+    {
+        $tipContent->delete();
+
+        $this->success('Deleted successfully!');
     }
 
     public function deleteTip($id): void
