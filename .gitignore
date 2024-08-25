@@ -22,3 +22,4 @@ yarn-error.log
 /.vscode
 .vite
 /public/last_notification.json
+last_notification.json

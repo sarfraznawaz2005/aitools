@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Pages;
 
-use App\Events\OnTipContnetSaved;
 use App\Models\ApiKey;
 use App\Models\Tip;
 use App\Models\TipContent;
@@ -14,7 +13,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Event;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -30,7 +28,6 @@ class TipsNotifier extends Component
     protected $listeners = [
         'apiKeysUpdated' => '$refresh',
         'tipContentUpdated' => '$refresh',
-        'native:' . OnTipContnetSaved::class => '$refresh',
     ];
 
     public Tip $model;
@@ -43,13 +40,6 @@ class TipsNotifier extends Component
     public string $searchQuery = '';
 
     private CronExpression $CronExp;
-
-    public function boot(): void
-    {
-        Event::listen(OnTipContnetSaved::class, function () {
-            $this->dispatch('tipContentUpdated')->self();
-        });
-    }
 
     #[Computed]
     public function totalContentsCount(): int

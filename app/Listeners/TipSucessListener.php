@@ -9,13 +9,10 @@ use App\LLM\LlmProvider;
 use App\Models\Tip;
 use App\Services\NotificationManager;
 use Illuminate\Support\Str;
-use Livewire\Features\SupportEvents\HandlesEvents;
 use Native\Laravel\Notification;
 
 class TipSucessListener
 {
-    use HandlesEvents;
-
     public function handle(TipSucessEvent $event): void
     {
         $tip = $event->tip;
@@ -56,10 +53,7 @@ class TipSucessListener
                 ->show();
 
             OnNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
-
-            $this->dispatch('tipContentUpdated');
-
-            OnTipContnetSaved::dispatch();
+            OnTipContnetSaved::broadcast();
         }
     }
 
