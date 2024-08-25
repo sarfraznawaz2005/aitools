@@ -144,7 +144,7 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
-                                Content
+                                Date
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
@@ -164,16 +164,16 @@
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300">
                                     {{ $content->tip->name }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300"
-                                    x-data x-tooltip.raw="{{$content->title}}">
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 cursor-pointer"
+                                    wire:click="viewContents({{ $content->id }})"
+                                    x-data x-tooltip.raw="click to view">
                                     {{ Str::limit($content->title, 75) }}
                                 </td>
                                 <td
                                     class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center"
                                     x-data x-tooltip.raw="View Content"
                                 >
-                                    ️‍<span class="cursor-pointer"
-                                            wire:click="viewContents({{ $content->id }})">📑</span>
+                                    ️‍{{ $content->created_at->diffForHumans() }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
                                     @if ($content->favorite)
