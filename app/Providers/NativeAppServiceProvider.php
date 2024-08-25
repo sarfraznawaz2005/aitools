@@ -12,6 +12,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     {
         // NOTE: see config.app app_url, it is set to nativephp default
 
+        // remove default menu
         Menu::new()->register();
 
         MenuBar::create()
@@ -21,13 +22,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->icon(public_path('assets/menuBarIconTemplate.png'))
             ->width(1250)
             ->height(760);
-
-        /*
-        GlobalShortcut::new()
-            ->key('CmdOrCtrl+Shift+I')
-            //->event(ShortcutPressed::class)
-            ->register();
-        */
 
         //openWindow('main', 'home');
     }
