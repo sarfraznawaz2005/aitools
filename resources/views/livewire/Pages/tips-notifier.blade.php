@@ -6,9 +6,16 @@
         @if (!count($this->tips))
             <div class="flex justify-center w-full mb-4">
                 <span
-                    class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
+                    class="inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
+                    💡 Get regular AI tips by setting a prompt and schedule. The AI will send you notifications based on your prompt at the specified times.
+                </span>
+            </div>
+
+            <div class="flex justify-center w-full mb-4">
+                <span
+                    class="inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
                     No tips added, click button below to add a tip.
-                    </span>
+                </span>
             </div>
         @endif
 
