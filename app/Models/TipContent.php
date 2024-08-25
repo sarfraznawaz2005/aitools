@@ -12,7 +12,7 @@ class TipContent extends Model
 
     protected $fillable = ['title', 'content'];
 
-    public function apiKey(): BelongsTo
+    public function tip(): BelongsTo
     {
         return $this->belongsTo(Tip::class);
     }

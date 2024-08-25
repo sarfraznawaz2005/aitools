@@ -34,7 +34,7 @@ class TipsNotifier extends Component
     #[Computed]
     public function tips(): Collection
     {
-        return Tip::query()->latest()->get();
+        return Tip::query()->with('contents')->latest()->get();
     }
 
     #[Computed]

@@ -35,7 +35,7 @@ class TipContentOutput extends Component
         $this->model->favorite = !$this->model->favorite;
         $this->model->save();
 
-        $this->success($this->model->favorite ? 'Tip favorited successfully.' : 'Tip un-favorited successfully.');
+        //$this->success($this->model->favorite ? 'Tip favorited successfully.' : 'Tip un-favorited successfully.');
 
         $this->close();
     }
@@ -44,7 +44,7 @@ class TipContentOutput extends Component
     {
         $this->model->delete();
 
-        $this->success('Tip deleted successfully.');
+        //$this->success('Tip deleted successfully.');
 
         $this->close();
     }
