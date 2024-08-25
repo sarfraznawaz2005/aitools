@@ -121,6 +121,7 @@
             <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8">
                 <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips
                     ({{ $this->contents->total() }})
+                    <span class="cursor-pointer" x-data x-tooltip.raw="Refresh" wire:click="$refresh">🔄</span>
                 </legend>
 
                 <!-- Add search field -->
