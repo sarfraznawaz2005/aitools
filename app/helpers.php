@@ -180,3 +180,30 @@ function getBotName(Conversation $conversation = null): string
 {
     return $conversation?->bot?->name ?? 'General';
 }
+
+function openWindow(string $id, string $route, array $params = [], $focusable = true, $closable = true, $minimizable = true, $maximizable = true): PendingOpenWindow
+{
+    return Window::open($id)
+        ->route($route, $params) // Pass parameters to the route
+        ->showDevTools(false)
+        //->frameless()
+        //->titleBarHidden()
+        //->fullscreen(true)
+        ->width(1280)
+        ->hideMenu()
+        ->minWidth(1024)
+        ->height(800)
+        ->minHeight(800)
+        ->lightVibrancy()
+        ->hasShadow()
+        ->rememberState()
+        ->focusable($focusable)
+        ->closable($closable)
+        ->minimizable($minimizable)
+        ->maximizable($maximizable);
+}
+
+function closeWindow(string $id): void
+{
+    Window::close($id);
+}

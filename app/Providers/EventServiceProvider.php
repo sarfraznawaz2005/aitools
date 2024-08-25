@@ -18,29 +18,8 @@ class EventServiceProvider extends ServiceProvider
 
         Event::listen(OnNotificationShown::class, function ($event) {
             //Log::info('Opening Tips Window');
-
-            sleep(1);
-
-            //Window::close('main');
-
-            Window::open('tip')
-                ->route('tip-content', ['id' => $event->id])
-                ->showDevTools(false)
-                //->frameless()
-                //->titleBarHidden()
-                //->fullscreen(true)
-                ->width(1280)
-                ->hideMenu()
-                ->minWidth(1024)
-                ->height(800)
-                ->minHeight(800)
-                ->lightVibrancy()
-                ->hasShadow()
-                ->rememberState()
-                ->focusable(false)
-                //->closable(true)
-                ->minimizable(false)
-                ->maximizable(false);
+            Window::close('tip');
+            openWindow('tip', 'tip-content', ['id' => $event->id]);
         });
     }
 }
