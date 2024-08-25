@@ -1,6 +1,7 @@
 /.phpunit.cache
 /node_modules
 /dist
+/.codiumai
 /public/build
 /public/hot
 /public/storage
@@ -19,6 +20,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/dist
 .vite
-.codiumai
+/public/last_notification.json
