@@ -23,10 +23,9 @@ class TipSucessListener
         // remove empty lines
         $existingTipContents = implode(PHP_EOL, array_map(function ($line) {
                 return $line . '.';
-            }, array_filter(
-                array_map(
-                    'trim', explode(PHP_EOL, str_replace(["\r", "\n", "\r\n"], PHP_EOL, $existingTipContents))
-                ), 'strlen'))
+            }, array_filter(array_map(
+                'trim', explode(PHP_EOL, str_replace(["\r", "\n", "\r\n"], PHP_EOL, $existingTipContents))
+            ), 'strlen'))
         );
 
 
