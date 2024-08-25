@@ -118,8 +118,10 @@
         </fieldset>
 
         @if (count($this->tips))
-            <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8" wire:ignore>
-                <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips ({{ $this->totalContentsCount }})</legend>
+            <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8">
+                <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips
+                    ({{ $this->totalContentsCount }})
+                </legend>
 
                 <div class="items-center justify-center font-semibold w-full border border-gray-300">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -164,7 +166,8 @@
                                         class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-300 text-center"
                                         x-data x-tooltip.raw="View Content"
                                     >
-                                        ️‍<span class="cursor-pointer" wire:click="viewContents({{ $content->id }})">📑</span>
+                                        ️‍<span class="cursor-pointer"
+                                                wire:click="viewContents({{ $content->id }})">📑</span>
                                     </td>
                                     <td class="px-6 py-2 whitespace-nowrap text-sm text-center">
                                         @if ($content->favorite)
@@ -295,4 +298,5 @@
         </x-modal>
 
     </div>
+
 </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\OnNotificationShown;
+use Exception;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Native\Laravel\Events\Windows\WindowMinimized;
@@ -18,8 +19,13 @@ class EventServiceProvider extends ServiceProvider
 
         Event::listen(OnNotificationShown::class, function ($event) {
             //Log::info('Opening Tips Window');
-            Window::close('tip');
-            openWindow('tip', 'tip-content', ['id' => $event->id]);
+
+            try {
+                Window::close('tip');
+            } catch (Exception) {
+            } finally {
+                openWindow('tip', 'tip-content', ['id' => $event->id]);
+            }
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Events\ViewTipsContent;
 use App\Models\ApiKey;
 use App\Models\Tip;
 use App\Models\TipContent;
@@ -156,22 +157,12 @@ class TipsNotifier extends Component
 
     public function viewContents(TipContent $content): void
     {
-        //Window::close('tip');
-        //openWindow('tip', 'tip-content', ['id' => $content->id]);
-
-        Window::open('viewTip')
-            ->route('tip-content', ['id' => $content->id])
-            ->showDevTools(false)
-            //->frameless()
-            //->titleBarHidden()
-            //->fullscreen(true)
-            ->width(1280)
-            ->hideMenu()
-            ->minWidth(1024)
-            ->height(800)
-            ->minHeight(800)
-            ->lightVibrancy()
-            ->hasShadow();
+        try {
+            Window::close('tipView');
+        } catch (Exception) {
+        } finally {
+            openWindow('tipView', 'tip-content', ['id' => $content->id]);
+        }
     }
 
     public function resetForm(): void

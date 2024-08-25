@@ -4,11 +4,13 @@ namespace App\Livewire\Pages;
 
 use App\Models\TipContent;
 use App\Traits\InteractsWithToast;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Native\Laravel\Facades\Window;
 
 class TipContentOutput extends Component
 {
@@ -51,6 +53,11 @@ class TipContentOutput extends Component
 
     public function close(): void
     {
-        closeWindow('tip');
+        try {
+            Window::close('tipView');
+        } catch (Exception) {
+        } finally {
+            closeWindow('tip');
+        }
     }
 }
