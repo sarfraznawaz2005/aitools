@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\OnNotificationShown;
+use App\Events\OnTipContnetSaved;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
@@ -55,6 +56,8 @@ class TipSucessListener
                 ->show();
 
             OnNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
+
+            $this->dispatch(OnTipContnetSaved::class);
         }
     }
 
