@@ -10,6 +10,10 @@
                     class="bg-gray-100 hover:bg-gray-200 text-gray-600 border border-gray-200 font-medium py-2 px-4 rounded">
                 🗑️ Delete
             </button>
+            <button id="shareButton" style="display: none;"
+                    class="bg-gray-100 hover:bg-gray-200 text-gray-600 border border-gray-200 font-medium py-2 px-4 rounded">
+                📤 Share
+            </button>
             <button wire:click="close"
                     class="bg-gray-100 hover:bg-gray-200 text-gray-600 border border-gray-200 font-medium py-2 px-4 rounded">
                 ❌ Close
@@ -18,6 +22,31 @@
     @endif
 
     <div class="prose mx-auto bg-gray-100 px-6 py-2 rounded-lg border border-gray-300 shadow-2xl">
-        <x-markdown>{!! $tipContent->content !!}</x-markdown>
+        <x-markdown id="contents">{!! $tipContent->content !!}</x-markdown>
     </div>
+
+    <script data-navigate-once wire:ignore>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const shareButton = document.getElementById('shareButton');
+            const markdownContent = document.getElementById('contents').innerText;
+
+            if (navigator.share) {
+                shareButton.style.display = 'block';
+                shareButton.addEventListener('click', async () => {
+                    try {
+                        await navigator.share({
+                            title: 'Check out this content',
+                            text: markdownContent,
+                            url: window.location.href
+                        });
+                        console.log('Content shared successfully');
+                    } catch (error) {
+                        console.error('Error sharing content:', error);
+                    }
+                });
+            } else {
+                shareButton.style.display = 'none';
+            }
+        });
+    </script>
 </div>
