@@ -1,10 +1,10 @@
 <?php
 /*
  * TODO
- * chatbuddy - use https://github.com/theodo-group/LLPhant
+ * use nativephp Settings facade for diff settings instead of composer package
  * pass role to llms for chatbudy? this might solve issue of doctor related questions
  * chatbudy - replace built-in prompt with user-defined prompts?
- * use nativephp Settings facade for diff settings instead of composer package
+ * chatbuddy - use https://github.com/theodo-group/LLPhant
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator
