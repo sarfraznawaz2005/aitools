@@ -41,6 +41,15 @@ class TipSucessListener
         if ($result) {
             $this->generateTitle($llm, $tip, $result);
 
+//            session()->put(
+//                'notificationInfo',
+//                [
+//                    'window' => 'tip',
+//                    'route' => 'tip-content',
+//                    'routeParams' => ['id' => $tip->contents()->latest()->take(1)->first()->id]
+//                ]
+//            );
+
             NotificationManager::setLastNotification(
                 'tip',
                 'tip-content',
