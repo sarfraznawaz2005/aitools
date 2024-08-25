@@ -178,7 +178,7 @@ class TipsNotifier extends Component
             Window::close('tipView');
         } catch (Exception) {
         } finally {
-            openWindow('tipView', 'tip-content', ['id' => $content->id]);
+            openWindow('tipView', 'tip-content', ['id' => $content->id, 'hideActions' => true]);
         }
     }
 
