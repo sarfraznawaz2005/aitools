@@ -1,7 +1,6 @@
 <?php
 /*
  * TODO
- * with new tip content, the page should refresh automatically
  * chatbuddy - use https://github.com/theodo-group/LLPhant
  * pass role to llms for chatbudy? this might solve issue of doctor related questions
  * chatbudy - replace built-in prompt with user-defined prompts?
