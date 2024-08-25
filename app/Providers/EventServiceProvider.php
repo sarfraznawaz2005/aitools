@@ -20,8 +20,6 @@ class EventServiceProvider extends ServiceProvider
         });
 
         Event::listen(OnNotificationShown::class, function ($event) {
-            //Log::info('Opening Tips Window');
-
             try {
                 Window::close('tip');
             } catch (Exception) {
