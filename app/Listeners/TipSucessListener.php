@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\OnNotificationClicked;
 use App\Events\OnNotificationShown;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
@@ -43,7 +44,7 @@ class TipSucessListener
             $this->generateTitle($llm, $tip, $result);
 
             Notification::new()
-                //->event(OnNotificationClicked::class)
+                ->event(OnNotificationClicked::class)
                 ->title('✅ AiTools - ' . ucwords($tip->name))
                 ->message(Str::limit($result))
                 ->show();
