@@ -38,6 +38,8 @@ class TipsNotifier extends Component
     public string $prompt = '';
     public string $cron = '';
 
+    public string $searchQuery = '';
+
     private CronExpression $CronExp;
 
     #[Computed]
@@ -57,6 +59,7 @@ class TipsNotifier extends Component
     {
         return TipContent::query()
             ->with('tip')
+            ->where('content', 'like', '%' . $this->searchQuery . '%')
             ->latest()
             ->paginate(10);
     }

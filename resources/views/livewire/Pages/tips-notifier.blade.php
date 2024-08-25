@@ -123,6 +123,13 @@
                     ({{ $this->contents->total() }})
                 </legend>
 
+                <!-- Add search field -->
+                <div class="mb-4">
+                    <input type="text" wire:model.live.debounce.500ms="searchQuery"
+                           placeholder="Search content..."
+                           class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+                </div>
+
                 <div class="items-center justify-center font-semibold w-full border border-gray-300">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                         <thead class="bg-gray-100 dark:bg-neutral-800">
