@@ -1,11 +1,13 @@
 <?php
 /*
  * TODO
+ * pagination for tips
+ * open window on tip click
+ * Tips options
  * chatbuddy - save embeddings into db? Might improve performance
  * chatbuddy - use https://github.com/theodo-group/LLPhant
  * pass role to llms for chatbudy? this might solve issue of doctor related questions
  * chatbudy - replace built-in prompt with user-defined prompts?
- * Tips options?
  * use nativephp Settings facade for diff settings instead of composer package
  * Researcher Agent
  * UpWork AI extension
