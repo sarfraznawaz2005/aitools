@@ -3,7 +3,6 @@
  * TODO
  * open window on notification click
  * Tips options
- * check all livewire events are working, might need to add "native:" prefix
  * chatbuddy - save embeddings into db? Might improve performance
  * chatbuddy - use https://github.com/theodo-group/LLPhant
  * pass role to llms for chatbudy? this might solve issue of doctor related questions
