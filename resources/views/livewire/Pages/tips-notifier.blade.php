@@ -30,7 +30,7 @@
                         <path d="M12 5v14"/>
                     </svg>
 
-                    Add Tip
+                    Add Schedule
                 </x-gradient-button>
             </div>
 

@@ -33,12 +33,7 @@ class EventServiceProvider extends ServiceProvider
         Event::listen(OnNotificationClicked::class, function ($event) {
             Log::info('Opening Tips Window');
 
-            try {
-                Window::close('tip');
-            } catch (Exception) {
-            } finally {
-                openWindow('tip', 'tip-content', ['id' => $event->id]);
-            }
+            openWindow('chatbuddy', 'chat-buddy');
         });
     }
 }
