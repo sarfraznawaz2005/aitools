@@ -61,6 +61,7 @@ class TipContentOutput extends Component
             Window::close('tipView');
         } catch (Exception) {
         } finally {
+            $this->dispatch('tipContentUpdated');
             closeWindow('tip');
         }
     }

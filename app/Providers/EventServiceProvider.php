@@ -32,9 +32,14 @@ class EventServiceProvider extends ServiceProvider
             $lastNotification = NotificationManager::getLastNotification();
 
             if ($lastNotification) {
-                openWindow($lastNotification['window'], $lastNotification['route'], $lastNotification['routeParams']);
+                try {
+                    Window::close($lastNotification['window']);
+                } catch (Exception) {
+                } finally {
+                    openWindow($lastNotification['window'], $lastNotification['route'], $lastNotification['routeParams']);
 
-                NotificationManager::clearLastNotification();
+                    NotificationManager::clearLastNotification();
+                }
             }
         });
     }
