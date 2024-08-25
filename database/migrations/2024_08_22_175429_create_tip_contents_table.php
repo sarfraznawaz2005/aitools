@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('tip_id');
             $table->string('title');
             $table->text('content');
+            $table->boolean('favorite')->default(false);
             $table->timestamps();
         });
     }

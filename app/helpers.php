@@ -196,7 +196,7 @@ function openWindow(string $id, string $route, array $params = [], $focusable = 
         ->minHeight(800)
         ->lightVibrancy()
         ->hasShadow()
-        ->rememberState()
+        //->rememberState()
         ->focusable($focusable)
         ->closable($closable)
         ->minimizable($minimizable)

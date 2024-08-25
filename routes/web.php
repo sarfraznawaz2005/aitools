@@ -2,6 +2,7 @@
 
 use App\Livewire\Pages\ChatBuddy;
 use App\Livewire\Pages\TextStyler;
+use App\Livewire\Pages\TipContentOutput;
 use App\Livewire\Pages\TipsNotifier;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,4 @@ Route::get('text-styler', TextStyler::class)->name('text-styler');
 Route::get('text-styler/chat', [TextStyler::class, 'chat']);
 
 Route::get('tips-notifier', TipsNotifier::class)->name('tips-notifier');
-Route::get('tip-content/{id}', [TipsNotifier::class, 'showContentWindow'])->name('tip-content');
+Route::get('tip-content/{id}', TipContentOutput::class)->name('tip-content');
