@@ -146,7 +146,7 @@ class TipsNotifier extends Component
 
         $this->dispatch('closeModal', ['id' => 'tipModal']);
 
-        $this->success($this->model->exists ? 'Tip saved successfully!' : 'Tip added successfully!');
+        $this->success($this->model->exists ? 'Tip schedule saved successfully!' : 'Tip schedule added successfully!');
 
         $this->resetForm();
     }
@@ -185,7 +185,7 @@ class TipsNotifier extends Component
     {
         Tip::destroy($id);
 
-        $this->success('Tip deleted successfully!');
+        $this->success('Tip schedule deleted successfully!');
     }
 
     public function viewContents(TipContent $content): void
