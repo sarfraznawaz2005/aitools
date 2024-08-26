@@ -8,9 +8,9 @@ use Native\Laravel\Facades\Settings;
 
 class Others extends Component
 {
-    #[Validate('required|numeric|min:800|max:1920')]
+    #[Validate('required|numeric|min:300|max:1920')]
     public int $width = 1280;
-    #[Validate('required|numeric|min:600|max:1080')]
+    #[Validate('required|numeric|min:400|max:1080')]
     public int $height = 800;
     public bool $alwaysOnTop = false;
     public string $page = 'home';

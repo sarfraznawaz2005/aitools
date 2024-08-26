@@ -28,7 +28,7 @@
                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Width</label>
 
             <input type="number" wire:model="width" id="width"
-                   min="800" max="1920"
+                   min="300" max="1920"
                    class="peer p-2 block w-[8rem] bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600"
             >
         </div>
@@ -38,7 +38,7 @@
                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height</label>
 
             <input type="number" wire:model="height" id="height"
-                   min="600" max="1080"
+                   min="400" max="1080"
                    class="peer p-2 block w-[8rem] bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600"
             >
         </div>

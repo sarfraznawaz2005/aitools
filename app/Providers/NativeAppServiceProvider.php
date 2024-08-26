@@ -28,7 +28,11 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->alwaysOnTop((bool)$alwaysOnTop)
             ->route($page)
             ->width($width)
-            ->height($height);
+            ->maxWidth($width)
+            ->minWidth(300)
+            ->height($height)
+            ->maxHeight($height)
+            ->minHeight(400);
 
         //openWindow('main', 'home');
     }
