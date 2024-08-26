@@ -16,10 +16,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     {
         // NOTE: see config.app app_url, it is set to nativephp default
 
-        if (Schema::hasTable('bots') && !Bot::query()->count()) {
-            Artisan::call('native:db:seed --force'); // had to use firstOrCreate due to some issues
-        }
-
         $alwaysOnTop = Settings::get('settings.alwaysOnTop', false);
         $page = Settings::get('settings.page', 'home');
         $width = Settings::get('settings.width', 1280);

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Bot;
 use Exception;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\CronTranslator\CronTranslator;
@@ -17,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // we cannot put this in NativeAppServiceProvider because by the time it loads, we need to fill the database
+        // with data we need.
+        if (Schema::hasTable('bots') && !Bot::query()->count()) {
+            Artisan::call('native:db:seed --force'); // had to use firstOrCreate due to some issues
+        }
+
         config(['app.timezone' => System::timezone()]); // via nativephp
 
         $this->registerCustomValidators();
