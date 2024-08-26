@@ -216,7 +216,7 @@
         <x-modal id="tipModal">
             <x-slot name="title">
                 <div class="flex gap-x-2">
-                    {{ $model && $model->exists ? '✏️ Edit Tip' : '➕ Add Tip'}}
+                    {{ $model && $model->exists ? '✏️ Edit Tip Schedule' : '➕ Add Tip Schedule'}}
                 </div>
             </x-slot>
 
