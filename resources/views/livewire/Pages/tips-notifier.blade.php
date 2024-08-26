@@ -145,11 +145,15 @@
                                 Title
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                x-data x-tooltip.raw="sort"
+                                wire:click="sortBy('id')"
+                                class="px-6 py-3 text-center cursor-pointer text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
                                 Date
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
+                                x-data x-tooltip.raw="sort"
+                                wire:click="sortBy('favorite')"
+                                class="px-6 py-3 text-center cursor-pointer text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
                                 Favorite
                             </th>
                             <th scope="col"

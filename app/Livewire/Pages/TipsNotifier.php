@@ -35,6 +35,9 @@ class TipsNotifier extends Component
 
     public string $searchQuery = '';
 
+    public string $sortField = 'id';
+    public bool $sortAsc = false;
+
     private CronExpression $CronExp;
 
     public function getListeners(): array
@@ -46,6 +49,17 @@ class TipsNotifier extends Component
             'echo-private:' . SettingChanged::class => '$refresh', // does not seem to work, maybe laravel socket must be installed
             SettingChanged::class => '$refresh',
         ];
+    }
+
+    public function sortBy($field): void
+    {
+        if ($this->sortField === $field) {
+            $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortAsc = true;
+        }
+
+        $this->sortField = $field;
     }
 
     #[Computed]
@@ -66,7 +80,7 @@ class TipsNotifier extends Component
         return TipContent::query()
             ->with('tip')
             ->where('content', 'like', '%' . $this->searchQuery . '%')
-            ->latest()
+            ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate(10);
     }
 
