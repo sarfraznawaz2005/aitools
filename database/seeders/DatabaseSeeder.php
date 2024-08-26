@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call(BotSeeder::class);
+        //$this->call(BotSeeder::class); // we run this conditionally in AppServiceProvider
 
 //        if (app()->environment('local')) {
 //            $this->call(DemoSeeder::class);
