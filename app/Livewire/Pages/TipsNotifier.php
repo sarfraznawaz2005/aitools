@@ -43,6 +43,7 @@ class TipsNotifier extends Component
             'apiKeysUpdated' => '$refresh',
             'tipContentUpdated' => '$refresh',
             'native:' . SettingChanged::class => '$refresh', // does not seem to work, maybe laravel socket must be installed
+            'echo-private:' . SettingChanged::class => '$refresh', // does not seem to work, maybe laravel socket must be installed
             SettingChanged::class => '$refresh',
         ];
     }
