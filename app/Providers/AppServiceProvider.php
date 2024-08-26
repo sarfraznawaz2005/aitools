@@ -20,7 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (!Schema::hasTable('bots')) {
-            Artisan::call('db:seed', ['--force' => true]);
+            Artisan::call('migrate');
+            Artisan::call('db:seed');
         }
 
         //$this->copyNativeAppIcons(); // since it does not have a way to change icon currently
