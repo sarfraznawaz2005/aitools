@@ -20,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (!Schema::hasTable('bots')) {
-            Artisan::call('migrate', ['--force' => true]);
             Artisan::call('db:seed', ['--force' => true]);
         }
 
