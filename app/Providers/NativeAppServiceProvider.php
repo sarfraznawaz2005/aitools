@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Bot;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Facades\Settings;
@@ -15,7 +16,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     {
         // NOTE: see config.app app_url, it is set to nativephp default
 
-        if (!Bot::query()->count()) {
+        if (Schema::hasTable('bots') && !Bot::query()->count()) {
             Artisan::call('native:db:seed --force'); // had to use firstOrCreate due to some issues
         }
 
