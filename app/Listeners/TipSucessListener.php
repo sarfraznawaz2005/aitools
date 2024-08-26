@@ -46,6 +46,8 @@ class TipSucessListener
                 'routeParams' => ['id' => $tip->contents()->latest()->take(1)->first()->id]
             ]);
 
+            sleep(1);
+
             Notification::new()
                 ->title('✅ AiTools - ' . ucwords($tip->name))
                 ->message(Str::limit($result))
