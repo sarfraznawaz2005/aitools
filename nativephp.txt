@@ -1,0 +1,21 @@
+1. Sensitive data in .env: Don’t store sensitive information (like API keys or passwords) in your .env file as it can be accessible to
+anyone with the application bundle.
+
+2. Built-in Features: NativePHP includes built-in support for features like user timezone, clipboard access, Touch ID, and PDF printing.
+3. Custom Events: You can broadcast your own custom events by ensuring they implement the ShouldBroadcastNow interface.
+4. Data Storage: Database and user files are stored in the %APPDATA% folder, within the storage/app directory.
+5. Automatic Migrations: NativePHP runs migrations automatically whenever it starts, ensuring database updates are applied.
+6. Development Database: In development, your application uses a SQLite database located in the application’s appdata folder.
+
+7. Persistent Storage: Use Application::storagePath() to store files that should persist even after updates or uninstallation, such as
+configuration, settings, and user data that doesn’t need direct access.
+
+8. System Folder Access: You can access other folders on the system using Storage::disk(‘desktop’)->get(‘file.txt’).
+9. User Privileges: The NativePHP process runs with the same privileges as the logged-in user.
+
+10. Hostile Environment: Assume a potentially hostile environment for your application, as it’s installed on systems outside your control.
+Protect sensitive data and be mindful of security implications.
+
+11. Queue Worker: A single queue worker starts when your application boots up, ready to process background jobs.
+12. Migration Versioning: Migrations only run on the user’s machine if the current version differs from the installed version.
+13. NativePHP also starts a connection to broadcasting service if installed allowing realtime events to be broadcasted to the user.
