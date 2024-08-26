@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Exception;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\CronTranslator\CronTranslator;
@@ -17,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        if (!Schema::hasTable('bots')) {
+            Artisan::call('migrate', ['--force' => true]);
+        }
+
         //$this->copyNativeAppIcons(); // since it does not have a way to change icon currently
 
         config(['app.timezone' => System::timezone()]); // via nativephp
