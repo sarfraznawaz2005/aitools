@@ -6,6 +6,7 @@ import '../css/app.css';
 import 'preline';
 import {Notyf} from 'notyf';
 import 'notyf/notyf.min.css'; // for React, Vue and Svelte
+import './echo';
 
 Alpine.plugin(Tooltip);
 Alpine.plugin(Clipboard)
