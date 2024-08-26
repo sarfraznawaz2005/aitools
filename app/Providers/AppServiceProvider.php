@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // we cannot put this in NativeAppServiceProvider because by the time it loads, we need to fill the database
-        // with data we need.
+        // with data our NativePHP app needs to function as per our requirements.
         if (Schema::hasTable('bots') && !Bot::query()->count()) {
             Artisan::call('native:db:seed --force'); // had to use firstOrCreate due to some issues
         }
