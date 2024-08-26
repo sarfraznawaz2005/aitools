@@ -13,9 +13,9 @@ class TipSchedulerServiceProvider extends ServiceProvider
 {
     public function boot(Schedule $schedule): void
     {
-        try {
-            $tips = Tip::all();
+        $tips = Tip::all();
 
+        try {
             foreach ($tips as $tip) {
                 if ($tip->active) {
                     $schedule->call(fn() => TipSucessEvent::broadcast($tip))
