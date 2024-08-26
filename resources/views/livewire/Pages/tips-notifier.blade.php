@@ -117,20 +117,21 @@
             @endif
         </fieldset>
 
-        @if (count($this->contents))
-            <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8">
-                <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips
-                    ({{ $this->contents->total() }})
-                    <span class="cursor-pointer" x-data x-tooltip.raw="Refresh" wire:click="$refresh">🔄</span>
-                </legend>
 
-                <!-- Add search field -->
-                <div class="mb-4">
-                    <input type="text" wire:model.live.debounce.500ms="searchQuery"
-                           placeholder="Search content..."
-                           class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
-                </div>
+        <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8">
+            <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips
+                ({{ $this->contents->total() }})
+                <span class="cursor-pointer" x-data x-tooltip.raw="Refresh" wire:click="$refresh">🔄</span>
+            </legend>
 
+            <!-- Add search field -->
+            <div class="mb-4">
+                <input type="text" wire:model.live.debounce.500ms="searchQuery"
+                       placeholder="Search content..."
+                       class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+            </div>
+
+            @if($this->contents->count())
                 <div class="items-center justify-center font-semibold w-full border border-gray-300">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                         <thead class="bg-gray-100 dark:bg-neutral-800">
@@ -210,8 +211,10 @@
                 <div class="mt-4">
                     {{ $this->contents->links() }} <!-- Single Pagination control for contents -->
                 </div>
-            </fieldset>
-        @endif
+            @endif
+
+        </fieldset>
+
 
         <x-modal id="tipModal">
             <x-slot name="title">
