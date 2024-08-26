@@ -29,7 +29,7 @@ class TipsNotifier extends Component
     protected $listeners = [
         'apiKeysUpdated' => '$refresh',
         'tipContentUpdated' => '$refresh',
-        'native:'. SettingChanged::class => '$refresh',
+        'native:'. SettingChanged::class => '$refresh', // does not seem to work, maybe laravel socket must be installed
         SettingChanged::class => '$refresh',
     ];
 

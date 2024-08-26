@@ -14,10 +14,10 @@ window.notyf = new Notyf();
 
 // This re-initializes the preline components. Need to do this only when using livewire's wire:navigate on links.
 document.addEventListener('livewire:navigated', () => {
+    window.HSStaticMethods.autoInit();
+
     delete window.notyf;
     window.notyf = new Notyf();
-
-    window.HSStaticMethods.autoInit();
 })
 
 Livewire.start()
