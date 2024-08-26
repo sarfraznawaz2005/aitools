@@ -38,6 +38,8 @@ class TipSucessListener
         //Log::info($prompt);
 
         if ($result) {
+            sleep(1);
+
             $this->generateTitle($llm, $tip, $result);
 
             Settings::set('lastNotification', [
