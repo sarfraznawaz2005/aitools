@@ -26,13 +26,6 @@ class TipsNotifier extends Component
     use WithPagination;
     use InteractsWithToast;
 
-    protected $listeners = [
-        'apiKeysUpdated' => '$refresh',
-        'tipContentUpdated' => '$refresh',
-        'native:'. SettingChanged::class => '$refresh', // does not seem to work, maybe laravel socket must be installed
-        SettingChanged::class => '$refresh',
-    ];
-
     public Tip $model;
 
     public string $api_key_id = '';
@@ -43,6 +36,16 @@ class TipsNotifier extends Component
     public string $searchQuery = '';
 
     private CronExpression $CronExp;
+
+    public function getListeners(): array
+    {
+        return [
+            'apiKeysUpdated' => '$refresh',
+            'tipContentUpdated' => '$refresh',
+            'native:' . SettingChanged::class => '$refresh', // does not seem to work, maybe laravel socket must be installed
+            SettingChanged::class => '$refresh',
+        ];
+    }
 
     #[Computed]
     public function totalContentsCount(): int
