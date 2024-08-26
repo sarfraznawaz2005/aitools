@@ -139,6 +139,12 @@
                             aria-controls="chatbuddy-tab" role="tab">
                         Tips Notifier
                     </button>
+                    <button type="button"
+                            class="hs-tab-active:bg-white hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 dark:hs-tab-active:bg-neutral-800 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:text-white -mb-px py-3 px-4 inline-flex items-center gap-x-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-t-lg hover:text-gray-700 focus:outline-none focus:text-gray-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                            id="card-type-tab-item-2" aria-selected="false" data-hs-tab="#others-tab"
+                            aria-controls="chatbuddy-tab" role="tab">
+                        Others
+                    </button>
                 </nav>
             </div>
 
@@ -151,6 +157,9 @@
                 </div>
                 <div id="tips-tab" class="hidden" role="tabpanel" aria-labelledby="card-type-tab-item-2">
                     <livewire:settings.tips-settings/>
+                </div>
+                <div id="others-tab" class="hidden" role="tabpanel" aria-labelledby="card-type-tab-item-2">
+                    <livewire:settings.others/>
                 </div>
             </div>
 

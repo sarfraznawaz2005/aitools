@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
+use Native\Laravel\Facades\Settings;
 use Native\Laravel\Menu\Menu;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
@@ -12,16 +13,22 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     {
         // NOTE: see config.app app_url, it is set to nativephp default
 
+        $alwaysOnTop = Settings::get('settings.alwaysOnTop', false);
+        $page = Settings::get('settings.page', 'home');
+        $width = Settings::get('settings.width', 1280);
+        $height = Settings::get('settings.height', 800);
+
         // remove default menu
         Menu::new()->register();
 
         MenuBar::create()
-            //->alwaysOnTop()
             //->label(config('app.name'))
-            ->showDockIcon(false)
             ->icon(public_path('assets/menuBarIconTemplate.png'))
-            ->width(1250)
-            ->height(760);
+            ->showDockIcon(false)
+            ->alwaysOnTop((bool)$alwaysOnTop)
+            ->route($page)
+            ->width($width)
+            ->height($height);
 
         //openWindow('main', 'home');
     }
