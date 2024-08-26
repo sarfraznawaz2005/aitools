@@ -5,6 +5,11 @@
  * UpWork AI extension
  * Image/Video Generator
  * https://www.youtube.com/watch?v=7rYR_l9oqQg
+ *
+ * Interesting PHP Libraries and Tools
+ * https://github.com/cognesy/instructor-php
+ * https://github.com/theodo-group/LLPhant
+ * https://github.com/kambo-1st/langchain-php
  * */
 
 use App\LLM\GeminiProvider;
