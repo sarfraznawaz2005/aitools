@@ -17,7 +17,7 @@ class TipSucessListener
     {
         $tip = $event->tip;
 
-        $titleLimits = 200; // to avoid too much context window
+        $titleLimits = 100; // to avoid too much context window
         $existingTipContents = implode('', $tip->contents()->latest()->take($titleLimits)->pluck('title')->toArray());
 
         // remove empty lines
