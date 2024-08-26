@@ -1,5 +1,6 @@
 <?php
 /*
+ * 500 error api key not valid check
  * setup updator
  * app icon change.
  * Researcher Agent
