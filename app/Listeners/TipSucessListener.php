@@ -34,30 +34,48 @@ class TipSucessListener
         $prompt = str_ireplace('{{PROMPT}}', $tip->prompt, config('prompts.tips'));
         $prompt = str_ireplace('{{DISALLOWED}}', $existingTipContents, $prompt);
 
-        $result = $llm->chat($prompt);
-        //Log::info($prompt);
+        $isError = false;
 
-        if ($result) {
-            sleep(1);
+        try {
+            $result = $llm->chat($prompt);
+            //Log::info($prompt);
+        } catch (\Exception $e) {
+            $result = $e->getMessage();
+            $isError = true;
+        } finally {
 
-            $this->generateTitle($llm, $tip, $result);
+            if ($result) {
+                sleep(1);
 
-            Settings::set('lastNotification', [
-                'window' => 'tip',
-                'route' => 'tip-content',
-                'routeParams' => ['id' => $tip->contents()->latest()->take(1)->first()->id]
-            ]);
+                if ($isError) {
+                    Notification::new()
+                        ->title('❌ AiTools - ' . ucwords($tip->name))
+                        ->message(AIChatFailed($result))
+                        ->show();
 
-            sleep(1);
+                    return;
+                }
 
-            Notification::new()
-                ->title('✅ AiTools - ' . ucwords($tip->name))
-                ->message(Str::limit($result))
-                ->show();
+                $this->generateTitle($llm, $tip, $result);
 
-            OnNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
-            OnTipContentSaved::broadcast();
+                Settings::set('lastNotification', [
+                    'window' => 'tip',
+                    'route' => 'tip-content',
+                    'routeParams' => ['id' => $tip->contents()->latest()->take(1)->first()->id]
+                ]);
+
+                sleep(1);
+
+                Notification::new()
+                    ->title('✅ AiTools - ' . ucwords($tip->name))
+                    ->message(Str::limit($result))
+                    ->show();
+
+                OnNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
+                OnTipContentSaved::broadcast();
+            }
         }
+
     }
 
     private function generateTitle(LlmProvider $llm, Tip $tip, string $result): void
