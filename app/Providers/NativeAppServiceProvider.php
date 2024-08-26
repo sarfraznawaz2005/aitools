@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Bot;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Native\Laravel\Contracts\ProvidesPhpIni;
@@ -15,8 +16,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     {
         // NOTE: see config.app app_url, it is set to nativephp default
 
-        if (!Schema::hasTable('bots')) {
-            Artisan::call('native:db:seed');
+        if (!Bot::query()->count()) {
+            Artisan::call('native:db:seed --force');
         }
 
         $alwaysOnTop = Settings::get('settings.alwaysOnTop', false);
