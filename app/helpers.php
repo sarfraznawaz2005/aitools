@@ -2,7 +2,6 @@
 /*
  * TODO
  * sort tip content by favorite
- * livewire broadcasting|events
  * App url
  * General Settings
  * pass role to llms for chatbudy? this might solve issue of doctor related questions
