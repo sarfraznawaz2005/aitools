@@ -156,8 +156,8 @@ class BotSelector extends Component
         $this->dispatch('closeModal', ['id' => 'botModal']);
 
         // clean bot files
-        File::cleanDirectory(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)));
-        File::deleteDirectory(base_path('storage/app/files/') . strtolower(Str::slug($bot->name)));
+        File::cleanDirectory(storage_path('app/files/') . strtolower(Str::slug($bot->name)));
+        File::deleteDirectory(storage_path('app/files/') . strtolower(Str::slug($bot->name)));
 
         $this->success('Bot deleted successfully!');
 
@@ -166,7 +166,7 @@ class BotSelector extends Component
 
     public function deleteFile(string $fileName): void
     {
-        $path = base_path('storage/app/files/') . strtolower(Str::slug($this->model->name)) . '/' . $fileName;
+        $path = storage_path('app/files/') . strtolower(Str::slug($this->model->name)) . '/' . $fileName;
 
         @unlink($path);
 

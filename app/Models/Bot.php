@@ -38,7 +38,7 @@ class Bot extends Model
 
     public function files(): array
     {
-        return glob(base_path('storage/app/files/') . strtolower(Str::slug($this->name)) . '/*');
+        return glob(storage_path('app/files/') . strtolower(Str::slug($this->name)) . '/*');
     }
 
     public function conversations(): HasMany

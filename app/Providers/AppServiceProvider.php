@@ -24,8 +24,6 @@ class AppServiceProvider extends ServiceProvider
             Artisan::call('db:seed');
         }
 
-        //$this->copyNativeAppIcons(); // since it does not have a way to change icon currently
-
         config(['app.timezone' => System::timezone()]); // via nativephp
 
         $this->registerCustomValidators();
@@ -54,15 +52,5 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
         });
-    }
-
-    private function copyNativeAppIcons(): void
-    {
-        copy(public_path('assets/icon.png'), base_path('vendor/nativephp/electron/resources/js/resources/icon.png'));
-        copy(public_path('assets/menuBarIconTemplate.png'), base_path('vendor/nativephp/electron/resources/js/resources/menuBarIconTemplate.png'));
-        copy(public_path('assets/menuBarIconTemplate@2x.png'), base_path('vendor/nativephp/electron/resources/js/resources/menuBarIconTemplate@2x.png'));
-        copy(public_path('assets/menuBarIconTemplate.png'), base_path('vendor/nativephp/electron/resources/js/resources/IconTemplate.png'));
-        copy(public_path('assets/menuBarIconTemplate@2x.png'), base_path('vendor/nativephp/electron/resources/js/resources/IconTemplate@2x.png'));
-        copy(public_path('assets/icon.png'), base_path('vendor/nativephp/electron/resources/js/build/icon.png'));
     }
 }
