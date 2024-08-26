@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -61,14 +62,19 @@ class Conversation extends Model
         too short, create on your own without completing the text.
         ";
 
-        $title = $llm->chat($prompt);
+        $title = 'New Conversation';
 
-        $title = preg_replace('/[^A-Za-z0-9] /', '', $title);
-
-        $this->title = $title;
-        $this->updated_at = now();
-        $this->created_at = now();
-        $this->save();
+        try {
+            $title = $llm->chat($prompt);
+            $title = preg_replace('/[^A-Za-z0-9] /', '', $title);
+        } catch (Exception) {
+            //
+        } finally {
+            $this->title = $title;
+            $this->updated_at = now();
+            $this->created_at = now();
+            $this->save();
+        }
 
         return $title;
     }
