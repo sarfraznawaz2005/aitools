@@ -18,6 +18,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Lorisleiva\CronTranslator\CronTranslator;
+use Native\Laravel\Events\Settings\SettingChanged;
 use Native\Laravel\Facades\Window;
 
 class TipsNotifier extends Component
@@ -28,6 +29,8 @@ class TipsNotifier extends Component
     protected $listeners = [
         'apiKeysUpdated' => '$refresh',
         'tipContentUpdated' => '$refresh',
+        'native:'. SettingChanged::class => '$refresh',
+        SettingChanged::class => '$refresh',
     ];
 
     public Tip $model;
