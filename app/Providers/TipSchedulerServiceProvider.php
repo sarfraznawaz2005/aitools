@@ -7,12 +7,17 @@ use App\Events\TipSucessEvent;
 use App\Models\Tip;
 use Exception;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class TipSchedulerServiceProvider extends ServiceProvider
 {
     public function boot(Schedule $schedule): void
     {
+        if (!Schema::hasTable('tips')) {
+            return;
+        }
+
         $tips = Tip::all();
 
         try {
