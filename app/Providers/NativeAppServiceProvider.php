@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Facades\Settings;
@@ -12,6 +14,10 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function boot(): void
     {
         // NOTE: see config.app app_url, it is set to nativephp default
+
+        if (!Schema::hasTable('bots')) {
+            Artisan::call('native:db:seed');
+        }
 
         $alwaysOnTop = Settings::get('settings.alwaysOnTop', false);
         $page = Settings::get('settings.page', 'home');
