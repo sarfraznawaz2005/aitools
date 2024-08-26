@@ -1,8 +1,5 @@
 <?php
 /*
- * pass role to llms for chatbudy? this might solve issue of doctor related questions
- * chatbudy - replace built-in prompt with user-defined prompts?
- * chatbuddy - use https://github.com/theodo-group/LLPhant
  * app icon change.
  * Researcher Agent
  * UpWork AI extension
