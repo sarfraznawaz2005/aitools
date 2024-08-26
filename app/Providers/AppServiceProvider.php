@@ -20,8 +20,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (!Schema::hasTable('bots')) {
-            Artisan::call('migrate');
-            Artisan::call('db:seed');
+            try {
+                Artisan::call('migrate');
+                Artisan::call('db:seed');
+            } catch (Exception) {
+                // Ignore
+            }
         }
 
         config(['app.timezone' => System::timezone()]); // via nativephp
