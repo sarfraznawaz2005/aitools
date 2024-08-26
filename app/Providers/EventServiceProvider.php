@@ -9,6 +9,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use Native\Laravel\Events\Notifications\NotificationClicked;
 use Native\Laravel\Events\Windows\WindowMinimized;
+use Native\Laravel\Facades\Settings;
 use Native\Laravel\Facades\Window;
 
 class EventServiceProvider extends ServiceProvider
@@ -29,7 +30,7 @@ class EventServiceProvider extends ServiceProvider
         });
 
         Event::listen(NotificationClicked::class, function () {
-            $lastNotification = NotificationManager::getLastNotification();
+            $lastNotification = Settings::get('lastNotification');
 
             if ($lastNotification) {
                 try {
@@ -38,7 +39,7 @@ class EventServiceProvider extends ServiceProvider
                 } finally {
                     openWindow($lastNotification['window'], $lastNotification['route'], $lastNotification['routeParams']);
 
-                    NotificationManager::clearLastNotification();
+                    Settings::set('lastNotification', null);
                 }
             }
         });

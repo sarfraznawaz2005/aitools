@@ -7,8 +7,8 @@ use App\Events\OnTipContentSaved;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
 use App\Models\Tip;
-use App\Services\NotificationManager;
 use Illuminate\Support\Str;
+use Native\Laravel\Facades\Settings;
 use Native\Laravel\Notification;
 
 class TipSucessListener
@@ -40,20 +40,11 @@ class TipSucessListener
         if ($result) {
             $this->generateTitle($llm, $tip, $result);
 
-//            session()->put(
-//                'notificationInfo',
-//                [
-//                    'window' => 'tip',
-//                    'route' => 'tip-content',
-//                    'routeParams' => ['id' => $tip->contents()->latest()->take(1)->first()->id]
-//                ]
-//            );
-
-            NotificationManager::setLastNotification(
-                'tip',
-                'tip-content',
-                ['id' => $tip->contents()->latest()->take(1)->first()->id]
-            );
+            Settings::set('lastNotification', [
+                'window' => 'tip',
+                'route' => 'tip-content',
+                'routeParams' => ['id' => $tip->contents()->latest()->take(1)->first()->id]
+            ]);
 
             Notification::new()
                 ->title('✅ AiTools - ' . ucwords($tip->name))

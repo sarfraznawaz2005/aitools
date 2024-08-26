@@ -1,7 +1,6 @@
 <?php
 /*
  * TODO
- * use settings facade for notificationclick
  * sort tip content by favorite
  * livewire broadcasting|events
  * App url
