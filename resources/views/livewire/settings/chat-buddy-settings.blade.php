@@ -4,7 +4,7 @@
 
     <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
         <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
-            Automatically Delete Old Conversations (Except Favorited)
+            Automatically Delete Old Conversations (Except Favorited/Archived)
         </legend>
 
         <div class="flex items-center justify-between space-x-4">
@@ -27,7 +27,7 @@
 
     <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mt-8">
         <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
-            Delete All Conversations (Except Favorited)
+            Delete All Conversations (Except Favorited/Archived)
         </legend>
 
         <div class="flex justify-center mt-4">

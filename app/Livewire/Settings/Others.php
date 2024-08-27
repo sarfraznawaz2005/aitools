@@ -11,7 +11,7 @@ class Others extends Component
     #[Validate('required|numeric|min:300|max:1920')]
     public int $width = 1280;
     #[Validate('required|numeric|min:400|max:1080')]
-    public int $height = 800;
+    public int $height = 750;
     public bool $alwaysOnTop = false;
     public string $page = 'home';
 

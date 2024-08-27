@@ -104,7 +104,8 @@ class Conversation extends Model
 
         $oldConversations = static::query()
             ->where('created_at', '<', now()->subDays($days))
-            ->where('favorite', false);
+            ->where('favorite', false)
+            ->where('archived', false);
 
         if ($oldConversations->exists()) {
             $deletedCount = $oldConversations->delete();

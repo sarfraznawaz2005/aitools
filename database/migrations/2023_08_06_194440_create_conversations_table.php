@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('bot_id')->nullable();
             $table->string('title')->nullable();
             $table->boolean('favorite')->default(false);
+            $table->boolean('archived')->default(false);
             $table->timestamps();
         });
     }
