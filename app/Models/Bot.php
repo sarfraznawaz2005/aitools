@@ -20,6 +20,7 @@ class Bot extends Model
         'type',
         'icon',
         'related_questions',
+        'system',
     ];
 
     public function isDocumentBot(): bool

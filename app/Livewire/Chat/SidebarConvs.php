@@ -15,6 +15,7 @@ class SidebarConvs extends Component
     public ?Conversation $conversation = null;
 
     public bool $archived;
+
     public string $search = '';
 
     protected $listeners = ['conversationsUpdated' => '$refresh'];

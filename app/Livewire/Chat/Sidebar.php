@@ -8,6 +8,4 @@ use Livewire\Component;
 class Sidebar extends Component
 {
     public ?Conversation $conversation = null;
-
-    protected $listeners = ['conversationsUpdated' => '$refresh'];
 }

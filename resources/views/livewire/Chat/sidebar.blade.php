@@ -46,11 +46,12 @@
                     <div id="activeConv" role="tabpanel" aria-labelledby="activeConv">
                         <livewire:chat.sidebar-convs :conversation="$conversation" :archived="false"/>
                     </div>
-                    <div id="archivedConv" class="hidden" role="tabpanel" aria-labelledby="archivedConv">
+                    <div id="archivedConv" role="tabpanel" aria-labelledby="archivedConv"
+                         class="hidden">
                         <livewire:chat.sidebar-convs :conversation="$conversation" :archived="true"/>
                     </div>
                 </div>
-                
+
             </ul>
             <!-- End List -->
         </div>
