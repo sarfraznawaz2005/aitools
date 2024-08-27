@@ -9,7 +9,7 @@ use Native\Laravel\Facades\Settings;
 class Others extends Component
 {
     #[Validate('required|numeric|min:300|max:1920')]
-    public int $width = 1280;
+    public int $width = 1200;
     #[Validate('required|numeric|min:400|max:1080')]
     public int $height = 750;
     public bool $alwaysOnTop = false;
@@ -40,8 +40,8 @@ class Others extends Component
 
     private function loadSettings(): void
     {
-        $this->width = Settings::get('settings.width', 1280);
-        $this->height = Settings::get('settings.height', 800);
+        $this->width = Settings::get('settings.width', $this->width);
+        $this->height = Settings::get('settings.height', $this->height);
         $this->alwaysOnTop = Settings::get('settings.alwaysOnTop', false);
         $this->page = Settings::get('settings.page', 'home');
     }
@@ -56,10 +56,7 @@ class Others extends Component
 
     private function resetToDefaults(): void
     {
-        $this->width = 1280;
-        $this->height = 800;
-        $this->alwaysOnTop = false;
-        $this->page = 'home';
+        $this->reset();
     }
 }
 

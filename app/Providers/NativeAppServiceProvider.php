@@ -18,7 +18,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
 
         $alwaysOnTop = Settings::get('settings.alwaysOnTop', false);
         $page = Settings::get('settings.page', 'home');
-        $width = Settings::get('settings.width', 1280);
+        $width = Settings::get('settings.width', 1200);
         $height = Settings::get('settings.height', 750);
 
         // remove default menu

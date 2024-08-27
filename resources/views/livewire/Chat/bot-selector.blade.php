@@ -9,7 +9,7 @@
 
         <div class="p-3 px-6 text-center">
             <div
-                class="rounded-lg p-3 border border-gray-200 w-fit justify-center m-auto bg-gray-100 text-gray-800 text-xs sm:text-sm md:text-base lg:text-base">
+                class="rounded-lg p-3 border border-gray-200 w-fit justify-center m-auto bg-gray-100 text-gray-800 text-xs">
                 🎉 Hey there, click a bot to choose or start talking to the versatile General bot by default.
             </div>
 
