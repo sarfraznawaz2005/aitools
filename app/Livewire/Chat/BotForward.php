@@ -69,6 +69,7 @@ class BotForward extends Component
         $conversation->addChatMessage($message);
 
         $conversation->createTempAImessage();
+        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
 
         session()->flash('addBotMessage', $conversation->id);
 

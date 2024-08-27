@@ -14,6 +14,7 @@ class Message extends Model
         'body',
         'llm',
         'is_ai',
+        'updated_at'
     ];
 
     public function conversation(): BelongsTo

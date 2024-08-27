@@ -41,6 +41,7 @@ class ChatList extends Component
     {
         // Create temp answer to show the user that the AI is typing
         $this->conversation->createTempAImessage();
+        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
 
         $this->refresh();
 
@@ -124,7 +125,10 @@ class ChatList extends Component
     public function regenerate(Message $message): void
     {
         $message->body = Constants::CHATBUDDY_LOADING_STRING;
+        $message->updated_at = now();
         $message->save();
+
+        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
 
         $this->refresh();
 
