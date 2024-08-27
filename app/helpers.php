@@ -1,7 +1,6 @@
 <?php
 /*
  * setup updator
- * app icon change.
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator
