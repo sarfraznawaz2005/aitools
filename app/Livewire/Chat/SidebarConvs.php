@@ -53,10 +53,7 @@ class SidebarConvs extends Component
         $conversation->archived = !$conversation->archived;
         $conversation->save();
 
-        $message = $conversation->archived ? 'Conversation archived successfully.' : 'Conversation un-archived successfully.';
-        $this->success($message);
-
-        $this->dispatch('conversationsUpdated');
+        $this->redirect(route('chat-buddy'), true);
     }
 
     public function rename(Conversation $conversation, $title): void
