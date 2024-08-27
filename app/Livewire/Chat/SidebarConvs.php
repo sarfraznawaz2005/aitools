@@ -14,7 +14,7 @@ class SidebarConvs extends Component
 
     public ?Conversation $conversation = null;
 
-    public bool $archived = false;
+    public bool $archived;
     public string $search = '';
 
     protected $listeners = ['conversationsUpdated' => '$refresh'];
@@ -28,6 +28,8 @@ class SidebarConvs extends Component
             })
             ->when($this->archived, function ($query) {
                 $query->where('archived', true);
+            }, function ($query) {
+                $query->where('archived', false);
             })
             ->orderByDesc('updated_at')
             ->orderByDesc('id')
@@ -36,15 +38,22 @@ class SidebarConvs extends Component
 
     public function toggleFavorite(Conversation $conversation): void
     {
-        if ($conversation->favorite) {
-            $conversation->favorite = false;
-            $conversation->save();
-            $this->success('Conversation un-favorited successfully.');
-        } else {
-            $conversation->favorite = true;
-            $conversation->save();
-            $this->success('Conversation favorited successfully.');
-        }
+        $conversation->favorite = !$conversation->favorite;
+        $conversation->save();
+
+        $message = $conversation->favorite ? 'Conversation favorited successfully.' : 'Conversation un-favorited successfully.';
+        $this->success($message);
+
+        $this->dispatch('conversationsUpdated');
+    }
+
+    public function toggleArchived(Conversation $conversation): void
+    {
+        $conversation->archived = !$conversation->archived;
+        $conversation->save();
+
+        $message = $conversation->archived ? 'Conversation archived successfully.' : 'Conversation un-archived successfully.';
+        $this->success($message);
 
         $this->dispatch('conversationsUpdated');
     }

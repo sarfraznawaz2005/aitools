@@ -61,7 +61,7 @@ class ChatInput extends Component
             $this->conversation->addChatMessage($this->query);
 
             $this->conversation->createTempAImessage();
-            $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+            $this->dispatch('conversationsUpdated');
 
             session()->flash('addBotMessage', $this->conversation->id);
 
@@ -73,7 +73,7 @@ class ChatInput extends Component
         $this->conversation->addChatMessage($this->query);
 
         $this->dispatch('inputSaved');
-        $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+        $this->dispatch('conversationsUpdated');
 
         $this->reset('query');
     }

@@ -48,7 +48,7 @@ class ChatBuddy extends Component
 
         return response()->stream(function () use ($conversation) {
 
-            $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+            $this->dispatch('conversationsUpdated');
 
             $latestMessage = $conversation
                 ->messages()
@@ -145,7 +145,7 @@ class ChatBuddy extends Component
     {
         return response()->stream(function () use ($conversation) {
 
-            $this->dispatch('conversationsUpdated')->to(Sidebar::class);
+            $this->dispatch('conversationsUpdated');
 
             $latestMessage = $conversation
                 ->messages()
