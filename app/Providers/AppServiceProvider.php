@@ -20,11 +20,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // we cannot put this in NativeAppServiceProvider because by the time it loads, we need to fill the database
-        // with data our NativePHP app needs to function as per our requirements.
-        if (Schema::hasTable('bots') && !Bot::query()->count()) {
-            Artisan::call('native:db:seed --force'); // had to use firstOrCreate due to some issues
-        }
+        // now doing directly from migration instead: database/migrations/2024_08_15_074354_create_bots_table.php:27
+        //Artisan::call('native:db:seed --force');
 
         config(['app.timezone' => System::timezone()]); // via nativephp
 

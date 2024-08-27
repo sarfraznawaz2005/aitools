@@ -1,12 +1,12 @@
 <?php
 
 use App\Enums\BotTypeEnum;
+use Database\Seeders\BotSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -23,6 +23,9 @@ return new class extends Migration
             $table->boolean('related_questions')->default(true);
             $table->timestamps();
         });
+
+        $seeder = new BotSeeder();
+        $seeder->run();
     }
 
     /**
