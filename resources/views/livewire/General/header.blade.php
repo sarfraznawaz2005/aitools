@@ -109,7 +109,7 @@
     @endif
     <!-- header end -->
 
-    <x-modal>
+    <x-modal id="general-modal">
         <x-slot name="title">
             <div class="flex gap-x-2">
                 <x-icons.settings class="shrink-0 size-6 "/>
@@ -121,8 +121,8 @@
 
             <div class="border-b border-gray-200 dark:border-neutral-700">
                 <nav class="flex gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
-                    <button type="button"
-                            class="hs-tab-active:bg-white hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 dark:hs-tab-active:bg-neutral-800 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:text-white -mb-px py-3 px-4 inline-flex items-center gap-x-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-t-lg hover:text-gray-700 focus:outline-none focus:text-gray-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200 active"
+                    <button type="button" x-intersect="$el.click()"
+                            class="active hs-tab-active:bg-white hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 dark:hs-tab-active:bg-neutral-800 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:text-white -mb-px py-3 px-4 inline-flex items-center gap-x-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-t-lg hover:text-gray-700 focus:outline-none focus:text-gray-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
                             id="card-type-tab-item-1" aria-selected="true" data-hs-tab="#apk-keys-tab"
                             aria-controls="apk-keys-tab" role="tab">
                         API Keys

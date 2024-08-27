@@ -333,26 +333,12 @@
                 </div>
 
                 <div class="hs-accordion-group" x-show="botType == '{{App\Enums\BotTypeEnum::DOCUMENT->value}}'">
-                    <div class="hs-accordion active" id="knowledge-sources-accordian">
-                        <button
-                            class="hs-accordion-toggle hs-accordion-active:text-gray-600 inline-flex items-center gap-x-3 w-full text-start text-gray-600 focus:outline-none rounded-lg disabled:opacity-50 disabled:pointer-events-none"
-                        >
-                            <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m6 9 6 6 6-6"></path>
-                            </svg>
-                            <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m18 15-6-6-6 6"></path>
-                            </svg>
-                            Knowledge Sources
+                    <span class="text-sm">Knowledge Sources</span>
 
-                            <!-- Popover -->
-                            <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
+                    <!-- Popover -->
+                    <div class="hs-tooltip [--trigger:hover] [--placement:top] inline-block text-xs">
                                         <span
-                                            class="hs-tooltip-toggle cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
+                                            class="hs-tooltip-toggle text-xs cursor-pointer rounded-lg bg-white p-1 border border-gray-300">
                                             💡
                                             <span
                                                 x-transition:enter="transition ease-out duration-200"
@@ -368,74 +354,65 @@
                                                 bots.
                                             </span>
                                         </span>
-                            </div>
-                            <!-- End Popover -->
-                        </button>
+                    </div>
+                    <!-- End Popover -->
 
-                        <div class="hs-accordion-group">
-                            <div id="hs-basic-with-arrow-collapse-one"
-                                 class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-                                 role="region" aria-labelledby="knowledge-sources-accordian">
+                    <fieldset
+                        class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
+                        <legend class="text-sm text-gray-600 dark:text-neutral-300">
+                            Add Knowledge Sources
+                            <span class="text-xs">(PDFs, TXTs, etc)</span>
+                        </legend>
 
-                                <fieldset
-                                    class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
-                                    <legend class="text-sm text-gray-600 dark:text-neutral-300">
-                                        Add Knowledge Sources
-                                        <span class="text-xs">(PDFs, TXTs, etc)</span>
-                                    </legend>
+                        <p class="text-xs">For best results, it's recommmnded to have one file per bot.</p>
 
-                                    <p class="text-xs">For best results, it's recommmnded to have one file per bot.</p>
-
-                                    <div class="relative w-full">
-                                        <div
-                                            x-data="{ uploading: false, progress: 0 }"
-                                            x-on:livewire-upload-start="uploading = true"
-                                            x-on:livewire-upload-finish="uploading = false"
-                                            x-on:livewire-upload-cancel="uploading = false"
-                                            x-on:livewire-upload-error="uploading = false"
-                                            x-on:livewire-upload-progress="progress = $event.detail.progress"
-                                        >
-                                            <!-- File Input -->
-                                            <label for="file-input" class="sr-only">Choose files</label>
-                                            <input type="file" wire:model="files" id="{{uniqid()}}" multiple
-                                                   class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
+                        <div class="relative w-full">
+                            <div
+                                x-data="{ uploading: false, progress: 0 }"
+                                x-on:livewire-upload-start="uploading = true"
+                                x-on:livewire-upload-finish="uploading = false"
+                                x-on:livewire-upload-cancel="uploading = false"
+                                x-on:livewire-upload-error="uploading = false"
+                                x-on:livewire-upload-progress="progress = $event.detail.progress"
+                            >
+                                <!-- File Input -->
+                                <label for="file-input" class="sr-only">Choose files</label>
+                                <input type="file" wire:model="files" id="{{uniqid()}}" multiple
+                                       class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
                                                 file:bg-gray-50 file:border-0
                                                 file:me-4
                                                 file:py-3 file:px-4
                                                 dark:file:bg-neutral-700 dark:file:text-neutral-400">
 
-                                            <span class="text-xs ml-2">Max Size: 25MB</span>
+                                <span class="text-xs ml-2">Max Size: 25MB</span>
 
-                                            <!-- Progress Bar -->
-                                            <div x-show="uploading">
-                                                <progress max="100" x-bind:value="progress"></progress>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                @if($botFiles)
-                                    <fieldset
-                                        class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
-                                        <legend class="text-sm text-gray-600 dark:text-neutral-300">
-                                            Uploaded Files
-                                        </legend>
-                                        @foreach($botFiles as $file)
-                                            <div class="flex items center justify-between mb-2"
-                                                 style="font-size: .8rem;">
-                                                <div>{{basename($file)}}</div>
-                                                <div class="cursor-pointer"
-                                                     wire:click="deleteFile('{{basename($file)}}')">
-                                                    <x-icons.delete class="text-red-500"/>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </fieldset>
-                                @endif
-
+                                <!-- Progress Bar -->
+                                <div x-show="uploading">
+                                    <progress max="100" x-bind:value="progress"></progress>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
+
+                    @if($botFiles)
+                        <fieldset
+                            class="items-center justify-center w-full border border-gray-300 rounded-lg p-5 dark:border-neutral-700 my-4">
+                            <legend class="text-sm text-gray-600 dark:text-neutral-300">
+                                Uploaded Files
+                            </legend>
+                            @foreach($botFiles as $file)
+                                <div class="flex items center justify-between mb-2"
+                                     style="font-size: .8rem;">
+                                    <div>{{basename($file)}}</div>
+                                    <div class="cursor-pointer"
+                                         wire:click="deleteFile('{{basename($file)}}')">
+                                        <x-icons.delete class="text-red-500"/>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </fieldset>
+                    @endif
+
                 </div>
 
                 <div class="relative mb-3">

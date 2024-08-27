@@ -6,7 +6,7 @@
                type="text"
                autocomplete="off"
                placeholder="Search Conversations"
-               class="w-full px-3 py-2 text-sm bg-gray-50 text-gray-700 placeholder-gray-400 border-0 text-center focus:ring-0"/>
+               class="w-full px-3 py-2 text-sm bg-gray-50 text-gray-700 placeholder-gray-400 border-none text-center focus:ring-0"/>
     </li>
 
     @foreach($this->conversations as $conversationItem)
@@ -32,7 +32,7 @@
             }"
             x-cloak
             wire:key="conv-{{$conversationItem->id}}"
-            class="conversation relative group hover:bg-gray-200 focus:outline-none {{$conversation && $conversation->id === $conversationItem->id ? 'bg-gray-200' : ''}}">
+            class="my-0.5 mt-0 conversation relative group hover:bg-gray-200 focus:outline-none {{$conversation && $conversation->id === $conversationItem->id ? 'bg-gray-200' : ''}}">
 
             <div class="flex justify-between">
                 <div class="w-full">

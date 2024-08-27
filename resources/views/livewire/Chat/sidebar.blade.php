@@ -17,7 +17,7 @@
         <div class="h-full overflow-y-auto flex-1">
 
             <!-- List -->
-            <ul class="space-y-0.5">
+            <ul class="space-y-0">
                 @if(hasApiKeysCreated())
                     <li class="p-4">
                         <x-gradient-link class="w-full" href="/{{$tools['chat-buddy']['route']}}" wire:navigate>
@@ -37,7 +37,7 @@
                      aria-orientation="horizontal">
                     <button type="button"
                             @click.prevent="activeTab = 'activeConv'"
-                            :class="{ 'text-gray-600 bg-gray-100 border-r-1 border-r-gray-200 font-bold': activeTab === 'activeConv', 'bg-white text-gray-500 hover:text-gray-700': activeTab !== 'activeConv' }"
+                            :class="{ 'text-gray-600 bg-gray-100 border-r-1 border-r-gray-200 font-bold active': activeTab === 'activeConv', 'bg-white text-gray-500 hover:text-gray-700': activeTab !== 'activeConv' }"
                             class="relative min-w-0 flex-1 border-b-1 py-2 px-4 text-sm text-center overflow-hidden focus:z-10 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                             aria-selected="true" data-hs-tab="#activeConv"
                             aria-controls="activeConv" role="tab">
@@ -45,7 +45,7 @@
                     </button>
                     <button type="button"
                             @click.prevent="activeTab = 'archivedConv'"
-                            :class="{ 'text-gray-600 bg-gray-100 border-l-1 border-l-gray-200 font-bold': activeTab === 'archivedConv', 'bg-white text-gray-500 hover:text-gray-700': activeTab !== 'archivedConv' }"
+                            :class="{ 'text-gray-600 bg-gray-100 border-l-1 border-l-gray-200 font-bold active': activeTab === 'archivedConv', 'bg-white text-gray-500 hover:text-gray-700': activeTab !== 'archivedConv' }"
                             class="relative min-w-0 flex-1 border-b-1 py-2 px-4 text-sm text-center overflow-hidden focus:z-10 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                             aria-selected="false" data-hs-tab="#archivedConv"
                             aria-controls="archivedConv" role="tab">
@@ -59,7 +59,7 @@
                     <div id="activeConv" role="tabpanel" aria-labelledby="activeConv" x-show="activeTab === 'activeConv'">
                         <livewire:chat.sidebar-convs :conversation="$conversation" :archived="false"/>
                     </div>
-                    <div id="archivedConv" role="tabpanel" aria-labelledby="archivedConv" x-show="activeTab === 'archivedConv'">
+                    <div id="archivedConv" x-cloak role="tabpanel" aria-labelledby="archivedConv" x-show="activeTab === 'archivedConv'">
                         <livewire:chat.sidebar-convs :conversation="$conversation" :archived="true"/>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
 
         @if (hasApiKeysCreated())
             <div
-                class="sticky bottom-0 border-gray-200 dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 p-1">
+                class="sticky bottom-0 border-gray-200 dark:border-neutral-700 bg-gray-200 dark:bg-neutral-900 rounded p-1">
                 <livewire:general.model-selector for="{{App\Constants::CHATBUDDY_SELECTED_LLM_KEY}}"/>
             </div>
         @endif
