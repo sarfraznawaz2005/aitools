@@ -37,16 +37,16 @@
                      aria-orientation="horizontal">
                     <button type="button"
                             @click.prevent="activeTab = 'activeConv'"
-                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'activeConv', 'text-gray-500 hover:text-gray-700': activeTab !== 'activeConv' }"
-                            class="relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-2 px-4 text-sm font-medium text-center overflow-hidden focus:z-10 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
+                            :class="{ 'text-gray-600 bg-gray-100 border-r-1 border-r-gray-200 font-bold': activeTab === 'activeConv', 'bg-white text-gray-500 hover:text-gray-700': activeTab !== 'activeConv' }"
+                            class="relative min-w-0 flex-1 border-b-1 py-2 px-4 text-sm text-center overflow-hidden focus:z-10 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                             aria-selected="true" data-hs-tab="#activeConv"
                             aria-controls="activeConv" role="tab">
                         Active
                     </button>
                     <button type="button"
                             @click.prevent="activeTab = 'archivedConv'"
-                            :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'archivedConv', 'text-gray-500 hover:text-gray-700': activeTab !== 'archivedConv' }"
-                            class="relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-2 px-4 text-sm font-medium text-center overflow-hidden focus:z-10 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
+                            :class="{ 'text-gray-600 bg-gray-100 border-l-1 border-l-gray-200 font-bold': activeTab === 'archivedConv', 'bg-white text-gray-500 hover:text-gray-700': activeTab !== 'archivedConv' }"
+                            class="relative min-w-0 flex-1 border-b-1 py-2 px-4 text-sm text-center overflow-hidden focus:z-10 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                             aria-selected="false" data-hs-tab="#archivedConv"
                             aria-controls="archivedConv" role="tab">
                         Archived

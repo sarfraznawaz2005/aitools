@@ -6,7 +6,7 @@
                type="text"
                autocomplete="off"
                placeholder="Search Conversations"
-               class="w-full px-3 py-1 text-sm text-gray-700 placeholder-gray-400 border-0 text-center focus:ring-0"/>
+               class="w-full px-3 py-2 text-sm bg-gray-50 text-gray-700 placeholder-gray-400 border-0 text-center focus:ring-0"/>
     </li>
 
     @foreach($this->conversations as $conversationItem)
