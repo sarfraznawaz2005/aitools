@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         //User::factory(10)->create();
 
-        $this->call(BotSeeder::class);
+        //$this->call(BotSeeder::class); now called from within migration due to nativephp
 
 //        if (app()->environment('local')) {
 //            $this->call(DemoSeeder::class);
