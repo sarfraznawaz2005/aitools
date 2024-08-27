@@ -53,13 +53,13 @@
         <div class="relative mb-4">
             <select wire:model.change="page" id="page"
                     autocomplete="off"
-                    class="py-3 px-4 pe-9 block w-full font-bold text-center bg-white rounded-lg text-sm outline-0 focus:outline-none focus:ring-0 focus-visible:ring-0 focus:border-gray-400 sm:text-sm md:xs lg:xs">
+                    class="py-2 px-4 pe-9 block w-full font-bold text-center bg-white rounded-lg text-sm outline-0 focus:outline-none focus:ring-0 focus-visible:ring-0 focus:border-gray-400 sm:text-sm md:xs lg:xs">
 
-                <option value="home" class="py-2">Home</option>
+                <option value="home" class="py-1">Home</option>
 
                 @foreach(config('tools') as $tool)
                     <option
-                        class="my-2"
+                        class="my-1"
                         value="{{ $tool['route'] }}" {{$page === $tool['route'] ? 'selected' : ''}}>{{ $tool['name'] }}
                     </option>
                 @endforeach
