@@ -4,6 +4,7 @@ namespace App\Livewire\Pages;
 
 use App\Constants;
 use App\Enums\ApiKeyTypeEnum;
+use App\Livewire\Chat\Sidebar;
 use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
@@ -46,6 +47,8 @@ class ChatBuddy extends Component
         }
 
         return response()->stream(function () use ($conversation) {
+
+            $this->dispatch('conversationsUpdated')->to(Sidebar::class);
 
             $latestMessage = $conversation
                 ->messages()
@@ -141,6 +144,8 @@ class ChatBuddy extends Component
     protected function chatWithDocs(Conversation $conversation): StreamedResponse
     {
         return response()->stream(function () use ($conversation) {
+
+            $this->dispatch('conversationsUpdated')->to(Sidebar::class);
 
             $latestMessage = $conversation
                 ->messages()
