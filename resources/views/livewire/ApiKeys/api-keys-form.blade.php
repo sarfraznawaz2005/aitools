@@ -155,7 +155,79 @@
             <input type="text" wire:model="model_name"
                    placeholder="Model Name"
                    class="peer p-3 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-            <p class="mt-2 text-sm text-gray-400 dark:text-neutral-500">&nbsp;Based on your selected LLM</p>
+
+            <p class="mt-2 ml-2 text-xs text-gray-400 dark:text-neutral-500">
+            <div x-data="{}">
+                <a id="current-models-link" class="text-blue-500 text-xs ml-2" href="#" x-data
+                   @click.prevent="$dispatch('open-dialog')">See Current Models</a>
+
+                <!-- Dialog Component -->
+                <x-dialog>
+                    <ul class="space-y-3">
+                        <li>
+                            <h3 class="font-semibold text-base mb-2">OpenAI</h3>
+                            <ul class="ml-4 space-y-2">
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gpt-4o-mini</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gpt-4o</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gpt-4-turbo</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gpt-3.5-turbo</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="font-semibold text-base mb-2">Google</h3>
+                            <ul class="ml-4 space-y-2">
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gemini-1.5-flash-latest</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gemini-1.5-flash</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gemini-1.5-pro</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">gemini-pro</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="font-semibold text-base mb-2">Ollama</h3>
+                            <ul class="ml-4 space-y-2">
+                                <li class="flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="text-sm">Models you have downloaded on your PC.</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </x-dialog>
+            </div>
+
+            </p>
+
+            <p class="mt-2 ml-2 text-xs text-gray-400 dark:text-neutral-500">
+                Or for latest model, see
+                <a class="text-blue-500" href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank">Google</a>
+                |
+                <a class="text-blue-500" href="https://platform.openai.com/docs/models" target="_blank">OpenAI</a> |
+                <a class="text-blue-500" href="https://ollama.com/library" target="_blank">Ollama</a>
+            </p>
         </div>
         <!-- End Floating Input -->
 

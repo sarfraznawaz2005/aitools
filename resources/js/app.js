@@ -1,8 +1,7 @@
-//import './bootstrap';
+import '../css/app.css';
 import {Livewire, Alpine} from '../../vendor/livewire/livewire/dist/livewire.esm';
 import Clipboard from '@ryangjchandler/alpine-clipboard'
 import Tooltip from "@ryangjchandler/alpine-tooltip";
-import '../css/app.css';
 import 'preline';
 import {Notyf} from 'notyf';
 import 'notyf/notyf.min.css'; // for React, Vue and Svelte
