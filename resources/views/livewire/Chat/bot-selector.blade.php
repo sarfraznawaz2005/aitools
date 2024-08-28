@@ -1,7 +1,7 @@
-<div>
+<div class="pb-6">
 
-    <div class="flex flex-col bg-white border shadow-sm rounded-xl m-auto">
-        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:px-5" style="padding: 16px 16px 14px 16px;">
+    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl m-auto">
+        <div class="bg-gray-200 border-b rounded-t-xl py-3 px-4 md:px-5" style="padding: 16px 16px 14px 16px;">
             <p class="text-sm text-gray-500 font-bold">
                 🚀 Start New Conversation
             </p>

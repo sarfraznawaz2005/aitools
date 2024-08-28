@@ -20,7 +20,7 @@
                 </div>
             @endif
 
-            <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
+            <fieldset class="border border-gray-200 rounded-lg p-4 bg-white mb-4">
                 <legend class="text-sm font-bold text-gray-500 dark:text-neutral-300">Tips Schedules</legend>
                 <div class="flex w-full {{count($this->tips) ? '' : 'justify-center'}}">
                     <x-gradient-button data-hs-overlay="#tipModal" wire:click="resetForm">
@@ -36,7 +36,7 @@
                 </div>
 
                 @if (count($this->tips))
-                    <div class="items-center justify-center font-semibold w-full border border-gray-300 mt-4">
+                    <div class="items-center justify-center font-semibold w-full border border-gray-200 mt-4">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                                 <thead class="bg-gray-100 dark:bg-neutral-800">
@@ -119,7 +119,7 @@
                 @endif
             </fieldset>
 
-            <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8">
+            <fieldset class="border border-gray-200 rounded-lg p-4 bg-white mb-4 mt-8">
                 <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips
                     ({{ App\Models\TipContent::query()->count() }})
                     <span class="cursor-pointer" x-data x-tooltip.raw="Refresh" wire:click="$refresh">🔄</span>
@@ -133,7 +133,7 @@
                 </div>
 
                 @if($this->contents->count())
-                    <div class="items-center justify-center font-semibold w-full border border-gray-300">
+                    <div class="items-center justify-center font-semibold w-full border border-gray-200">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                             <thead class="bg-gray-100 dark:bg-neutral-800">
                             <tr>
@@ -304,7 +304,7 @@
                     @endif
 
                     <div
-                        class="flex items-center border-t border-gray-300 pt-4 justify-end">
+                        class="flex items-center border-t border-gray-200 pt-4 justify-end">
                         <x-gradient-button wire:click="save">
                             <x-icons.ok class="size-5"/>
                             Save
