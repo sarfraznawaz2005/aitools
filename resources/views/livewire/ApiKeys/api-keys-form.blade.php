@@ -156,8 +156,7 @@
                    placeholder="Model Name"
                    class="peer p-3 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
 
-            <p class="mt-2 ml-2 text-xs text-gray-400 dark:text-neutral-500">
-            <div x-data="{}">
+            <div class="mt-2 text-xs text-gray-400 dark:text-neutral-500">
                 <a id="current-models-link" class="text-blue-500 text-xs ml-2" href="#" x-data
                    @click.prevent="$dispatch('open-dialog')">See Current Models</a>
 
@@ -169,19 +168,55 @@
                             <ul class="ml-4 space-y-2">
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gpt-4o-mini</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gpt-4o-mini
+                                    </span>
                                 </li>
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gpt-4o</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gpt-4o
+                                    </span>
                                 </li>
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gpt-4-turbo</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gpt-4-turbo
+                                    </span>
                                 </li>
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gpt-3.5-turbo</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gpt-3.5-turbo
+                                    </span>
                                 </li>
                             </ul>
                         </li>
@@ -190,19 +225,55 @@
                             <ul class="ml-4 space-y-2">
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gemini-1.5-flash-latest</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gemini-1.5-flash-latest
+                                    </span>
                                 </li>
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gemini-1.5-flash</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gemini-1.5-flash
+                                    </span>
                                 </li>
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gemini-1.5-pro</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gemini-1.5-pro
+                                    </span>
                                 </li>
                                 <li class="flex items-center">
                                     <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
-                                    <span class="text-sm">gemini-pro</span>
+                                    <span class="text-blue-500 text-sm cursor-pointer"
+                                          @click="
+                                            open = false;
+                                            $refs.dialog.close();
+                                            $nextTick(() => {
+                                                $wire.set('model_name', $el.innerText.trim());
+                                            });
+                                          ">
+                                        gemini-pro
+                                    </span>
                                 </li>
                             </ul>
                         </li>
@@ -218,8 +289,6 @@
                     </ul>
                 </x-dialog>
             </div>
-
-            </p>
 
             <p class="mt-2 ml-2 text-xs text-gray-400 dark:text-neutral-500">
                 Or for latest model, see
