@@ -119,10 +119,9 @@
                 @endif
             </fieldset>
 
-
             <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4 mt-8">
                 <legend class="text-sm text-gray-500 dark:text-neutral-300 font-bold">AI Generated Tips
-                    ({{ $this->contents->total() }})
+                    ({{ App\Models\TipContent::query()->count() }})
                     <span class="cursor-pointer" x-data x-tooltip.raw="Refresh" wire:click="$refresh">🔄</span>
                 </legend>
 
@@ -256,8 +255,8 @@
                     </div>
 
                     <div class="mb-4">
-            <textarea placeholder="Enter your prompt..." wire:model="prompt" rows="3"
-                      class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"></textarea>
+                        <textarea placeholder="Enter your prompt..." wire:model="prompt" rows="3"
+                            class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"></textarea>
                     </div>
 
                     <div class="mb-4">

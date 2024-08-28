@@ -63,12 +63,6 @@ class TipsNotifier extends Component
     }
 
     #[Computed]
-    public function totalContentsCount(): int
-    {
-        return $this->tips->sum(fn($tip) => $tip->contents->count());
-    }
-
-    #[Computed]
     public function tips(): Collection
     {
         return Tip::query()->latest()->get();
