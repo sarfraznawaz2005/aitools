@@ -145,7 +145,7 @@
 
                 @foreach($this->messages as $message)
                     @if(!$message->is_ai)
-                        <li wire:key="chatlist-message{{$message->id}}" class="my-4" x-data="{
+                        <li wire:key="chatlist-message{{$message->id}}" class="my-4 list_message" x-data="{
                             copied: false,
                             copy () {
                               $clipboard($refs.content.innerText)

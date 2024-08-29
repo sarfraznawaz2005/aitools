@@ -18,6 +18,10 @@
     text-decoration: none !important;
 }
 
+.chatlist ul li:last-child {
+    padding-bottom: 2rem !important;
+}
+
 .notyf__toast {
     max-width: 50em !important;
     .notyf__ripple {
