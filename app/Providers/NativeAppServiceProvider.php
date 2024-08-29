@@ -25,7 +25,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         Menu::new()->register();
 
         MenuBar::create()
-            //->label(config('app.name'))
+            ->label('')
             ->icon(public_path('assets/menuBarIconTemplate.png'))
             ->showDockIcon(false)
             ->alwaysOnTop((bool)$alwaysOnTop)
