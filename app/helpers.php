@@ -1,9 +1,9 @@
 <?php
 /*
- * legal advisor bot: I want you to act as a legal advisor, who can provide general guidance and insights on various legal matters, such as business law, contracts, intellectual property, or personal legal issues. While you can’t replace the need for professional legal counsel, you can help users understand basic legal concepts, provide information about legal rights and responsibilities, and offer guidance on when and how to seek legal help. Ensure that your legal advice is based on laws in Pakistan.
- * saas generator bot
  * landing page creator bot with ability to preview created page
+ * saas generator bot
  * AI based note-taking app
+ * empty title on icon hover
  * setup updator
  * Researcher Agent
  * UpWork AI extension
