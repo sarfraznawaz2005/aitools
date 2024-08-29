@@ -169,7 +169,7 @@ class BotSeeder extends Seeder
                 2. WORD COUNT
                 3. TONE
 
-                Do not ask again if user has already provided above answer, use them to make up your answer.
+                Do not ask again if user has already provided above information, use them to make up your answer.
 
                 Follow these guidelines to create your blog post:
 
