@@ -277,6 +277,8 @@ class DocumentSearchService
                     ];
                 }
 
+                //file_put_contents('pdf_text', json_encode($text, JSON_PRETTY_PRINT));
+
                 return $text;
             case 'txt':
             case 'md':
@@ -437,15 +439,38 @@ class DocumentSearchService
     {
         $text = strtolower($text);
         $text = strip_tags($text);
-        $text = str_replace('\n', ' ', $text);
-        $text = str_replace('\r', ' ', $text);
-        $text = str_replace('\n\r', ' ', $text);
-        $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
-        $text = preg_replace('/<\/p>/i', "\n\n", $text);
-        $text = preg_replace('/\r\n|\r/', "\n", $text);
-        $text = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $text);
-        $text = preg_replace('/\s+/', ' ', $text);
-        $text = preg_replace('/\s+/u', ' ', $text);
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5);
+
+        // we mean literal stings here not actual new lines, so do not use " characters
+        $text = str_replace(['\n', '\r', '\r\n'], ' ', $text);
+
+        // Add spaces around Unicode sequences and convert them to actual characters
+        $text = preg_replace_callback(
+            '/\\\\u([0-9A-Fa-f]{4})/',
+            function ($matches) {
+                return ' ' . mb_convert_encoding(pack('H*', $matches[1]), 'UTF-8', 'UCS-2BE') . ' ';
+            },
+            $text
+        );
+
+        // Replace unwanted characters and clean the text
+        $text = preg_replace(
+            [
+                '/\r\n|\r/',                     // Handle different newline characters
+                '/(\s*\n\s*){3,}/',              // Replace multiple newlines with double newlines
+                '/\s+/',                         // Replace multiple spaces with single space
+                '/[^\w\s\-$%_.\/ ]/',            // Allow only letters, numbers, $, -, _, %, /, ., and space
+                '/(\$|%|_|-|\\|.|\/| )\1+/',     // Remove duplicate special characters
+            ],
+            [
+                "\n",
+                "\n\n",
+                ' ',
+                ' ',
+                '$1',
+            ],
+            $text
+        );
 
         if ($removeStopWords) {
             $text = $this->removeStopwords($text);
