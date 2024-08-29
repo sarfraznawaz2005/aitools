@@ -42,6 +42,16 @@ class LandingPageBotSeeder extends Seeder
             8. For CSS, do not skip anything or make assumptions; always provide complete CSS code.
             9. Use semantic HTML5 elements where appropriate, follow best practices.
             10. Ensure all elements are properly closed and the HTML is valid.
+            11. Ensure to add as many details to landing page as possible, it should not be very basic.
+
+            For your html code answer follow below format:
+
+            Landing Page Code:
+            Preview Link: Preview Landing Page
+
+            For Preview Link, please always provide hyperlink in below format:
+
+            <a href="#" class="ai-preview-landing-page" style="font-size: 0.9rem">Preview Landing Page</a>
 
             PROMPT,
             'type' => BotTypeEnum::TEXT,
