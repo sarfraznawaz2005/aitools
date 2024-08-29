@@ -1,6 +1,6 @@
 <?php
 
-use Database\Seeders\PakistanConstitutionBotSeeder;
+use App\Models\Bot;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration {
@@ -9,8 +9,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        $seeder = new PakistanConstitutionBotSeeder();
-        $seeder->run();
+        Bot::query()->where('name', 'Pak Constitution Bot')->first()?->delete();
     }
 
     /**

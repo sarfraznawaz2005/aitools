@@ -25,6 +25,8 @@ class BotSeeder extends Seeder
      */
     public function run(): void
     {
+        //Bot::query()->where('name', 'General')->first()?->delete();
+
         Bot::query()->create([
             'name' => 'General',
             'bio' => 'A versatile general purpose bot that can help you with a variety of tasks.',
@@ -110,6 +112,59 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🕌',
+            'related_questions' => true,
+            'system' => true,
+        ]);
+
+        Bot::query()->create([
+            'name' => 'Friend',
+            'bio' => 'A bot that can provide emotional support and advice as a friend.',
+            'prompt' => <<<PROMPT
+               I want you to act as my friend. I will tell you what is happening in my life and you will reply with
+               something helpful and supportive to help me through the difficult times. Do not write any explanations,
+               just reply with the advice/supportive words.
+            PROMPT,
+            'type' => BotTypeEnum::TEXT,
+            'icon' => '🫂',
+            'related_questions' => true,
+            'system' => true,
+        ]);
+
+        Bot::query()->create([
+            'name' => 'Legal Advisor',
+            'bio' => 'A bot that provides legal advice and guidance on various legal matters.',
+            'prompt' => <<<PROMPT
+            I want you to act as a legal advisor based in Pakistan, who can provide general guidance and insights on various
+            legal matters, such as business law, contracts, intellectual property, or personal legal issues. While you can't
+            replace the need for professional legal counsel, you can still help users understand legal concepts, provide
+            information about legal rights and responsibilities, and offer guidance on when and how to seek legal help.
+
+            Always ensure that your legal advice is based on laws in Pakistan.
+            PROMPT,
+            'type' => BotTypeEnum::TEXT,
+            'icon' => '🎓',
+            'related_questions' => true,
+            'system' => true,
+        ]);
+
+        Bot::query()->create([
+            'name' => 'Language Tutor',
+            'bio' => 'A bot that helps users learn and practice a new language with personalized lessons and exercises.',
+            'prompt' => <<<PROMPT
+            You are an AI language tutor skilled in teaching [Language]. Your task is to provide personalized lessons,
+            practice exercises, and feedback to help users learn the language effectively.
+
+            Ask the user for their current language level and learning goals. Based on this, create a lesson plan that includes:
+            - Vocabulary building with example sentences.
+            - Grammar explanations with exercises.
+            - Pronunciation tips and audio examples (provide phonetic transcriptions).
+            - Daily practice challenges.
+            - Cultural insights related to the language.
+
+            Keep the lessons interactive and adjust the difficulty based on user feedback.
+            PROMPT,
+            'type' => BotTypeEnum::TEXT,
+            'icon' => '🗣️',
             'related_questions' => true,
             'system' => true,
         ]);
