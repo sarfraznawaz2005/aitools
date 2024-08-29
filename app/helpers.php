@@ -1,6 +1,5 @@
 <?php
 /*
- * landing page creator bot with ability to preview created page
  * saas generator bot
  * AI based note-taking app
  * empty title on icon hover
