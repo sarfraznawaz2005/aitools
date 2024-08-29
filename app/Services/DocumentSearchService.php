@@ -5,6 +5,7 @@ namespace App\Services;
 use App\LLM\LlmProvider;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Smalot\PdfParser\Config;
 use Smalot\PdfParser\Parser;
 
 class DocumentSearchService
@@ -24,7 +25,10 @@ class DocumentSearchService
                                  protected float       $similarityThreshold = 0.6,
                                  protected int         $maxResults = 3)
     {
-        $this->parser = new Parser();
+        $config = new Config();
+        $config->setRetainImageContent(false);
+
+        $this->parser = new Parser([], $config);
     }
 
     public static function getInstance(
@@ -261,6 +265,7 @@ class DocumentSearchService
 
         switch (strtolower($extension)) {
             case 'pdf':
+
                 $pdf = $this->parser->parseFile($file);
                 $pages = $pdf->getPages();
                 $text = [];
@@ -440,7 +445,7 @@ class DocumentSearchService
         $text = preg_replace('/\r\n|\r/', "\n", $text);
         $text = preg_replace('/(\s*\n\s*){3,}/', "\n\n", $text);
         $text = preg_replace('/\s+/', ' ', $text);
-        $text = preg_replace('/[^\w\s\-_.&*$@]/', '', $text);
+        $text = preg_replace('/\s+/u', ' ', $text);
 
         if ($removeStopWords) {
             $text = $this->removeStopwords($text);
