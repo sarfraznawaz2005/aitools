@@ -1,5 +1,9 @@
 <?php
 /*
+ * legal advisor bot: I want you to act as a legal advisor, who can provide general guidance and insights on various legal matters, such as business law, contracts, intellectual property, or personal legal issues. While you can’t replace the need for professional legal counsel, you can help users understand basic legal concepts, provide information about legal rights and responsibilities, and offer guidance on when and how to seek legal help. My first request is ‘Explain the key elements that should be included in a basic business contract and their importance in protecting both parties involved.’
+ * saas generator bot
+ * landing page creator bot with ability to preview created page
+ * AI based note-taking app
  * setup updator
  * Researcher Agent
  * UpWork AI extension
