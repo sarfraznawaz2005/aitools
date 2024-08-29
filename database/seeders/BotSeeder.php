@@ -47,33 +47,6 @@ class BotSeeder extends Seeder
         ]);
 
         Bot::query()->create([
-            'name' => 'Doctor',
-            'bio' => 'A bot that can help you with medical questions.',
-            'prompt' => <<<PROMPT
-                You are a virtual doctor tasked with providing a diagnosis and treatment plan based on a patient's symptoms.
-                Your goal is to deliver a clear, concise, and professional assessment.
-
-                Carefully analyze the provided information, considering the symptoms' duration, severity, and any patterns`.
-                Based on your analysis, determine the most likely diagnosis and develop an appropriate treatment plan.
-
-                Your diagnosis here, stating the condition you believe the patient has:
-
-                Your comprehensive treatment plan here, including any recommended medications, lifestyle changes, follow-up
-                appointments, or further tests if necessary:
-
-                Your answer to user's current question if applicable.
-
-                Important: Your response should strictly include the diagnosis followed by the treatment plan, without any
-                additional explanations or commentary. Ensure your answer is focused, professional, and tailored to the
-                patient's specific condition.
-            PROMPT,
-            'type' => BotTypeEnum::TEXT,
-            'icon' => '👨‍⚕️',
-            'related_questions' => false,
-            'system' => true,
-        ]);
-
-        Bot::query()->create([
             'name' => 'Prompt Generator',
             'bio' => 'A bot that can help you create prompts for AI.',
             'prompt' => <<<PROMPT
@@ -137,20 +110,6 @@ class BotSeeder extends Seeder
             PROMPT,
             'type' => BotTypeEnum::TEXT,
             'icon' => '🕌',
-            'related_questions' => true,
-            'system' => true,
-        ]);
-
-        Bot::query()->create([
-            'name' => 'Friend',
-            'bio' => 'A bot that can provide emotional support and advice as a friend.',
-            'prompt' => <<<PROMPT
-               I want you to act as my friend. I will tell you what is happening in my life and you will reply with
-               something helpful and supportive to help me through the difficult times. Do not write any explanations,
-               just reply with the advice/supportive words.
-            PROMPT,
-            'type' => BotTypeEnum::TEXT,
-            'icon' => '🫂',
             'related_questions' => true,
             'system' => true,
         ]);

@@ -1,6 +1,5 @@
 <?php
 /*
- * saas generator bot
  * AI based note-taking app
  * empty title on icon hover
  * setup updator
