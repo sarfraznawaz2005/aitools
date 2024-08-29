@@ -1,5 +1,7 @@
 <?php
 /*
+ * the tooltip issue
+ * forward even user queries to other bots
  * AI based note-taking app
  * empty title on icon hover
  * setup updator
