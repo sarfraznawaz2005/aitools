@@ -433,6 +433,8 @@ class DocumentSearchService
         $text = strtolower($text);
         $text = strip_tags($text);
         $text = str_replace('\n', ' ', $text);
+        $text = str_replace('\r', ' ', $text);
+        $text = str_replace('\n\r', ' ', $text);
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
         $text = preg_replace('/<\/p>/i', "\n\n", $text);
         $text = preg_replace('/\r\n|\r/', "\n", $text);
