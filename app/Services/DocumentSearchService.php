@@ -266,9 +266,9 @@ class DocumentSearchService
         switch (strtolower($extension)) {
             case 'pdf':
 
+                $text = [];
                 $pdf = $this->parser->parseFile($file);
                 $pages = $pdf->getPages();
-                $text = [];
 
                 foreach ($pages as $pageNumber => $page) {
                     $text[] = [
