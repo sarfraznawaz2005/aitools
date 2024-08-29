@@ -212,7 +212,7 @@ class DocumentSearchService
 
         $this->embeddingsCache[$cacheKey] = $data;
 
-        file_put_contents($path, json_encode($data));
+        file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
 
         return $embeddings;
     }
@@ -432,6 +432,7 @@ class DocumentSearchService
     {
         $text = strtolower($text);
         $text = strip_tags($text);
+        $text = str_replace('\n', ' ', $text);
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
         $text = preg_replace('/<\/p>/i', "\n\n", $text);
         $text = preg_replace('/\r\n|\r/', "\n", $text);
