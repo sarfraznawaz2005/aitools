@@ -1,4 +1,4 @@
-<div class="py-16 px-4 sm:px-6 md:px-8 chatlist mx-auto max-w-7xl w-full">
+<div class="px-4 sm:px-6 md:px-8 chatlist mx-auto max-w-7xl w-full">
 
     <x-flash/>
 

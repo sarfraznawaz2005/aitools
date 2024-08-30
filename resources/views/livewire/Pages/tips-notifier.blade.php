@@ -1,4 +1,4 @@
-<div class="py-20 px-8">
+<div class="px-8">
     <livewire:apikeys.api-key-banner/>
 
     @if (hasApiKeysCreated())
