@@ -86,7 +86,6 @@
 
             <div class="w-full h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600"></div>
         </header>
-        <div class="h-16"></div>
     @endif
     <!-- header end -->
 

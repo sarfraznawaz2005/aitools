@@ -1,7 +1,7 @@
 @php($tools = config('tools'))
 
 <div>
-    <aside class="w-48 bg-white h-screen" x-data="{ openDropdown: null }">
+    <aside class="w-48 bg-white h-screen pt-14" x-data="{ openDropdown: null }">
         <ul class="space-y-0.5 bg-white">
 
             <li class="mx-2 mb-2">

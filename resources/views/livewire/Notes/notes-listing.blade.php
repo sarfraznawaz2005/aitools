@@ -3,7 +3,7 @@
 
         <livewire:notes.sidebar/>
 
-        <main class="flex-1 bg-gray-50 border-l">
+        <main class="flex-1 bg-gray-50 border-l pt-20 px-8">
 
             <livewire:apikeys.api-key-banner/>
 
