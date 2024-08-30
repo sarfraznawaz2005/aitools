@@ -424,10 +424,10 @@
                         <input type="checkbox"
                                wire:model="related_questions"
                                id="related_questions_checkbox"
-                               class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                               class="shrink-0 mt-0.5 cursor-pointer border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         >
                         <label for="related_questions_checkbox"
-                               class="text-sm text-gray-500 ms-3 dark:text-neutral-400">
+                               class="text-sm text-gray-500 ms-3 cursor-pointer">
                             Allow Related Questions
                         </label>
                     </div>
