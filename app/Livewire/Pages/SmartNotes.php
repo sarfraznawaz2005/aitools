@@ -24,4 +24,10 @@ class SmartNotes extends Component
     {
         return NoteFolder::query()->with('notes')->orderBy('name')->get();
     }
+
+    #[Computed]
+    public function totalNotesCount(): int
+    {
+        return NoteFolder::query()->withCount('notes')->get()->sum('notes_count');
+    }
 }

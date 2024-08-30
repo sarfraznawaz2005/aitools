@@ -9,7 +9,7 @@
                     <a href="#"
                        class="flex items-center align-middle p-2 text-sm hover:bg-gray-300 bg-gray-200">
                         <x-icons.folders class="inline size-6 mr-2" />
-                        All Folders
+                        All Folders ({{ $this->totalNotesCount }})
                     </a>
                 </li>
 
@@ -18,7 +18,7 @@
                         <a href="#"
                            class="flex items-center align-middle p-2 text-sm hover:bg-gray-100 {{ $folder->color }}">
                             <x-icons.folder class="inline size-6 mr-2" />
-                            {{ $folder->name }}
+                            {{ $folder->name }} ({{ $folder->notes->count() }})
                         </a>
                     </li>
                 @endforeach
