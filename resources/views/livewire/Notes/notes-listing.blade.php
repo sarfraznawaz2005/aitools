@@ -97,7 +97,7 @@
                                     x-show="open"
                                     @click.away="open = false"
                                     @click.outside="open = false"
-                                    class="absolute right-0 z-50 mt-2 w-32 bg-white rounded-lg shadow-lg"
+                                    class="absolute right-[4px] top-6 z-50 w-32 bg-white rounded-lg shadow-lg"
                                 >
                                     <a href="#" wire:click.prevent="$dispatch('openCustomModalForEdit', [{{$note->id}}])" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>

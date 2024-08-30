@@ -40,7 +40,7 @@
                     <div x-show="openDropdown === {{$folder->id}}"
                          @click.away="openDropdown = false"
                          x-cloak
-                         class="absolute right-[4px] bg-white w-32 border text-xs border-gray-200 rounded-lg shadow-lg z-10">
+                         class="absolute right-[4px] top-7 bg-white w-32 border text-xs border-gray-200 rounded-lg shadow-lg z-10">
                         <ul>
                             <li>
                                 <a href="#"
