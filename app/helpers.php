@@ -1,6 +1,5 @@
 <?php
 /*
- * move notes to other folders
  * images | attach files?
  * search, sort, filter
  * backup to one drive, etc
