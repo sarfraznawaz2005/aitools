@@ -16,22 +16,8 @@
                 @foreach($this->folders as $folder)
                     <li class="folder group relative hover:bg-gray-100" x-data="{
                             openDropdown: false,
-                            editable: false,
                             startEdit() {
-                                this.editable = true;
-                                this.$nextTick(() => this.$refs.titleEditable.focus());
-                            },
-                            stopEdit() {
-                                if (this.editable) {
-                                    this.$wire.rename({{$folder->id}}, this.$refs.titleEditable.innerText);
-                                    this.editable = false;
-                                }
-                            },
-                            handleKeyDown(event) {
-                                if (event.key === 'Enter') {
-                                              event.preventDefault();
-                                    this.stopEdit();
-                                }
+                                //
                             }
                         }"
                         x-cloak
@@ -64,7 +50,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <x-confirm-dialog call="delete({{$folder->id}})" title="Delete"
+                                    <x-confirm-dialog call="deleteFolder({{$folder->id}})"
+                                                      title="Delete"
+                                                      text="Are you sure you want to delete? This will delete all notes in this folder!"
                                                       class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
                                         <x-icons.delete class="inline-block mr-2 text-red-500"/>
                                         Delete

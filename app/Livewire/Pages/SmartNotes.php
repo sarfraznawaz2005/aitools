@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\Models\NoteFolder;
+use App\Traits\InteractsWithToast;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,6 +14,8 @@ use Livewire\Component;
 
 class SmartNotes extends Component
 {
+    use InteractsWithToast;
+
     #[Title('Smart Notes')]
     public function render(): View|Application|Factory
     {
@@ -30,4 +33,12 @@ class SmartNotes extends Component
     {
         return NoteFolder::query()->withCount('notes')->get()->sum('notes_count');
     }
+
+    public function deleteFolder(NoteFolder $folder): void
+    {
+        $folder->delete();
+
+        $this->success('Folder deleted successfully.');
+    }
+
 }
