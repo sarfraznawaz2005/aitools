@@ -7,7 +7,7 @@
 
             <div
                 class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 px-8 p-3 mb-4 border-b {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
-                <div class="font-[700] {{ $folder->color }}">
+                <div class="font-[600] {{ $folder->color }}">
                     {{$folder->name}} ({{$folder->notes->count()}})
                 </div>
 
