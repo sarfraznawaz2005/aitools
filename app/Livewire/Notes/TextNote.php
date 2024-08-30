@@ -48,7 +48,13 @@ class TextNote extends Component
     #[On('openTextNoteModalEdit')]
     public function openTextNoteModalEdit(Note $note): void
     {
+        $this->hasReminder = false;
+
         $this->note = $note;
+
+        if ($note->reminder_at && $note->reminder_at !== '') {
+            $this->hasReminder = true;
+        }
 
         $this->fill($note->toArray());
 
