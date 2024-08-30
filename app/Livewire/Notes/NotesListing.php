@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Notes;
 
+use App\Models\Note;
 use App\Models\NoteFolder;
+use App\Traits\InteractsWithToast;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -11,6 +13,8 @@ use Livewire\Component;
 
 class NotesListing extends Component
 {
+    use InteractsWithToast;
+
     #[Title('Smart Notes')]
     public NoteFolder $folder;
 
@@ -38,5 +42,14 @@ class NotesListing extends Component
     public function addCustomNote(): void
     {
         $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
+    }
+
+    public function deleteNote(Note $note): void
+    {
+        $note->delete();
+
+        $this->success('Note deleted successfully.');
+
+        $this->dispatch('notesUpdated');
     }
 }

@@ -1,7 +1,7 @@
 @php($tools = config('tools'))
 
 <div>
-    <aside class="w-48 bg-white h-screen pt-16" x-data="{ openDropdown: null }">
+    <aside class="w-48 bg-white h-screen pt-16" x-data="{ openDropdown: false }">
         <ul class="space-y-0.5 bg-white">
 
             <li class="mx-2 mb-2">
@@ -32,14 +32,14 @@
                     </div>
 
                     <div x-show="openDropdown === {{$folder->id}}"
-                         @click.away="openDropdown = null"
+                         @click.away="openDropdown = false"
                          x-cloak
                          class="absolute right-[4px] bg-white w-32 border text-xs border-gray-200 rounded-lg shadow-lg z-10">
                         <ul>
                             <li>
                                 <a href="#"
                                    wire:click.prevent="editFolder({{$folder->id}})"
-                                   @click.prevent="openDropdown = null;"
+                                   @click.prevent="openDropdown = false;"
                                    class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                     Edit
@@ -47,7 +47,6 @@
                             </li>
                             <li>
                                 <x-confirm-dialog call="deleteFolder({{$folder->id}})"
-                                                  title="Delete"
                                                   text="Are you sure you want to delete? This will delete all notes in this folder!"
                                                   class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
                                     <x-icons.delete class="inline-block mr-2 text-red-500"/>

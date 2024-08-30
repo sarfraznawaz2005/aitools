@@ -77,23 +77,32 @@
                 @foreach($this->notes as $note)
                     <div class="p-4 bg-gray-50 rounded-lg transition-shadow border relative flex flex-col">
                         <div class="relative">
-                            <div x-data="{ open: false }" class="absolute top-0 right-0">
+
+                            <div x-data="{ open: false }" class="absolute top-0 right-0" x-cloak x-init="
+                                  $wire.on('updated', () => {
+                                   open = false
+                                  });
+                                ">
+
                                 <button @click="open = !open" class="text-gray-500 hover:text-gray-700">
-                                    <x-icons.dotsv />
+                                    <x-icons.dotsv/>
                                 </button>
                                 <div
                                     x-show="open"
                                     @click.away="open = false"
+                                    @click.outside="open = false"
                                     class="absolute right-0 z-50 mt-2 w-32 bg-white rounded-lg shadow-lg"
                                 >
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
                                     </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <x-confirm-dialog
+                                        call="deleteNote({{$note->id}}); open = false"
+                                        class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
                                         <x-icons.delete class="inline-block mr-2 text-red-500"/>
                                         Delete
-                                    </a>
+                                    </x-confirm-dialog>
                                 </div>
                             </div>
                             <div class="w-full">
@@ -106,7 +115,6 @@
                     </div>
                 @endforeach
             </div>
-
 
 
         </main>
