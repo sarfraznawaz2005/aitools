@@ -41,6 +41,7 @@
                <div class="mb-4">
                    <div class="flex">
                        <input type="checkbox"
+                              wire:model="hasReminder"
                               @click="show = $el.checked"
                               class="shrink-0 mt-0.5 cursor-pointer border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                               id="reminder_checkbox">
@@ -52,7 +53,7 @@
 
                <div class="mb-4" x-show="show" x-cloak>
                    <div class="mb-4">
-                       <select wire:model.change="cron"
+                       <select wire:model.change="reminder_at"
                                class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
                            <option value="">Choose Frequency</option>
                            <option value="* * * * *">Every Minute</option>
@@ -64,7 +65,7 @@
                    </div>
 
                    <div class="mb-4">
-                       <input type="text" wire:model.live="cron"
+                       <input type="text" wire:model.live="reminder_at"
                               placeholder="Type cron expression or select above"
                               class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
 
@@ -76,7 +77,7 @@
                        </p>
                    </div>
 
-                   @if (!empty($cron))
+                   @if (!empty($reminder_at))
                        <div class="mb-4">
                            <p class="text-sm">Description: <span
                                    class="text-pink-500">{{ $this->schedulePreview }}</span>
@@ -84,7 +85,7 @@
                        </div>
                    @endif
 
-                   @if (!empty($cron))
+                   @if (!empty($reminder_at))
                        <div class="mb-4">
                            <p class="text-sm italic font-bold mb-1">Next Runs:</p>
                            <ul class="list-disc list-inside ml-2">

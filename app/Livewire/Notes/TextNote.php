@@ -5,10 +5,13 @@ namespace App\Livewire\Notes;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
+use Cron\CronExpression;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Lorisleiva\CronTranslator\CronTranslator;
 
 class TextNote extends Component
 {
@@ -21,6 +24,7 @@ class TextNote extends Component
     public string $title = '';
     public string $content = '';
     public string $reminder_at = '';
+    public bool $hasReminder = false;
 
     public function mount(): void
     {
@@ -57,14 +61,19 @@ class TextNote extends Component
             'note_folder_id' => 'required',
             'title' => 'required|min:4',
             'content' => 'required|min:5',
-            'reminder_at' => 'sometimes|valid_cron',
-        ]);
+            'reminder_at' => 'required_if:hasReminder,true|valid_cron',
+        ],
+            [
+                'reminder_at.required_if' => 'The frequency field is required.',
+                'reminder_at.valid_cron' => 'The frequency format is invalid. Please use a valid cron expression.',
+            ]
+        );
 
         $this->note->fill([
             'note_folder_id' => $this->note_folder_id,
             'title' => $this->title,
             'content' => $this->content,
-            'reminder_at' => $this->reminder_at ?? null,
+            'reminder_at' => $this->hasReminder ? $this->reminder_at ?? null : null,
         ])->save();
 
 
@@ -76,6 +85,37 @@ class TextNote extends Component
         $this->resetForm();
     }
 
+    #[Computed]
+    public function schedulePreview(): string
+    {
+        try {
+            $humanReadable = CronTranslator::translate(trim($this->reminder_at));
+            return ucfirst($humanReadable);
+        } catch (Exception) {
+            return 'Invalid cron expression';
+        }
+    }
+
+    #[Computed]
+    public function nextRuns(): array
+    {
+        try {
+            $nextRuns = [];
+            $date = now();
+            $cronExpression = new CronExpression(trim($this->reminder_at));
+
+            for ($i = 0; $i < 3; $i++) {
+                $nextRun = $cronExpression->getNextRunDate($date);
+                $nextRuns[] = $nextRun->format('Y-m-d H:i:s');
+                $date = $nextRun;
+            }
+
+            return $nextRuns;
+        } catch (Exception) {
+            return [];
+        }
+    }
+
     public function resetForm(): void
     {
         $this->reset(['title', 'content', 'reminder_at']);
@@ -84,5 +124,6 @@ class TextNote extends Component
 
         $this->note = new Note();
         $this->note_folder_id = $this->folder->id ?? '';
+        $this->hasReminder = $this->note->reminder_at !== null;
     }
 }
