@@ -76,7 +76,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 @foreach($this->notes as $note)
                     <div class="p-4 bg-gray-50 rounded-lg transition-shadow border relative flex flex-col">
-                        <div class="relative">
+
+                        <div class="relative min-h-24 max-h-24">
 
                             <div x-data="{ open: false }" class="absolute top-0 right-0" x-cloak x-init="
                                 $nextTick(() => { open = false; })
