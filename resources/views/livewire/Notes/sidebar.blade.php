@@ -19,7 +19,7 @@
 
             @foreach($this->folders as $folderItem)
                 <li class="folder group relative hover:bg-gray-100"
-                    wire:key="folder-{{$folderItem->id}}">
+                    wire:key="foldersidebar-{{$folderItem->id}}">
                     <div class="flex justify-between items-center">
                         <a
                             wire:navigate

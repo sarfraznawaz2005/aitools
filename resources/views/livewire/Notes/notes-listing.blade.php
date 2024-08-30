@@ -78,7 +78,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-8 px-8">
 
                 @foreach($this->notes as $note)
-                    <div class="p-4 bg-white rounded-lg transition-shadow shadow-lg relative flex flex-col">
+                    <div class="p-4 bg-white rounded-lg transition-shadow shadow-lg relative flex flex-col" wire:key="note-{{$note->id}}">
 
                         <div class="relative min-h-24 max-h-24">
 
@@ -132,7 +132,7 @@
                                             class="absolute top-0 z-50 w-full ml-0.5 bg-white shadow-lg"
                                         >
                                             @foreach($this->folders as $folder)
-                                                <a href="#" wire:click.prevent="moveToFolder({{$folder->id}}, {{$note->id}})" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                <a wire:key="mvfolder-{{$folder->id}}" href="#" wire:click.prevent="moveToFolder({{$folder->id}}, {{$note->id}})" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                     {{$folder->name}}
                                                 </a>
                                             @endforeach

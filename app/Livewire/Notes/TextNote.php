@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Notes;
 
-use App\Enums\BotTypeEnum;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
@@ -138,6 +137,5 @@ class TextNote extends Component
 
         $this->note = new Note();
         $this->note_folder_id = $this->folder->id ?? '';
-        $this->hasReminder = $this->note->reminder_at !== null;
     }
 }
