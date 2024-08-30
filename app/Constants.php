@@ -13,6 +13,8 @@ final class Constants
     const string CHATBUDDY_LOADING_STRING = 'Thinking...';
     const int CHATBUDDY_TOTAL_CONVERSATION_HISTORY = 50;
 
+    const string NOTES_SELECTED_LLM_KEY = 'Notes-LLM';
+
     const string TEXTSTYLER_SELECTED_LLM_KEY = 'TextStyler-LLM';
 
     const string OPENAI_EMBEDDING_MODEL = 'text-embedding-ada-002';
