@@ -11,6 +11,7 @@ export default {
     ],
     safelist: [
         'w-48',
+        'w-64',
         'list-disc',
         'list-decimal',
         'list-square',
