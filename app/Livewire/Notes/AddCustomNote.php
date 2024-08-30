@@ -20,8 +20,6 @@ class AddCustomNote extends Component
     public string $title = '';
     public string $content = '';
 
-    protected $listeners = ['notesUpdated' => '$refresh'];
-
     public function mount(Note $note = null): void
     {
         $this->note = $note ?? new Note();
@@ -59,13 +57,11 @@ class AddCustomNote extends Component
 
     public function resetForm(): void
     {
-        $this->reset([]);
+        $this->reset(['title', 'content']);
 
         $this->resetErrorBag();
 
         $this->note = new Note();
         $this->note_folder_id = $this->folder->id ?? '';
-
-        $this->fill($this->note->toArray());
     }
 }

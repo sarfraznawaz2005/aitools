@@ -84,6 +84,10 @@
                                 $wire.on('updated', () => {
                                     open = false
                                 });
+
+                                Livewire.on('notesUpdated', () => {
+                                    open = false
+                                });
                                 ">
 
                                 <button @click="open = !open" class="text-gray-500 hover:text-gray-700">
