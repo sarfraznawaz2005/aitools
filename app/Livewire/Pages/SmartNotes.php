@@ -56,6 +56,25 @@ class SmartNotes extends Component
         $this->fill($folder->toArray());
     }
 
+    public function save(): void
+    {
+        $this->validate([
+            'name' => 'required|min:3|max:25|unique:note_folders,name,' . ($this->model->id ?? 'NULL') . ',id',
+            'color' => 'required',
+        ]);
+
+        $this->model->fill([
+            'name' => $this->name,
+            'color' => $this->color,
+        ])->save();
+
+        $this->dispatch('closeModal', ['id' => 'notesFolderModal']);
+
+        $this->success($this->model->wasRecentlyCreated ? 'Folder added successfully!' : 'Folder saved successfully!');
+
+        $this->resetForm();
+    }
+
     public function deleteFolder(NoteFolder $folder): void
     {
         $folder->delete();

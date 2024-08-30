@@ -140,7 +140,35 @@
 
         <x-slot name="body">
 
-            hi
+            <x-flash/>
+
+            <div class="mb-4">
+                <input placeholder="Name" wire:model="name" type="text"
+                       class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+            </div>
+
+            <div class="mb-4">
+                <select wire:model.change="color"
+                        class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
+                    <option value="">Choose Color</option>
+                    <option value="text-gray-600" class="text-gray-600">Gray</option>
+                    <option value="text-blue-600" class="text-blue-600">Blue</option>
+                    <option value="text-cyan-600" class="text-cyan-600">Cyan</option>
+                    <option value="text-green-600" class="text-green-600">Green</option>
+                    <option value="text-purple-600" class="text-purple-600">Purple</option>
+                    <option value="text-red-600" class="text-red-600">Red</option>
+                    <option value="text-yellow-600" class="text-yellow-600">Yellow</option>
+                    <option value="text-orange-600" class="text-orange-600">Orange</option>
+                </select>
+            </div>
+
+            <div
+                class="flex items-center border-t border-gray-200 pt-4 justify-end">
+                <x-gradient-button wire:click="save">
+                    <x-icons.ok class="size-5"/>
+                    Save
+                </x-gradient-button>
+            </div>
 
         </x-slot>
     </x-modal>
