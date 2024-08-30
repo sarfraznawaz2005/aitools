@@ -19,6 +19,8 @@ class AddCustomNote extends Component
     public string $title = '';
     public string $content = '';
 
+    protected $listeners = ['notesUpdated' => '$refresh'];
+
     public function mount(Note $note = null): void
     {
         $this->note = $note ?? new Note();
@@ -48,7 +50,7 @@ class AddCustomNote extends Component
 
         $this->success($this->note->wasRecentlyCreated ? 'Note added successfully!' : 'Note saved successfully!');
 
-        $this->dispatch('notesUpdated')->to(Sidebar::class);
+        $this->dispatch('notesUpdated');
 
         $this->resetForm();
     }

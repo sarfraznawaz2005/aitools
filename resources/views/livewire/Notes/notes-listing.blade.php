@@ -7,7 +7,8 @@
 
             <livewire:apikeys.api-key-banner/>
 
-            <div class="flex justify-between items-center w-full border p-3 rounded-lg mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
+            <div
+                class="flex justify-between items-center w-full border p-3 rounded-lg mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
                 <div class="font-medium {{ $folder->color }}">
                     {{$folder->name}} ({{$folder->notes->count()}})
                 </div>
@@ -18,7 +19,7 @@
                         type="button"
                         class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                     >
-                        <x-icons.plus />
+                        <x-icons.plus/>
                         Add Note
                         <svg
                             class="size-4"
@@ -72,55 +73,24 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Note Card -->
-                <div class="p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <h2 class="text-lg font-semibold text-gray-700">Note Title 1</h2>
-                    <p class="mt-2 text-gray-600">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan...
-                    </p>
-                    <div class="mt-4">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Read more</a>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                @foreach($this->notes as $note)
+                    <div class="p-4 bg-gray-50 rounded-lg transition-shadow border">
+                        <h2 class="text-lg font-semibold text-gray-700">{{$note->title}}</h2>
+                        <p class="mt-2 text-gray-600">
+                            {{Str::limit($note->content, 100)}}
+                        </p>
+                        <div class="mt-4">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Read more</a>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Another Note Card -->
-                <div class="p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <h2 class="text-lg font-semibold text-gray-700">Note Title 2</h2>
-                    <p class="mt-2 text-gray-600">
-                        Suspendisse potenti. Nullam auctor, urna eget imperdiet lobortis...
-                    </p>
-                    <div class="mt-4">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Read more</a>
-                    </div>
-                </div>
-
-                <div class="p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <h2 class="text-lg font-semibold text-gray-700">Note Title 1</h2>
-                    <p class="mt-2 text-gray-600">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan...
-                    </p>
-                    <div class="mt-4">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Read more</a>
-                    </div>
-                </div>
-
-                <!-- Another Note Card -->
-                <div class="p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <h2 class="text-lg font-semibold text-gray-700">Note Title 2</h2>
-                    <p class="mt-2 text-gray-600">
-                        Suspendisse potenti. Nullam auctor, urna eget imperdiet lobortis...
-                    </p>
-                    <div class="mt-4">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Read more</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
         </main>
     </div>
 
-    <livewire:notes.add-custom-note />
-    <livewire:notes.add-link-note />
+    <livewire:notes.add-custom-note/>
+    <livewire:notes.add-link-note/>
 
 </div>
