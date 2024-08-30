@@ -35,6 +35,14 @@ export default {
         'bg-yellow-500',
         'bg-red-500',
         'marker:text-blue-600',
+        'xxxxx',
+        'text-red-600',
+        'text-blue-600',
+        'text-green-600',
+        'text-purple-600',
+        'text-gray-600',
+        'text-pink-600',
+        'text-yellow-600',
     ],
     theme: {
         fontFamily: {

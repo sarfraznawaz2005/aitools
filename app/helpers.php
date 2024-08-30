@@ -1,6 +1,6 @@
 <?php
 /*
- * AI based note-taking app
+ * search, sort, filter
  * backup to one drive, etc
  * empty title on icon hover
  * setup updator
