@@ -48,11 +48,11 @@ class AddCustomNote extends Component
             'content' => $this->content,
         ])->save();
 
-        $this->dispatch('closeModal', ['id' => 'addCustomNoteModal']);
 
         $this->success($this->note->wasRecentlyCreated ? 'Note added successfully!' : 'Note saved successfully!');
 
         $this->dispatch('notesUpdated');
+        $this->dispatch('closeModal', ['id' => 'addCustomNoteModal']);
 
         $this->resetForm();
     }

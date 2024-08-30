@@ -18,7 +18,10 @@ class NotesListing extends Component
     #[Title('Smart Notes')]
     public NoteFolder $folder;
 
-    protected $listeners = ['folderUpdated' => '$refresh'];
+    protected $listeners = [
+        'folderUpdated' => '$refresh',
+        'notesUpdated' => '$refresh',
+    ];
 
     public function mount(NoteFolder $folder): void
     {
