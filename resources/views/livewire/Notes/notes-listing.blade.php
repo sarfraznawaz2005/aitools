@@ -3,12 +3,10 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-20 px-8 border-l {{$folder->getBorderColor()}}">
-
-            <livewire:apikeys.api-key-banner/>
+        <main class="flex-1 pt-12 border-l {{$folder->getBorderColor()}} {{ $folder->getBackGroundColor() }}">
 
             <div
-                class="flex justify-between items-center w-full border p-3 rounded-lg mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
+                class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 p-3 mb-4 border-b {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
                 <div class="font-bold {{ $folder->color }}">
                     {{$folder->name}} ({{$folder->notes->count()}})
                 </div>
@@ -17,7 +15,7 @@
                     <button
                         @click="open = !open"
                         type="button"
-                        class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                        class="py-2 px-2 inline-flex items-center mr-2 rounded-full gap-x-2 text-sm font-medium rounded border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                     >
                         <x-icons.plus/>
                         Add Note
@@ -48,13 +46,13 @@
                         x-transition:leave="transition ease-in duration-150"
                         x-transition:leave-start="opacity-100 scale-100"
                         x-transition:leave-end="opacity-0 scale-95"
-                        class="absolute right-0 mt-2 min-w-32 bg-gray-50 z-40 shadow-md space-y-0.5 divide-y divide-gray-200"
+                        class="absolute right-0 mt-2 min-w-32 z-40 shadow-lg space-y-0.5 divide-y divide-gray-200"
                         role="menu"
                     >
                         <div class="py-2 first:pt-0 last:pb-0">
                             <a
                                 wire:click.prevent="$dispatch('openCustomModal')"
-                                class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 bg-white hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                 href="#"
                             >
                                 <x-icons.text class="shrink-0 size-4"/>
@@ -62,7 +60,7 @@
                             </a>
                             <a
                                 @click.prevent="$wire.export('txt')"
-                                class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 bg-white hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                 href="#"
                             >
                                 <x-icons.link class="shrink-0 size-4"/>
@@ -73,9 +71,14 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="mx-8 my-4">
+                <livewire:apikeys.api-key-banner/>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-8 px-8">
+
                 @foreach($this->notes as $note)
-                    <div class="p-4 bg-gray-50 rounded-lg transition-shadow border relative flex flex-col">
+                    <div class="p-4 bg-white rounded-lg transition-shadow shadow-lg relative flex flex-col">
 
                         <div class="relative min-h-24 max-h-24">
 

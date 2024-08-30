@@ -1,7 +1,7 @@
 @php($tools = config('tools'))
 
 <div>
-    <aside class="w-48 bg-white h-screen pt-16" x-data="{ openDropdown: false }" x-init="
+    <aside class="w-48 bg-white sticky top-0 z-40 h-screen pt-16" x-data="{ openDropdown: false }" x-init="
             $nextTick(() => { openDropdown = false; })
 
             $wire.on('updated', () => {
@@ -41,7 +41,7 @@
                     <div x-show="openDropdown === {{$folderItem->id}}"
                          @click.away="openDropdown = false"
                          x-cloak
-                         class="absolute right-[4px] top-7 bg-white w-32 border text-xs border-gray-200 rounded-lg shadow-lg z-10">
+                         class="absolute right-[4px] top-7 bg-white w-32 border text-xs border-gray-200 shadow-lg z-10">
                         <ul>
                             <li>
                                 <a href="#"

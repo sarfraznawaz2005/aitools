@@ -116,7 +116,7 @@
                                     x-transition:leave="transition ease-in duration-150"
                                     x-transition:leave-start="opacity-100 scale-100"
                                     x-transition:leave-end="opacity-0 scale-95"
-                                    class="absolute right-0 mt-0.5 min-w-28 bg-gray-50 shadow-md space-y-0.5 divide-y divide-gray-200"
+                                    class="absolute right-0 mt-0.5 min-w-28 bg-white shadow-lg space-y-0.5 divide-y divide-gray-200"
                                     role="menu"
                                 >
                                     <div class="py-2 first:pt-0 last:pb-0">

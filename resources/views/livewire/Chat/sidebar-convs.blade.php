@@ -81,7 +81,7 @@
 
             <div x-show="openDropdown === {{$conversationItem->id}}"
                  @click.away="openDropdown = null"
-                 class="absolute right-[4px] bg-white border text-xs border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
+                 class="absolute right-[4px] bg-white border text-xs border-gray-200 shadow-lg z-10">
                 <ul>
                     <li>
                         <a href="#"
