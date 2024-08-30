@@ -50,13 +50,13 @@
 
                         <div x-show="openDropdown === {{$folder->id}}"
                              @click.away="openDropdown = null"
-                             class="absolute right-[4px] bg-white border text-xs border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
+                             class="absolute right-[4px] bg-white border text-xs border-gray-200 rounded-lg shadow-lg z-10">
                             <ul>
                                 <li>
                                     <a href="#"
                                        wire:click.prevent="editFolder({{$folder->id}})"
                                        @click.prevent="openDropdown = null;"
-                                       class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                                       class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
                                     </a>
