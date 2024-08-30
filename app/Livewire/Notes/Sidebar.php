@@ -17,6 +17,11 @@ class Sidebar extends Component
     public string $name = '';
     public string $color = 'text-gray-600';
 
+    public function mount(NoteFolder $folder = null): void
+    {
+        $this->folder = $folder ?? new NoteFolder();
+    }
+
     #[Computed]
     public function folders(): Collection
     {
