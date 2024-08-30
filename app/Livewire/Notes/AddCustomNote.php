@@ -21,9 +21,8 @@ class AddCustomNote extends Component
     public string $title = '';
     public string $content = '';
 
-    public function mount(Note $note = null): void
+    public function mount(): void
     {
-        $this->note = $note ?? new Note();
         $this->note_folder_id = $this->folder->id ?? '';
     }
 
@@ -41,11 +40,21 @@ class AddCustomNote extends Component
         $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
     }
 
+    #[On('openCustomModalForEdit')]
+    public function openCustomModalForEdit(Note $note): void
+    {
+        $this->note = $note;
+
+        $this->fill($note->toArray());
+
+        $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
+    }
+
     public function saveNote(): void
     {
         $this->validate([
             'note_folder_id' => 'required',
-            'title' => 'required|min:5',
+            'title' => 'required|min:4',
             'content' => 'required|min:5',
         ]);
 
