@@ -12,39 +12,40 @@
 
             <li class="mx-2 mb-2">
                 <x-gradient-link class="w-full" href="#" wire:click.prevent="addFolder()">
-                    <x-icons.plus />
+                    <x-icons.plus/>
                     New Folder
                 </x-gradient-link>
             </li>
 
-            @foreach($this->folders as $folder)
+            @foreach($this->folders as $folderItem)
                 <li class="folder group relative hover:bg-gray-100"
-                    wire:key="folder-{{$folder->id}}">
+                    wire:key="folder-{{$folderItem->id}}">
                     <div class="flex justify-between items-center">
                         <a
                             wire:navigate
-                            href="{{route($tools['smart-notes']['route'] . '.listing', $folder->id)}}"
-                            class="flex items-center w-full align-middle p-2 text-sm truncate {{ $folder->color }}">
+                            href="{{route($tools['smart-notes']['route'] . '.listing', $folderItem->id)}}"
+                            class="flex items-center w-full align-middle p-2 text-sm truncate
+                            {{ $folderItem->color }} {{isset($folder) && $folder->exists && $folderItem->id === $folder->id ? $folder->getBackgroundColor() : ''}}">
                             <x-icons.folder class="inline size-6 mr-2"/>
-                            {{ $folder->name }} ({{ $folder->notes->count() }})
+                            {{ $folderItem->name }} ({{ $folderItem->notes->count() }})
                         </a>
                         <div>
                             <button
-                                @click.prevent.stop="openDropdown = (openDropdown === {{$folder->id}}) ? null : {{$folder->id}}"
+                                @click.prevent.stop="openDropdown = (openDropdown === {{$folderItem->id}}) ? null : {{$folderItem->id}}"
                                 class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
                                 <x-icons.dots class="inline-block"/>
                             </button>
                         </div>
                     </div>
 
-                    <div x-show="openDropdown === {{$folder->id}}"
+                    <div x-show="openDropdown === {{$folderItem->id}}"
                          @click.away="openDropdown = false"
                          x-cloak
                          class="absolute right-[4px] top-7 bg-white w-32 border text-xs border-gray-200 rounded-lg shadow-lg z-10">
                         <ul>
                             <li>
                                 <a href="#"
-                                   wire:click.prevent="editFolder({{$folder->id}})"
+                                   wire:click.prevent="editFolder({{$folderItem->id}})"
                                    @click.prevent="openDropdown = false;"
                                    class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     <x-icons.edit class="inline-block mr-2 text-gray-500"/>
@@ -52,7 +53,7 @@
                                 </a>
                             </li>
                             <li>
-                                <x-confirm-dialog call="deleteFolder({{$folder->id}})"
+                                <x-confirm-dialog call="deleteFolder({{$folderItem->id}})"
                                                   text="Are you sure you want to delete? This will delete all notes in this folder!"
                                                   class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
                                     <x-icons.delete class="inline-block mr-2 text-red-500"/>
@@ -69,7 +70,7 @@
     <x-modal id="notesFolderModal">
         <x-slot name="title">
             <div class="flex gap-x-2">
-                {{ $folder && $folder->exists ? '✏️ Edit Folder' : '➕ Add Folder'}}
+                {{ $folderItem && $folderItem->exists ? '✏️ Edit Folder' : '➕ Add Folder'}}
             </div>
         </x-slot>
 
