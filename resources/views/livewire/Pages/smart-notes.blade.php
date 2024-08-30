@@ -64,6 +64,12 @@
 
             <livewire:apikeys.api-key-banner/>
 
+            @if(!$this->totalNotesCount)
+                <div class="text-center font-bold text-gray-400 p-2 h-screen items-center flex justify-center">
+                    No notes added, click on a folder to add a note.
+                </div>
+            @endif
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Note Card -->
                 <div class="p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
