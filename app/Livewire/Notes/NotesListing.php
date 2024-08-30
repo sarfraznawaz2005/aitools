@@ -29,6 +29,12 @@ class NotesListing extends Component
     }
 
     #[Computed]
+    public function folders(): Collection
+    {
+        return NoteFolder::query()->with('notes')->orderBy('name')->get();
+    }
+
+    #[Computed]
     public function notes(): Collection
     {
         return $this->folder->notes()->latest()->get();
@@ -41,6 +47,16 @@ class NotesListing extends Component
             $this->redirect(route('smart-notes'), true);
         }
     }
+
+    public function moveToFolder(NoteFolder $folder, Note $note): void
+    {
+        $note->update(['note_folder_id' => $folder->id]);
+
+        $this->dispatch('notesUpdated');
+
+        $this->success('Note moved successfully!');
+    }
+
 
     public function deleteNote(Note $note): void
     {

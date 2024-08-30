@@ -82,35 +82,62 @@
 
                         <div class="relative min-h-24 max-h-24">
 
-                            <div x-data="{ open: false }" class="absolute top-0 right-0" x-cloak x-init="
-                                $nextTick(() => { open = false; })
+                            <div x-data="{ open: false, subOpen: false, subMenuLeft: false }" class="absolute top-0 right-0" x-cloak x-init="
+                                    $nextTick(() => { open = false; });
 
-                                $wire.on('updated', () => {
-                                    open = false
-                                });
+                                    $wire.on('updated', () => {
+                                        open = false;
+                                        subOpen = false;
+                                        subMenuLeft = false;
+                                    });
 
-                                Livewire.on('notesUpdated', () => {
-                                    open = false
-                                });
+                                    Livewire.on('notesUpdated', () => {
+                                        open = false;
+                                        subOpen = false;
+                                        subMenuLeft = false;
+                                    });
                                 ">
 
                                 <button @click="open = !open" class="text-gray-500 hover:text-gray-700">
                                     <x-icons.dotsv/>
                                 </button>
+
                                 <div
                                     x-show="open"
                                     @click.away="open = false"
                                     @click.outside="open = false"
-                                    class="absolute right-[4px] top-6 z-50 w-32 bg-white rounded-lg shadow-lg"
+                                    class="absolute right-[4px] top-6 z-50 w-32 bg-white shadow-lg"
                                 >
                                     <a href="#" wire:click.prevent="$dispatch('openCustomModalForEdit', [{{$note->id}}])" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
                                     </a>
-                                    <a href="#" wire:click.prevent="$dispatch('openCustomModalForEdit', [{{$note->id}}])" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        <x-icons.share class="inline-block mr-2 text-gray-400"/>
-                                        Move
-                                    </a>
+                                    <div
+                                        class="relative"
+                                        @mouseenter="subOpen = true; subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);"
+                                        @mouseleave="subOpen = false"
+                                    >
+                                        <a href="#" @click.prevent="subOpen = !subOpen" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-between">
+                                            <span>
+                                                <x-icons.share class="inline-block mr-2 text-gray-400"/>
+                                                Move
+                                            </span>
+                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </a>
+                                        <div
+                                            x-show="subOpen"
+                                            :class="subMenuLeft ? 'right-full' : 'left-full'"
+                                            class="absolute top-0 z-50 w-full ml-0.5 bg-white shadow-lg"
+                                        >
+                                            @foreach($this->folders as $folder)
+                                                <a href="#" wire:click.prevent="moveToFolder({{$folder->id}}, {{$note->id}})" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                    {{$folder->name}}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                     <x-confirm-dialog
                                         call="deleteNote({{$note->id}}); open = false"
                                         class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
@@ -119,6 +146,7 @@
                                     </x-confirm-dialog>
                                 </div>
                             </div>
+
                             <div class="w-full">
                                 <span class="text-sm font-semibold text-gray-700">{{$note->title}}</span>
                                 <p class="mt-2 text-gray-600">

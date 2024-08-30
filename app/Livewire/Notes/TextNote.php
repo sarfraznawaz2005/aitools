@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Notes;
 
+use App\Enums\BotTypeEnum;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
@@ -23,7 +24,7 @@ class TextNote extends Component
     public string $note_folder_id;
     public string $title = '';
     public string $content = '';
-    public string $reminder_at = '';
+    public $reminder_at;
     public bool $hasReminder = false;
 
     public function mount(): void
@@ -55,19 +56,33 @@ class TextNote extends Component
         $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
     }
 
-    public function saveNote(): void
+    protected function rules(): array
     {
-        $this->validate([
+        $rules = [
             'note_folder_id' => 'required',
             'title' => 'required|min:4',
             'content' => 'required|min:5',
-            'reminder_at' => 'required_if:hasReminder,true|valid_cron',
-        ],
-            [
-                'reminder_at.required_if' => 'The frequency field is required.',
-                'reminder_at.valid_cron' => 'The frequency format is invalid. Please use a valid cron expression.',
-            ]
-        );
+            'reminder_at' => 'required_if:hasReminder,true',
+        ];
+
+        if ($this->reminder_at && $this->hasReminder) {
+            $rules['reminder_at'] = 'valid_cron';
+        }
+
+        return $rules;
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'reminder_at.required_if' => 'The frequency field is required.',
+            'reminder_at.valid_cron' => 'The frequency format is invalid. Please use a valid cron expression.',
+        ];
+    }
+
+    public function saveNote(): void
+    {
+        $this->validate();
 
         $this->note->fill([
             'note_folder_id' => $this->note_folder_id,
@@ -75,7 +90,6 @@ class TextNote extends Component
             'content' => $this->content,
             'reminder_at' => $this->hasReminder ? $this->reminder_at ?? null : null,
         ])->save();
-
 
         $this->success($this->note->wasRecentlyCreated ? 'Note added successfully!' : 'Note saved successfully!');
 
