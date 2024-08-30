@@ -34,7 +34,7 @@ class AddCustomNote extends Component
     }
 
     #[On('openCustomModal')]
-    public function openCustomModal(NoteFolder $folder): void
+    public function openCustomModal(): void
     {
         $this->resetForm();
 
