@@ -34,4 +34,9 @@ class NotesListing extends Component
             $this->redirect(route('smart-notes'), true);
         }
     }
+
+    public function addCustomNote(): void
+    {
+        $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
+    }
 }

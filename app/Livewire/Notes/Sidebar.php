@@ -17,6 +17,8 @@ class Sidebar extends Component
     public string $name = '';
     public string $color = 'text-gray-600';
 
+    protected $listeners = ['notesUpdated' => '$refresh'];
+
     public function mount(NoteFolder $folder = null): void
     {
         $this->folder = $folder ?? new NoteFolder();
