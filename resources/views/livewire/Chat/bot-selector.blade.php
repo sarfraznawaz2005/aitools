@@ -160,7 +160,11 @@
                             placeholder="Prompt"></textarea>
 
                         <!-- Toolbar -->
-                        <div class="absolute bottom-px inset-x-px p-2 rounded-b-md bg-gray-100">
+                        <div class="absolute bottom-px inset-x-px p-2 rounded-b-md bg-gray-100" x-data x-init="
+                            $nextTick(() => {
+                                window.HSStaticMethods.autoInit();
+                            })
+                        ">
                             <div class="flex justify-end items-center">
                                 <!-- Button Group -->
                                 <div class="flex items-center gap-x-1">
@@ -178,8 +182,8 @@
                                                 x-transition:leave-end="opacity-0 transform scale-95"
                                                 class="hs-tooltip-content text-wrap p-4 hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-[100] max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
                                                 role="tooltip">
-                                                <span class="font-semibold mb-2 text-xs">Prompt Example:</span><hr
-                                                    class="h-1 my-2">
+                                                <span class="font-semibold mb-2 text-xs">Prompt Example:</span>
+                                                <hr class="h-1 my-2">
                                                 I want you to act as an interviewer. I will be the candidate and you will ask me the interview questions for the position position. I want you to only reply as the interviewer. Do not write all the conservation at once. I want you to only do the interview with me. Ask me the questions and wait for my answers. Do not write explanations. Ask me the questions one by one like an interviewer does and wait for my answers.
                                             </span>
                                         </span>
