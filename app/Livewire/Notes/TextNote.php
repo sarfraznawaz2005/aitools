@@ -20,6 +20,7 @@ class TextNote extends Component
     public string $note_folder_id;
     public string $title = '';
     public string $content = '';
+    public string $reminder_at = '';
 
     public function mount(): void
     {
@@ -56,12 +57,14 @@ class TextNote extends Component
             'note_folder_id' => 'required',
             'title' => 'required|min:4',
             'content' => 'required|min:5',
+            'reminder_at' => 'sometimes|valid_cron',
         ]);
 
         $this->note->fill([
             'note_folder_id' => $this->note_folder_id,
             'title' => $this->title,
             'content' => $this->content,
+            'reminder_at' => $this->reminder_at ?? null,
         ])->save();
 
 
@@ -75,7 +78,7 @@ class TextNote extends Component
 
     public function resetForm(): void
     {
-        $this->reset(['title', 'content']);
+        $this->reset(['title', 'content', 'reminder_at']);
 
         $this->resetErrorBag();
 

@@ -132,7 +132,7 @@
 
             <x-flash/>
 
-            <div class="max-w-lg mx-auto p-3" x-data="{ botType: @entangle('type') }">
+            <div class="w-full mx-auto p-3" x-data="{ botType: @entangle('type') }">
 
                 <div class="relative mb-3">
                     <input type="text"
@@ -423,10 +423,13 @@
                     <div class="flex">
                         <input type="checkbox"
                                wire:model="related_questions"
+                               id="related_questions_checkbox"
                                class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                               id="hs-default-checkbox">
-                        <label for="hs-default-checkbox" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Allow
-                            Related Questions</label>
+                        >
+                        <label for="related_questions_checkbox"
+                               class="text-sm text-gray-500 ms-3 dark:text-neutral-400">
+                            Allow Related Questions
+                        </label>
                     </div>
                 </div>
 
