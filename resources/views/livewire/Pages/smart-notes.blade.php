@@ -1,6 +1,6 @@
 <div>
 
-    <div class="flex h-screen bg-gray-50 py-10">
+    <div class="flex h-screen bg-gray-50 py-10" x-data="{ openDropdown: null }">
 
         <!-- Sidebar -->
         <aside class="w-48 bg-white border-r border-gray-200">
@@ -14,13 +14,7 @@
                 </li>
 
                 @foreach($this->folders as $folder)
-                    <li class="folder group relative hover:bg-gray-100" x-data="{
-                            openDropdown: false,
-                            startEdit() {
-                                //
-                            }
-                        }"
-                        x-cloak
+                    <li class="folder group relative hover:bg-gray-100"
                         wire:key="folder-{{$folder->id}}">
                         <div class="flex justify-between items-center">
                             <a href="#"
@@ -30,20 +24,20 @@
                             </a>
                             <div>
                                 <button
-                                    @click.prevent.stop="openDropdown = !openDropdown"
+                                    @click.prevent.stop="openDropdown = (openDropdown === {{$folder->id}}) ? null : {{$folder->id}}"
                                     class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
                                     <x-icons.dots class="inline-block"/>
                                 </button>
                             </div>
                         </div>
 
-                        <div x-show="openDropdown"
-                             @click.away="openDropdown = false"
+                        <div x-show="openDropdown === {{$folder->id}}"
+                             @click.away="openDropdown = null"
                              class="absolute right-[4px] bg-white border text-xs border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
                             <ul>
                                 <li>
                                     <a href="#"
-                                       @click.prevent="startEdit(); openDropdown = false;"
+                                       @click.prevent="startEdit(); openDropdown = null;"
                                        class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
