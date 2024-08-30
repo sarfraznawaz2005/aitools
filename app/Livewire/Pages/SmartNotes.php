@@ -56,7 +56,7 @@ class SmartNotes extends Component
         $this->fill($folder->toArray());
     }
 
-    public function save(): void
+    public function saveFolder(): void
     {
         $this->validate([
             'name' => 'required|min:3|max:25|unique:note_folders,name,' . ($this->model->id ?? 'NULL') . ',id',

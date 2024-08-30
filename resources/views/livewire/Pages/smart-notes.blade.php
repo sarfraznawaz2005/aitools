@@ -160,7 +160,7 @@
 
             <div
                 class="flex items-center border-t border-gray-200 pt-4 justify-end">
-                <x-gradient-button wire:click="save">
+                <x-gradient-button wire:click="saveFolder">
                     <x-icons.ok class="size-5"/>
                     Save
                 </x-gradient-button>
