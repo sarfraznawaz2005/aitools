@@ -75,18 +75,39 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 @foreach($this->notes as $note)
-                    <div class="p-4 bg-gray-50 rounded-lg transition-shadow border relative">
-                        <span class="text-sm font-semibold text-gray-700">{{$note->title}}</span>
-                        <p class="mt-2 text-gray-600">
-                            {{Str::limit($note->content, 100)}}
-                        </p>
-                        <div class="sticky mt-4 justify-around w-full flex">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Delete</a>
+                    <div class="p-4 bg-gray-50 rounded-lg transition-shadow border relative flex flex-col">
+                        <div class="relative">
+                            <div x-data="{ open: false }" class="absolute top-0 right-0">
+                                <button @click="open = !open" class="text-gray-500 hover:text-gray-700">
+                                    <x-icons.dotsv />
+                                </button>
+                                <div
+                                    x-show="open"
+                                    @click.away="open = false"
+                                    class="absolute right-0 z-50 mt-2 w-32 bg-white rounded-lg shadow-lg"
+                                >
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <x-icons.edit class="inline-block mr-2 text-gray-500"/>
+                                        Edit
+                                    </a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <x-icons.delete class="inline-block mr-2 text-red-500"/>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="w-full">
+                                <span class="text-sm font-semibold text-gray-700">{{$note->title}}</span>
+                                <p class="mt-2 text-gray-600">
+                                    {{Str::limit($note->content, 100)}}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             </div>
+
+
 
         </main>
     </div>
