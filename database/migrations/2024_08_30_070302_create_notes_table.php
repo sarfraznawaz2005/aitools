@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->boolean('pinned')->default(false);
             $table->boolean('archived')->default(false);
+            $table->boolean('favorite')->default(false);
             $table->timestamp('reminder_at')->nullable();
             $table->json('code')->nullable(); // json field to store: html, width, height, ratio
             $table->string('url')->nullable();

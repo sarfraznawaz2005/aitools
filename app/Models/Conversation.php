@@ -110,7 +110,7 @@ class Conversation extends Model
         if ($oldConversations->exists()) {
             $deletedCount = $oldConversations->delete();
 
-            Log::info("Deleted $deletedCount old conversations");
+            Log::info("Deleted $deletedCount old conversations.");
         }
     }
 

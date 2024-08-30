@@ -37,7 +37,7 @@ class TipContent extends Model
         if ($oldItems->exists()) {
             $deletedCount = $oldItems->delete();
 
-            Log::info("Deleted $deletedCount old conversations");
+            Log::info("Deleted $deletedCount old tip contents.");
         }
     }
 }

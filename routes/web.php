@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Pages\ChatBuddy;
+use App\Livewire\Pages\SmartNotes;
 use App\Livewire\Pages\TextStyler;
 use App\Livewire\Pages\TipContentOutput;
 use App\Livewire\Pages\TipsNotifier;
@@ -22,8 +23,7 @@ Route::get('chat-buddy', ChatBuddy::class)->name('chat-buddy');
 Route::get('chat-buddy/{conversation}', ChatBuddy::class)->name('chat-buddyload-conversation');
 Route::get('chat-buddy/chat/{conversation}', [ChatBuddy::class, 'chat']);
 
-Route::get('smart-notes', TextStyler::class)->name('smart-notes');
-
+Route::get('smart-notes', SmartNotes::class)->name('smart-notes');
 
 Route::get('text-styler', TextStyler::class)->name('text-styler');
 Route::get('text-styler/chat', [TextStyler::class, 'chat']);
