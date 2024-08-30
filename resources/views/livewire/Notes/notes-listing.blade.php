@@ -48,7 +48,7 @@
                         x-transition:leave="transition ease-in duration-150"
                         x-transition:leave-start="opacity-100 scale-100"
                         x-transition:leave-end="opacity-0 scale-95"
-                        class="absolute right-0 mt-2 min-w-28 bg-gray-50 z-40 shadow-md space-y-0.5 divide-y divide-gray-200"
+                        class="absolute right-0 mt-2 min-w-32 bg-gray-50 z-40 shadow-md space-y-0.5 divide-y divide-gray-200"
                         role="menu"
                     >
                         <div class="py-2 first:pt-0 last:pb-0">
@@ -58,7 +58,7 @@
                                 href="#"
                             >
                                 <x-icons.text class="shrink-0 size-4"/>
-                                Custom
+                                Text Note
                             </a>
                             <a
                                 @click.prevent="$wire.export('txt')"
@@ -66,7 +66,7 @@
                                 href="#"
                             >
                                 <x-icons.link class="shrink-0 size-4"/>
-                                Link
+                                Link Note
                             </a>
                         </div>
                     </div>
