@@ -1,7 +1,7 @@
 <div>
     <div class="flex bg-white">
 
-        <livewire:notes.sidebar/>
+        <livewire:notes.sidebar :folder="$folder"/>
 
         <main class="flex-1 bg-gray-50 border-l pt-20 px-8">
 

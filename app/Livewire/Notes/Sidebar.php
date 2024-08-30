@@ -12,11 +12,11 @@ class Sidebar extends Component
 {
     use InteractsWithToast;
 
-    public NoteFolder $model;
+    public NoteFolder $folder;
 
     public string $name = '';
     public string $color = 'text-gray-600';
-    
+
     #[Computed]
     public function folders(): Collection
     {
@@ -36,25 +36,25 @@ class Sidebar extends Component
 
         $this->resetErrorBag();
 
-        $this->model = $folder;
+        $this->folder = $folder;
         $this->fill($folder->toArray());
     }
 
     public function saveFolder(): void
     {
         $this->validate([
-            'name' => 'required|min:3|max:25|unique:note_folders,name,' . ($this->model->id ?? 'NULL') . ',id',
+            'name' => 'required|min:3|max:25|unique:note_folders,name,' . ($this->folder->id ?? 'NULL') . ',id',
             'color' => 'required',
         ]);
 
-        $this->model->fill([
+        $this->folder->fill([
             'name' => $this->name,
             'color' => $this->color,
         ])->save();
 
         $this->dispatch('closeModal', ['id' => 'notesFolderModal']);
 
-        $this->success($this->model->wasRecentlyCreated ? 'Folder added successfully!' : 'Folder saved successfully!');
+        $this->success($this->folder->wasRecentlyCreated ? 'Folder added successfully!' : 'Folder saved successfully!');
 
         $this->resetForm();
     }
@@ -72,8 +72,8 @@ class Sidebar extends Component
 
         $this->resetErrorBag();
 
-        $this->model = new NoteFolder();
+        $this->folder = new NoteFolder();
 
-        $this->fill($this->model->toArray());
+        $this->fill($this->folder->toArray());
     }
 }

@@ -1,7 +1,7 @@
 @php($tools = config('tools'))
 
 <div>
-    <aside class="w-48 bg-white h-screen pt-14" x-data="{ openDropdown: null }">
+    <aside class="w-48 bg-white h-screen pt-16" x-data="{ openDropdown: null }">
         <ul class="space-y-0.5 bg-white">
 
             <li class="mx-2 mb-2">
@@ -69,7 +69,7 @@
     <x-modal id="notesFolderModal">
         <x-slot name="title">
             <div class="flex gap-x-2">
-                {{ $model && $model->exists ? '✏️ Edit Folder' : '➕ Add Folder'}}
+                {{ $folder && $folder->exists ? '✏️ Edit Folder' : '➕ Add Folder'}}
             </div>
         </x-slot>
 
