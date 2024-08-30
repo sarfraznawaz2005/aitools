@@ -2,9 +2,11 @@
 
 <div>
     <aside class="w-48 bg-white h-screen pt-16" x-data="{ openDropdown: false }" x-init="
-                                  $wire.on('updated', () => {
-                                   openDropdown = false
-                                  });
+            $nextTick(() => { openDropdown = false; })
+
+            $wire.on('updated', () => {
+                openDropdown = false
+            });
                                 ">
         <ul class="space-y-0.5 bg-white">
 

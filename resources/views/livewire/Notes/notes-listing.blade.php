@@ -79,9 +79,11 @@
                         <div class="relative">
 
                             <div x-data="{ open: false }" class="absolute top-0 right-0" x-cloak x-init="
-                                  $wire.on('updated', () => {
-                                   open = false
-                                  });
+                                $nextTick(() => { open = false; })
+
+                                $wire.on('updated', () => {
+                                    open = false
+                                });
                                 ">
 
                                 <button @click="open = !open" class="text-gray-500 hover:text-gray-700">

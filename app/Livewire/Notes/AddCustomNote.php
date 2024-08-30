@@ -59,11 +59,12 @@ class AddCustomNote extends Component
 
     public function resetForm(): void
     {
-        $this->reset();
+        $this->reset([]);
 
         $this->resetErrorBag();
 
         $this->note = new Note();
+        $this->note_folder_id = $this->folder->id ?? '';
 
         $this->fill($this->note->toArray());
     }
