@@ -1,7 +1,11 @@
 @php($tools = config('tools'))
 
 <div>
-    <aside class="w-48 bg-white h-screen pt-16" x-data="{ openDropdown: false }">
+    <aside class="w-48 bg-white h-screen pt-16" x-data="{ openDropdown: false }" x-init="
+                                  $wire.on('updated', () => {
+                                   openDropdown = false
+                                  });
+                                ">
         <ul class="space-y-0.5 bg-white">
 
             <li class="mx-2 mb-2">
