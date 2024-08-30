@@ -1,6 +1,6 @@
 @php($tools = config('tools'))
 
-<div>
+<div x-data="{ openDropdown: null }">
     <li>
         <input wire:model.live.debounce.500ms="search"
                type="text"
@@ -11,7 +11,6 @@
 
     @foreach($this->conversations as $conversationItem)
         <li x-data="{
-                openDropdown: false,
                 editable: false,
                 startEdit() {
                     this.editable = true;
@@ -72,7 +71,7 @@
 
                     <div>
                         <button
-                            @click.prevent.stop="openDropdown = !openDropdown"
+                            @click.prevent.stop="openDropdown = (openDropdown === {{$conversationItem->id}}) ? null : {{$conversationItem->id}}"
                             class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
                             <x-icons.dots class="inline-block"/>
                         </button>
@@ -80,13 +79,13 @@
                 </div>
             </div>
 
-            <div x-show="openDropdown"
-                 @click.away="openDropdown = false"
+            <div x-show="openDropdown === {{$conversationItem->id}}"
+                 @click.away="openDropdown = null"
                  class="absolute right-[4px] bg-white border text-xs border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
                 <ul>
                     <li>
                         <a href="#"
-                           wire:click.prevent="toggleFavorite({{$conversationItem->id}}); openDropdown = false;"
+                           wire:click.prevent="toggleFavorite({{$conversationItem->id}}); openDropdown = null;"
                            class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                             <x-icons.star class="inline-block mr-2 text-gray-500"/>
                             {{$conversationItem->favorite ? 'Un-favorite' : 'Favorite'}}
@@ -94,7 +93,7 @@
                     </li>
                     <li>
                         <a href="#"
-                           @click.prevent="startEdit(); openDropdown = false;"
+                           @click.prevent="startEdit(); openDropdown = null;"
                            class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                             <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                             Rename
@@ -102,7 +101,7 @@
                     </li>
                     <li>
                         <a href="#"
-                           wire:click.prevent="toggleArchived({{$conversationItem->id}}); openDropdown = false;"
+                           wire:click.prevent="toggleArchived({{$conversationItem->id}}); openDropdown = null;"
                            class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                             <x-icons.archive class="inline-block mr-2 text-gray-500"/>
                             {{$conversationItem->archived ? 'Un-archive' : 'Archive'}}
