@@ -78,11 +78,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-8 px-8">
 
                 @foreach($this->notes as $note)
-                    <div class="p-4 bg-white rounded-lg transition-shadow shadow-lg relative flex flex-col" wire:key="note-{{$note->id}}">
+                    <div class="p-4 bg-white rounded-lg transition-shadow shadow-lg relative flex flex-col"
+                         wire:key="note-{{$note->id}}">
 
                         <div class="relative min-h-24 max-h-24">
 
-                            <div x-data="{ open: false, subOpen: false, subMenuLeft: false }" class="absolute top-0 right-0" x-cloak x-init="
+                            <div x-data="{ open: false, subOpen: false, subMenuLeft: false }"
+                                 class="absolute top-0 right-0" x-cloak x-init="
                                     $nextTick(() => { open = false; });
 
                                     $wire.on('updated', () => {
@@ -108,7 +110,8 @@
                                     @click.outside="open = false"
                                     class="absolute right-[4px] top-6 z-50 w-32 bg-white shadow-lg"
                                 >
-                                    <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
                                     </a>
@@ -117,13 +120,16 @@
                                         @mouseenter="subOpen = true; subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);"
                                         @mouseleave="subOpen = false"
                                     >
-                                        <a href="#" @click.prevent="subOpen = !subOpen" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-between">
+                                        <a href="#" @click.prevent="subOpen = !subOpen"
+                                           class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-between">
                                             <span>
                                                 <x-icons.share class="inline-block mr-2 text-gray-400"/>
                                                 Move
                                             </span>
-                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M9 5l7 7-7 7"></path>
                                             </svg>
                                         </a>
                                         <div
@@ -131,10 +137,14 @@
                                             :class="subMenuLeft ? 'right-full' : 'left-full'"
                                             class="absolute top-0 z-50 w-full ml-0.5 bg-white shadow-lg"
                                         >
-                                            @foreach($this->folders as $folder)
-                                                <a wire:key="mvfolder-{{$folder->id}}" href="#" wire:click.prevent="moveToFolder({{$folder->id}}, {{$note->id}})" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                    {{$folder->name}}
-                                                </a>
+                                            @foreach($this->folders as $folderItem)
+                                                @if($folderItem->id !== $folder->id)
+                                                    <a wire:key="mvfolder-{{$folderItem->id}}" href="#"
+                                                       wire:click.prevent="moveToFolder({{$folderItem->id}}, {{$note->id}})"
+                                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                        {{$folderItem->name}}
+                                                    </a>
+                                                @endif
                                             @endforeach
                                         </div>
                                     </div>
