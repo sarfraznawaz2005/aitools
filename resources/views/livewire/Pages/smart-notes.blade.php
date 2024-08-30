@@ -51,7 +51,7 @@
                     >
                         <div class="py-2 first:pt-0 last:pb-0">
                             <a
-                                wire:click.prevent="$dispatch('openCustomModal')"
+                                wire:click.prevent="$dispatch('openTextNoteModal')"
                                 class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                 href="#"
                             >

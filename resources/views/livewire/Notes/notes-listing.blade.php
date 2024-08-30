@@ -51,7 +51,7 @@
                     >
                         <div class="py-2 first:pt-0 last:pb-0">
                             <a
-                                wire:click.prevent="$dispatch('openCustomModal')"
+                                wire:click.prevent="$dispatch('openTextNoteModal')"
                                 class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 bg-white hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                 href="#"
                             >
@@ -108,7 +108,7 @@
                                     @click.outside="open = false"
                                     class="absolute right-[4px] top-6 z-50 w-32 bg-white shadow-lg"
                                 >
-                                    <a href="#" wire:click.prevent="$dispatch('openCustomModalForEdit', [{{$note->id}}])" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
                                     </a>

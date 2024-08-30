@@ -37,22 +37,22 @@ class TextNote extends Component
         return NoteFolder::query()->with('notes')->orderBy('name')->get();
     }
 
-    #[On('openCustomModal')]
-    public function openCustomModal(): void
+    #[On('openTextNoteModal')]
+    public function openTextNoteModal(): void
     {
         $this->resetForm();
 
-        $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
+        $this->dispatch('showModal', ['id' => 'textNoteModal']);
     }
 
-    #[On('openCustomModalForEdit')]
-    public function openCustomModalForEdit(Note $note): void
+    #[On('openTextNoteModalEdit')]
+    public function openTextNoteModalEdit(Note $note): void
     {
         $this->note = $note;
 
         $this->fill($note->toArray());
 
-        $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
+        $this->dispatch('showModal', ['id' => 'textNoteModal']);
     }
 
     protected function rules(): array
@@ -93,7 +93,7 @@ class TextNote extends Component
         $this->success($this->note->wasRecentlyCreated ? 'Note added successfully!' : 'Note saved successfully!');
 
         $this->dispatch('notesUpdated');
-        $this->dispatch('closeModal', ['id' => 'addCustomNoteModal']);
+        $this->dispatch('closeModal', ['id' => 'textNoteModal']);
 
         $this->resetForm();
     }
