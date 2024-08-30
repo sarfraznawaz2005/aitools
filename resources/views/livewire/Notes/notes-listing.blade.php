@@ -6,8 +6,8 @@
         <main class="flex-1 pt-12 border-l {{$folder->getBorderColor()}} {{ $folder->getBackGroundColor() }}">
 
             <div
-                class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 p-3 mb-4 border-b {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
-                <div class="font-bold {{ $folder->color }}">
+                class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 px-8 p-3 mb-4 border-b {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
+                <div class="font-[700] {{ $folder->color }}">
                     {{$folder->name}} ({{$folder->notes->count()}})
                 </div>
 
@@ -15,7 +15,7 @@
                     <button
                         @click="open = !open"
                         type="button"
-                        class="py-2 px-2 inline-flex items-center mr-2 rounded-full gap-x-2 text-sm font-medium rounded border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                        class="py-2 px-2 inline-flex items-center rounded-full gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                     >
                         <x-icons.plus/>
                         Add Note
@@ -141,7 +141,7 @@
                                                 @if($folderItem->id !== $folder->id)
                                                     <a wire:key="mvfolder-{{$folderItem->id}}" href="#"
                                                        wire:click.prevent="moveToFolder({{$folderItem->id}}, {{$note->id}})"
-                                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                       class="block px-4 py-2 font-[500] text-sm hover:bg-gray-100 {{$folderItem->color}}">
                                                         {{$folderItem->name}}
                                                     </a>
                                                 @endif

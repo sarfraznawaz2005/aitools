@@ -24,7 +24,7 @@
                         <a
                             wire:navigate
                             href="{{route($tools['smart-notes']['route'] . '.listing', $folderItem->id)}}"
-                            class="flex items-center w-full align-middle p-2 text-sm truncate
+                            class="flex items-center w-full font-[500] align-middle p-2 text-sm truncate
                             {{ $folderItem->color }} {{isset($folder) && $folder->exists && $folderItem->id === $folder->id ? $folder->getBackgroundColor() : ''}}">
                             <x-icons.folder class="inline size-6 mr-2"/>
                             {{ $folderItem->name }} ({{ $folderItem->notes->count() }})

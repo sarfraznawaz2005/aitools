@@ -9,7 +9,7 @@
     @livewireStyles
 </head>
 
-<body class="antialiased bg-gray-50 dark:bg-neutral-900">
+<body class="antialiased bg-gray-50 inter font-inter">
 
 <x-autoloading/>
 <x-page-expired/>

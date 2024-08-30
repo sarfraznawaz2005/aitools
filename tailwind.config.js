@@ -111,7 +111,7 @@ export default {
     ],
     theme: {
         fontFamily: {
-            sans: ['sans-serif'],
+            sans: ['Inter', 'Helvetica', 'sans-serif'],
         },
         extend: {
             utilities: {
