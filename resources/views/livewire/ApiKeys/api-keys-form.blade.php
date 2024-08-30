@@ -1,11 +1,11 @@
 <div>
 
     @if ($this->apiKeys && count($this->apiKeys))
-        <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
-            <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">SAVED API KEYS</legend>
+        <fieldset class="border border-gray-300 rounded-lg p-2 mb-4">
+            <legend class="text-sm text-gray-500 mx-3">SAVED API KEYS</legend>
 
-            <div class="items-center justify-center font-medium w-full border border-gray-300">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+            <div class="items-center justify-center w-full border border-gray-300">
+                <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50 dark:bg-neutral-800">
                     <tr>
                         <th scope="col"
@@ -68,8 +68,8 @@
 
     <x-flash/>
 
-    <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
-        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
+    <fieldset class="border border-gray-300 rounded-lg p-2">
+        <legend class="text-sm font-medium text-gray-500 mx-3">
             {{ $model->exists ? 'EDIT API KEY' : 'ADD API KEY'}}
         </legend>
 
@@ -291,7 +291,7 @@
                 </x-dialog>
             </div>
 
-            <p class="mt-2 ml-2 text-xs text-gray-400 dark:text-neutral-500">
+            <p class="mt-2 ml-2 text-xs text-gray-500">
                 Or for latest model, see
                 <a class="text-blue-500" href="https://ai.google.dev/gemini-api/docs/models/gemini" target="_blank">Google</a>
                 |

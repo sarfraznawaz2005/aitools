@@ -2,22 +2,22 @@
 
     <x-flash/>
 
-    <p class="text-xs text-gray-600 mb-2 text-center font-bold bg-gray-50 border border-gray-100 p-1 rounded">
+    <p class="text-xs text-gray-600 mb-2 text-center font-semibold bg-gray-50 border border-gray-100 p-1 rounded">
         📣 These settings take effect after re-starting the app.
     </p>
 
-    <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
-        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
+    <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
+        <legend class="text-sm font-medium text-gray-500 mx-3">
             Window
         </legend>
 
         <div class="flex relative mb-4">
             <input type="checkbox"
                    wire:model="alwaysOnTop"
-                   class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                   id="hs-default-checkbox">
+                   class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                   id="hs-alwaysontop-checkbox">
 
-            <label for="hs-default-checkbox"
+            <label for="hs-alwaysontop-checkbox"
                    class="text-sm text-gray-500 ms-3 dark:text-neutral-400">
                 Always on Top
             </label>
@@ -25,7 +25,7 @@
 
         <div class="flex items-center justify-between space-x-4 mb-4">
             <label for="width"
-                   class="block text-sm font-medium text-gray-700 dark:text-gray-300">Width</label>
+                   class="block text-sm text-gray-700 dark:text-gray-300">Width</label>
 
             <input type="number" wire:model="width" id="width"
                    min="300" max="1920"
@@ -35,7 +35,7 @@
 
         <div class="flex items-center justify-between space-x-4 mb-4">
             <label for="height"
-                   class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height</label>
+                   class="block text-sm text-gray-700 dark:text-gray-300">Height</label>
 
             <input type="number" wire:model="height" id="height"
                    min="400" max="1080"
@@ -45,8 +45,8 @@
 
     </fieldset>
 
-    <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mb-4">
-        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
+    <fieldset class="border border-gray-300 rounded-lg p-2 mb-4">
+        <legend class="text-sm font-medium text-gray-500 mx-3">
             Startup Page
         </legend>
 
@@ -71,7 +71,7 @@
     <div
         class="flex items-center justify-between">
         <button wire:click="restore"
-                class="font-bold bg-gray-100 border border-gray-200 hover:bg-gray-200 text-gray-600 flex items-center justify-center gap-x-3 py-2 px-3 text-sm rounded-lg focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-blue-500">
+                class="font-medium bg-gray-100 border border-gray-200 hover:bg-gray-200 text-gray-600 flex items-center justify-center gap-x-3 py-2 px-3 text-sm rounded-lg focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-blue-500">
             ⬅️ Restore Defaults
         </button>
 

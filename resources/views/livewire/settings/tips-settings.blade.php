@@ -2,14 +2,14 @@
 
     <x-flash/>
 
-    <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700">
-        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
+    <fieldset class="border border-gray-300 rounded-lg p-4">
+        <legend class="text-xs font-medium text-gray-500 mx-3">
             Automatically Delete Old AI-Generated Tips (Except Favorited)
         </legend>
 
         <div class="flex items-center justify-between space-x-4">
             <label for="deleteOldDays"
-                   class="block text-sm font-medium text-gray-700 dark:text-gray-300">Days</label>
+                   class="block text-sm text-gray-700 dark:text-gray-300">Days</label>
 
             <input type="number" wire:model="deleteOldDays" id="deleteOldDays"
                    min="1" max="365"
@@ -25,8 +25,8 @@
         </div>
     </fieldset>
 
-    <fieldset class="border border-gray-300 rounded-lg p-4 dark:border-neutral-700 mt-8">
-        <legend class="text-sm font-medium text-gray-500 dark:text-neutral-300">
+    <fieldset class="border border-gray-300 rounded-lg p-2 mt-8">
+        <legend class="text-xs font-medium text-gray-500 mx-3">
             Delete All AI-Generated Tip Contents (Except Favorited)
         </legend>
 
