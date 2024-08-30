@@ -9,37 +9,22 @@
     @livewireStyles
 </head>
 
-<body class="antialiased bg-gray-50 dark:bg-neutral-900 h-screen">
+<body class="antialiased bg-gray-50 dark:bg-neutral-900">
 
 <x-autoloading/>
 <x-page-expired/>
 
-<livewire:general.header title="{{$title ?? ''}}"/>
+<div class="text-gray-600">
+    <livewire:general.header title="{{$title ?? ''}}"/>
+    <livewire:general.offline/>
 
-<div class="flex h-screen">
+    <x-loading/>
+    <x-toast/>
 
-    <!-- main content start -->
-    <div class="flex-1 text-gray-600 dark:text-neutral-200 mainSection">
-        <livewire:general.offline/>
-
-        <x-loading/>
-        <x-toast/>
-
-        {{ $slot }}
-    </div>
-    <!-- main content end -->
+    {{ $slot }}
 </div>
 
 @livewireScriptConfig
-
-{{--
-<script data-navigate-once wire:ignore>
-    // for task scheduler
-    setInterval(() => {
-        fetch('/run-scheduler').catch(console.error)
-    }, 60000);
-</script>
---}}
 
 </body>
 </html>
