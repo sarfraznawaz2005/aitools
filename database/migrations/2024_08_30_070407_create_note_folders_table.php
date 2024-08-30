@@ -14,7 +14,6 @@ return new class extends Migration {
         Schema::create('note_folders', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('description')->nullable();
             $table->string('color')->default('gray');
             $table->timestamps();
         });

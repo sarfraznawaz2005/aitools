@@ -5,6 +5,19 @@
         <!-- Sidebar -->
         <aside class="w-48 bg-white border-r border-gray-200">
             <ul class="mt-4 space-y-0.5 bg-white">
+
+                <li class="mx-2 mb-2">
+                    <x-gradient-link class="w-full" href="#" wire:click.prevent="addFolder()">
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"/>
+                            <path d="M12 5v14"/>
+                        </svg>
+                        New Folder
+                    </x-gradient-link>
+                </li>
+
                 <li class="hover:bg-gray-100">
                     <a href="#"
                        class="flex items-center align-middle p-2 text-sm">
@@ -37,7 +50,8 @@
                             <ul>
                                 <li>
                                     <a href="#"
-                                       @click.prevent="startEdit(); openDropdown = null;"
+                                       wire:click.prevent="editFolder({{$folder->id}})"
+                                       @click.prevent="openDropdown = null;"
                                        class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
@@ -117,5 +131,18 @@
         </main>
     </div>
 
+    <x-modal id="notesFolderModal">
+        <x-slot name="title">
+            <div class="flex gap-x-2">
+                {{ $model && $model->exists ? '✏️ Edit Folder' : '➕ Add Folder'}}
+            </div>
+        </x-slot>
+
+        <x-slot name="body">
+
+            hi
+
+        </x-slot>
+    </x-modal>
 
 </div>

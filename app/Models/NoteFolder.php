@@ -12,7 +12,6 @@ class NoteFolder extends Model
 
     protected $fillable = [
         'name',
-        'description',
         'color',
     ];
 

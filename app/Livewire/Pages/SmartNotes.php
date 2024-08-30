@@ -16,6 +16,11 @@ class SmartNotes extends Component
 {
     use InteractsWithToast;
 
+    public NoteFolder $model;
+
+    public string $name = '';
+    public string $color = 'text-gray-600';
+
     #[Title('Smart Notes')]
     public function render(): View|Application|Factory
     {
@@ -34,6 +39,23 @@ class SmartNotes extends Component
         return NoteFolder::query()->withCount('notes')->get()->sum('notes_count');
     }
 
+    public function addFolder(): void
+    {
+        $this->resetForm();
+
+        $this->dispatch('showModal', ['id' => 'notesFolderModal']);
+    }
+
+    public function editFolder(NoteFolder $folder): void
+    {
+        $this->dispatch('showModal', ['id' => 'notesFolderModal']);
+
+        $this->resetErrorBag();
+
+        $this->model = $folder;
+        $this->fill($folder->toArray());
+    }
+
     public function deleteFolder(NoteFolder $folder): void
     {
         $folder->delete();
@@ -41,4 +63,14 @@ class SmartNotes extends Component
         $this->success('Folder deleted successfully.');
     }
 
+    public function resetForm(): void
+    {
+        $this->reset();
+
+        $this->resetErrorBag();
+
+        $this->model = new NoteFolder();
+
+        $this->fill($this->model->toArray());
+    }
 }

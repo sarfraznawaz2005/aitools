@@ -81,13 +81,13 @@
                                             @if ($tip->active)
                                                 <span
                                                     class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">
-                                Active
-                            </span>
+                                                    Active
+                                                </span>
                                             @else
                                                 <span
                                                     class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">
-                                Inactive
-                            </span>
+                                                    Inactive
+                                                </span>
                                             @endif
                                         </td>
                                         <td class="px-6 py-2 whitespace-nowrap w-0 text-sm text-gray-500 dark:text-neutral-300 text-center">
