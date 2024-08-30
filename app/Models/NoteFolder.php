@@ -15,6 +15,16 @@ class NoteFolder extends Model
         'color',
     ];
 
+    public function getBackGroundColor(): string
+    {
+        return str_replace(['text', '600'], ['bg', '50'], $this->color);
+    }
+
+    public function getBorderColor(): string
+    {
+        return str_replace(['text', '600'], ['border', '300'], $this->color);
+    }
+
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);

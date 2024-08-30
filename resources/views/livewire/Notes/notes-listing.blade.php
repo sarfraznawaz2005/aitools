@@ -3,9 +3,16 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 bg-gray-50 pt-20 px-8 border-l {{str_replace('text', 'border', $folder->color)}}">
+        <main class="flex-1 bg-gray-50 pt-20 px-8 border-l {{$folder->getBorderColor()}}">
 
             <livewire:apikeys.api-key-banner/>
+
+            <div class="flex justify-between w-full border p-3 rounded-lg mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
+                <div class="font-bold {{ $folder->color }}">
+                    {{$folder->name}} ({{$folder->notes->count()}})
+                </div>
+                <div>2</div>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Note Card -->
