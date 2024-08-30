@@ -49,7 +49,6 @@ class Note extends Model
         $oldItems = static::query()
             ->where('created_at', '<', now()->subDays($days))
             ->where('favorite', false)
-            ->where('pinned', false)
             ->where('archived', false);
 
         if ($oldItems->exists()) {
