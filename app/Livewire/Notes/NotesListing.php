@@ -49,10 +49,9 @@ class NotesListing extends Component
 
     public function deleteNote(Note $note): void
     {
-        $note->delete();
-
-        $this->success('Note deleted successfully.');
-
-        $this->dispatch('notesUpdated');
+        if ($note->delete()) {
+            // doing redirect because otherwise was getting strange livewire $headers error
+            $this->redirect(route('smart-notes.listing', $this->folder->id), true);
+        }
     }
 }

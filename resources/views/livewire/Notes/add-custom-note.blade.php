@@ -24,16 +24,18 @@
                       placeholder="Contents..."></textarea>
             </div>
 
-            <div class="mb-4">
-                <select wire:model.change="note_folder_id"
-                        class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
-                    <option value="">Choose Folder</option>
+            @if(!isset($folder))
+                <div class="mb-4">
+                    <select wire:model.change="note_folder_id"
+                            class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
+                        <option value="">Choose Folder</option>
 
-                    @foreach($this->folders as $folderItem)
-                        <option value="{{$folderItem->id}}" {{isset($folder) && $folderItem->id === $folder->id ? 'selected' : ''}}>{{$folderItem->name}}</option>
-                    @endforeach
-                </select>
-            </div>
+                        @foreach($this->folders as $folderItem)
+                            <option value="{{$folderItem->id}}">{{$folderItem->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
 
             <div
                 class="flex items-center border-t border-gray-200 pt-4 justify-end">
