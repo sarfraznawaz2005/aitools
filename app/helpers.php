@@ -1,9 +1,8 @@
 <?php
 /*
- * search, sort, filter
- * images
  * move notes to other folders
- * attach files?
+ * images | attach files?
+ * search, sort, filter
  * backup to one drive, etc
  * empty title on icon hover
  * setup updator

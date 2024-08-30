@@ -103,10 +103,14 @@
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
                                     </a>
+                                    <a href="#" wire:click.prevent="$dispatch('openCustomModalForEdit', [{{$note->id}}])" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <x-icons.share class="inline-block mr-2 text-gray-400"/>
+                                        Move
+                                    </a>
                                     <x-confirm-dialog
                                         call="deleteNote({{$note->id}}); open = false"
                                         class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
-                                        <x-icons.delete class="inline-block mr-2 text-red-500"/>
+                                        <x-icons.delete class="inline-block mr-2 ml-1 text-red-500"/>
                                         Delete
                                     </x-confirm-dialog>
                                 </div>
