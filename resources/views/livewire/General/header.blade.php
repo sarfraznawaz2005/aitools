@@ -57,10 +57,10 @@
 
                     <div class="md:block">
                         @if($currentRoute === 'home')
-                            <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24">{{ $title }}</h2>
+                            <h2>&nbsp;</h2>
                         @else
                             <a href="{{route('home')}}" wire:navigate>
-                                <h2 class="text-2xl text-gray-500 font-semibold dark:text-gray-300 md:mr-24 lg:mr-24 hover:text-gray-700 dark:hover:text-gray-500">
+                                <h2 class="text-xl text-gray-500 font-[600] md:mr-24 lg:mr-24 hover:text-gray-700">
                                     <img width="32" height="32" class="inline" alt="{{$title}}"
                                          src="{{config('tools.' . Request::segment(1) . '.icon_data')}}">
                                     {{ $title }}

@@ -10,8 +10,8 @@
                         <div class="inline-flex justify-center items-center">
                             <img width="75" height="75" alt="{{$tool['name']}}" src="{{$tool['icon_data']}}">
                         </div>
-                        <h3 class="block text-lg font-bold text-gray-800 dark:text-white">{{$tool['name']}}</h3>
-                        <p class="text-gray-600 dark:text-neutral-400">{{$tool['description']}}</p>
+                        <h3 class="block text-lg font-bold text-gray-500 mb-2 dark:text-white">{{$tool['name']}}</h3>
+                        <p class="text-gray-600">{{$tool['description']}}</p>
                     </div>
                 </a>
             @endforeach
