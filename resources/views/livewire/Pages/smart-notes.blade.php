@@ -20,22 +20,14 @@
                     </x-gradient-link>
                 </li>
 
-                <li class="hover:bg-gray-100">
-                    <a href="#"
-                       class="flex items-center align-middle p-2 text-sm">
-                        <x-icons.folders class="inline size-6 mr-2"/>
-                        All Folders ({{ $this->totalNotesCount }})
-                    </a>
-                </li>
-
                 @foreach($this->folders as $folder)
                     <li class="folder group relative hover:bg-gray-100"
                         wire:key="folder-{{$folder->id}}">
                         <div class="flex justify-between items-center">
                             <a
-                               wire:navigate
-                               href="{{route($tools['smart-notes']['route'] . '.openfolder', $folder->id)}}"
-                               class="flex items-center w-full align-middle p-2 text-sm truncate {{ $folder->color }}">
+                                wire:navigate
+                                href="{{route($tools['smart-notes']['route'] . '.openfolder', $folder->id)}}"
+                                class="flex items-center w-full align-middle p-2 text-sm truncate {{ $folder->color }}">
                                 <x-icons.folder class="inline size-6 mr-2"/>
                                 {{ $folder->name }} ({{ $folder->notes->count() }})
                             </a>
@@ -82,11 +74,11 @@
 
             <livewire:apikeys.api-key-banner/>
 
-            @if(!$this->totalNotesCount)
-                <div class="text-center font-bold text-gray-400 p-2 h-screen items-center flex justify-center">
-                    No notes added, click on a folder to add a note.
-                </div>
-            @endif
+            <div class="text-center font-medium text-gray-400 text-2xl p-2 h-screen items-center flex justify-center">
+                <span class="inline-flex items-center gap-x-1.5 py-3 px-6 rounded-full bg-gray-100 text-gray-500 dark:bg-yellow-800/30 dark:text-yellow-500">
+                    You have total of {{ $this->totalNotesCount }} notes in {{ $this->folders->count() }} folders
+                </span>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Note Card -->
