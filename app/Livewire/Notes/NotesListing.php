@@ -42,11 +42,6 @@ class NotesListing extends Component
         }
     }
 
-    public function addCustomNote(): void
-    {
-        $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
-    }
-
     public function deleteNote(Note $note): void
     {
         if ($note->delete()) {

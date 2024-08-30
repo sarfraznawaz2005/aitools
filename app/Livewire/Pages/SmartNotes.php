@@ -22,9 +22,4 @@ class SmartNotes extends Component
     {
         return NoteFolder::query()->withCount('notes')->get()->sum('notes_count');
     }
-
-    public function addCustomNote(): void
-    {
-        $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
-    }
 }

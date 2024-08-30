@@ -7,6 +7,7 @@ use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class AddCustomNote extends Component
@@ -30,6 +31,14 @@ class AddCustomNote extends Component
     public function folders(): Collection
     {
         return NoteFolder::query()->with('notes')->orderBy('name')->get();
+    }
+
+    #[On('openCustomModal')]
+    public function openCustomModal(NoteFolder $folder): void
+    {
+        $this->resetForm();
+
+        $this->dispatch('showModal', ['id' => 'addCustomNoteModal']);
     }
 
     public function saveNote(): void
