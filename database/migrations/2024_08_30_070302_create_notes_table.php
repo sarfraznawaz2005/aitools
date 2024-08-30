@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId('note_folder_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('content');
-            $table->boolean('archived')->default(false);
-            $table->boolean('favorite')->default(false);
             $table->timestamp('reminder_at')->nullable();
             $table->text('html')->nullable();
             $table->string('width')->nullable();
