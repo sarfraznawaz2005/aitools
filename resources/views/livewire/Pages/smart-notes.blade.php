@@ -5,21 +5,73 @@
         <!-- Sidebar -->
         <aside class="w-48 bg-white border-r border-gray-200">
             <ul class="mt-4 space-y-0.5 bg-white">
-                <li>
+                <li class="hover:bg-gray-100">
                     <a href="#"
-                       class="flex items-center align-middle p-2 text-sm hover:bg-gray-300 bg-gray-200">
-                        <x-icons.folders class="inline size-6 mr-2" />
+                       class="flex items-center align-middle p-2 text-sm">
+                        <x-icons.folders class="inline size-6 mr-2"/>
                         All Folders ({{ $this->totalNotesCount }})
                     </a>
                 </li>
 
                 @foreach($this->folders as $folder)
-                    <li>
-                        <a href="#"
-                           class="flex items-center align-middle p-2 text-sm hover:bg-gray-100 {{ $folder->color }}">
-                            <x-icons.folder class="inline size-6 mr-2" />
-                            {{ $folder->name }} ({{ $folder->notes->count() }})
-                        </a>
+                    <li class="folder group relative hover:bg-gray-100" x-data="{
+                            openDropdown: false,
+                            editable: false,
+                            startEdit() {
+                                this.editable = true;
+                                this.$nextTick(() => this.$refs.titleEditable.focus());
+                            },
+                            stopEdit() {
+                                if (this.editable) {
+                                    this.$wire.rename({{$folder->id}}, this.$refs.titleEditable.innerText);
+                                    this.editable = false;
+                                }
+                            },
+                            handleKeyDown(event) {
+                                if (event.key === 'Enter') {
+                                              event.preventDefault();
+                                    this.stopEdit();
+                                }
+                            }
+                        }"
+                        x-cloak
+                        wire:key="folder-{{$folder->id}}">
+                        <div class="flex justify-between items-center">
+                            <a href="#"
+                               class="flex items-center w-full align-middle p-2 text-sm {{ $folder->color }}">
+                                <x-icons.folder class="inline size-6 mr-2"/>
+                                {{ $folder->name }} ({{ $folder->notes->count() }})
+                            </a>
+                            <div>
+                                <button
+                                    @click.prevent.stop="openDropdown = !openDropdown"
+                                    class="ml-auto cursor-pointer hidden group-hover:inline-block pr-2">
+                                    <x-icons.dots class="inline-block"/>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div x-show="openDropdown"
+                             @click.away="openDropdown = false"
+                             class="absolute right-[4px] bg-white border text-xs border-gray-200 rounded-lg shadow-lg dark:bg-neutral-900 dark:border-neutral-700 z-10">
+                            <ul>
+                                <li>
+                                    <a href="#"
+                                       @click.prevent="startEdit(); openDropdown = false;"
+                                       class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                                        <x-icons.edit class="inline-block mr-2 text-gray-500"/>
+                                        Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <x-confirm-dialog call="delete({{$folder->id}})" title="Delete"
+                                                      class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
+                                        <x-icons.delete class="inline-block mr-2 text-red-500"/>
+                                        Delete
+                                    </x-confirm-dialog>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 @endforeach
             </ul>
@@ -76,7 +128,6 @@
             </div>
         </main>
     </div>
-
 
 
 </div>
