@@ -1,3 +1,5 @@
+@php($tools = config('tools'))
+
 <div>
 
     <div class="flex h-screen bg-gray-50 py-10" x-data="{ openDropdown: null }">
@@ -30,8 +32,10 @@
                     <li class="folder group relative hover:bg-gray-100"
                         wire:key="folder-{{$folder->id}}">
                         <div class="flex justify-between items-center">
-                            <a href="#"
-                               class="flex items-center w-full align-middle p-2 text-sm {{ $folder->color }}">
+                            <a
+                               wire:navigate
+                               href="{{route($tools['smart-notes']['route'] . '.openfolder', $folder->id)}}"
+                               class="flex items-center w-full align-middle p-2 text-sm truncate {{ $folder->color }}">
                                 <x-icons.folder class="inline size-6 mr-2"/>
                                 {{ $folder->name }} ({{ $folder->notes->count() }})
                             </a>

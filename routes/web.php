@@ -20,10 +20,11 @@ Route::get('test', function () {
 })->name('test');
 
 Route::get('chat-buddy', ChatBuddy::class)->name('chat-buddy');
-Route::get('chat-buddy/{conversation}', ChatBuddy::class)->name('chat-buddyload-conversation');
+Route::get('chat-buddy/{conversation}', ChatBuddy::class)->name('chat-buddy.loadconversation');
 Route::get('chat-buddy/chat/{conversation}', [ChatBuddy::class, 'chat']);
 
 Route::get('smart-notes', SmartNotes::class)->name('smart-notes');
+Route::get('smart-notes/{folder}', [SmartNotes::class, 'openFolder'])->name('smart-notes.openfolder');
 
 Route::get('text-styler', TextStyler::class)->name('text-styler');
 Route::get('text-styler/chat', [TextStyler::class, 'chat']);

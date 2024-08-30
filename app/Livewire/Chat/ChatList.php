@@ -108,7 +108,7 @@ class ChatList extends Component
     {
         if ($message->delete()) {
             // doing redirect because otherwise was getting 404 for some reason on multiple random deletes
-            $this->redirect(route('chat-buddyload-conversation', $this->conversation), true);
+            $this->redirect(route('chat-buddy.loadconversation', $this->conversation->id), true);
         } else {
             $this->danger('Failed to delete message.');
         }
@@ -118,7 +118,7 @@ class ChatList extends Component
     {
         if ($this->conversation->messages()->delete()) {
             // doing redirect because otherwise was getting 404 for some reason on multiple random deletes
-            $this->redirect(route('chat-buddyload-conversation', $this->conversation), true);
+            $this->redirect(route('chat-buddy.loadconversation', $this->conversation->id), true);
         }
     }
 
