@@ -61,6 +61,8 @@ class Sidebar extends Component
 
         $this->success($this->folder->wasRecentlyCreated ? 'Folder added successfully!' : 'Folder saved successfully!');
 
+        $this->dispatch('folderUpdated')->to(NotesListing::class);
+
         $this->resetForm();
     }
 
@@ -69,6 +71,8 @@ class Sidebar extends Component
         $folder->delete();
 
         $this->success('Folder deleted successfully.');
+
+        $this->dispatch('folderDeleted')->to(NotesListing::class);
     }
 
     public function resetForm(): void

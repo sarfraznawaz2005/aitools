@@ -22,7 +22,7 @@ class NoteFolder extends Model
 
     public function getBorderColor(): string
     {
-        return str_replace(['text', '600'], ['border', '300'], $this->color);
+        return str_replace('text', 'border', $this->color);
     }
 
     public function notes(): HasMany

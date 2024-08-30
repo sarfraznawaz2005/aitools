@@ -3,12 +3,12 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 bg-gray-50 pt-20 px-8 border-l {{$folder->getBorderColor()}}">
+        <main class="flex-1 pt-20 px-8 border-l {{$folder->getBorderColor()}}">
 
             <livewire:apikeys.api-key-banner/>
 
             <div class="flex justify-between w-full border p-3 rounded-lg mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
-                <div class="font-bold {{ $folder->color }}">
+                <div class="font-medium {{ $folder->color }}">
                     {{$folder->name}} ({{$folder->notes->count()}})
                 </div>
                 <div>2</div>
