@@ -37,7 +37,7 @@
                 </div>
             @endif
 
-           <div x-data="{show:false}">
+           <div x-data="{show: @entangle('hasReminder')}">
                <div class="mb-4">
                    <div class="flex">
                        <input type="checkbox"
