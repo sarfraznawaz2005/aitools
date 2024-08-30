@@ -74,6 +74,6 @@
         </main>
     </div>
 
-    <livewire:notes.add-custom-note />
-    <livewire:notes.add-link-note />
+    <livewire:notes.text-note />
+    <livewire:notes.link-note />
 </div>

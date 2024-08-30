@@ -134,7 +134,7 @@
         </main>
     </div>
 
-    <livewire:notes.add-custom-note :folder="$folder"/>
-    <livewire:notes.add-link-note :folder="$folder"/>
+    <livewire:notes.text-note :folder="$folder"/>
+    <livewire:notes.link-note :folder="$folder"/>
 
 </div>

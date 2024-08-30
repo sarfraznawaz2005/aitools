@@ -10,7 +10,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class AddCustomNote extends Component
+class TextNote extends Component
 {
     use InteractsWithToast;
 
