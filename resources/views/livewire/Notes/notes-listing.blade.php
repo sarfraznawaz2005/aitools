@@ -120,7 +120,7 @@
         </main>
     </div>
 
-    <livewire:notes.add-custom-note/>
-    <livewire:notes.add-link-note/>
+    <livewire:notes.add-custom-note :folder="$folder"/>
+    <livewire:notes.add-link-note :folder="$folder"/>
 
 </div>

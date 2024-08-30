@@ -29,8 +29,8 @@
                         class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
                     <option value="">Choose Folder</option>
 
-                    @foreach($this->folders as $folder)
-                        <option value="{{$folder->id}}">{{$folder->name}}</option>
+                    @foreach($this->folders as $folderItem)
+                        <option value="{{$folderItem->id}}" {{isset($folder) && $folderItem->id === $folder->id ? 'selected' : ''}}>{{$folderItem->name}}</option>
                     @endforeach
                 </select>
             </div>

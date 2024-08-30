@@ -14,8 +14,9 @@ class AddCustomNote extends Component
     use InteractsWithToast;
 
     public Note $note;
+    public NoteFolder $folder;
 
-    public int $note_folder_id;
+    public string $note_folder_id;
     public string $title = '';
     public string $content = '';
 
@@ -24,6 +25,7 @@ class AddCustomNote extends Component
     public function mount(Note $note = null): void
     {
         $this->note = $note ?? new Note();
+        $this->note_folder_id = $this->folder->id ?? '';
     }
 
     #[Computed]

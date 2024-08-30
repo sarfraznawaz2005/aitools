@@ -29,7 +29,7 @@ class Note extends Model
         'published_at',
     ];
 
-    public function note(): BelongsTo
+    public function folder(): BelongsTo
     {
         return $this->belongsTo(NoteFolder::class);
     }
