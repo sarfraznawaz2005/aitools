@@ -116,13 +116,13 @@
                                     x-transition:leave="transition ease-in duration-150"
                                     x-transition:leave-start="opacity-100 scale-100"
                                     x-transition:leave-end="opacity-0 scale-95"
-                                    class="absolute right-0 mt-2 min-w-28 rounded-lg bg-gray-50 shadow-md space-y-0.5 divide-y divide-gray-200"
+                                    class="absolute right-0 mt-2 min-w-28 bg-gray-50 shadow-md space-y-0.5 divide-y divide-gray-200"
                                     role="menu"
                                 >
                                     <div class="py-2 first:pt-0 last:pb-0">
                                         <a
                                             @click.prevent="$wire.export('html')"
-                                            class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                             href="#"
                                         >
                                             <x-icons.code class="shrink-0 size-4"/>
@@ -130,7 +130,7 @@
                                         </a>
                                         <a
                                             @click.prevent="$wire.export('txt')"
-                                            class="flex items-center rounded-lg gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                             href="#"
                                         >
                                             <x-icons.text class="shrink-0 size-4"/>
