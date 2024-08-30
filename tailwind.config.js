@@ -10,6 +10,7 @@ export default {
         "node_modules/preline/dist/*.js",
     ],
     safelist: [
+        'w-48',
         'list-disc',
         'list-decimal',
         'list-square',

@@ -15,7 +15,31 @@ class NotesFolderSeeder extends Seeder
         //Bot::query()->where('name', 'General')->first()?->delete();
 
         NoteFolder::query()->create([
-            'name' => 'General',
+            'name' => 'Important',
+            'description' => 'A place to store all your video notes.',
+            'color' => 'bg-pink-200',
+        ]);
+
+        NoteFolder::query()->create([
+            'name' => 'Work',
+            'description' => 'A place to store all your video notes.',
+            'color' => 'bg-pink-200',
+        ]);
+
+        NoteFolder::query()->create([
+            'name' => 'Personal',
+            'description' => 'A place to store all your video notes.',
+            'color' => 'bg-pink-200',
+        ]);
+
+        NoteFolder::query()->create([
+            'name' => 'Favorites',
+            'description' => 'A place to store all your video notes.',
+            'color' => 'bg-pink-200',
+        ]);
+
+        NoteFolder::query()->create([
+            'name' => 'Miscellaneous',
             'description' => 'A place to store all your general notes.',
             'color' => 'bg-gray-200',
         ]);

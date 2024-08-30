@@ -16,7 +16,6 @@ class Note extends Model
         'note_folder_id',
         'title',
         'content',
-        'pinned',
         'archived',
         'favorite',
         'reminder_at',
