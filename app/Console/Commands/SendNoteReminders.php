@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Note;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Native\Laravel\Facades\System;
 
 class SendNoteReminders extends Command
 {
@@ -20,14 +21,19 @@ class SendNoteReminders extends Command
     {
         $now = Carbon::now();
 
+        $now->setTimezone(System::timezone() ?? 'Asia/Karachi');
+
         // Handle non-recurring reminders
         $nonRecurringNotes = Note::withNonRecurringReminderAt($now)->get();
+        info('Non-recurring reminders to be sent: ' . $nonRecurringNotes->count());
+
         foreach ($nonRecurringNotes as $note) {
             $this->sendReminder($note);
         }
 
         // Handle recurring reminders
         $recurringNotes = Note::withRecurringReminderAt($now)->get();
+        info('Recurring reminders to be sent: ' . $recurringNotes->count());
         foreach ($recurringNotes as $note) {
             $this->sendReminder($note);
         }

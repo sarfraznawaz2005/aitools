@@ -37,17 +37,18 @@ class Note extends Model
         return $this->belongsTo(NoteFolder::class);
     }
 
-    /**
-     * Scope to get notes that have a non-recurring reminder at the given time.
-     */
     public function scopeWithNonRecurringReminderAt($query, Carbon $time)
     {
-        return $query->where('reminder_at', $time->format('Y-m-d H:i:s'))->where('is_recurring', false);
+        $formattedTime = $time->format('Y-m-d H:i');
+        //info('Checking for non-recurring reminders at: ' . $formattedTime);
+
+        $query = $query->whereRaw("strftime('%Y-%m-%d %H:%M', reminder_at) = ?", [$formattedTime])->where('is_recurring', false);
+        //dump($query->toRawSql());
+
+        return $query;
     }
 
-    /**
-     * Scope to get notes that have a recurring reminder at the given time.
-     */
+
     public function scopeWithRecurringReminderAt($query, Carbon $time)
     {
         $formattedDate = $time->format('Y-m-d');
@@ -64,21 +65,16 @@ class Note extends Model
                     ->whereRaw("strftime('%H', reminder_at) <= ?", [$hour])
                     ->whereRaw("strftime('%M', reminder_at) = ?", [$minute])
                     ->orWhere('recurring_frequency', 'daily')
-                    ->whereRaw("strftime('%H', reminder_at) = ?", [$hour])
-                    ->whereRaw("strftime('%M', reminder_at) = ?", [$minute])
+                    ->whereRaw("strftime('%H:%M', reminder_at) = ?", ["$hour:$minute"])
                     ->orWhere('recurring_frequency', 'weekly')
                     ->whereRaw("strftime('%w', reminder_at) = ?", [$dayOfWeek])
-                    ->whereRaw("strftime('%H', reminder_at) = ?", [$hour])
-                    ->whereRaw("strftime('%M', reminder_at) = ?", [$minute])
+                    ->whereRaw("strftime('%H:%M', reminder_at) = ?", ["$hour:$minute"])
                     ->orWhere('recurring_frequency', 'monthly')
                     ->whereRaw("strftime('%d', reminder_at) = ?", [$day])
-                    ->whereRaw("strftime('%H', reminder_at) = ?", [$hour])
-                    ->whereRaw("strftime('%M', reminder_at) = ?", [$minute])
+                    ->whereRaw("strftime('%H:%M', reminder_at) = ?", ["$hour:$minute"])
                     ->orWhere('recurring_frequency', 'yearly')
-                    ->whereRaw("strftime('%m', reminder_at) = ?", [$month])
-                    ->whereRaw("strftime('%d', reminder_at) = ?", [$day])
-                    ->whereRaw("strftime('%H', reminder_at) = ?", [$hour])
-                    ->whereRaw("strftime('%M', reminder_at) = ?", [$minute]);
+                    ->whereRaw("strftime('%m-%d', reminder_at) = ?", ["$month-$day"])
+                    ->whereRaw("strftime('%H:%M', reminder_at) = ?", ["$hour:$minute"]);
             });
     }
 
