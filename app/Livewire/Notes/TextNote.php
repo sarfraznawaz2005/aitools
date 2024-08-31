@@ -68,28 +68,25 @@ class TextNote extends Component
         $this->dispatch('showModal', ['id' => 'textNoteModal']);
     }
 
-    protected function rules(): array
+    public function saveNote(): void
     {
-        return [
+        $this->validate([
             'note_folder_id' => 'required',
             'title' => 'required|min:4',
             'content' => 'required|min:5',
-            'reminder_datetime' => 'required_if:hasReminder,true',
             'recurring_frequency' => 'required_if:is_recurring,true',
-        ];
-    }
-
-    protected function messages(): array
-    {
-        return [
+            'reminder_datetime' => [
+                'required_if:hasReminder,true',
+                function ($attribute, $value, $fail) {
+                    if ($this->hasReminder && Carbon::parse($value)->isPast()) {
+                        $fail('The reminder date & time cannot be in the past.');
+                    }
+                },
+            ]
+        ], [
             'reminder_datetime.required_if' => 'The reminder date & time field is required when setting a reminder.',
             'recurring_frequency.required_if' => 'The frequency field is required for recurring reminders.',
-        ];
-    }
-
-    public function saveNote(): void
-    {
-        $this->validate();
+        ]);
 
         $reminderAt = $this->hasReminder ? Carbon::parse($this->reminder_datetime)->format('Y-m-d H:i:s') : null;
 

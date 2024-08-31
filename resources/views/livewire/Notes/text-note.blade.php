@@ -52,6 +52,7 @@
             @if($hasReminder)
                 <div class="mb-4">
                     <input type="datetime-local" wire:model="reminder_datetime"
+                           min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}"
                            class="py-3 px-4 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"/>
                 </div>
 
