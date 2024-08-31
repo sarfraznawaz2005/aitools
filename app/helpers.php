@@ -1,6 +1,5 @@
 <?php
 /*
- * click to enlarge image or open in another window
  * search, sort, filter
  * backup to one drive, etc
  * empty title on icon hover
