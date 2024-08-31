@@ -42,8 +42,7 @@ class Note extends Model
      */
     public function scopeWithNonRecurringReminderAt($query, Carbon $time)
     {
-        return $query->where('reminder_at', $time->format('Y-m-d H:i:s'))
-            ->where('is_recurring', false);
+        return $query->where('reminder_at', $time->format('Y-m-d H:i:s'))->where('is_recurring', false);
     }
 
     /**
