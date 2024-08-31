@@ -12,7 +12,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Native\Laravel\Facades\Window;
 
-class TipContentOutput extends Component
+class TipWindow extends Component
 {
     use InteractsWithToast;
 
@@ -29,7 +29,7 @@ class TipContentOutput extends Component
     {
         $tipContent = $this->model = TipContent::query()->findOrFail($this->id);
 
-        return view('livewire.pages.tip-content-output', compact('tipContent'));
+        return view('livewire.pages.tip-window', compact('tipContent'));
     }
 
     public function favorite(): void

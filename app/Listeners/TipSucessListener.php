@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\OnNotificationShown;
+use App\Events\OnTipNotificationShown;
 use App\Events\OnTipContentSaved;
 use App\Events\TipSucessEvent;
 use App\LLM\LlmProvider;
@@ -60,7 +60,7 @@ class TipSucessListener
 
                 Settings::set('lastNotification', [
                     'window' => 'tip',
-                    'route' => 'tip-content',
+                    'route' => 'tip-window',
                     'routeParams' => ['id' => $tip->contents()->latest()->take(1)->first()->id]
                 ]);
 
@@ -71,7 +71,7 @@ class TipSucessListener
                     ->message(Str::limit($result))
                     ->show();
 
-                OnNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
+                OnTipNotificationShown::broadcast($tip->contents()->latest()->take(1)->first()->id);
                 OnTipContentSaved::broadcast();
             }
         }

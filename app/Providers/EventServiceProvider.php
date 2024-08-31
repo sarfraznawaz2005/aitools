@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\OnNotificationShown;
-use App\Services\NotificationManager;
+use App\Events\OnNoteNotificationShown;
+use App\Events\OnTipNotificationShown;
 use Exception;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -20,12 +20,21 @@ class EventServiceProvider extends ServiceProvider
             //
         });
 
-        Event::listen(OnNotificationShown::class, function ($event) {
+        Event::listen(OnTipNotificationShown::class, function ($event) {
             try {
                 Window::close('tip');
             } catch (Exception) {
             } finally {
-                openWindow('tip', 'tip-content', ['id' => $event->id]);
+                openWindow('tip', 'tip-window', ['id' => $event->id]);
+            }
+        });
+
+        Event::listen(OnNoteNotificationShown::class, function ($event) {
+            try {
+                Window::close('note');
+            } catch (Exception) {
+            } finally {
+                openWindow('note', 'note-window', ['id' => $event->id]);
             }
         });
 
