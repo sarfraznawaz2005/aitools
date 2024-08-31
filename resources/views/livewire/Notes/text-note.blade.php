@@ -1,5 +1,10 @@
 <div>
 
+    <div wire:ignore>
+        <script src="{{asset('/assets/js/quill/quill.js')}}"></script>
+        <link href="{{asset('/assets/js/quill/quill.snow.css')}}" rel="stylesheet">
+    </div>
+
     <x-modal id="textNoteModal" maxWidth="sm:max-w-2xl">
         <x-slot name="title">
             <div class="flex gap-x-2">
@@ -16,12 +21,25 @@
                        class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
             </div>
 
-            <div class="mb-4">
-                  <textarea
-                      wire:model="content"
-                      rows="3"
-                      class="p-4 pb-12 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
-                      placeholder="Contents..."></textarea>
+            <div class="mb-4 w-full" wire:ignore>
+                <div
+                    class="bg-gray-100"
+                    style="height: 150px;"
+                    x-data
+                    x-ref="quillEditor"
+                    x-init="
+                        quill = new Quill(
+                            $refs.quillEditor,
+                            {theme: 'snow', placeholder: 'Contents...'}
+                        );
+
+                        quill.on('text-change', function () {
+                            $dispatch('input', quill.root.innerHTML);
+                        });
+                       "
+                    wire:model.debounce.500ms="content"
+                >
+                </div>
             </div>
 
             @if(!isset($folder))

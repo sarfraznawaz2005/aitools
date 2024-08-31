@@ -75,29 +75,27 @@
                 <livewire:apikeys.api-key-banner/>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-8 px-8">
-
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8 mt-8 px-8" style="align-items: start;">
                 @foreach($this->notes as $note)
                     <div
                         class="p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg transition-shadow border relative flex flex-col"
                         wire:key="note-{{$note->id}}">
+                        <div class="relative min-h-10">
 
-                        <div class="relative min-h-24 max-h-24">
-
-                            <div x-data="{ open: false, subOpen: false, subMenuLeft: false }"
+                            <div x-data="{ open: false, subOpen: false, subMenuLeft: false, subMenuBottom: false, subMenuTimer: null }"
                                  class="absolute top-0 right-0" x-cloak x-init="
-                                    $nextTick(() => { open = false; });
+                                    $nextTick(() => { open = false; subOpen = false; subMenuLeft = false; subMenuBottom = false; });
 
                                     $wire.on('updated', () => {
                                         open = false;
                                         subOpen = false;
-                                        subMenuLeft = false;
+                                        subMenuBottom = false;
                                     });
 
                                     Livewire.on('notesUpdated', () => {
                                         open = false;
                                         subOpen = false;
-                                        subMenuLeft = false;
+                                        subMenuBottom = false;
                                     });
                                 ">
 
@@ -119,8 +117,15 @@
                                     </a>
                                     <div
                                         class="relative"
-                                        @mouseenter="subOpen = true; subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);"
-                                        @mouseleave="subOpen = false"
+                                        @mouseenter="
+                                            clearTimeout(subMenuTimer);
+                                            subOpen = true;
+                                            subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);
+                                            subMenuBottom = (window.innerHeight - $el.getBoundingClientRect().bottom < 150);
+                                            "
+                                        @mouseleave="
+                                            subMenuTimer = setTimeout(() => { subOpen = false }, 200);
+                                        "
                                     >
                                         <a href="#" @click.prevent="subOpen = !subOpen"
                                            class="px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center justify-between">
@@ -137,8 +142,15 @@
                                         <div
                                             x-cloak
                                             x-show="subOpen"
-                                            :class="subMenuLeft ? 'right-full' : 'left-full'"
-                                            class="absolute top-0 z-50 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
+                                            @mouseenter="clearTimeout(subMenuTimer)"
+                                            @mouseleave="subMenuTimer = setTimeout(() => { subOpen = false }, 200)"
+                                            :class="{
+                                                'right-full': subMenuLeft,
+                                                'left-full': !subMenuLeft,
+                                                'bottom-full': subMenuBottom,
+                                                'top-0': !subMenuBottom
+                                            }"
+                                            class="absolute z-50 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
                                         >
                                             @foreach($this->folders as $folderItem)
                                                 @if($folderItem->id !== $folder->id)
@@ -162,8 +174,8 @@
 
                             <div class="w-full text-sm">
                                 <span class="font-semibold text-gray-700">{{$note->title}}</span>
-                                <p class="mt-2 text-gray-600">
-                                    {{Str::limit($note->content, 100)}}
+                                <p class="mt-2 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
+                                    {!! $note->content !!}
                                 </p>
                             </div>
                         </div>

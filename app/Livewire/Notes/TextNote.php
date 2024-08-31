@@ -73,8 +73,15 @@ class TextNote extends Component
         $this->validate([
             'note_folder_id' => 'required',
             'title' => 'required|min:4',
-            'content' => 'required|min:5',
             'recurring_frequency' => 'required_if:is_recurring,true',
+            'content' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!trim(strip_tags($value))) {
+                        $fail('The content field is required.');
+                    }
+                },
+            ],
             'reminder_datetime' => [
                 'required_if:hasReminder,true',
                 function ($attribute, $value, $fail) {
