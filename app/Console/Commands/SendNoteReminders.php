@@ -25,7 +25,7 @@ class SendNoteReminders extends Command
 
         // Handle non-recurring reminders
         $nonRecurringNotes = Note::withNonRecurringReminderAt($now)->get();
-        info('Non-recurring reminders to be sent: ' . $nonRecurringNotes->count());
+        //info('Non-recurring reminders to be sent: ' . $nonRecurringNotes->count());
 
         foreach ($nonRecurringNotes as $note) {
             $this->sendReminder($note);
@@ -33,7 +33,8 @@ class SendNoteReminders extends Command
 
         // Handle recurring reminders
         $recurringNotes = Note::withRecurringReminderAt($now)->get();
-        info('Recurring reminders to be sent: ' . $recurringNotes->count());
+        //info('Recurring reminders to be sent: ' . $recurringNotes->count());
+
         foreach ($recurringNotes as $note) {
             $this->sendReminder($note);
         }
