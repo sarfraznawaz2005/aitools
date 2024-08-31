@@ -7,30 +7,11 @@
         <main class="flex-1 pt-12 pb-12 border-l {{$folder->getBorderColor()}}">
 
             <div
-                class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 px-5 p-3 mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
-                <div class="font-[600] {{ $folder->color }}">
-                    {{$folder->name}} ({{$folder->notes->count()}})
-                </div>
-
-                <div>
-                    <input type="text" wire:model.live.debounce.500ms="searchQuery"
-                           placeholder="Search Content..."
-                           class="py-2 px-4 block w-full bg-white border-transparent text-center rounded-full text-sm focus:ring-0"/>
-                </div>
+                class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 p-3 mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
 
                 <div class="flex items-center justify-between">
-                    <div>
-                        <button
-                            wire:click.prevent="$dispatch('openTextNoteModal')"
-                            type="button"
-                            class="py-2 px-2 inline-flex items-center rounded-full gap-x-1 pr-4 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                        >
-                            <x-icons.plus/>
-                            Add Note
-                        </button>
-                    </div>
 
-                    <div x-data="{ open: false }" class="relative ml-4 pt-1">
+                    <div x-data="{ open: false }" class="relative pt-1 mr-4">
                         <button @click="open = !open" x-data x-tooltip.raw="Sort">
                             <x-icons.sort class="cursor-pointer"/>
                         </button>
@@ -45,7 +26,7 @@
                             x-transition:leave="transition ease-in duration-150"
                             x-transition:leave-start="opacity-100 scale-100"
                             x-transition:leave-end="opacity-0 scale-95"
-                            class="absolute right-0 mt-0.5 min-w-28 bg-white shadow-lg text-xs space-y-0.5 divide-y divide-gray-200"
+                            class="absolute left-0 mt-0.5 min-w-28 bg-white shadow-lg text-xs space-y-0.5 divide-y divide-gray-200"
                             role="menu"
                         >
                             <div class="py-2 first:pt-0 last:pb-0">
@@ -101,6 +82,27 @@
 
                         </div>
                     </div>
+
+                    <div class="font-[600] mr-4 uppercase">
+                        {{$folder->name}} ({{$folder->notes->count()}})
+                    </div>
+
+                    <div>
+                        <button
+                            wire:click.prevent="$dispatch('openTextNoteModal')"
+                            type="button"
+                            class="py-2 px-2 inline-flex items-center rounded-full gap-x-1 pr-4 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                        >
+                            <x-icons.plus/>
+                            Add Note
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <input type="text" wire:model.live.debounce.500ms="searchQuery"
+                           placeholder="Search Content..."
+                           class="py-2 px-4 block w-full bg-white border-transparent text-center rounded-full text-sm focus:ring-0"/>
                 </div>
 
             </div>
