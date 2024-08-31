@@ -78,8 +78,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-8 px-8">
 
                 @foreach($this->notes as $note)
-                    <div class="p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg transition-shadow border relative flex flex-col"
-                         wire:key="note-{{$note->id}}">
+                    <div
+                        class="p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg transition-shadow border relative flex flex-col"
+                        wire:key="note-{{$note->id}}">
 
                         <div class="relative min-h-24 max-h-24">
 
@@ -105,6 +106,7 @@
                                 </button>
 
                                 <div
+                                    x-cloak
                                     x-show="open"
                                     @click.away="open = false"
                                     @click.outside="open = false"
@@ -133,9 +135,10 @@
                                             </svg>
                                         </a>
                                         <div
+                                            x-cloak
                                             x-show="subOpen"
                                             :class="subMenuLeft ? 'right-full' : 'left-full'"
-                                            class="absolute top-0 z-50 w-full ml-0.5 bg-white shadow-lg"
+                                            class="absolute top-0 z-50 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
                                         >
                                             @foreach($this->folders as $folderItem)
                                                 @if($folderItem->id !== $folder->id)
