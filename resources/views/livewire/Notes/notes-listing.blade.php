@@ -12,64 +12,14 @@
                     {{$folder->name}} ({{$folder->notes->count()}})
                 </div>
 
-                <div x-data="{ open: false }" class="relative">
-                    <button
-                        @click="open = !open"
-                        type="button"
-                        class="py-2 px-2 inline-flex items-center rounded-full gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                        <x-icons.plus/>
-                        Add Note
-                        <svg
-                            class="size-4"
-                            :class="{ 'rotate-180': open }"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="m6 9 6 6 6-6"/>
-                        </svg>
-                    </button>
-
-                    <div
-                        x-cloak
-                        x-show="open"
-                        @click.away="open = false"
-                        x-transition:enter="transition ease-out duration-200"
-                        x-transition:enter-start="opacity-0 scale-95"
-                        x-transition:enter-end="opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-150"
-                        x-transition:leave-start="opacity-100 scale-100"
-                        x-transition:leave-end="opacity-0 scale-95"
-                        class="absolute right-0 mt-0.5 min-w-32 z-40 shadow-lg space-y-0.5 divide-y divide-gray-200"
-                        role="menu"
-                    >
-                        <div class="py-2 first:pt-0 last:pb-0">
-                            <a
-                                wire:click.prevent="$dispatch('openTextNoteModal')"
-                                class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 bg-white hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                href="#"
-                            >
-                                <x-icons.text class="shrink-0 size-4"/>
-                                Text Note
-                            </a>
-                            <a
-                                @click.prevent="$wire.export('txt')"
-                                class="flex items-center gap-x-3.5 py-2 px-3 text-sm text-gray-800 bg-white hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                href="#"
-                            >
-                                <x-icons.link class="shrink-0 size-4"/>
-                                Link Note
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <button
+                    wire:click.prevent="$dispatch('openTextNoteModal')"
+                    type="button"
+                    class="py-2 px-2 inline-flex items-center rounded-full gap-x-1 pr-4 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                >
+                    <x-icons.plus/>
+                    Add Note
+                </button>
             </div>
 
             <div class="mx-8 my-4">
@@ -189,6 +139,5 @@
     </div>
 
     <livewire:notes.text-note :folder="$folder"/>
-    <livewire:notes.link-note :folder="$folder"/>
 
 </div>

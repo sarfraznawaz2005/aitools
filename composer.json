@@ -12,7 +12,6 @@
         "ext-curl": "*",
         "archtechx/enums": "^1.1",
         "embed/embed": "^4.4",
-        "laminas/laminas-diactoros": "^3.3",
         "laravel/framework": "^11.9",
         "livewire/livewire": "^3.5",
         "lorisleiva/cron-translator": "^0.4.5",
