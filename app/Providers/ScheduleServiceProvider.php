@@ -10,9 +10,18 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
-class TipSchedulerServiceProvider extends ServiceProvider
+class ScheduleServiceProvider extends ServiceProvider
 {
     public function boot(Schedule $schedule): void
+    {
+        // note reminders
+        $schedule->command('app:send-note-reminders')->everyMinute();
+
+        // tips notifier reminders
+        $this->tipsNotifierReminders($schedule);
+    }
+
+    private function tipsNotifierReminders(Schedule $schedule): void
     {
         if (!Schema::hasTable('tips')) {
             return;

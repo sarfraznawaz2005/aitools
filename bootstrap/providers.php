@@ -3,5 +3,5 @@
 return [
     App\Providers\AppServiceProvider::class,
     App\Providers\EventServiceProvider::class,
-    App\Providers\TipSchedulerServiceProvider::class,
+    App\Providers\ScheduleServiceProvider::class,
 ];
