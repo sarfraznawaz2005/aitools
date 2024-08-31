@@ -17,6 +17,7 @@ class BotForward extends Component
 
     public ?Message $message = null;
     public ?Bot $bot = null;
+    public ?Bot $forwarderBot = null;
 
     #[Computed]
     public function bots(): Collection
@@ -28,6 +29,8 @@ class BotForward extends Component
     public function startFoward(Message $message): void
     {
         $this->message = $message;
+
+        $this->forwarderBot = $message->conversation->bot;
 
         $this->dispatch('showModal', ['id' => 'botForwardModal']);
     }

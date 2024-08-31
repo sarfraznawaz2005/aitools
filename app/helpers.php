@@ -1,5 +1,7 @@
 <?php
 /*
+ * color
+ * date reminders
  * images | attach files?
  * search, sort, filter
  * backup to one drive, etc

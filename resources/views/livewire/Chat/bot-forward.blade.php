@@ -12,6 +12,10 @@
             <div
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 font-medium">
                 @foreach($this->bots as $bot)
+                    @if(isset($forwarderBot) && $bot->id == $forwarderBot->id)
+                        @continue
+                    @endif
+
                     <button
                         type="button"
                         wire:click.prevent="selectBot({{ $bot->id }})"

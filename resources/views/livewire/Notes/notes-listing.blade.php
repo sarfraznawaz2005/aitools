@@ -3,7 +3,7 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-12 border-l {{$folder->getBorderColor()}} {{ $folder->getBackGroundColor() }}">
+        <main class="flex-1 pt-12 border-l {{$folder->getBorderColor()}}">
 
             <div
                 class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 px-8 p-3 mb-4 border-b {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
@@ -46,7 +46,7 @@
                         x-transition:leave="transition ease-in duration-150"
                         x-transition:leave-start="opacity-100 scale-100"
                         x-transition:leave-end="opacity-0 scale-95"
-                        class="absolute right-0 mt-2 min-w-32 z-40 shadow-lg space-y-0.5 divide-y divide-gray-200"
+                        class="absolute right-0 mt-0.5 min-w-32 z-40 shadow-lg space-y-0.5 divide-y divide-gray-200"
                         role="menu"
                     >
                         <div class="py-2 first:pt-0 last:pb-0">

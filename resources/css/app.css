@@ -116,38 +116,6 @@
     font-weight: 700;
     src: url('/public/fonts/inter-v18-latin-700italic.woff2') format('woff2');
 }
-/* inter-800 - latin */
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 800;
-    src: url('/public/fonts/inter-v18-latin-800.woff2') format('woff2');
-}
-/* inter-800italic - latin */
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: italic;
-    font-weight: 800;
-    src: url('/public/fonts/inter-v18-latin-800italic.woff2') format('woff2');
-}
-/* inter-900 - latin */
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 900;
-    src: url('/public/fonts/inter-v18-latin-900.woff2') format('woff2');
-}
-/* inter-900italic - latin */
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: italic;
-    font-weight: 900;
-    src: url('/public/fonts/inter-v18-latin-900italic.woff2') format('woff2');
-}
 
 /* misc */
 [x-cloak] {
