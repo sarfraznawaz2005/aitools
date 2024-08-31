@@ -3,7 +3,7 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-12 border-l {{$folder->getBorderColor()}}">
+        <main class="flex-1 pt-12 mb-14 border-l {{$folder->getBorderColor()}}">
 
             <div
                 class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 px-8 p-3 mb-4 border-b {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
