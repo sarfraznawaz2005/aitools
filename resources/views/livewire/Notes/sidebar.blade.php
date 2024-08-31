@@ -18,13 +18,13 @@
             </li>
 
             @foreach($this->folders as $folderItem)
-                <li class="folder group relative hover:bg-gray-100"
+                <li class="folder group relative hover:{{$folderItem->getBackgroundColor()}}"
                     wire:key="foldersidebar-{{$folderItem->id}}">
                     <div class="flex justify-between items-center">
                         <a
                             wire:navigate
                             href="{{route($tools['smart-notes']['route'] . '.listing', $folderItem->id)}}"
-                            class="flex items-center w-full font-[500] align-middle p-2 text-sm truncate
+                            class="items-center font-[500] p-2 text-sm w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis
                             {{ $folderItem->color }} {{isset($folder) && $folder->exists && $folderItem->id === $folder->id ? $folder->getBackgroundColor() : ''}}">
                             <x-icons.folder class="inline size-6 mr-2"/>
                             {{ $folderItem->name }} ({{ $folderItem->notes->count() }})

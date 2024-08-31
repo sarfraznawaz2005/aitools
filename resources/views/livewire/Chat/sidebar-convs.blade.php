@@ -41,7 +41,7 @@
                        style="padding: 8px 8px 7px 8px;"
                        href="{{route($tools['chat-buddy']['route'] . '.loadconversation', $conversationItem->id)}}">
 
-                        <div class="max-w-48 truncate whitespace-nowrap inline-flex items-center truncate">
+                        <div class="max-w-52 w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis items-center">
                             <div class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
                                 <span class="inline-block">{{getBotIcon($conversationItem)}}</span>
                             </div>
