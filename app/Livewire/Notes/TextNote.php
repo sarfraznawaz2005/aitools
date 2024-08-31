@@ -89,11 +89,13 @@ class TextNote extends Component
     {
         $this->validate();
 
+        $reminderAt = $this->hasReminder ? Carbon::parse($this->reminder_datetime)->format('Y-m-d H:i:s') : null;
+
         $this->note->fill([
             'note_folder_id' => $this->note_folder_id,
             'title' => $this->title,
             'content' => $this->content,
-            'reminder_at' => $this->hasReminder ? $this->reminder_datetime ?? null : null,
+            'reminder_at' => $reminderAt,
             'is_recurring' => $this->is_recurring,
             'recurring_frequency' => $this->is_recurring ? $this->recurring_frequency : null,
         ])->save();

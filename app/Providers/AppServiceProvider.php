@@ -2,10 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Bot;
 use Exception;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\CronTranslator\CronTranslator;

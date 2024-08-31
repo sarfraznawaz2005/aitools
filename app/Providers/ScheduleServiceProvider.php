@@ -9,11 +9,14 @@ use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Native\Laravel\Facades\System;
 
 class ScheduleServiceProvider extends ServiceProvider
 {
     public function boot(Schedule $schedule): void
     {
+        config(['app.timezone' => System::timezone()]); // via nativephp
+
         // note reminders
         $schedule->command('app:send-note-reminders')->everyMinute();
 

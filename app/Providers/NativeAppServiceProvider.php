@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Bot;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Schema;
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Facades\Settings;
