@@ -19,7 +19,7 @@
             <div class="mb-4">
                   <textarea
                       wire:model="content"
-                      rows="5"
+                      rows="3"
                       class="p-4 pb-12 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
                       placeholder="Contents..."></textarea>
             </div>
