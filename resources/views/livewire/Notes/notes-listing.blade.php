@@ -159,7 +159,7 @@
 
                             <div class="w-full">
                                 <span class="text-sm font-semibold text-gray-700">{{$note->title}}</span>
-                                <p class="mt-2 text-gray-600">
+                                <p class="mt-2 text-gray-600 text-sm">
                                     {{Str::limit($note->content, 100)}}
                                 </p>
                             </div>
