@@ -77,6 +77,10 @@ class TextNote extends Component
             'content' => [
                 'required',
                 function ($attribute, $value, $fail) {
+                    if (str_contains(strtolower($value), '<img') || str_contains(strtolower($value), '<iframe')) {
+                        return;
+                    }
+
                     if (!trim(strip_tags($value))) {
                         $fail('The content field is required.');
                     }

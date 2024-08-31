@@ -140,4 +140,21 @@
 
     <livewire:notes.text-note :folder="$folder"/>
 
+    <style>
+        iframe {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        .quill-editor iframe, .ql-editor iframe {
+            pointer-events: none !important;
+        }
+
+        div.content img {
+            width: 100% !important;
+            max-height: 300px !important;
+            height: auto !important;
+            object-fit: contain !important;
+        }
+    </style>
 </div>
