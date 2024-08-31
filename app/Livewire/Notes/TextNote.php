@@ -5,6 +5,7 @@ namespace App\Livewire\Notes;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
+use Carbon\Carbon;
 use Cron\CronExpression;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,7 +13,6 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Lorisleiva\CronTranslator\CronTranslator;
-use Carbon\Carbon;
 
 class TextNote extends Component
 {
@@ -66,15 +66,13 @@ class TextNote extends Component
 
     protected function rules(): array
     {
-        $rules = [
+        return [
             'note_folder_id' => 'required',
             'title' => 'required|min:4',
             'content' => 'required|min:5',
             'reminder_datetime' => 'required_if:hasReminder,true',
             'recurringFrequency' => 'required_if:isRecurring,true',
         ];
-
-        return $rules;
     }
 
     protected function messages(): array
@@ -116,7 +114,12 @@ class TextNote extends Component
         try {
             $startDateTime = Carbon::parse($this->reminder_datetime);
             $cronExpression = $this->generateCronExpression($this->recurringFrequency, $startDateTime);
-            $humanReadable = CronTranslator::translate($cronExpression);
+
+            if ($this->recurringFrequency === 'hourly') {
+                $humanReadable = "Every hour on " . $startDateTime->format('d M Y');
+            } else {
+                $humanReadable = CronTranslator::translate($cronExpression);
+            }
 
             return ucfirst($humanReadable);
         } catch (Exception $e) {
@@ -134,13 +137,26 @@ class TextNote extends Component
         try {
             $nextRuns = [];
             $startDateTime = Carbon::parse($this->reminder_datetime);
-            $cronExpression = new CronExpression($this->generateCronExpression($this->recurringFrequency, $startDateTime));
-            $date = $startDateTime;
 
-            for ($i = 0; $i < 3; $i++) {
-                $nextRun = $cronExpression->getNextRunDate($date);
-                $nextRuns[] = $nextRun->format('Y-m-d H:i:s');
-                $date = $nextRun;
+            if ($this->recurringFrequency === 'hourly') {
+                // Manually generate the next hourly runs for the specified date
+                $date = $startDateTime;
+                for ($i = 0; $i < 3; $i++) {
+                    $nextRun = $date->addHour();
+                    if ($nextRun->isSameDay($startDateTime)) {
+                        $nextRuns[] = $nextRun->format('Y-m-d H:i:s');
+                    }
+                }
+            } else {
+                // Use CronExpression for non-hourly frequencies
+                $cronExpression = new CronExpression($this->generateCronExpression($this->recurringFrequency, $startDateTime));
+                $date = $startDateTime;
+
+                for ($i = 0; $i < 3; $i++) {
+                    $nextRun = $cronExpression->getNextRunDate($date);
+                    $nextRuns[] = $nextRun->format('Y-m-d H:i:s');
+                    $date = $nextRun;
+                }
             }
 
             return $nextRuns;
@@ -149,21 +165,21 @@ class TextNote extends Component
         }
     }
 
+    /**
+     * @throws Exception
+     */
     private function generateCronExpression(string $frequency, Carbon $startDateTime): string
     {
-        switch ($frequency) {
-            case 'daily':
-                return sprintf('%s %s * * *', $startDateTime->minute, $startDateTime->hour);
-            case 'weekly':
-                return sprintf('%s %s * * %s', $startDateTime->minute, $startDateTime->hour, $startDateTime->dayOfWeek);
-            case 'monthly':
-                return sprintf('%s %s %s * *', $startDateTime->minute, $startDateTime->hour, $startDateTime->day);
-            case 'yearly':
-                return sprintf('%s %s %s %s *', $startDateTime->minute, $startDateTime->hour, $startDateTime->day, $startDateTime->month);
-            default:
-                throw new Exception('Invalid frequency');
-        }
+        return match ($frequency) {
+            'hourly' => sprintf('%s * %s %s %s *', $startDateTime->minute, $startDateTime->hour, $startDateTime->day, $startDateTime->month),
+            'daily' => sprintf('%s %s * * *', $startDateTime->minute, $startDateTime->hour),
+            'weekly' => sprintf('%s %s * * %s', $startDateTime->minute, $startDateTime->hour, $startDateTime->dayOfWeek),
+            'monthly' => sprintf('%s %s %s * *', $startDateTime->minute, $startDateTime->hour, $startDateTime->day),
+            'yearly' => sprintf('%s %s %s %s *', $startDateTime->minute, $startDateTime->hour, $startDateTime->day, $startDateTime->month),
+            default => throw new Exception('Invalid frequency'),
+        };
     }
+
 
     public function resetForm(): void
     {

@@ -72,6 +72,7 @@
                         <select wire:model.change="recurringFrequency"
                                 class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
                             <option value="">Select Frequency</option>
+                            <option value="hourly">Hourly</option>
                             <option value="daily">Daily</option>
                             <option value="weekly">Weekly</option>
                             <option value="monthly">Monthly</option>
