@@ -16,6 +16,8 @@ class Note extends Model
         'title',
         'content',
         'reminder_at',
+        'is_recurring',
+        'recurring_frequency',
         'html',
         'width',
         'height',

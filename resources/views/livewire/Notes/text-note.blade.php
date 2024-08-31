@@ -83,16 +83,17 @@
                     @if($recurringFrequency)
                         <div class="mb-4">
                             <p class="text-sm text-gray-500">
-                                Schedule: {{ $this->schedulePreview }}
+                                Schedule:
+                                <span class="text-pink-500">{{ $this->schedulePreview }}</span>
                             </p>
                         </div>
 
                         <div class="mb-4">
                             <div class="text-sm text-gray-500">
-                                Next Runs:
-                                <ul>
-                                    @foreach($this->nextRuns as $run)
-                                        <li>{{ $run }}</li>
+                                <p class="text-sm italic font-bold mb-1">Next Runs:</p>
+                                <ul class="list-disc list-inside ml-2">
+                                    @foreach ($this->nextRuns as $run)
+                                        <li class="text-sm text-pink-500">{{ $run }}</li>
                                     @endforeach
                                 </ul>
                             </div>

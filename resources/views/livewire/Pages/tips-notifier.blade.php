@@ -286,7 +286,7 @@
 
                     @if (!empty($cron))
                         <div class="mb-4">
-                            <p class="text-sm">Description: <span
+                            <p class="text-sm">Schedule: <span
                                     class="text-pink-500">{{ $this->schedulePreview }}</span>
                             </p>
                         </div>

@@ -34,7 +34,6 @@ class ScheduleServiceProvider extends ServiceProvider
                 if ($tip->active) {
                     $schedule->call(fn() => TipSucessEvent::broadcast($tip))
                         ->name($tip->name)
-                        ->withoutOverlapping()
                         ->cron($tip->cron)
                         ->onFailure(fn() => TipFailureEvent::broadcast($tip));
                 }
