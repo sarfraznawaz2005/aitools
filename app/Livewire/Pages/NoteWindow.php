@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Native\Laravel\Facades\Window;
 
 class NoteWindow extends Component
 {
@@ -24,5 +25,10 @@ class NoteWindow extends Component
         $note = Note::query()->findOrFail($this->id);
 
         return view('livewire.pages.note-window', compact('note'));
+    }
+
+    public function close(): void
+    {
+        Window::close('note');
     }
 }
