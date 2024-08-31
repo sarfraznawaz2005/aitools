@@ -18,18 +18,6 @@ return new class extends Migration {
             $table->timestamp('reminder_at')->nullable();
             $table->boolean('is_recurring')->default(false);
             $table->string('recurring_frequency')->nullable();
-            $table->text('html')->nullable();
-            $table->string('width')->nullable();
-            $table->string('height')->nullable();
-            $table->string('ratio')->nullable();
-            $table->string('url')->nullable();
-            $table->string('image')->nullable();
-            $table->string('author')->nullable();
-            $table->string('author_url')->nullable();
-            $table->string('source')->nullable();
-            $table->string('source_url')->nullable();
-            $table->string('source_icon')->nullable();
-            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

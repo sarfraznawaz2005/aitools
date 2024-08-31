@@ -18,18 +18,6 @@ class Note extends Model
         'reminder_at',
         'is_recurring',
         'recurring_frequency',
-        'html',
-        'width',
-        'height',
-        'ratio',
-        'url',
-        'image',
-        'author',
-        'author_url',
-        'source',
-        'source_url',
-        'source_icon',
-        'published_at',
     ];
 
     public function folder(): BelongsTo
