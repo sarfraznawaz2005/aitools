@@ -32,7 +32,7 @@
 
                     <div x-data="{ open: false }" class="relative ml-4 pt-1">
                         <button @click="open = !open" x-data x-tooltip.raw="Sort">
-                            <x-icons.sort class="cursor-pointer" />
+                            <x-icons.sort class="cursor-pointer"/>
                         </button>
 
                         <div
@@ -50,37 +50,49 @@
                         >
                             <div class="py-2 first:pt-0 last:pb-0">
                                 <a
-                                    wire:click="sortBy('id')"
+                                    wire:click.prevent="sortBy('id')"
                                     class="flex items-center gap-x-3.5 py-2 px-3 text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                     href="#"
                                 >
                                     Date
                                     @if($sortField === 'id')
                                         @if($sortAsc)
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M5 15l7-7 7 7"/>
                                             </svg>
                                         @else
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M19 9l-7 7-7-7"/>
                                             </svg>
                                         @endif
                                     @endif
                                 </a>
                                 <a
-                                    wire:click="sortBy('title')"
+                                    wire:click.prevent="sortBy('title')"
                                     class="flex items-center gap-x-3.5 py-2 px-3 text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                     href="#"
                                 >
                                     Title
                                     @if($sortField === 'title')
                                         @if($sortAsc)
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M5 15l7-7 7 7"/>
                                             </svg>
                                         @else
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M19 9l-7 7-7-7"/>
                                             </svg>
                                         @endif
                                     @endif

@@ -147,13 +147,13 @@
                                 </th>
                                 <th scope="col"
                                     x-data x-tooltip.raw="sort"
-                                    wire:click="sortBy('id')"
+                                    wire:click.prevent="sortBy('id')"
                                     class="px-6 py-3 text-center cursor-pointer text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
                                     Date
                                 </th>
                                 <th scope="col"
                                     x-data x-tooltip.raw="sort"
-                                    wire:click="sortBy('favorite')"
+                                    wire:click.prevent="sortBy('favorite')"
                                     class="px-6 py-3 text-center cursor-pointer text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-neutral-300">
                                     Favorite
                                 </th>
