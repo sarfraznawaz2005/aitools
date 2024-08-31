@@ -113,7 +113,7 @@
                 @foreach($this->notes as $note)
                     <div
                         class="flex-grow flex-shrink-0 basis-[calc(50%-1.5rem)] p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg transition-shadow border relative flex flex-col"
-                        wire:key="note-{{$note->id}}">
+                        wire:key="note-{{$note->id}}{{uniqid()}}">
                         <div class="relative min-h-10">
 
                             <div
