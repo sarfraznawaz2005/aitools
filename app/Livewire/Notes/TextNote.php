@@ -53,6 +53,9 @@ class TextNote extends Component
     #[On('openTextNoteModalEdit')]
     public function openTextNoteModalEdit(Note $note): void
     {
+        $this->resetErrorBag();
+        $this->resetValidation();
+
         $this->note = $note;
 
         $this->hasReminder = false;
@@ -190,6 +193,7 @@ class TextNote extends Component
         $this->reset(['title', 'content', 'reminder_datetime', 'is_recurring', 'recurring_frequency']);
 
         $this->resetErrorBag();
+        $this->resetValidation();
 
         $this->note = new Note();
         $this->note_folder_id = $this->folder->id ?? '';
