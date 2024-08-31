@@ -8,7 +8,7 @@
     <x-modal id="textNoteModal" maxWidth="sm:max-w-2xl">
         <x-slot name="title">
             <div class="flex gap-x-2">
-                {{ $note && $note->exists ? '✏️ Edit Note' : '➕ Add Note'}}
+                {{ isset($note) && $note->exists ? '✏️ Edit Note' : '➕ Add Note'}}
             </div>
         </x-slot>
 
