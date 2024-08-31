@@ -55,6 +55,17 @@
                                     href="#"
                                 >
                                     Date
+                                    @if($sortField === 'id')
+                                        @if($sortAsc)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                            </svg>
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        @endif
+                                    @endif
                                 </a>
                                 <a
                                     wire:click="sortBy('title')"
@@ -62,9 +73,20 @@
                                     href="#"
                                 >
                                     Title
+                                    @if($sortField === 'title')
+                                        @if($sortAsc)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                            </svg>
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        @endif
+                                    @endif
                                 </a>
-                                <div class="space-x-reverse"></div>
                             </div>
+
                         </div>
                     </div>
                 </div>
