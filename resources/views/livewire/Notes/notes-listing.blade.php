@@ -233,7 +233,7 @@
     <style>
         iframe {
             width: 100% !important;
-            height: 300px !important;
+            height: 400px !important;
         }
 
         .quill-editor iframe, .ql-editor iframe {
