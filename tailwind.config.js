@@ -35,6 +35,7 @@ export default {
         'bg-yellow-500',
         'bg-red-500',
         'marker:text-blue-600',
+        'bg-yellow-500',
         'xxxxx',
         'flex-wrap',
         'inset-x-0',
