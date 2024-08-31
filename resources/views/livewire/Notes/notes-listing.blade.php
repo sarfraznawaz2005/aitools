@@ -75,10 +75,10 @@
                 <livewire:apikeys.api-key-banner/>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8 mt-8 px-8" style="align-items: start;">
+            <div class="flex flex-wrap gap-6 mb-8 mt-8 px-8">
                 @foreach($this->notes as $note)
                     <div
-                        class="p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg transition-shadow border relative flex flex-col"
+                        class="flex-grow flex-shrink-0 basis-[calc(50%-1.5rem)] p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg transition-shadow border relative flex flex-col"
                         wire:key="note-{{$note->id}}">
                         <div class="relative min-h-10">
 
@@ -118,21 +118,21 @@
                                     <div
                                         class="relative"
                                         @mouseenter="
-                                            clearTimeout(subMenuTimer);
-                                            subOpen = true;
-                                            subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);
-                                            subMenuBottom = (window.innerHeight - $el.getBoundingClientRect().bottom < 150);
-                                            "
+                                clearTimeout(subMenuTimer);
+                                subOpen = true;
+                                subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);
+                                subMenuBottom = (window.innerHeight - $el.getBoundingClientRect().bottom < 150);
+                                "
                                         @mouseleave="
-                                            subMenuTimer = setTimeout(() => { subOpen = false }, 200);
-                                        "
+                                subMenuTimer = setTimeout(() => { subOpen = false }, 200);
+                            "
                                     >
                                         <a href="#" @click.prevent="subOpen = !subOpen"
                                            class="px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center justify-between">
-                                            <span>
-                                                <x-icons.share class="inline-block mr-2 text-gray-400"/>
-                                                Move
-                                            </span>
+                                <span>
+                                    <x-icons.share class="inline-block mr-2 text-gray-400"/>
+                                    Move
+                                </span>
                                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
                                                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -145,11 +145,11 @@
                                             @mouseenter="clearTimeout(subMenuTimer)"
                                             @mouseleave="subMenuTimer = setTimeout(() => { subOpen = false }, 200)"
                                             :class="{
-                                                'right-full': subMenuLeft,
-                                                'left-full': !subMenuLeft,
-                                                'bottom-full': subMenuBottom,
-                                                'top-0': !subMenuBottom
-                                            }"
+                                    'right-full': subMenuLeft,
+                                    'left-full': !subMenuLeft,
+                                    'bottom-full': subMenuBottom,
+                                    'top-0': !subMenuBottom
+                                }"
                                             class="absolute z-50 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
                                         >
                                             @foreach($this->folders as $folderItem)
@@ -182,6 +182,7 @@
                     </div>
                 @endforeach
             </div>
+
 
 
         </main>
