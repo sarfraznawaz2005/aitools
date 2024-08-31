@@ -81,10 +81,10 @@
                                     >
                                         <a href="#" @click.prevent="subOpen = !subOpen"
                                            class="px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center justify-between">
-                                <span>
-                                    <x-icons.share class="inline-block mr-2 text-gray-400"/>
-                                    Move
-                                </span>
+                                            <span>
+                                                <x-icons.share class="inline-block mr-2 text-gray-400"/>
+                                                Move
+                                            </span>
                                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
                                                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -126,7 +126,7 @@
 
                             <div class="w-full text-sm">
                                 <span class="font-semibold text-gray-700">{{$note->title}}</span>
-                                <p class="mt-2 content text-gray-600 prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
+                                <p class="mt-4 content text-sm text-gray-600 prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
                                     {!! $note->content !!}
                                 </p>
                             </div>
