@@ -82,8 +82,9 @@
                         wire:key="note-{{$note->id}}">
                         <div class="relative min-h-10">
 
-                            <div x-data="{ open: false, subOpen: false, subMenuLeft: false, subMenuBottom: false, subMenuTimer: null }"
-                                 class="absolute top-0 right-0" x-cloak x-init="
+                            <div
+                                x-data="{ open: false, subOpen: false, subMenuLeft: false, subMenuBottom: false, subMenuTimer: null }"
+                                class="absolute top-0 right-0" x-cloak x-init="
                                     $nextTick(() => { open = false; subOpen = false; subMenuLeft = false; subMenuBottom = false; });
 
                                     $wire.on('updated', () => {
@@ -182,8 +183,6 @@
                     </div>
                 @endforeach
             </div>
-
-
 
         </main>
     </div>
