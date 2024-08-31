@@ -15,7 +15,7 @@ class ScheduleServiceProvider extends ServiceProvider
 {
     public function boot(Schedule $schedule): void
     {
-        config(['app.timezone' => System::timezone()]); // via nativephp
+        config(['app.timezone' => System::timezone() ?? 'Asia/Karachi']); // via nativephp
 
         // note reminders
         $schedule->command('app:send-note-reminders')->everyMinute();

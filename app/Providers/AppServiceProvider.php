@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
         // now doing directly from migration instead: database/migrations/2024_08_15_074354_create_bots_table.php:27
         //Artisan::call('native:db:seed --force');
 
-        config(['app.timezone' => System::timezone()]); // via nativephp
+        config(['app.timezone' => System::timezone() ?? 'Asia/Karachi']); // via nativephp
 
         $this->registerCustomValidators();
     }
