@@ -86,7 +86,7 @@
                     <li>
                         <a href="#"
                            wire:click.prevent="toggleFavorite({{$conversationItem->id}}); openDropdown = null;"
-                           class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                           class="block w-full px-3 py-2 text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                             <x-icons.star class="inline-block mr-2 text-gray-500"/>
                             {{$conversationItem->favorite ? 'Un-favorite' : 'Favorite'}}
                         </a>
@@ -94,7 +94,7 @@
                     <li>
                         <a href="#"
                            @click.prevent="startEdit(); openDropdown = null;"
-                           class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                           class="block w-full px-3 py-2 text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                             <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                             Rename
                         </a>
@@ -102,14 +102,14 @@
                     <li>
                         <a href="#"
                            wire:click.prevent="toggleArchived({{$conversationItem->id}}); openDropdown = null;"
-                           class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                           class="block w-full px-3 py-2 text-gray-700 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
                             <x-icons.archive class="inline-block mr-2 text-gray-500"/>
                             {{$conversationItem->archived ? 'Un-archive' : 'Archive'}}
                         </a>
                     </li>
                     <li>
                         <x-confirm-dialog call="delete({{$conversationItem->id}})" title="Delete"
-                                          class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
+                                          class="px-3 py-2 text-left block bg-white hover:bg-gray-100 w-full">
                             <x-icons.delete class="inline-block mr-2 text-red-500"/>
                             Delete
                         </x-confirm-dialog>

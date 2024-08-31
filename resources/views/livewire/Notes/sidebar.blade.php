@@ -47,7 +47,7 @@
                                 <a href="#"
                                    wire:click.prevent="editFolder({{$folderItem->id}})"
                                    @click.prevent="openDropdown = false;"
-                                   class="block w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                   class="block w-full px-3 py-2 text-gray-700 hover:bg-gray-100">
                                     <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                     Edit
                                 </a>
@@ -55,7 +55,7 @@
                             <li>
                                 <x-confirm-dialog call="deleteFolder({{$folderItem->id}})"
                                                   text="Are you sure you want to delete? This will delete all notes in this folder!"
-                                                  class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
+                                                  class="px-3 py-2 text-left block bg-white hover:bg-gray-100 w-full">
                                     <x-icons.delete class="inline-block mr-2 text-red-500"/>
                                     Delete
                                 </x-confirm-dialog>

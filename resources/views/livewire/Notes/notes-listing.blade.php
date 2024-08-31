@@ -78,7 +78,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-8 px-8">
 
                 @foreach($this->notes as $note)
-                    <div class="p-4 bg-white rounded-lg transition-shadow shadow-lg relative flex flex-col"
+                    <div class="p-4 bg-white rounded-lg transition-shadow shadow relative flex flex-col"
                          wire:key="note-{{$note->id}}">
 
                         <div class="relative min-h-24 max-h-24">
@@ -108,10 +108,10 @@
                                     x-show="open"
                                     @click.away="open = false"
                                     @click.outside="open = false"
-                                    class="absolute right-[4px] top-6 z-50 w-32 bg-white shadow-lg"
+                                    class="absolute right-[4px] top-6 z-50 w-32 bg-white text-xs shadow-lg"
                                 >
                                     <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                       class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
                                         Edit
                                     </a>
@@ -121,7 +121,7 @@
                                         @mouseleave="subOpen = false"
                                     >
                                         <a href="#" @click.prevent="subOpen = !subOpen"
-                                           class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-between">
+                                           class="px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center justify-between">
                                             <span>
                                                 <x-icons.share class="inline-block mr-2 text-gray-400"/>
                                                 Move
@@ -141,7 +141,7 @@
                                                 @if($folderItem->id !== $folder->id)
                                                     <a wire:key="mvfolder-{{$folderItem->id}}" href="#"
                                                        wire:click.prevent="moveToFolder({{$folderItem->id}}, {{$note->id}})"
-                                                       class="block px-4 py-2 font-[500] text-sm hover:bg-gray-100 {{$folderItem->color}}">
+                                                       class="block px-4 py-2 font-[500] hover:bg-gray-100 {{$folderItem->color}}">
                                                         {{$folderItem->name}}
                                                     </a>
                                                 @endif
@@ -150,16 +150,16 @@
                                     </div>
                                     <x-confirm-dialog
                                         call="deleteNote({{$note->id}}); open = false"
-                                        class="px-3 py-2 text-left block text-sm bg-white hover:bg-gray-100 w-full">
+                                        class="px-3 py-2 text-left block bg-white hover:bg-gray-100 w-full">
                                         <x-icons.delete class="inline-block mr-2 ml-1 text-red-500"/>
                                         Delete
                                     </x-confirm-dialog>
                                 </div>
                             </div>
 
-                            <div class="w-full">
-                                <span class="text-sm font-semibold text-gray-700">{{$note->title}}</span>
-                                <p class="mt-2 text-gray-600 text-sm">
+                            <div class="w-full text-sm">
+                                <span class="font-semibold text-gray-700">{{$note->title}}</span>
+                                <p class="mt-2 text-gray-600">
                                     {{Str::limit($note->content, 100)}}
                                 </p>
                             </div>
