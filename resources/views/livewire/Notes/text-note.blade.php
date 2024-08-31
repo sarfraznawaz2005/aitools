@@ -58,7 +58,7 @@
                 <div class="mb-4">
                     <div class="flex">
                         <input type="checkbox"
-                               wire:model.change="isRecurring"
+                               wire:model.change="is_recurring"
                                class="shrink-0 mt-0.5 cursor-pointer border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                id="recurring_checkbox">
                         <label for="recurring_checkbox" class="cursor-pointer text-sm text-gray-500 ms-3">
@@ -67,9 +67,9 @@
                     </div>
                 </div>
 
-                @if($isRecurring)
+                @if($is_recurring)
                     <div class="mb-4">
-                        <select wire:model.change="recurringFrequency"
+                        <select wire:model.change="recurring_frequency"
                                 class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
                             <option value="">Select Frequency</option>
                             <option value="hourly">Hourly</option>
@@ -80,7 +80,7 @@
                         </select>
                     </div>
 
-                    @if($recurringFrequency)
+                    @if($recurring_frequency)
                         <div class="mb-4">
                             <p class="text-sm text-gray-500">
                                 Schedule:

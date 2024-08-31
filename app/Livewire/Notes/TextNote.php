@@ -25,9 +25,9 @@ class TextNote extends Component
     public string $title = '';
     public string $content = '';
     public string $reminder_datetime = '';
-    public ?string $recurringFrequency = null;
+    public ?string $recurring_frequency = null;
     public bool $hasReminder = false;
-    public bool $isRecurring = false;
+    public bool $is_recurring = false;
 
     public function mount(): void
     {
@@ -43,6 +43,8 @@ class TextNote extends Component
     #[On('openTextNoteModal')]
     public function openTextNoteModal(): void
     {
+        $this->hasReminder = false;
+
         $this->resetForm();
 
         $this->dispatch('showModal', ['id' => 'textNoteModal']);
@@ -51,12 +53,12 @@ class TextNote extends Component
     #[On('openTextNoteModalEdit')]
     public function openTextNoteModalEdit(Note $note): void
     {
-        $this->hasReminder = false;
-
         $this->note = $note;
 
-        if ($note->reminder_at && $note->reminder_at !== '') {
+        $this->hasReminder = false;
+        if ($note->reminder_at && $note->reminder_at !== '' && $note->reminder_at !== null) {
             $this->hasReminder = true;
+            $this->reminder_datetime = $note->reminder_at;
         }
 
         $this->fill($note->toArray());
@@ -71,7 +73,7 @@ class TextNote extends Component
             'title' => 'required|min:4',
             'content' => 'required|min:5',
             'reminder_datetime' => 'required_if:hasReminder,true',
-            'recurringFrequency' => 'required_if:isRecurring,true',
+            'recurring_frequency' => 'required_if:is_recurring,true',
         ];
     }
 
@@ -79,7 +81,7 @@ class TextNote extends Component
     {
         return [
             'reminder_datetime.required_if' => 'The reminder date & time field is required when setting a reminder.',
-            'recurringFrequency.required_if' => 'The frequency field is required for recurring reminders.',
+            'recurring_frequency.required_if' => 'The frequency field is required for recurring reminders.',
         ];
     }
 
@@ -92,8 +94,8 @@ class TextNote extends Component
             'title' => $this->title,
             'content' => $this->content,
             'reminder_at' => $this->hasReminder ? $this->reminder_datetime ?? null : null,
-            'is_recurring' => $this->isRecurring,
-            'recurring_frequency' => $this->isRecurring ? $this->recurringFrequency : null,
+            'is_recurring' => $this->is_recurring,
+            'recurring_frequency' => $this->is_recurring ? $this->recurring_frequency : null,
         ])->save();
 
         $this->success($this->note->wasRecentlyCreated ? 'Note added successfully!' : 'Note saved successfully!');
@@ -107,15 +109,15 @@ class TextNote extends Component
     #[Computed]
     public function schedulePreview(): string
     {
-        if (!$this->hasReminder || !$this->reminder_datetime || !$this->isRecurring || !$this->recurringFrequency) {
+        if (!$this->hasReminder || !$this->reminder_datetime || !$this->is_recurring || !$this->recurring_frequency) {
             return '';
         }
 
         try {
             $startDateTime = Carbon::parse($this->reminder_datetime);
-            $cronExpression = $this->generateCronExpression($this->recurringFrequency, $startDateTime);
+            $cronExpression = $this->generateCronExpression($this->recurring_frequency, $startDateTime);
 
-            if ($this->recurringFrequency === 'hourly') {
+            if ($this->recurring_frequency === 'hourly') {
                 $humanReadable = "Every hour on " . $startDateTime->format('d M Y');
             } else {
                 $humanReadable = CronTranslator::translate($cronExpression);
@@ -130,7 +132,7 @@ class TextNote extends Component
     #[Computed]
     public function nextRuns(): array
     {
-        if (!$this->hasReminder || !$this->reminder_datetime || !$this->isRecurring || !$this->recurringFrequency) {
+        if (!$this->hasReminder || !$this->reminder_datetime || !$this->is_recurring || !$this->recurring_frequency) {
             return [];
         }
 
@@ -138,7 +140,7 @@ class TextNote extends Component
             $nextRuns = [];
             $startDateTime = Carbon::parse($this->reminder_datetime);
 
-            if ($this->recurringFrequency === 'hourly') {
+            if ($this->recurring_frequency === 'hourly') {
                 // Manually generate the next hourly runs for the specified date
                 $date = $startDateTime;
                 for ($i = 0; $i < 3; $i++) {
@@ -149,7 +151,7 @@ class TextNote extends Component
                 }
             } else {
                 // Use CronExpression for non-hourly frequencies
-                $cronExpression = new CronExpression($this->generateCronExpression($this->recurringFrequency, $startDateTime));
+                $cronExpression = new CronExpression($this->generateCronExpression($this->recurring_frequency, $startDateTime));
                 $date = $startDateTime;
 
                 for ($i = 0; $i < 3; $i++) {
@@ -183,7 +185,7 @@ class TextNote extends Component
 
     public function resetForm(): void
     {
-        $this->reset(['title', 'content', 'reminder_datetime', 'isRecurring', 'recurringFrequency']);
+        $this->reset(['title', 'content', 'reminder_datetime', 'is_recurring', 'recurring_frequency']);
 
         $this->resetErrorBag();
 
