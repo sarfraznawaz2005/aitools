@@ -1,9 +1,10 @@
 <div>
+
     <div class="flex bg-white">
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-12 mb-14 border-l {{$folder->getBorderColor()}}">
+        <main class="flex-1 pt-12 pb-12 border-l {{$folder->getBorderColor()}}">
 
             <div
                 class="flex justify-between items-center w-full shadow-lg sticky top-12 z-40 px-8 p-3 mb-4 border-b {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
@@ -175,7 +176,7 @@
 
                             <div class="w-full text-sm">
                                 <span class="font-semibold text-gray-700">{{$note->title}}</span>
-                                <p class="mt-2 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
+                                <p class="mt-2 content text-gray-600 prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
                                     {!! $note->content !!}
                                 </p>
                             </div>
