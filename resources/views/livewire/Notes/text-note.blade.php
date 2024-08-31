@@ -28,15 +28,24 @@
                     x-data
                     x-ref="quillEditor"
                     x-init="
-                        quill = new Quill(
-                            $refs.quillEditor,
-                            {theme: 'snow', placeholder: 'Contents...'}
-                        );
+                    quill = new Quill($refs.quillEditor, {
+                        theme: 'snow',
+                        placeholder: 'Contents...'
+                    });
 
-                        quill.on('text-change', function () {
-                            $dispatch('input', quill.root.innerHTML);
-                        });
-                       "
+                    // Set initial content from Livewire
+                    quill.root.innerHTML = $wire.get('content');
+
+                    // Watch for changes in the Livewire 'content' property and update Quill
+                    $watch('$wire.content', value => {
+                        quill.root.innerHTML = value;
+                    });
+
+                    // Update the Livewire 'content' property when Quill content changes
+                    quill.on('text-change', function () {
+                        $dispatch('input', quill.root.innerHTML);
+                    });
+                   "
                     wire:model.debounce.500ms="content"
                 >
                 </div>
