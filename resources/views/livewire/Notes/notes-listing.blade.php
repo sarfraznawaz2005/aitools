@@ -12,6 +12,12 @@
                     {{$folder->name}} ({{$folder->notes->count()}})
                 </div>
 
+                <div>
+                    <input type="text" wire:model.live.debounce.500ms="searchQuery"
+                           placeholder="Search content..."
+                           class="py-2 px-4 block w-full bg-white border-transparent text-center rounded-full text-sm focus:ring-0"/>
+                </div>
+
                 <button
                     wire:click.prevent="$dispatch('openTextNoteModal')"
                     type="button"
@@ -133,6 +139,11 @@
                         </div>
                     </div>
                 @endforeach
+
+                <div class="items-center justify-center w-full">
+                    {{ $this->notes->links() }}
+                </div>
+
             </div>
 
         </main>

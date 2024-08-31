@@ -5,15 +5,18 @@ namespace App\Livewire\Notes;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class NotesListing extends Component
 {
     use InteractsWithToast;
+    use WithPagination;
 
     #[Title('Smart Notes')]
     public NoteFolder $folder;
@@ -22,6 +25,11 @@ class NotesListing extends Component
         'folderUpdated' => '$refresh',
         'notesUpdated' => '$refresh',
     ];
+
+    public string $searchQuery = '';
+
+    public string $sortField = 'id';
+    public bool $sortAsc = false;
 
     public function mount(NoteFolder $folder): void
     {
@@ -37,9 +45,16 @@ class NotesListing extends Component
     }
 
     #[Computed]
-    public function notes(): Collection
+    public function notes(): LengthAwarePaginator
     {
-        return $this->folder->notes()->latest()->get();
+        return $this->folder->notes()
+            ->where(function ($query) {
+                $query->where('content', 'like', '%' . $this->searchQuery . '%')
+                    ->orWhere('title', 'like', '%' . $this->searchQuery . '%');
+            })
+            ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+            ->paginate(10);
+
     }
 
     #[On('folderDeleted')]
