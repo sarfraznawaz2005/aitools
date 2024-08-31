@@ -53,8 +53,7 @@ class TextNote extends Component
     #[On('openTextNoteModalEdit')]
     public function openTextNoteModalEdit(Note $note): void
     {
-        $this->resetErrorBag();
-        $this->resetValidation();
+        $this->resetForm();
 
         $this->note = $note;
 
