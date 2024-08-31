@@ -1,4 +1,10 @@
 <div>
+
+    <div wire:ignore>
+        <script src="{{asset('/assets/js/quill/quill.js')}}"></script>
+        <link href="{{asset('/assets/js/quill/quill.snow.css')}}" rel="stylesheet">
+    </div>
+
     <div class="flex">
         <livewire:notes.sidebar/>
 
