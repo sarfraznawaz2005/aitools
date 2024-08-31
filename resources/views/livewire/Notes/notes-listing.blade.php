@@ -119,14 +119,14 @@
                                     <div
                                         class="relative"
                                         @mouseenter="
-                                clearTimeout(subMenuTimer);
-                                subOpen = true;
-                                subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);
-                                subMenuBottom = (window.innerHeight - $el.getBoundingClientRect().bottom < 150);
-                                "
+                                            clearTimeout(subMenuTimer);
+                                            subOpen = true;
+                                            subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);
+                                            subMenuBottom = (window.innerHeight - $el.getBoundingClientRect().bottom < 150);
+                                            "
                                         @mouseleave="
-                                subMenuTimer = setTimeout(() => { subOpen = false }, 200);
-                            "
+                                            subMenuTimer = setTimeout(() => { subOpen = false }, 200);
+                                        "
                                     >
                                         <a href="#" @click.prevent="subOpen = !subOpen"
                                            class="px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center justify-between">
@@ -146,11 +146,11 @@
                                             @mouseenter="clearTimeout(subMenuTimer)"
                                             @mouseleave="subMenuTimer = setTimeout(() => { subOpen = false }, 200)"
                                             :class="{
-                                    'right-full': subMenuLeft,
-                                    'left-full': !subMenuLeft,
-                                    'bottom-full': subMenuBottom,
-                                    'top-0': !subMenuBottom
-                                }"
+                                                'right-full': subMenuLeft,
+                                                'left-full': !subMenuLeft,
+                                                'bottom-full': subMenuBottom,
+                                                'top-0': !subMenuBottom
+                                            }"
                                             class="absolute z-50 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
                                         >
                                             @foreach($this->folders as $folderItem)
