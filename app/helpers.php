@@ -1,7 +1,5 @@
 <?php
 /*
- * note reminders work fine
- * images | attach files?
  * search, sort, filter
  * backup to one drive, etc
  * empty title on icon hover

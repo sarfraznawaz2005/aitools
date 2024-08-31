@@ -26,9 +26,4 @@ class NoteWindow extends Component
 
         return view('livewire.pages.note-window', compact('note'));
     }
-
-    public function close(): void
-    {
-        Window::close('note');
-    }
 }

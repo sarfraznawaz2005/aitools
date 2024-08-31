@@ -25,6 +25,8 @@ class NotesListing extends Component
 
     public function mount(NoteFolder $folder): void
     {
+        openWindow('note', 'note-window', ['id' => 1]);
+
         $this->folder = $folder;
     }
 
