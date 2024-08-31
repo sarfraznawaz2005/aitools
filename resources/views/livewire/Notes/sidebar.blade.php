@@ -10,11 +10,12 @@
                                 ">
         <ul class="space-y-0.5 bg-white">
 
-            <li class="mx-2 mb-2">
-                <x-gradient-button class="w-full" href="#" wire:click.prevent="addFolder()">
+            <li class="mx-2">
+                <button type="button" wire:click.prevent="addFolder()"
+                        class="py-2 px-2 w-full bg-gradient-to-r bg-gray-200 hover:bg-gray-300 inline-flex items-center gap-x-1 justify-center text-sm font-medium rounded-lg border border-transparent text-gray-800 focus:outline-none focus:bg-gray-200">
                     <x-icons.plus/>
-                    New Folder
-                </x-gradient-button>
+                    Add Folder
+                </button>
             </li>
 
             @foreach($this->folders as $folderItem)

@@ -88,21 +88,24 @@
                     </div>
 
                     <div>
-                        <button
-                            wire:click.prevent="$dispatch('openTextNoteModal')"
-                            type="button"
-                            class="py-2 px-2 inline-flex items-center rounded-full gap-x-1 pr-4 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                        >
+                        <x-gradient-button class="w-full" href="#" wire:click.prevent="$dispatch('openTextNoteModal')">
                             <x-icons.plus/>
                             Add Note
-                        </button>
+                        </x-gradient-button>
                     </div>
                 </div>
 
                 <div>
                     <input type="text" wire:model.live.debounce.500ms="searchQuery"
                            placeholder="Search Content..."
-                           class="py-2 px-4 block w-full bg-white border-transparent text-center rounded-full text-sm focus:ring-0"/>
+                           class="py-2 px-4 shadow block w-full min-w-60 bg-white border-transparent text-center rounded-lg text-sm focus:ring-0"/>
+                </div>
+
+                <div>
+                    <button type="button" class="py-2 px-4 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                        <x-icons.chat class="size-4"/>
+                        Chat With Your Notes
+                    </button>
                 </div>
 
             </div>
