@@ -93,6 +93,7 @@
                     <option value="text-cyan-600" class="text-cyan-600">Cyan</option>
                     <option value="text-green-600" class="text-green-600">Green</option>
                     <option value="text-purple-600" class="text-purple-600">Purple</option>
+                    <option value="text-indigo-600" class="text-indigo-600">Indigo</option>
                     <option value="text-red-600" class="text-red-600">Red</option>
                     <option value="text-yellow-600" class="text-yellow-600">Yellow</option>
                     <option value="text-orange-600" class="text-orange-600">Orange</option>

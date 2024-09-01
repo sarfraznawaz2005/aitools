@@ -31,9 +31,13 @@
                         <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
                             <h3 class="font-semibold">Oops!</h3>
                             <ul class="mt-2">
-                                @foreach ($linkErrors['link'] as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                                @if(is_array($linkErrors['link']))
+                                    @foreach ($linkErrors['link'] as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                @else
+                                    <li>{{ $linkErrors['link'] }}</li>
+                                @endif
                             </ul>
                         </div>
                     @endif

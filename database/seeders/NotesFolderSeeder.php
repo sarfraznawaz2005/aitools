@@ -53,5 +53,10 @@ class NotesFolderSeeder extends Seeder
             'name' => 'Reminders',
             'color' => 'text-orange-600',
         ]);
+
+        NoteFolder::query()->create([
+            'name' => 'Links',
+            'color' => 'text-indigo-600',
+        ]);
     }
 }
