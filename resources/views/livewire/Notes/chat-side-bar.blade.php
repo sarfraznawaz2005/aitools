@@ -1,5 +1,5 @@
 <div>
-    <div x-data="{ open: true }">
+    <div x-data="{ open: false }">
         <button type="button" @click="open = true"
                 class="py-2 px-4 mr-2 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
             <x-icons.chat class="size-4"/>
