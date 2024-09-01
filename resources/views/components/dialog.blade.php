@@ -19,17 +19,13 @@
     x-transition:enter="ease-out duration-200"
     x-transition:leave="ease-in duration-100"
     x-cloak
-    class="fixed inset-0 z-[100] flex justify-center"
+    class="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm"
     :id="dialogId"
     {{ $attributes->merge(['wire:key' => 'dialog-'.$dialogId]) }}
 >
-    <template x-if="open">
-        <div class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" @click="open = false"></div>
-    </template>
-
     <div
         :style="{ width: width, top: '15%' }"
-        class="absolute bg-white rounded-lg z-50 shadow-lg p-4 mx-4"
+        class="absolute bg-white rounded-lg z-[100] shadow-lg p-4 mx-4"
         @click.away="open = false"
     >
 

@@ -80,8 +80,8 @@
                     @foreach($groupedApiKeys as $apiKey)
                         <li
                             wire:click="setModel('{{ $apiKey->model_name }}'); open = false;"
-                            class="ml-4 text-sm cursor-pointer py-1.5
-                            {{$apiKey->model_name === $selectedModel ? 'text-blue-500' : 'text-gray-500'}}
+                            class="ml-4 text-sm cursor-pointer py-1.5 text-gray-500
+                            {{$apiKey->model_name === $selectedModel ? 'font-bold pointer-events-none' : ''}}
                             hover:text-blue-600 p-1 list-disc list-inside whitespace-nowrap"
                         >
                             {{ $apiKey->model_name }}
