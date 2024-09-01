@@ -60,7 +60,7 @@
                             >
                                 <div class="py-2 first:pt-0 last:pb-0 rounded-lg border">
                                     @foreach($this->apiKeys->groupBy('llm_type') as $llmType => $groupedApiKeys)
-                                        <ul class="m-2">
+                                        <ul class="m-3">
                                             <li class="font-bold text-sm text-gray-500 whitespace-nowrap">
                                                 {{ $llmType }}
                                             </li>
