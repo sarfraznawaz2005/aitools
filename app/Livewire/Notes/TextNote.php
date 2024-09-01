@@ -9,10 +9,12 @@ use Carbon\Carbon;
 use Cron\CronExpression;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Lorisleiva\CronTranslator\CronTranslator;
+use Pforret\PfArticleExtractor\ArticleExtractor;
 
 class TextNote extends Component
 {
@@ -27,9 +29,10 @@ class TextNote extends Component
     public ?string $recurring_frequency = null;
     public bool $is_recurring = false;
 
-    public string $link = '';
     public string $reminder_datetime = '';
     public bool $hasReminder = false;
+
+    public array $linkErrors = [];
 
     public function mount(): void
     {
@@ -68,6 +71,37 @@ class TextNote extends Component
         $this->fill($note->toArray());
 
         $this->dispatch('showModal', ['id' => 'textNoteModal']);
+    }
+
+    #[On('fetchLink')]
+    public function fetchLink(string $link): void
+    {
+        $validator = Validator::make(['link' => $link], [
+            'link' => 'required|url',
+        ]);
+
+        if ($validator->fails()) {
+            $this->linkErrors = $validator->errors()->toArray();
+            return;
+        }
+
+        try {
+            $html = fetchUrlContent($link);
+
+            if (!$html) {
+                $this->linkErrors = ['link' => 'Failed to fetch content from the provided link.'];
+                return;
+            }
+
+            $articleData = ArticleExtractor::getArticle($html);
+
+            $this->title = $articleData->title ?? '';
+            $this->content = $articleData->content ?? '';
+
+            $this->linkErrors = [];
+        } catch (Exception) {
+            $this->linkErrors = ['link' => 'Failed to fetch content from the provided link.'];
+        }
     }
 
     public function saveNote(): void

@@ -26,9 +26,41 @@
                 </div>
 
                 <x-dialog dialogId="linkdialog">
-                    <input placeholder="Enter Link" wire:model="link" type="url"
-                           autofocus
-                           class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+
+                    @if (!empty($linkErrors['link']))
+                        <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                            <h3 class="font-semibold">Oops!</h3>
+                            <ul class="mt-2">
+                                @foreach ($linkErrors['link'] as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div class="p-1.5 flex flex-col sm:flex-row items-center gap-2 border border-gray-300 rounded-lg"
+                         x-data>
+                        <div class="relative w-full">
+                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3">
+                                <x-icons.link class="shrink-0 size-4 text-gray-400"/>
+                            </div>
+                            <input type="url" autofocus id="fetchUrl" x-ref="fetchUrl"
+                                   class="py-2 ps-9 pe-3 block w-full border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
+                                   placeholder="Enter Link">
+                        </div>
+                        <button
+                            @click="$dispatch('fetchLink', { link: $refs.fetchUrl.value })"
+                            class="w-full sm:w-auto whitespace-nowrap py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-gray-600 text-white hover:bg-blue-700 focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
+                            Fetch
+                            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"/>
+                                <path d="m12 5 7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+
                 </x-dialog>
             </div>
 

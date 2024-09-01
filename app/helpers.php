@@ -200,3 +200,40 @@ function closeWindow(string $id): void
 {
     Window::close($id);
 }
+
+function fetchUrlContent($url): bool|string
+{
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0');
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+
+    // Optional: Set headers if needed (e.g., for APIs)
+    // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    //     'Accept: application/json',
+    //     'Content-Type: application/json',
+    // ));
+
+    $response = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        Log::error(curl_error($ch));
+        curl_close($ch);
+        return false;
+    }
+
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    // Check if the response was successful (status code 200-299)
+    if ($httpCode >= 200 && $httpCode < 300) {
+        return $response;
+    } else {
+        Log::error('HTTP error: ' . $httpCode);
+        return false;
+    }
+}
