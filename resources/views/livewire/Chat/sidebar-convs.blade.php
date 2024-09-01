@@ -60,12 +60,12 @@
                          @blur="stopEdit"
                          @keydown="handleKeyDown"
                          contenteditable="true"
-                         class="items-center py-2 px-3 flex-nowrap text-sm text-gray-700 block w-full outline-none bg-yellow-50 rounded">
+                         class="items-center w-full p-3 flex-nowrap text-sm text-gray-700 block border focus:outline-gray-400 bg-yellow-50">
                         {{$conversationItem->title ?? "Conversation #" . $conversationItem->id}}
                     </div>
                 </div>
 
-                <div class="flex justify-end items-center mr-2">
+                <div class="flex justify-end items-center mr-2" x-show="!editable">
                     @if($conversationItem->favorite)
                         <x-icons.star class="inline-block text-gray-500 size-4 mt-1" viewBox="0 0 24 24"/>
                     @endif
