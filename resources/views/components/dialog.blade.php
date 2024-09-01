@@ -20,7 +20,7 @@
     x-transition:leave="ease-in duration-100"
 
     x-cloak
-    class="fixed inset-0 z-50 flex items-center justify-center"
+    class="fixed inset-0 z-[100] flex items-center justify-center"
     :id="dialogId"
     {{ $attributes->merge(['wire:key' => 'dialog-'.$dialogId]) }}
 >
