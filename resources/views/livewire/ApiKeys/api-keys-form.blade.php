@@ -156,7 +156,7 @@
                    placeholder="Model Name"
                    class="peer p-3 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
 
-            <div class="mt-2 text-xs text-gray-400 dark:text-neutral-500">
+            <div class="mt-2 text-xs text-gray-500">
                 <button class="text-blue-500 text-xs ml-2" @click.prevent="$dispatch('open-dialog', { id: 'apidialog' })">
                     See Current Models
                 </button>
@@ -168,7 +168,7 @@
                             <h3 class="font-semibold text-base mb-2">OpenAI</h3>
                             <ul class="ml-4 space-y-2">
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -181,7 +181,7 @@
                                     </span>
                                 </li>
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -194,7 +194,7 @@
                                     </span>
                                 </li>
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -207,7 +207,7 @@
                                     </span>
                                 </li>
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -225,7 +225,7 @@
                             <h3 class="font-semibold text-base mb-2">Google</h3>
                             <ul class="ml-4 space-y-2">
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -238,7 +238,7 @@
                                     </span>
                                 </li>
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -251,7 +251,7 @@
                                     </span>
                                 </li>
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -264,7 +264,7 @@
                                     </span>
                                 </li>
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-4000 rounded-full mr-2"></span>
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
@@ -282,7 +282,7 @@
                             <h3 class="font-semibold text-base mb-2">Ollama</h3>
                             <ul class="ml-4 space-y-2">
                                 <li class="flex items-center">
-                                    <span class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mr-2"></span>
+                                    <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span>
                                     <span class="text-sm">Models you have downloaded on your PC.</span>
                                 </li>
                             </ul>
