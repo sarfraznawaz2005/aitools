@@ -8,7 +8,7 @@
 
             <div
                 style="top: 50px;"
-                class="flex justify-between items-center w-full shadow-lg sticky z-40 py-2 px-4 mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
+                class="flex justify-between items-center w-full shadow-lg sticky z-10 py-2 px-4 mb-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
 
                 <div class="flex items-center justify-between">
 
