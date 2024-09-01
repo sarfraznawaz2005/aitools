@@ -99,6 +99,8 @@ class TextNote extends Component
             $this->content = $articleData->content ?? '';
 
             $this->linkErrors = [];
+
+            $this->dispatch('close-dialog', id: 'linkdialog');
         } catch (Exception) {
             $this->linkErrors = ['link' => 'Failed to fetch content from the provided link.'];
         }
