@@ -76,6 +76,9 @@ class TextNote extends Component
     #[On('fetchLink')]
     public function fetchLink(string $link): void
     {
+        $this->title = '';
+        $this->content = '';
+        
         $validator = Validator::make(['link' => $link], [
             'link' => 'required|url',
         ]);
@@ -86,10 +89,11 @@ class TextNote extends Component
         }
 
         try {
+
             $html = fetchUrlContent($link);
 
             if (!$html) {
-                $this->linkErrors = ['link' => 'Failed to fetch content from the provided link.'];
+                $this->linkErrors = ['link' => 'Failed to fetch content from the provided link, please try again.'];
                 return;
             }
 
@@ -104,7 +108,7 @@ class TextNote extends Component
 
             $this->dispatch('close-dialog', id: 'linkdialog');
         } catch (Exception) {
-            $this->linkErrors = ['link' => 'Failed to fetch content from the provided link.'];
+            $this->linkErrors = ['link' => 'Failed to fetch content from the provided link, please try again.'];
         }
     }
 

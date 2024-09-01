@@ -29,7 +29,7 @@
     ></div>
 
     <div
-        :style="{ width: width, top: '30%' }"
+        :style="{ width: width, top: '15%' }"
         class="absolute bg-white rounded-lg shadow-lg p-4 mx-4"
         @click.away="open = false"
     >

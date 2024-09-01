@@ -19,7 +19,7 @@
             <div class="inline-block w-full">
                 <div class="flex justify-end">
                     <button type="button"
-                            @click.prevent="$dispatch('open-dialog', { id: 'linkdialog', width: '600px' })"
+                            @click.prevent="$wire.title = ''; $wire.content = ''; $dispatch('open-dialog', { id: 'linkdialog', width: '600px' })"
                             class="mb-2 inline-flex mr-1 items-center text-sm font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800">
                         Get From Link
                     </button>
@@ -29,7 +29,6 @@
 
                     @if (!empty($linkErrors['link']))
                         <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
-                            <h3 class="font-semibold">Oops!</h3>
                             <ul class="mt-2">
                                 @if(is_array($linkErrors['link']))
                                     @foreach ($linkErrors['link'] as $error)
