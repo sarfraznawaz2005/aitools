@@ -51,6 +51,10 @@
         <x-icons.dotsv/>
     </button>
 
+    <template x-if="open">
+        <div class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" @click="open = false"></div>
+    </template>
+
     <div
         x-cloak
         x-show="open"
@@ -62,7 +66,7 @@
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
         x-ref="dropdown"
-        class="absolute z-[100] bg-white shadow-2xl space-y-0.5 divide-y divide-gray-200 rounded-lg border"
+        class="absolute z-[1000] bg-white shadow-2xl space-y-0.5 divide-y divide-gray-200 rounded-lg border"
         style="min-width: max-content;"
         role="menu"
     >

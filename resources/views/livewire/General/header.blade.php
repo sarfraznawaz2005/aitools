@@ -7,7 +7,7 @@
     @if($showHeader)
         <!-- header start -->
         <header
-            class="top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm z-[80]"
+            class="top-0 inset-x-0 flex flex-wrap w-full bg-white text-sm z-[10]"
             style="position: fixed;">
             <nav class="flex basis-full items-center w-full mx-auto">
                 <div class="w-full flex items-center ms-auto justify-between">
