@@ -108,15 +108,18 @@
                                 </div>
                             </div>
 
-                            <div class="w-full text-sm">
-                                <span wire:click="viewNote({{$note->id}})"
-                                      class="font-semibold text-gray-700 cursor-pointer" x-data
-                                      x-tooltip.raw="click to view">
+                            <div class="w-full">
+                                <span x-data
+                                      wire:click="viewNote({{$note->id}})"
+                                      x-tooltip.raw="click to view"
+                                      class="font-semibold text-sm text-gray-700 cursor-pointer">
                                     {{$note->title}}
                                 </span>
-                                <p class="mt-4 content text-sm text-gray-600 prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
+                                <div
+                                    wire:click="viewNote({{$note->id}})"
+                                    class="mt-4 content text-sm text-gray-600 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
                                     {!! Str::limit($note->content, 1000) !!}
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
