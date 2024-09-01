@@ -18,7 +18,7 @@ class NoteFolder extends Model
     public function getBackGroundColor(): string
     {
         if ($this->color === 'text-gray-600') {
-            return 'bg-gray-100';
+            return 'bg-gray-200';
         }
 
         return str_replace(['text', '600'], ['bg', '50'], $this->color);
