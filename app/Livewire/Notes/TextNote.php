@@ -99,6 +99,8 @@ class TextNote extends Component
             $this->content = $articleData->content ?? '';
 
             $this->linkErrors = [];
+            unset($html);
+            unset($articleData);
 
             $this->dispatch('close-dialog', id: 'linkdialog');
         } catch (Exception) {
