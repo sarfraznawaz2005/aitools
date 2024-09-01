@@ -19,7 +19,7 @@
     x-transition:enter="ease-out duration-200"
     x-transition:leave="ease-in duration-100"
     x-cloak
-    class="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm"
+    class="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm w-screen h-screen"
     :id="dialogId"
     {{ $attributes->merge(['wire:key' => 'dialog-'.$dialogId]) }}
 >

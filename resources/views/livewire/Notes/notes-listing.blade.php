@@ -225,7 +225,7 @@
                     <div>
                         <input type="text" wire:model.live.debounce.500ms="searchQuery"
                                placeholder="Search Content..."
-                               class="py-2 px-4 block w-full min-w-60 bg-white shadow focus:outline-none border-none border-transparent outline-0 text-center rounded-full text-sm focus:ring-0"/>
+                               class="py-2 px-4 block w-full min-w-96 bg-white shadow focus:outline-none border-none border-transparent outline-0 text-center rounded-full text-sm focus:ring-0"/>
                     </div>
                 @endif
 
