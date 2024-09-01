@@ -34,23 +34,24 @@
             class="my-0.5 mt-0 conversation relative group hover:bg-gray-200 focus:outline-none {{$conversation && $conversation->id === $conversationItem->id ? 'bg-gray-200' : ''}}">
 
             <div class="flex justify-between">
-                <div class="w-full">
+                <div class="w-full flex items-center">
                     <a wire:navigate
                        x-show="!editable"
-                       class="items-center flex-nowrap text-sm text-gray-700 block w-full"
-                       style="padding: 8px 8px 7px 8px;"
+                       class="flex-nowrap text-sm text-gray-700 block w-full p-2"
                        href="{{route($tools['chat-buddy']['route'] . '.loadconversation', $conversationItem->id)}}">
 
-                        <div class="max-w-52 w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis items-center">
-                            <div class="inline-block text-base lg:text-2xl md:text-2xl xl:text-2xl mr-1">
+                        <div class="flex max-w-52 w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis items-center">
+                            <div class="inline-block lg:text-2xl md:text-2xl xl:text-2xl mr-1">
                                 <span class="inline-block">{{getBotIcon($conversationItem)}}</span>
                             </div>
 
-                            @if($conversationItem->title)
-                                {{ucwords($conversationItem->title)}}
-                            @else
-                                Conversation #{{$conversationItem->id}}
-                            @endif
+                            <div>
+                                @if($conversationItem->title)
+                                    {{ucwords($conversationItem->title)}}
+                                @else
+                                    Conversation #{{$conversationItem->id}}
+                                @endif
+                            </div>
                         </div>
                     </a>
 
