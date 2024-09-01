@@ -143,7 +143,7 @@
                                     x-show="open"
                                     @click.away="open = false"
                                     @click.outside="open = false"
-                                    class="absolute right-[4px] top-6 z-50 w-32 bg-white text-xs shadow-lg"
+                                    class="absolute right-[4px] top-6 z-20 w-32 bg-white text-xs shadow-lg"
                                 >
                                     <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"
                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
@@ -185,7 +185,7 @@
                                                 'bottom-full': subMenuBottom,
                                                 'top-0': !subMenuBottom
                                             }"
-                                            class="absolute z-50 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
+                                            class="absolute z-20 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
                                         >
                                             @foreach($this->folders as $folderItem)
                                                 @if($folderItem->id !== $folder->id)
