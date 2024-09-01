@@ -18,9 +18,8 @@
     x-show="open"
     x-transition:enter="ease-out duration-200"
     x-transition:leave="ease-in duration-100"
-
     x-cloak
-    class="fixed inset-0 z-[100] flex items-center justify-center"
+    class="fixed inset-0 z-[100] flex justify-center"
     :id="dialogId"
     {{ $attributes->merge(['wire:key' => 'dialog-'.$dialogId]) }}
 >
@@ -30,8 +29,8 @@
     ></div>
 
     <div
-        :style="{ width: width }"
-        class="relative bg-white rounded-lg shadow-lg p-4 mx-4"
+        :style="{ width: width, top: '30%' }"
+        class="absolute bg-white rounded-lg shadow-lg p-4 mx-4"
         @click.away="open = false"
     >
 
@@ -40,4 +39,3 @@
         </div>
     </div>
 </div>
-
