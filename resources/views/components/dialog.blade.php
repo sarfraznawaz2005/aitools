@@ -23,14 +23,13 @@
     :id="dialogId"
     {{ $attributes->merge(['wire:key' => 'dialog-'.$dialogId]) }}
 >
-    <div
-        class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-[2px]"
-        @click="open = false"
-    ></div>
+    <template x-if="open">
+        <div class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" @click="open = false"></div>
+    </template>
 
     <div
         :style="{ width: width, top: '15%' }"
-        class="absolute bg-white rounded-lg shadow-lg p-4 mx-4"
+        class="absolute bg-white rounded-lg z-50 shadow-lg p-4 mx-4"
         @click.away="open = false"
     >
 
