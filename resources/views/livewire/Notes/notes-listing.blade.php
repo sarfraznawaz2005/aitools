@@ -13,7 +13,7 @@
             <div class="flex flex-wrap gap-6 mb-20 mt-8 px-8">
                 @foreach($this->notes as $note)
                     <div
-                        class="flex-grow flex-shrink-0 basis-[calc(50%-1.5rem)] p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg transition-shadow border relative flex flex-col"
+                        class="flex-grow flex-shrink-0 basis-[calc(50%-1.5rem)] p-4 bg-gray-50 rounded-lg border relative flex flex-col"
                         wire:key="note-{{$note->id}}{{uniqid()}}">
                         <div class="relative min-h-10">
 
@@ -117,7 +117,7 @@
                                 </span>
                                 <div
                                     wire:click="viewNote({{$note->id}})"
-                                    class="mt-4 content text-sm text-gray-600 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
+                                    class="mt-4 content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
                                     {!! Str::limit($note->content, 1000) !!}
                                 </div>
                             </div>
@@ -245,6 +245,11 @@
 
         .quill-editor iframe, .ql-editor iframe {
             pointer-events: none !important;
+        }
+
+        div.content {
+            font-size: 0.9rem !important;
+            line-height: 1.7rem !important;
         }
 
         div.content img {
