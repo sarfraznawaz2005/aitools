@@ -25,31 +25,45 @@
                         <div class="inline-flex border-r py-3 border-r-gray-300 dark:border-r-neutral-600">&nbsp;</div>
 
                         <!-- Dropdown -->
-                        <div class="hs-dropdown [--placement:center] relative inline-flex items-center ml-4 mt-1">
-                            <button id="hs-dropdown-account" type="button"
-                                    class="inline-flex justify-center items-center text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none dark:text-white"
-                                    aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                                <x-icons.dots
-                                    class="h-8 w-8 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
+                        <div x-data="{ open: false }" class="relative">
+                            <button
+                                @click="open = !open"
+                                type="button"
+                                class="inline-flex items-center ml-4 mt-2"
+                            >
+                                <x-icons.dots class="h-8 w-8 text-gray-500 hover:text-gray-700"/>
                             </button>
 
                             <div
-                                class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded border border-gray-300 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
-                                role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-account">
-                                <ul class="flex flex-col space-y-0.5">
-                                    @foreach(config('tools') as $tool)
-                                        <li wire:key="{{ $tool['name'] }}">
-                                            <a href="{{route($tool['route'])}}" wire:navigate
-                                               class="font-semibold w-full flex items-center gap-x-3 py-2 px-2.5 text-sm text-gray-500 rounded hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
-                                            >
-                                                <img width="24" height="24" alt="{{$tool['name']}}"
-                                                     src="{{$tool['icon_data']}}">
+                                x-cloak
+                                x-show="open"
+                                @click.away="open = false"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute left-0 mt-1 z-20 bg-white min-w-48 shadow-lg space-y-0.5 divide-y divide-gray-200"
+                                role="menu"
+                                style="min-width: max-content;"
+                            >
+                                <div class="py-2 first:pt-0 last:pb-0">
+                                    <ul class="flex flex-col space-y-0.5">
+                                        @foreach(config('tools') as $tool)
+                                            <li wire:key="{{ $tool['name'] }}">
+                                                <a href="{{route($tool['route'])}}" wire:navigate
+                                                   class="font-semibold w-full flex items-center gap-x-2 px-5 py-2 px-2.5 text-sm text-gray-500 hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
+                                                >
+                                                    <img width="24" height="24" alt="{{$tool['name']}}"
+                                                         src="{{$tool['icon_data']}}">
 
-                                                {{$tool['name']}}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                                    {{$tool['name']}}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <!-- End Dropdown -->
