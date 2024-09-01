@@ -118,7 +118,7 @@
                          class="fixed inset-0 z-50 pt-12 flex justify-end">
                         <div
                             @click.away="open = false"
-                            class="relative w-full max-w-md h-full bg-gray-50 shadow-xl flex flex-col">
+                            class="relative w-full max-w-md h-full bg-gray-50 shadow-2xl flex flex-col">
                             <!-- Close Button -->
                             <button @click="open = false" class="absolute top-4 right-4 text-gray-600 hover:text-gray-800">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
