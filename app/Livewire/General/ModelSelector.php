@@ -16,8 +16,7 @@ class ModelSelector extends Component
 
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
-    #[Computed]
-    public function apiKeys()
+    public function boot(): void
     {
         $selectedModel = Settings::get($this->for . '.selectedModel');
 
@@ -29,7 +28,11 @@ class ModelSelector extends Component
                 Settings::set($this->for . '.selectedModel', $this->selectedModel);
             }
         }
+    }
 
+    #[Computed]
+    public function apiKeys()
+    {
         return ApiKey::all()->sortBy('model_name');
     }
 
