@@ -157,12 +157,12 @@
                    class="peer p-3 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
 
             <div class="mt-2 text-xs text-gray-400 dark:text-neutral-500">
-                <button class="text-blue-500 text-xs ml-2" @click.prevent="$dispatch('open-dialog')">
+                <button class="text-blue-500 text-xs ml-2" @click.prevent="$dispatch('open-dialog', { id: 'apidialog' })">
                     See Current Models
                 </button>
 
                 <!-- Dialog Component -->
-                <x-dialog>
+                <x-dialog dialogId="apidialog">
                     <ul class="space-y-3">
                         <li>
                             <h3 class="font-semibold text-base mb-2">OpenAI</h3>

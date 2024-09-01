@@ -6,6 +6,7 @@
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator
+ * GraphRAG
  * https://www.youtube.com/watch?v=7rYR_l9oqQg
  *
  * Interesting PHP Libraries and Tools

@@ -16,6 +16,22 @@
 
             <x-flash/>
 
+            <div class="inline-block">
+                <div class="flex justify-end">
+                    <button type="button"
+                            @click.prevent="$dispatch('open-dialog', { id: 'linkdialog', width: '400px' })"
+                            class="px-4 mb-2 inline-flex items-center gap-x-1 text-sm font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800">
+                        Get From Link
+                    </button>
+                </div>
+
+                <x-dialog dialogId="linkdialog">
+                    <input placeholder="Enter Link" wire:model="link" type="url"
+                           class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+                </x-dialog>
+            </div>
+
+
             <div class="mb-4">
                 <input placeholder="Title" wire:model="title" type="text"
                        class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
