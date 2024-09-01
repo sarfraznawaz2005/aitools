@@ -20,6 +20,21 @@ class Note extends Model
         'recurring_frequency',
     ];
 
+    protected static function booted()
+    {
+        static::created(function ($note) {
+            info('A note was created: ', ['note' => $note->id]);
+        });
+
+        static::updated(function ($note) {
+            info('A note was updated: ', ['note' => $note->id]);
+        });
+
+        static::deleted(function ($note) {
+            info('A note was deleted: ', ['note' => $note->id]);
+        });
+    }
+
     public function folder(): BelongsTo
     {
         return $this->belongsTo(NoteFolder::class);
