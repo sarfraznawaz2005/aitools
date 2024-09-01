@@ -21,7 +21,13 @@
         </div>
     @endif
 
-    <div class="prose mx-auto px-6 {{request()->has('hideActions') ? 'bg-gray-50' : 'py-2 bg-white rounded-lg border border-gray-300 shadow-2xl'}}">
+    <div
+        class="rounded-lg p-3 my-4 border border-gray-300 w-fit justify-center uppercase m-auto bg-gray-200 font-[500] text-gray-600 text-base">
+        {!! $tipContent->tip->name !!}
+    </div>
+
+    <div
+        class="prose mx-auto px-6 {{request()->has('hideActions') ? 'bg-gray-50' : 'py-2 bg-white rounded-lg border border-gray-300 shadow-2xl'}}">
         <x-markdown id="contents">{!! $tipContent->content !!}</x-markdown>
     </div>
 
