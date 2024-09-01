@@ -24,10 +24,12 @@ class TextNote extends Component
     public string $note_folder_id;
     public string $title = '';
     public string $content = '';
-    public string $reminder_datetime = '';
     public ?string $recurring_frequency = null;
-    public bool $hasReminder = false;
     public bool $is_recurring = false;
+
+    public string $link = '';
+    public string $reminder_datetime = '';
+    public bool $hasReminder = false;
 
     public function mount(): void
     {
