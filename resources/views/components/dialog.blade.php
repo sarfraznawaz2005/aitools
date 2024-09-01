@@ -12,22 +12,20 @@
             });
         }
     }"
+    wire:ignore.self
     @open-dialog.window="if($event.detail.id === dialogId) { closeOtherDialogs(); open = true; width = $event.detail.width || 'auto'; }"
     @close-dialog.window="if($event.detail.id === dialogId) open = false"
     x-show="open"
-    x-transition:enter="transition ease-out duration-150"
-    x-transition:enter-start="opacity-0 scale-90"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-100"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-90"
-    style="display: none;"
+    x-transition:enter="ease-out duration-200"
+    x-transition:leave="ease-in duration-100"
+
+    x-cloak
     class="fixed inset-0 z-50 flex items-center justify-center"
     :id="dialogId"
     {{ $attributes->merge(['wire:key' => 'dialog-'.$dialogId]) }}
 >
     <div
-        class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+        class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-[2px]"
         @click="open = false"
     ></div>
 
@@ -54,3 +52,4 @@
         </div>
     </div>
 </div>
+
