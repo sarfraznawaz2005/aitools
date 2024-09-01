@@ -204,7 +204,7 @@ class TipsNotifier extends Component
         } finally {
             openWindow(
                 'tipView', 'tip-window', ['id' => $content->id, 'hideActions' => true],
-                true, true, true, false, 1024, 700
+                true, true, true, true, 1024, 700
             );
         }
     }

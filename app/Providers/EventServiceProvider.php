@@ -36,7 +36,7 @@ class EventServiceProvider extends ServiceProvider
             } finally {
                 openWindow(
                     'note', 'note-window', ['id' => $event->id],
-                    true, true, true, false, 1024, 700
+                    true, true, true, true, 1024, 700
                 );
             }
         });

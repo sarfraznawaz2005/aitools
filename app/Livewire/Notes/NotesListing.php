@@ -95,7 +95,7 @@ class NotesListing extends Component
         } finally {
             openWindow(
                 'viewNoteWindow', 'view-note-window', ['id' => $note->id],
-                true, true, true, false, 1024, 700
+                true, true, true, true, 1024, 700
             );
         }
     }
