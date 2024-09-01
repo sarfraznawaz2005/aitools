@@ -48,7 +48,7 @@
 
                     <div class="relative w-full">
                         <input type="url" autofocus autocomplete="off"
-                               :disabled="{{!$this->totalNotesCount}}"
+                               {{!$this->totalNotesCount ? 'disabled' : ''}}
                                class="py-1 block w-full border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
                                placeholder="Ask me anything...">
                     </div>
