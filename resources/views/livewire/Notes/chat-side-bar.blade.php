@@ -28,6 +28,14 @@
                         <div class="flex-grow border-t border-gray-300"></div>
                     </div>
 
+
+                    @if(!$this->totalNotesCount)
+                        <div class="p-4 text-center text-gray-500">
+                            <p class="text-lg font-semibold">No notes found</p>
+                            <p class="text-sm">Add notes to chat with them</p>
+                        </div>
+                    @endif
+
                     <!-- Your chat content goes here -->
                 </div>
 
