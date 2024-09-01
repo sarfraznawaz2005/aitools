@@ -31,8 +31,17 @@
                 </div>
 
                 <!-- Chat Input at the Bottom -->
-                <div class="p-4">
-                    <input type="text" placeholder="Type your message..." class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                <div class="p-2 flex flex-col sm:flex-row bg-white items-center border border-gray-300 rounded-lg m-3 mx-4">
+                    <div>
+                        <button @click="open = !open" class="text-gray-500 hover:text-gray-700 mt-1">
+                            <x-icons.dotsv/>
+                        </button>
+                    </div>
+                    <div class="relative w-full">
+                        <input type="url" autofocus autocomplete="off"
+                               class="py-1 block w-full border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
+                               placeholder="Ask me anything...">
+                    </div>
                 </div>
             </div>
         </div>
