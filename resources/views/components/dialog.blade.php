@@ -31,7 +31,7 @@
 
     <div
         :style="{ width: width }"
-        class="relative bg-white rounded-lg shadow-lg p-6 mx-4"
+        class="relative bg-white rounded-lg shadow-lg p-4 mx-4"
         @click.away="open = false"
     >
 
