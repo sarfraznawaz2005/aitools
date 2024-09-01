@@ -6,8 +6,8 @@
 
             $wire.on('updated', () => {
                 openDropdown = false
-            });
-                                ">
+            });"
+    >
         <ul class="space-y-0.5 bg-white">
 
             <li class="mx-2">

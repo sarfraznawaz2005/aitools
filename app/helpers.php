@@ -1,5 +1,7 @@
 <?php
 /*
+ * rename issue conv
+ * responsive notes bottom toolbar
  * use ai to fetch articles
  * backup to one drive, etc
  * empty title on icon hover
