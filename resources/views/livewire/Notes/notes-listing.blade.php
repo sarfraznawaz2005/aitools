@@ -115,10 +115,10 @@
                          x-transition:leave="transition ease-in duration-300"
                          x-transition:leave-start="transform translate-x-0"
                          x-transition:leave-end="transform translate-x-full"
-                         class="fixed inset-0 z-50 flex justify-end">
+                         class="fixed inset-0 z-50 pt-12 flex justify-end">
                         <div
                             @click.away="open = false"
-                            class="relative w-full max-w-md h-full bg-white shadow-xl flex flex-col">
+                            class="relative w-full max-w-md h-full bg-gray-50 shadow-xl flex flex-col">
                             <!-- Close Button -->
                             <button @click="open = false" class="absolute top-4 right-4 text-gray-600 hover:text-gray-800">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -244,9 +244,11 @@
                             </div>
 
                             <div class="w-full text-sm">
-                                <span class="font-semibold text-gray-700">{{$note->title}}</span>
+                                <span wire:click="viewNote({{$note->id}})" class="font-semibold text-gray-700 cursor-pointer" x-data x-tooltip.raw="click to view">
+                                    {{$note->title}}
+                                </span>
                                 <p class="mt-4 content text-sm text-gray-600 prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
-                                    {!! $note->content !!}
+                                    {!! Str::limit($note->content, 1000) !!}
                                 </p>
                             </div>
                         </div>

@@ -5,6 +5,6 @@
     </div>
 
     <div class="prose mx-auto px-6 py-2 bg-white rounded-lg border border-gray-300 shadow-2xl">
-        <x-markdown>{!! $note->content !!}</x-markdown>
+        {!! $note->content !!}
     </div>
 </div>

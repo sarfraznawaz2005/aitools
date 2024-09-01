@@ -5,6 +5,7 @@ namespace App\Livewire\Notes;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
@@ -12,6 +13,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Native\Laravel\Facades\Window;
 
 class NotesListing extends Component
 {
@@ -85,6 +87,15 @@ class NotesListing extends Component
         $this->success('Note moved successfully!');
     }
 
+    public function viewNote(Note $note): void
+    {
+        try {
+            Window::close('viewNoteWindow');
+        } catch (Exception) {
+        } finally {
+            openWindow('viewNoteWindow', 'view-note-window', ['id' => $note->id]);
+        }
+    }
 
     public function deleteNote(Note $note): void
     {

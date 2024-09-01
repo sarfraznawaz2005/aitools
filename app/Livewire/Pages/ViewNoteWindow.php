@@ -9,7 +9,7 @@ use Illuminate\Foundation\Application;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-class NoteWindow extends Component
+class ViewNoteWindow extends Component
 {
     public int $id;
 
@@ -19,10 +19,10 @@ class NoteWindow extends Component
     }
 
     #[Layout('components/layouts/headerless')]
-    public function render(): View|Application|Factory
+    public function render(): Application|View|Factory
     {
         $note = Note::query()->findOrFail($this->id);
 
-        return view('livewire.pages.note-window', compact('note'));
+        return view('livewire.pages.view-note-window', compact('note'));
     }
 }
