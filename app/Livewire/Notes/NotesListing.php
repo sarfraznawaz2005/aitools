@@ -93,7 +93,10 @@ class NotesListing extends Component
             Window::close('viewNoteWindow');
         } catch (Exception) {
         } finally {
-            openWindow('viewNoteWindow', 'view-note-window', ['id' => $note->id]);
+            openWindow(
+                'viewNoteWindow', 'view-note-window', ['id' => $note->id],
+                true, true, true, false, 1024, 700
+            );
         }
     }
 

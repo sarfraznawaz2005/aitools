@@ -78,7 +78,7 @@ class TextNote extends Component
     {
         $this->title = '';
         $this->content = '';
-        
+
         $validator = Validator::make(['link' => $link], [
             'link' => 'required|url',
         ]);
@@ -237,7 +237,6 @@ class TextNote extends Component
             default => throw new Exception('Invalid frequency'),
         };
     }
-
 
     public function resetForm(): void
     {

@@ -34,7 +34,10 @@ class EventServiceProvider extends ServiceProvider
                 Window::close('note');
             } catch (Exception) {
             } finally {
-                openWindow('note', 'note-window', ['id' => $event->id]);
+                openWindow(
+                    'note', 'note-window', ['id' => $event->id],
+                    true, true, true, false, 1024, 700
+                );
             }
         });
 
