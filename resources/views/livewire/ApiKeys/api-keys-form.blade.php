@@ -172,9 +172,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gpt-4o-mini
@@ -185,9 +185,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gpt-4o
@@ -198,9 +198,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gpt-4-turbo
@@ -211,9 +211,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gpt-3.5-turbo
@@ -229,9 +229,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gemini-1.5-flash-latest
@@ -242,9 +242,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gemini-1.5-flash
@@ -255,9 +255,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gemini-1.5-pro
@@ -268,9 +268,9 @@
                                     <span class="text-blue-500 text-sm cursor-pointer"
                                           @click="
                                             open = false;
-                                            $refs.dialog.close();
                                             $nextTick(() => {
                                                 $wire.set('model_name', $el.innerText.trim());
+                                                $dispatch('close-dialog', { id: 'apidialog' });
                                             });
                                           ">
                                         gemini-pro
