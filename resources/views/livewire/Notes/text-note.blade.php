@@ -20,7 +20,7 @@
                 <div class="flex justify-end">
                     <button type="button"
                             @click.prevent="$dispatch('open-dialog', { id: 'linkdialog', width: '600px' })"
-                            class="mb-2 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800">
+                            class="mb-2 inline-flex mr-1 items-center text-sm font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800">
                         Get From Link
                     </button>
                 </div>
