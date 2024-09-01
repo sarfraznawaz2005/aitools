@@ -40,7 +40,7 @@
                        class="flex-nowrap text-sm text-gray-700 block w-full p-2"
                        href="{{route($tools['chat-buddy']['route'] . '.loadconversation', $conversationItem->id)}}">
 
-                        <div class="flex max-w-52 w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis items-center">
+                        <div class="flex max-w-48 w-48 overflow-hidden truncate whitespace-nowrap text-ellipsis items-center">
                             <div class="inline-block lg:text-2xl md:text-2xl xl:text-2xl mr-1">
                                 <span class="inline-block">{{getBotIcon($conversationItem)}}</span>
                             </div>
