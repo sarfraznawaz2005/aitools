@@ -28,8 +28,8 @@
                 <x-dialog dialogId="linkdialog">
 
                     @if (!empty($linkErrors['link']))
-                        <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
-                            <ul class="mt-2">
+                        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+                            <ul>
                                 @if(is_array($linkErrors['link']))
                                     @foreach ($linkErrors['link'] as $error)
                                         <li>{{ $error }}</li>
@@ -47,7 +47,7 @@
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3">
                                 <x-icons.link class="shrink-0 size-4 text-gray-400"/>
                             </div>
-                            <input type="url" autofocus id="fetchUrl" x-ref="fetchUrl"
+                            <input type="url" autofocus autocomplete="off" id="fetchUrl" x-ref="fetchUrl"
                                    class="py-2 ps-9 pe-3 block w-full border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
                                    placeholder="Enter Link">
                         </div>
