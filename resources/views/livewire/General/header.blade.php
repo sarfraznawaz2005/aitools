@@ -53,7 +53,7 @@
                                         @foreach(config('tools') as $tool)
                                             <li wire:key="{{ $tool['name'] }}">
                                                 <a href="{{route($tool['route'])}}" wire:navigate
-                                                   class="font-semibold w-full flex items-center gap-x-2 px-5 py-2 px-2.5 text-sm text-gray-500 hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
+                                                   class="font-semibold w-full flex items-center gap-x-2 px-5 py-2 text-sm text-gray-500 hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
                                                 >
                                                     <img width="24" height="24" alt="{{$tool['name']}}"
                                                          src="{{$tool['icon_data']}}">
