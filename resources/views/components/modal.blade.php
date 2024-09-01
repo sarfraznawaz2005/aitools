@@ -33,7 +33,7 @@
      wire:ignore.self
      wire:key="modaldg-{{$id}}"
      x-data="modalControl"
-     class="hs-overlay hs-overlay-backdrop-open:bg-blue-950/90 hidden size-full fixed top-0 start-0 z-[100] overflow-x-hidden overflow-y-auto pointer-events-none dark:hs-overlay-backdrop-open:bg-blue-950/90"
+     class="hs-overlay hs-overlay-backdrop-open:backdrop-blur-sm hidden size-full fixed top-0 start-0 z-[100] overflow-x-hidden overflow-y-auto pointer-events-none"
      role="dialog"
      tabindex="-1"
      aria-labelledby="hs-custom-backdrop-label">
