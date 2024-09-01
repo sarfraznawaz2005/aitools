@@ -4,19 +4,19 @@
 
     @if (hasApiKeysCreated())
 
-        <div class="fixed left-3 bottom-3 inline-flex">
-            <livewire:general.model-selector for="{{App\Constants::TEXTSTYLER_SELECTED_LLM_KEY}}"/>
-        </div>
-
         <div class="flex justify-center items-center w-full">
             <div class="w-full max-w-4xl">
 
-               <textarea
-                   class="py-3 px-4 block w-full border-gray-200 rounded-lg text-base focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                   wire:model="text"
-                   rows="8"
-                   placeholder="Type your text...">
-               </textarea>
+                <div class="relative bg-transparent p-0 m-0">
+                    <div class="absolute right-5 top-3 inline-flex">
+                        <livewire:general.model-selector for="{{App\Constants::TEXTSTYLER_SELECTED_LLM_KEY}}"/>
+                    </div>
+                   <textarea
+                       class="py-3 px-4 block w-full border-gray-200 rounded-lg text-base focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                       wire:model="text"
+                       rows="8"
+                       placeholder="Type your text..."></textarea>
+                </div>
                 @error('text')
                 <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
                 @enderror

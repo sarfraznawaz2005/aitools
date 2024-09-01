@@ -14,7 +14,10 @@ class ModelSelector extends Component
 
     public string $selectedModel;
 
-    protected $listeners = ['apiKeysUpdated' => '$refresh'];
+    protected $listeners = [
+        'refresh' => '$refresh',
+        'apiKeysUpdated' => '$refresh',
+    ];
 
     public function boot(): void
     {
@@ -36,10 +39,13 @@ class ModelSelector extends Component
         return ApiKey::all()->sortBy('model_name');
     }
 
-    public function updated(): void
+    public function setModel(string $model): void
     {
-        Settings::set($this->for . '.selectedModel', $this->selectedModel);
+        Settings::set($this->for . '.selectedModel', $model);
 
-        $this->dispatch('modelChanged', $this->selectedModel);
+        $this->selectedModel = $model;
+
+        $this->dispatch('refresh');
+        $this->dispatch('modelChanged', $model);
     }
 }

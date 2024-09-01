@@ -80,25 +80,33 @@
                     <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
                     @enderror
 
-                    <textarea
-                        x-ref="textarea"
-                        name="query"
-                        id="query"
-                        wire:model="query"
-                        @input="adjustHeight"
-                        @paste="setTimeout(() => adjustHeight(), 0)"
-                        @keydown="handleKeyDown"
-                        wire:loading.attr="disabled"
-                        tabindex="-10"
-                        autofocus
-                        autocomplete="off"
-                        dir="auto"
-                        rows="1"
-                        {{!hasApiKeysCreated() ? 'disabled' : ''}}
-                        placeholder="Ask me anything..."
-                        class="m-0 resize-none border-0 rounded px-4 focus:ring-0 focus-visible:ring-0 disabled:bg-gray-200"
-                        style="height: 40px;"
-                    ></textarea>
+                    <div class="relative bg-transparent p-0 m-0 inline-flex items-center">
+                        <textarea
+                            x-ref="textarea"
+                            name="query"
+                            id="query"
+                            wire:model="query"
+                            @input="adjustHeight"
+                            @paste="setTimeout(() => adjustHeight(), 0)"
+                            @keydown="handleKeyDown"
+                            wire:loading.attr="disabled"
+                            tabindex="-10"
+                            autofocus
+                            autocomplete="off"
+                            dir="auto"
+                            rows="1"
+                            {{!hasApiKeysCreated() ? 'disabled' : ''}}
+                            placeholder="Ask me anything..."
+                            class="m-0 resize-none border-0 rounded px-4 w-full focus:ring-0 focus-visible:ring-0 disabled:bg-gray-200"
+                            style="height: 40px;"
+                        ></textarea>
+
+                        <div
+                            class="absolute right-3 top-1 inline">
+                            <livewire:general.model-selector for="{{App\Constants::CHATBUDDY_SELECTED_LLM_KEY}}"/>
+                        </div>
+                    </div>
+
                 </div>
 
                 @if(!hasApiKeysCreated())

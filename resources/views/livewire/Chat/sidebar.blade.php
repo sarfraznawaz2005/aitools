@@ -69,13 +69,6 @@
             <!-- End List -->
         </div>
 
-        @if (hasApiKeysCreated())
-            <div
-                class="sticky bottom-0 border-gray-200 bg-gray-200 p-1">
-                <livewire:general.model-selector for="{{App\Constants::CHATBUDDY_SELECTED_LLM_KEY}}"/>
-            </div>
-        @endif
-
     </nav>
 </div>
 <!-- End Sidebar -->
