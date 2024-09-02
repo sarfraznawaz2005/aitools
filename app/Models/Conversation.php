@@ -31,7 +31,10 @@ class Conversation extends Model
     {
         parent::boot();
 
-        self::deleteOld();
+        try {
+            self::deleteOld();
+        } catch (Exception) {
+        }
     }
 
     public function addChatMessage(string $message, bool $isAi = false): Message

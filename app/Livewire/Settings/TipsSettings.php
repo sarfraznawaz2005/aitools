@@ -3,6 +3,7 @@
 namespace App\Livewire\Settings;
 
 use App\Models\TipContent;
+use Exception;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Native\Laravel\Facades\Settings;
@@ -14,7 +15,11 @@ class TipsSettings extends Component
 
     public function mount(): void
     {
-        $this->deleteOldDays = Settings::get('TipsNotifier.deleteOldDays', 30);
+        try {
+            $this->deleteOldDays = Settings::get('TipsNotifier.deleteOldDays', 30);
+        } catch (Exception) {
+            $this->deleteOldDays = 30;
+        }
     }
 
     public function saveOptions(): void

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +19,10 @@ class TipContent extends Model
     {
         parent::boot();
 
-        self::deleteOld();
+        try {
+            self::deleteOld();
+        } catch (Exception) {
+        }
     }
 
     public function tip(): BelongsTo

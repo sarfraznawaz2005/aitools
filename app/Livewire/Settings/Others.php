@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings;
 
+use Exception;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Native\Laravel\Facades\Settings;
@@ -17,7 +18,11 @@ class Others extends Component
 
     public function mount(): void
     {
-        $this->loadSettings();
+        try {
+            $this->loadSettings();
+        } catch (Exception) {
+            $this->resetToDefaults();
+        }
     }
 
     public function save(): void

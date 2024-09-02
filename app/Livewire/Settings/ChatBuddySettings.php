@@ -3,6 +3,7 @@
 namespace App\Livewire\Settings;
 
 use App\Models\Conversation;
+use Exception;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Native\Laravel\Facades\Settings;
@@ -14,7 +15,11 @@ class ChatBuddySettings extends Component
 
     public function mount(): void
     {
-        $this->chatBuddyDeleteOldDays = Settings::get('ChatBuddy.chatBuddyDeleteOldDays', 30);
+        try {
+            $this->chatBuddyDeleteOldDays = Settings::get('ChatBuddy.chatBuddyDeleteOldDays', 30);
+        } catch (Exception) {
+            $this->chatBuddyDeleteOldDays = 30;
+        }
     }
 
     public function saveChatBuddyOptions(): void

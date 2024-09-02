@@ -3,6 +3,8 @@
 namespace App\Livewire\General;
 
 use App\Models\ApiKey;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Native\Laravel\Facades\Settings;
@@ -21,15 +23,19 @@ class ModelSelector extends Component
 
     public function boot(): void
     {
-        $selectedModel = Settings::get($this->for . '.selectedModel');
+        try {
+            $selectedModel = Settings::get($this->for . '.selectedModel');
 
-        if ($selectedModel && ApiKey::where('model_name', $selectedModel)->exists()) {
-            $this->selectedModel = $selectedModel;
-        } else {
-            if (ApiKey::hasApiKeys()) {
-                $this->selectedModel = ApiKey::whereActive()->first()->model_name;
-                Settings::set($this->for . '.selectedModel', $this->selectedModel);
+            if ($selectedModel && ApiKey::where('model_name', $selectedModel)->exists()) {
+                $this->selectedModel = $selectedModel;
+            } else {
+                if (ApiKey::hasApiKeys()) {
+                    $this->selectedModel = ApiKey::whereActive()->first()->model_name;
+                    Settings::set($this->for . '.selectedModel', $this->selectedModel);
+                }
             }
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
         }
     }
 
