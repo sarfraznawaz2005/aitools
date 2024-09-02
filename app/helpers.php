@@ -245,3 +245,14 @@ function fetchUrlContent($url): bool|string
         return false;
     }
 }
+
+function fixBrokenHtml($html) {
+    libxml_use_internal_errors(true); // Suppress libxml errors and warnings
+
+    $dom = new DOMDocument();
+    $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+    libxml_clear_errors();
+
+    return $dom->saveHTML();
+}
