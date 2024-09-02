@@ -129,7 +129,7 @@
                                 </div>
                             </div>
 
-                            <div class="w-full flex-grow overflow-hidden">
+                            <div class="w-full flex-grow overflow-hidden" x-ref="content">
                                 <span
                                     x-data
                                     wire:click="viewNote({{$note->id}})"
@@ -140,7 +140,7 @@
                                 <div
                                     wire:click="viewNote({{$note->id}})"
                                     class="content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full overflow-hidden">
-                                    <div class="line-clamp-5" x-ref="content">
+                                    <div class="line-clamp-5">
                                         {!! $note->content !!}
                                     </div>
                                 </div>
