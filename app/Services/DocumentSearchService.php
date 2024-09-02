@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\LLM\LlmProvider;
 use Exception;
-use Illuminate\Support\Facades\Log;
 use Smalot\PdfParser\Config;
 use Smalot\PdfParser\Parser;
 
@@ -57,7 +56,7 @@ class DocumentSearchService
 
         if (!empty($results)) {
             if (app()->environment('local')) {
-                Log::info('Resutls found via cosine similarity');
+                info('Resutls found via cosine similarity');
             }
 
             return $this->getTopResults($results);
@@ -67,14 +66,14 @@ class DocumentSearchService
 
         if (!empty($results)) {
             if (app()->environment('local')) {
-                Log::info('Resutls found via text search');
+                info('Resutls found via text search');
             }
 
             return $this->getTopResults($results);
         }
 
         if (app()->environment('local')) {
-            Log::info('No results found, giving suggested topics');
+            info('No results found, giving suggested topics');
         }
 
         return $this->getListOfIdeas($files);
@@ -191,13 +190,13 @@ class DocumentSearchService
         $cacheKey = "$fileName-" . $this->fileIdentifier;
 
         if (array_key_exists($cacheKey, $this->embeddingsCache)) {
-            //Log::info("Loaded embeddings from cache for $fileName");
+            //info("Loaded embeddings from cache for $fileName");
             return $this->embeddingsCache[$cacheKey]['embeddings'];
         }
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
-            //Log::info("Loaded embeddings from file for $fileName");
+            //info("Loaded embeddings from file for $fileName");
             return $data['embeddings'];
         }
 
