@@ -76,7 +76,7 @@
                         </button>
                     </div>
 
-                        <p wire:stream="linkFetchStatus" class="text-xs text-gray-600 mt-2 text-center font-semibold">
+                        <p wire:stream="linkFetchStatus" class="text-xs text-gray-600 mt-4 text-center font-semibold">
                             {{ $linkFetchStatus }}
                         </p>
 
