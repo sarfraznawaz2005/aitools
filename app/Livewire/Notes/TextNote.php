@@ -104,16 +104,16 @@ class TextNote extends Component
             $this->title = $articleData->title ?? '';
             $this->content = $articleData->content ?? '';
 
-            if (strlen($this->content) > 100) {
-                $this->content = $this->getContentAI($html);
+            if (strlen($html) > 100) {
+                $content = $this->getContentAI($html);
 
-                if ($this->content === 'No Content Found') {
+                if ($content === 'No Content Found') {
                     $this->linkErrors = ['link' => 'Failed to extract content from the provided link, please try again.'];
                     return;
                 }
 
                 $markdown = app(MarkdownRenderer::class);
-                $this->content = $markdown->toHtml($this->content);
+                $this->content = $markdown->toHtml($content);
             }
 
             $this->linkErrors = [];
@@ -140,6 +140,8 @@ class TextNote extends Component
         - Your answer must not contain any html tags but you must give your answer in markdown foramtted text.
         - You can use any markdown formatting like bold, italic, code block, etc.
         - Extracted content should have line breaks where necessary for improved readability.
+        - Do not skip minor details such as bullet points, images, code, charts, we need these as well.
+        - You can skip styles and javascript code.
 
         Finally, if you cannot extract an article or main content from given html, just say 'No Content Found'. Do not
         assume or provide answer from your own knowledge.
