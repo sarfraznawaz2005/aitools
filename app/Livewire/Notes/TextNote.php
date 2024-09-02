@@ -215,6 +215,7 @@ class TextNote extends Component
         - You can skip styles and javascript code.
         - Avoid double line breaks where not necessary.
         - Convert html tags into markdown counterparts where possible.
+        - Please do not include title of article or content in your answer.
         - Your answer must not contain any html tags (except, ul, li, pre, code, img, svg or videos) but you must give your
         answer in markdown foramtted text.
 

@@ -140,11 +140,6 @@
     list-style: square;
 }
 
-.aibot-message-content a {
-    color: rgb(59 130 246);
-    text-decoration: none !important;
-}
-
 .chatlist ul li:last-child {
     padding-bottom: 2rem !important;
 }
@@ -169,11 +164,6 @@ pre {
 
 .chatlist h2 {
     font-size: 1.25rem;
-    margin: 0 0 5px;
-}
-
-.chatlist h1 {
-    font-size: 1.5rem;
     margin: 0 0 5px;
 }
 

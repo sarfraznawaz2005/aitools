@@ -4,7 +4,7 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-10 border-t sm:border-t-0 sm:border-l border-gray-300">
+        <main class="flex-1 pt-10 border-t sm:border-t-0 h-screen sm:border-l border-gray-300">
 
             <div class="mx-4 sm:mx-8 my-4">
                 <livewire:apikeys.api-key-banner/>
@@ -14,7 +14,7 @@
                 @foreach($this->notes as $note)
                     <div
                         class="p-4 bg-gray-50 rounded-lg border relative flex flex-col"
-                        wire:key="note-{{$note->id}}{{uniqid()}}"  x-data="{
+                        wire:key="note-{{$note->id}}{{uniqid()}}" x-data="{
                         copied: false,
                         copy () {
                           $clipboard($refs.content.innerText)
@@ -274,16 +274,51 @@
             pointer-events: none !important;
         }
 
-        div.content {
+        .content {
             font-size: 0.9rem !important;
             line-height: 1.7rem !important;
         }
 
-        div.content img {
+        .content img {
             width: 100% !important;
             max-height: 300px !important;
             height: auto !important;
             object-fit: contain !important;
+        }
+
+        .content a {
+            color: rgb(59 130 246);
+            text-decoration: none !important;
+        }
+
+        .content li::marker {
+            font-size: 1.1rem;
+            color: #9ca3af;
+        }
+
+        .content li {
+            list-style: square;
+        }
+
+        .content h1 {
+            color: #5c616c;
+            font-size: 1.1rem;
+            margin: 0 0 5px;
+            font-weight: 600 !important;
+        }
+
+        .content h2 {
+            color: #5c616c;
+            font-size: 1.1rem;
+            margin: 0 0 5px;
+            font-weight: 600 !important;
+        }
+
+        .content h3 {
+            color: #5c616c;
+            font-size: 1.1rem;
+            margin: 0 0 5px;
+            font-weight: 600 !important;
         }
     </style>
 </div>
