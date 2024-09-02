@@ -14,11 +14,26 @@
                 @foreach($this->notes as $note)
                     <div
                         class="p-4 bg-gray-50 rounded-lg border relative flex flex-col"
-                        wire:key="note-{{$note->id}}{{uniqid()}}">
+                        wire:key="note-{{$note->id}}{{uniqid()}}"  x-data="{
+                        copied: false,
+                        copy () {
+                          $clipboard($refs.content.innerText)
+                          this.copied = true
+                          setTimeout(() => {
+                            this.copied = false
+                          }, 1000)
+                        }
+                      }">
                         <div class="relative min-h-10 flex flex-col h-full">
 
                             <div
-                                x-data="{ open: false, subOpen: false, subMenuLeft: false, subMenuBottom: false, subMenuTimer: null }"
+                                x-data="{
+                                        open: false,
+                                        subOpen: false,
+                                        subMenuLeft: false,
+                                        subMenuBottom: false,
+                                        subMenuTimer: null,
+                                    }"
                                 class="absolute top-0 right-0" x-cloak x-init="
                                     $nextTick(() => { open = false; subOpen = false; subMenuLeft = false; subMenuBottom = false; });
 
@@ -46,6 +61,12 @@
                                     @click.outside="open = false"
                                     class="absolute right-[4px] top-6 z-20 w-32 bg-white text-xs shadow-lg"
                                 >
+                                    <a href="#" @click.prevent="copy"
+                                       class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                        <x-icons.copy class="inline-block mr-2 text-gray-500"/>
+                                        <span x-text="copied ? 'Copied' : 'Copy'"></span>
+                                    </a>
+
                                     <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"
                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                         <x-icons.edit class="inline-block mr-2 text-gray-500"/>
@@ -119,7 +140,7 @@
                                 <div
                                     wire:click="viewNote({{$note->id}})"
                                     class="content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full overflow-hidden">
-                                    <div class="line-clamp-5">
+                                    <div class="line-clamp-5" x-ref="content">
                                         {!! $note->content !!}
                                     </div>
                                 </div>
