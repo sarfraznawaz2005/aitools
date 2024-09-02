@@ -138,43 +138,43 @@ class NotesSearchService
      */
     protected function setTextEmbeddingsFromFiles(array $notes): void
     {
+        $splits = [];
+
         foreach ($notes as $note) {
-
             $textWithMetadata = $this->getTextWithMetaData($note);
-            $chunks = $this->splitTextIntoChunks($textWithMetadata);
-            dd($chunks);
-
-            // Chunk the text based on $embdeddingsBatchSize
-            $chunkedTextArray = array_chunk($chunks, $this->embdeddingsBatchSize);
-
-            $chunkedEmbeddings = [];
-            $chunkedTextSplits = [];
-            foreach ($chunkedTextArray as $chunkIndex => $chunkedText) {
-                usleep(100000); // sleep for 100ms to avoid rate limiting
-                $embeddings = $this->getEmbeddingsOrLoadFromCache($note, $chunkedText);
-                $chunkedEmbeddings[$chunkIndex] = $embeddings;
-                $chunkedTextSplits[$chunkIndex] = $chunkedText;
-            }
-
-            $this->textSplits[$note['folder']][] = $chunkedTextSplits;
-            $this->embeddings[$note['folder']][] = $chunkedEmbeddings;
-
-            // Free memory after processing each file
-            unset($textWithMetadata, $chunks, $chunkedTextArray, $chunkedEmbeddings, $chunkedTextSplits);
+            $splits[] = $this->splitTextIntoChunks($textWithMetadata);
         }
+
+        // Chunk the text based on $embdeddingsBatchSize
+        $chunks = array_chunk($splits, $this->embdeddingsBatchSize);
+
+        $chunkedEmbeddings = [];
+        $chunkedTextSplits = [];
+        foreach ($chunks as $chunkIndex => $chunk) {
+            dd($chunk);
+            usleep(100000); // sleep for 100ms to avoid rate limiting
+            $embeddings = $this->getEmbeddingsOrLoadFromCache($note, $chunkedText);
+            $chunkedEmbeddings[$chunkIndex] = $embeddings;
+            $chunkedTextSplits[$chunkIndex] = $chunkedText;
+        }
+
+        $this->textSplits[] = $chunkedTextSplits;
+        $this->embeddings[] = $chunkedEmbeddings;
     }
 
     protected function getTextWithMetaData(array $note): array
     {
-        $lines = explode("\n", $note['content']);
         $text = [];
+        $lines = explode("\n", $note['content']);
 
         foreach ($lines as $lineNumber => $line) {
             $text[] = [
-                'text' => $this->getCleanedText($line),
-                'metadata' => ['source' => $note['folder'], 'line' => $lineNumber + 1]
+                'text' => $line,
+                'metadata' => ['source' => $note['folder'], 'title' => $note['title'], 'line' => $lineNumber + 1]
             ];
         }
+
+        $text = array_map(fn($item) => ['text' => $this->getCleanedText($item['text']), 'metadata' => $item['metadata']], $text);
 
         return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
     }

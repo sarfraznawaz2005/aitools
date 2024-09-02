@@ -272,12 +272,17 @@ class DocumentSearchService
 
                 foreach ($pages as $pageNumber => $page) {
                     $text[] = [
-                        'text' => $this->getCleanedText($page->getText()),
+                        'text' => $page->getText(),
                         'metadata' => ['source' => basename($file), 'page' => $pageNumber + 1]
                     ];
                 }
 
                 //file_put_contents('pdf_text', json_encode($text, JSON_PRETTY_PRINT));
+
+                $text = array_map(function ($item) {
+                    $item['text'] = $this->getCleanedText($item['text']);
+                    return $item;
+                }, $text);
 
                 return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
             case 'txt':
@@ -290,10 +295,15 @@ class DocumentSearchService
 
                 foreach ($lines as $lineNumber => $line) {
                     $text[] = [
-                        'text' => $this->getCleanedText($line),
+                        'text' => $line,
                         'metadata' => ['source' => basename($file), 'line' => $lineNumber + 1]
                     ];
                 }
+
+                $text = array_map(function ($item) {
+                    $item['text'] = $this->getCleanedText($item['text']);
+                    return $item;
+                }, $text);
 
                 return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
             default:
