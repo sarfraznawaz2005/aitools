@@ -141,14 +141,15 @@ class TextNote extends Component
         extract entire article without skipping anything. Follow these rules:
 
         - Do not tell anything about url, page, author or website itself, only the main content or article.
-        - Your answer must not contain any html tags (except, ul, li, img, svg or videos) but you must give your answer in markdown foramtted text.
         - You can use any markdown formatting like bold, italic, code block, etc.
         - Extracted content should have line breaks where necessary for improved readability.
-        - Do not skip minor details such as bullet points, images, code, charts from main content, we need these as well.
+        - Do not skip minor details such as bullet points, images, pre, code, charts from main content, we need these as well.
         - If there is an image (img tag) in main content, convert it into full url based on '$url' so we don't get broken images.
         - If there is table in main content, convert it to markdown table.
         - You can skip styles and javascript code.
         - Convert html tags into markdown counterparts where possible.
+        - Your answer must not contain any html tags (except, ul, li, pre, code, img, svg or videos) but you must give your
+        answer in markdown foramtted text.
 
         Finally, if you cannot extract an article or main content from given html, just say 'No Content Found'. Do not
         assume or provide answer from your own knowledge.
