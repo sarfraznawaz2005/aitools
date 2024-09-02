@@ -113,7 +113,7 @@
                                     x-data
                                     wire:click="viewNote({{$note->id}})"
                                     x-tooltip.raw="click to view"
-                                    class="font-semibold text-sm text-gray-700 cursor-pointer block mb-2">
+                                    class="font-semibold text-sm text-gray-700 cursor-pointer block mb-2 mr-4">
                                     {{$note->title}}
                                 </span>
                                 <div
