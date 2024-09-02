@@ -93,7 +93,7 @@ class TextNote extends Component
         try {
 
             $html = fetchUrlContent($link);
-            info($html);
+            //info($html);
 
             if (!$html) {
                 $this->linkErrors = ['link' => 'Failed to fetch content from the provided link, please try again.'];
