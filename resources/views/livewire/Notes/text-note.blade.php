@@ -21,7 +21,7 @@
                     <button type="button"
                             @click.prevent="$wire.title = ''; $wire.content = ''; $dispatch('open-dialog', { id: 'linkdialog', width: '600px' })"
                             class="mb-2 inline-flex mr-1 items-center text-sm font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800">
-                        Get From Link Using AI
+                        Get From Link
                     </button>
                 </div>
 
@@ -40,6 +40,18 @@
                             </ul>
                         </div>
                     @endif
+
+                        <div class="mb-4">
+                            <div class="flex">
+                                <input type="checkbox"
+                                       wire:model.change="useAI"
+                                       class="shrink-0 mt-0.5 cursor-pointer border-gray-500 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                       id="reminder_checkbox">
+                                <label for="reminder_checkbox" class="cursor-pointer text-sm text-gray-700 ms-3">
+                                    Fetch with AI (Improved Readability)
+                                </label>
+                            </div>
+                        </div>
 
                     <div class="p-1.5 flex flex-col sm:flex-row items-center gap-2 border border-gray-300 rounded-lg"
                          x-data>

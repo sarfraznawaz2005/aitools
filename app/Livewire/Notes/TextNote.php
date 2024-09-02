@@ -35,6 +35,7 @@ class TextNote extends Component
     public bool $hasReminder = false;
 
     public array $linkErrors = [];
+    public bool $useAI = true;
 
     public function mount(): void
     {
@@ -105,7 +106,7 @@ class TextNote extends Component
             $this->title = $articleData->title ?? '';
             $this->content = $articleData->content ?? '';
 
-            if (strlen($html) > 100) {
+            if ($this->useAI && strlen($html) > 100) {
                 $content = $this->getContentAI($html, $link);
 
                 if ($content === 'No Content Found') {
@@ -115,6 +116,8 @@ class TextNote extends Component
 
                 $markdown = app(MarkdownRenderer::class);
                 $this->content = $markdown->toHtml($content);
+
+                $this->reset(['useAI']);
             }
 
             $this->linkErrors = [];
