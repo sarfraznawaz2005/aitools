@@ -96,7 +96,7 @@ Artisan::command('test', function () {
     @unlink(storage_path('app/notes.json'));
 
     $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 2000);
-    $results = $searchService->searchTexts($notes, 'distributed systems....');
+    $results = $searchService->searchTexts($notes, 'ipsum');
 
     dd($results);
 

@@ -216,33 +216,37 @@ class NotesSearchService
             $queryEmbeddingValues = $queryEmbeddings;
         }
 
-        foreach ($this->embeddings as $topIndex => $embeddings) {
-            foreach ($embeddings as $embeddingEntry) {
-                foreach ($embeddingEntry as $index => $entry) {
+        foreach ($this->embeddings as $mainIndex => $embeddings) {
 
-                    // Gemini or OpenAI
-                    $embedding = $entry['values'] ?? $entry;
+            if (isset($embeddings['embeddings'])) {
+                // Gemini structure: 'embeddings' => array of arrays with 'values'
+                $embeddingValues = array_column($embeddings['embeddings'], 'values');
+            } else {
+                // OpenAI structure: direct array of embedding values
+                $embeddingValues = [$embeddings];
+            }
 
-                    $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
-                    //dump($similarity);
+            foreach ($embeddingValues as $index => $embedding) {
 
-                    if ($similarity >= $this->similarityThreshold) {
-                        if (isset($this->textSplits[$topIndex][$index])) {
-                            $matchedText = $this->textSplits[$topIndex][$index];
-                            $hash = md5($matchedText['text']);
+                $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
+                //dump($similarity);
 
-                            if (!isset($alreadyAdded[$hash])) {
-                                $alreadyAdded[$hash] = true;
+                if ($similarity >= $this->similarityThreshold) {
+                    if (isset($this->textSplits[$mainIndex][$index])) {
+                        $matchedText = $this->textSplits[$mainIndex][$index];
+                        $hash = md5($matchedText['text']);
 
-                                $results[] = [
-                                    'similarity' => $similarity,
-                                    'index' => $index,
-                                    'matchedChunk' => $matchedText,
-                                ];
-                            }
+                        if (!isset($alreadyAdded[$hash])) {
+                            $alreadyAdded[$hash] = true;
+
+                            $results[] = [
+                                'similarity' => $similarity,
+                                'index' => $index,
+                                'matchedChunk' => $matchedText,
+                            ];
                         }
-
                     }
+
                 }
             }
         }
