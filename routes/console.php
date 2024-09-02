@@ -67,7 +67,7 @@ Artisan::command('test', function () {
 //    $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
 
     $llm = new OpenAiProvider(
-        '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',
+        'xxxxxxxxxxxxxx',
         'gpt-4o-mini', ['max_tokens' => 4096, 'temperature' => 0.7]
     );
     $llmModel = ApiKey::where('model_name', 'gpt-4o-mini')->first();
