@@ -196,7 +196,6 @@ class NotesSearchService
         return $embeddings;
     }
 
-
     /**
      * @throws Exception
      */
