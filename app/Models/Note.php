@@ -20,7 +20,7 @@ class Note extends Model
         'recurring_frequency',
     ];
 
-    protected static function booted()
+    protected static function booted(): void
     {
         static::created(function ($note) {
             info('A note was created: ', ['note' => $note->id]);
