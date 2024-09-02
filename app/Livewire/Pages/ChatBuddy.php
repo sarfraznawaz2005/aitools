@@ -4,7 +4,6 @@ namespace App\Livewire\Pages;
 
 use App\Constants;
 use App\Enums\ApiKeyTypeEnum;
-use App\Livewire\Chat\Sidebar;
 use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
