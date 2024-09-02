@@ -114,8 +114,6 @@ class TextNote extends Component
 
                 $markdown = app(MarkdownRenderer::class);
                 $this->content = $markdown->toHtml($this->content);
-
-                unset($markdown);
             }
 
             $this->linkErrors = [];
