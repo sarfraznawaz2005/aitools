@@ -1,8 +1,8 @@
 <?php
 /*
- * empty title on icon hover
  * use ai to fetch articles
  * backup to one drive, etc
+ * empty title on icon hover
  * setup updator
  * Researcher Agent
  * UpWork AI extension
@@ -14,6 +14,7 @@
  * https://github.com/cognesy/instructor-php
  * https://github.com/theodo-group/LLPhant
  * https://github.com/kambo-1st/langchain-php
+ * https://github.com/BenSampo/laravel-embed
  * */
 
 use App\LLM\GeminiProvider;
