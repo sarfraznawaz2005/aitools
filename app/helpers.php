@@ -1,6 +1,10 @@
 <?php
 /*
+ * broken html
+ * prompt format issue
+ * openai chunks issue
  * openai/ metadata duplication
+ * smaller chunks for notes
  * notes settings?
  * backup to one drive, etc
  * empty title on icon hover
