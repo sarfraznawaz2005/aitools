@@ -93,6 +93,7 @@ class TextNote extends Component
         try {
 
             $html = fetchUrlContent($link);
+            info($html);
 
             if (!$html) {
                 $this->linkErrors = ['link' => 'Failed to fetch content from the provided link, please try again.'];
@@ -105,7 +106,7 @@ class TextNote extends Component
             $this->content = $articleData->content ?? '';
 
             if (strlen($html) > 100) {
-                $content = $this->getContentAI($html);
+                $content = $this->getContentAI($html, $link);
 
                 if ($content === 'No Content Found') {
                     $this->linkErrors = ['link' => 'Failed to extract content from the provided link, please try again.'];
@@ -126,7 +127,7 @@ class TextNote extends Component
         }
     }
 
-    private function getContentAI(string $html): string
+    private function getContentAI(string $html, string $url): string
     {
         $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 
@@ -137,11 +138,14 @@ class TextNote extends Component
         extract entire article without skipping anything. Follow these rules:
 
         - Do not tell anything about url, page, author or website itself, only the main content or article.
-        - Your answer must not contain any html tags but you must give your answer in markdown foramtted text.
+        - Your answer must not contain any html tags (except, ul, li, img, svg or videos) but you must give your answer in markdown foramtted text.
         - You can use any markdown formatting like bold, italic, code block, etc.
         - Extracted content should have line breaks where necessary for improved readability.
-        - Do not skip minor details such as bullet points, images, code, charts, we need these as well.
+        - Do not skip minor details such as bullet points, images, code, charts from main content, we need these as well.
+        - If there is an image (img tag) in main content, convert it into full url based on '$url' so we don't get broken images.
+        - If there is table in main content, convert it to markdown table.
         - You can skip styles and javascript code.
+        - Convert html tags into markdown counterparts where possible.
 
         Finally, if you cannot extract an article or main content from given html, just say 'No Content Found'. Do not
         assume or provide answer from your own knowledge.

@@ -243,6 +243,7 @@ class DocumentSearchService
             $chunkedEmbeddings = [];
             $chunkedTextSplits = [];
             foreach ($chunkedTextArray as $chunkIndex => $chunkedText) {
+                usleep(100000); // sleep for 100ms to avoid rate limiting
                 $embeddings = $this->getEmbeddingsOrLoadFromCache($file, $chunkedText);
                 $chunkedEmbeddings[$chunkIndex] = $embeddings;
                 $chunkedTextSplits[$chunkIndex] = $chunkedText;
