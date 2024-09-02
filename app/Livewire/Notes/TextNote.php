@@ -156,7 +156,7 @@ class TextNote extends Component
 
         At the end of extracted content, provide summary of main topics or points covered in the content in bullet points.
 
-        *AI-Generated Summary:*
+        **AI-Generated Summary:**
             1. Point 1
             2. Point 2
             3. Point 3
