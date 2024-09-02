@@ -126,10 +126,16 @@
                 </legend>
 
                 <!-- Add search field -->
-                <div class="mb-4">
-                    <input type="text" wire:model.live.debounce.500ms="searchQuery"
-                           placeholder="Search content..."
-                           class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+                <div class="relative bg-transparent">
+
+                    <div>
+                        <x-icons.search class="absolute top-3 left-4 text-gray-500"/>
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" wire:model.live.debounce.500ms="searchQuery"
+                               placeholder="Search content..."
+                               class="py-3 pl-12 pr-6 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
+                    </div>
                 </div>
 
                 @if($this->contents->count())
@@ -256,7 +262,7 @@
 
                     <div class="mb-4">
                         <textarea placeholder="Enter your prompt..." wire:model="prompt" rows="3"
-                            class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"></textarea>
+                                  class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"></textarea>
                     </div>
 
                     <div class="mb-4">

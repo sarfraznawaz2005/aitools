@@ -2,11 +2,18 @@
 
 <div x-data="{ openDropdown: null }">
     <li>
-        <input wire:model.live.debounce.500ms="search"
-               type="text"
-               autocomplete="off"
-               placeholder="Search Conversations"
-               class="w-full px-3 py-2 text-sm bg-gray-50 text-gray-700 placeholder-gray-400 border-none border-0 focus:outline-none text-center focus:ring-0"/>
+        <div class="relative bg-transparent">
+
+            <div>
+                <x-icons.search class="absolute top-2 left-3 text-gray-500"/>
+            </div>
+
+            <input wire:model.live.debounce.500ms="search"
+                   type="text"
+                   autocomplete="off"
+                   placeholder="Search Conversations"
+                   class="w-full pl-12 pr-6 py-2 text-sm bg-gray-50 text-gray-700 placeholder-gray-400 border-none border-0 focus:outline-none text-center focus:ring-0"/>
+        </div>
     </li>
 
     @foreach($this->conversations as $conversationItem)
@@ -40,7 +47,8 @@
                        class="flex-nowrap text-sm text-gray-700 block w-full p-2"
                        href="{{route($tools['chat-buddy']['route'] . '.loadconversation', $conversationItem->id)}}">
 
-                        <div class="flex max-w-48 w-48 overflow-hidden truncate whitespace-nowrap text-ellipsis items-center">
+                        <div
+                            class="flex max-w-48 w-48 overflow-hidden truncate whitespace-nowrap text-ellipsis items-center">
                             <div class="inline-block lg:text-2xl md:text-2xl xl:text-2xl mr-1">
                                 <span class="inline-block">{{getBotIcon($conversationItem)}}</span>
                             </div>
