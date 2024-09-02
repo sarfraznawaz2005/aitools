@@ -321,6 +321,14 @@ class DocumentSearchService
             throw new Exception("Splits and embeddings count mismatch!");
         }
 
+        // Gemini structure for queryEmbeddings
+        if (isset($queryEmbeddings['embeddings'])) {
+            $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
+        } else {
+            // OpenAI structure for queryEmbeddings
+            $queryEmbeddingValues = $queryEmbeddings;
+        }
+
         foreach ($this->embeddings as $file => $fileEmbeddings) {
             foreach ($fileEmbeddings as $mainIndex => $embeddings) {
 
@@ -333,13 +341,6 @@ class DocumentSearchService
                 }
 
                 foreach ($embeddingValues as $index => $embedding) {
-                    // Gemini structure for queryEmbeddings
-                    if (isset($queryEmbeddings['embeddings'])) {
-                        $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
-                    } else {
-                        // OpenAI structure for queryEmbeddings
-                        $queryEmbeddingValues = $queryEmbeddings;
-                    }
 
                     $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
 

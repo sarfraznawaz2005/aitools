@@ -298,32 +298,27 @@ class NotesSearchService
             throw new Exception("Splits and embeddings count mismatch!");
         }
 
-        foreach ($this->embeddings as $file => $fileEmbeddings) {
-            foreach ($fileEmbeddings as $mainIndex => $embeddings) {
+        // Gemini structure for queryEmbeddings
+        if (isset($queryEmbeddings['embeddings'])) {
+            $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
+        } else {
+            // OpenAI structure for queryEmbeddings
+            $queryEmbeddingValues = $queryEmbeddings;
+        }
 
-                if (isset($embeddings['embeddings'])) {
-                    // Gemini structure: 'embeddings' => array of arrays with 'values'
-                    $embeddingValues = array_column($embeddings['embeddings'], 'values');
-                } else {
-                    // OpenAI structure: direct array of embedding values
-                    $embeddingValues = [$embeddings];
-                }
+        foreach ($this->embeddings as $topIndex => $embeddings) {
+            foreach ($embeddings as $mainIndex => $embeddingEntry) {
+                foreach ($embeddingEntry as $embeddingIndex => $entry) {
 
-                foreach ($embeddingValues as $index => $embedding) {
-                    // Gemini structure for queryEmbeddings
-                    if (isset($queryEmbeddings['embeddings'])) {
-                        $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
-                    } else {
-                        // OpenAI structure for queryEmbeddings
-                        $queryEmbeddingValues = $queryEmbeddings;
-                    }
+                    // Gemini or OpenAI
+                    $embedding = $queryEmbeddings['values'] ?? $queryEmbeddings;
 
                     $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
 
                     if ($similarity >= $this->similarityThreshold) {
 
-                        if (isset($this->textSplits[$file][$mainIndex][$index])) {
-                            $matchedText = $this->textSplits[$file][$mainIndex][$index];
+                        if (isset($this->textSplits[$topIndex][$mainIndex][$index])) {
+                            $matchedText = $this->textSplits[$topIndex][$mainIndex][$index];
                             $hash = md5($matchedText['text']);
 
                             if (!isset($alreadyAdded[$hash])) {
