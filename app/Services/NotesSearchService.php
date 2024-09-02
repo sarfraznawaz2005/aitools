@@ -176,7 +176,7 @@ class NotesSearchService
             ];
         }
 
-        return array_filter($text, fn($item) => !empty($item['text']) && strlen($item['text']) > 25);
+        return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
     }
 
     protected function getEmbeddingsOrLoadFromCache(string $note, array $chunks): array
