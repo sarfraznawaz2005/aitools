@@ -302,7 +302,7 @@ class NotesSearchService
         }
 
         foreach ($this->embeddings as $topIndex => $embeddings) {
-            foreach ($embeddings as $mainIndex => $embeddingEntry) {
+            foreach ($embeddings as $embeddingEntry) {
                 foreach ($embeddingEntry as $index => $entry) {
 
                     // Gemini or OpenAI
@@ -312,8 +312,8 @@ class NotesSearchService
                     //dump($similarity);
 
                     if ($similarity >= $this->similarityThreshold) {
-                        if (isset($this->textSplits[$topIndex][$mainIndex][$index])) {
-                            $matchedText = $this->textSplits[$topIndex][$mainIndex][$index];
+                        if (isset($this->textSplits[$topIndex][$index])) {
+                            $matchedText = $this->textSplits[$topIndex][$index];
                             $hash = md5($matchedText['text']);
 
                             if (!isset($alreadyAdded[$hash])) {
