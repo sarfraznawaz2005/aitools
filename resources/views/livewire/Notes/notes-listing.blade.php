@@ -10,12 +10,12 @@
                 <livewire:apikeys.api-key-banner/>
             </div>
 
-            <div class="flex flex-wrap gap-6 mb-20 mt-8 px-4 sm:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-20 mt-8 px-4 sm:px-8">
                 @foreach($this->notes as $note)
                     <div
-                        class="flex-grow flex-shrink-0 basis-full sm:basis-[calc(50%-1.5rem)] p-4 bg-gray-50 rounded-lg border relative flex flex-col"
+                        class="p-4 bg-gray-50 rounded-lg border relative flex flex-col"
                         wire:key="note-{{$note->id}}{{uniqid()}}">
-                        <div class="relative min-h-10">
+                        <div class="relative min-h-10 flex flex-col h-full">
 
                             <div
                                 x-data="{ open: false, subOpen: false, subMenuLeft: false, subMenuBottom: false, subMenuTimer: null }"
@@ -108,17 +108,20 @@
                                 </div>
                             </div>
 
-                            <div class="w-full">
-                                <span x-data
-                                      wire:click="viewNote({{$note->id}})"
-                                      x-tooltip.raw="click to view"
-                                      class="font-semibold text-sm text-gray-700 cursor-pointer">
+                            <div class="w-full flex-grow overflow-hidden">
+                                <span
+                                    x-data
+                                    wire:click="viewNote({{$note->id}})"
+                                    x-tooltip.raw="click to view"
+                                    class="font-semibold text-sm text-gray-700 cursor-pointer block mb-2">
                                     {{$note->title}}
                                 </span>
                                 <div
                                     wire:click="viewNote({{$note->id}})"
-                                    class="mt-4 content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
-                                    {!! Str::limit($note->content, 1000) !!}
+                                    class="content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full overflow-hidden">
+                                    <div class="line-clamp-5">
+                                        {!! $note->content !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
