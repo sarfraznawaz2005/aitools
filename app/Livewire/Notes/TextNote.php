@@ -117,6 +117,12 @@ class TextNote extends Component
 
             $this->stream(
                 to: 'linkFetchStatus',
+                content: 'HTML fetched...',
+                replace: true,
+            );
+
+            $this->stream(
+                to: 'linkFetchStatus',
                 content: 'Fetching main content..',
                 replace: true,
             );
@@ -125,7 +131,7 @@ class TextNote extends Component
 
             $this->stream(
                 to: 'linkFetchStatus',
-                content: 'HTML fetched...',
+                content: 'main content fetched...',
                 replace: true,
             );
 
