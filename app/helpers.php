@@ -1,6 +1,5 @@
 <?php
 /*
- * broken html
  * prompt format issue
  * openai chunks issue
  * openai/ metadata duplication
@@ -246,13 +245,19 @@ function fetchUrlContent($url): bool|string
     }
 }
 
-function fixBrokenHtml($html) {
+function fixBrokenHtml($html)
+{
     libxml_use_internal_errors(true); // Suppress libxml errors and warnings
 
     $dom = new DOMDocument();
-    $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $success = $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
     libxml_clear_errors();
 
-    return $dom->saveHTML();
+    if ($success) {
+        $fixedHtml = $dom->saveHTML();
+        return $fixedHtml !== false ? $fixedHtml : $html;
+    }
+
+    return $html;
 }
