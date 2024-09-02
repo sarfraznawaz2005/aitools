@@ -1,7 +1,7 @@
 @php($tools = config('tools'))
 
 <div>
-    <aside class="w-52 bg-white sticky top-0 h-screen pt-16" x-data="{ openDropdown: false }" x-init="
+    <aside class="w-full sm:w-52 bg-white sm:sticky top-0 h-screen sm:h-auto sm:pt-16 pt-4" x-data="{ openDropdown: false }" x-init="
             $nextTick(() => { openDropdown = false; })
 
             $wire.on('updated', () => {
@@ -25,7 +25,7 @@
                         <a
                             wire:navigate
                             href="{{route($tools['smart-notes']['route'] . '.listing', $folderItem->id)}}"
-                            class="items-center font-[500] p-2 text-sm w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis
+                            class="items-center font-[500] p-2 text-sm w-full sm:w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis
                             {{ $folderItem->color }} {{isset($folder) && $folder->exists && $folderItem->id === $folder->id ? $folder->getBackgroundColor() : ''}}">
                             <x-icons.folder class="inline size-6 mr-2"/>
                             {{ $folderItem->name }} ({{ $folderItem->notes->count() }})

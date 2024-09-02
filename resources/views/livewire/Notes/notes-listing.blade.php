@@ -1,19 +1,19 @@
 <div>
 
-    <div class="flex bg-white">
+    <div class="flex flex-col sm:flex-row bg-white">
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-12 border-l border-gray-300">
+        <main class="flex-1 pt-12 border-t sm:border-t-0 sm:border-l border-gray-300">
 
-            <div class="mx-8 my-4">
+            <div class="mx-4 sm:mx-8 my-4">
                 <livewire:apikeys.api-key-banner/>
             </div>
 
-            <div class="flex flex-wrap gap-6 mb-20 mt-8 px-8">
+            <div class="flex flex-wrap gap-6 mb-20 mt-8 px-4 sm:px-8">
                 @foreach($this->notes as $note)
                     <div
-                        class="flex-grow flex-shrink-0 basis-[calc(50%-1.5rem)] p-4 bg-gray-50 rounded-lg border relative flex flex-col"
+                        class="flex-grow flex-shrink-0 basis-full sm:basis-[calc(50%-1.5rem)] p-4 bg-gray-50 rounded-lg border relative flex flex-col"
                         wire:key="note-{{$note->id}}{{uniqid()}}">
                         <div class="relative min-h-10">
 
@@ -133,9 +133,9 @@
 
             <div
                 style="box-shadow: 0 -5px 15px -6px rgba(0, 0, 0, 0.25);"
-                class="flex justify-between items-center w-[calc(100%-13rem)] border-t fixed bottom-0 z-10 py-2 px-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
+                class="flex flex-col sm:flex-row justify-between items-center w-full sm:w-[calc(100%-13rem)] border-t fixed bottom-0 z-10 py-2 px-4 {{ $folder->getBackGroundColor() }} {{ $folder->getBorderColor() }}">
 
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col sm:flex-row items-center justify-between w-full sm:w-auto">
 
                     <div x-data="{ open: false }" class="relative pt-1 mr-4">
                         <button @click="open = !open" x-data x-tooltip.raw="Sort">
@@ -221,7 +221,7 @@
                     </div>
                 </div>
 
-                <div class="relative bg-transparent">
+                <div class="relative bg-transparent mt-4 sm:mt-0 w-full sm:w-auto">
 
                     <div>
                         <x-icons.search class="absolute top-2 left-8 text-gray-500"/>
@@ -229,7 +229,7 @@
 
                     <input type="text" wire:model.live.debounce.500ms="searchQuery"
                            placeholder="Search Content..."
-                           class="py-2 pl-12 pr-6 ml-4 block w-full min-w-96 bg-white shadow focus:outline-none border-none border-transparent outline-0 text-center rounded-full text-sm focus:ring-0"/>
+                           class="py-2 pl-12 pr-6 ml-4 sm:ml-0 block w-full sm:w-auto min-w-96 bg-white shadow focus:outline-none border-none border-transparent outline-0 text-center rounded-full text-sm focus:ring-0"/>
                 </div>
 
                 <livewire:notes.chat-side-bar/>
