@@ -204,8 +204,6 @@ class DocumentSearchService
             return trim($chunk['text']);
         }, $chunks);
 
-        $textSplits = array_filter($textSplits);
-
         $embeddings = $this->llm->embed($textSplits, $this->embdeddingModel);
 
         $data = [

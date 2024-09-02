@@ -76,8 +76,7 @@ class NotesSearchService
     {
         $results = [];
 
-        //$queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->embdeddingModel);
-        $queryEmbeddings = [];
+        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->embdeddingModel);
 
         $this->setTextEmbeddingsFromFiles($notes);
 
@@ -139,6 +138,7 @@ class NotesSearchService
     protected function setTextEmbeddingsFromFiles(array $notes): void
     {
         $splits = [];
+        $entries = [];
 
         foreach ($notes as $note) {
             $textWithMetadata = $this->getTextWithMetaData($note);
@@ -148,18 +148,18 @@ class NotesSearchService
         // Chunk the text based on $embdeddingsBatchSize
         $chunks = array_chunk($splits, $this->embdeddingsBatchSize);
 
-        $chunkedEmbeddings = [];
-        $chunkedTextSplits = [];
-        foreach ($chunks as $chunkIndex => $chunk) {
-            dd($chunk);
-            usleep(100000); // sleep for 100ms to avoid rate limiting
-            $embeddings = $this->getEmbeddingsOrLoadFromCache($note, $chunkedText);
-            $chunkedEmbeddings[$chunkIndex] = $embeddings;
-            $chunkedTextSplits[$chunkIndex] = $chunkedText;
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $chunkEntry) {
+                foreach ($chunkEntry as $entry) {
+                    $entries[] = $entry;
+                }
+            }
         }
 
-        $this->textSplits[] = $chunkedTextSplits;
-        $this->embeddings[] = $chunkedEmbeddings;
+        $embeddings = $this->getEmbeddingsOrLoadFromCache($entries);
+
+        $this->textSplits[] = $entries;
+        $this->embeddings[] = $embeddings;
     }
 
     protected function getTextWithMetaData(array $note): array
@@ -179,11 +179,10 @@ class NotesSearchService
         return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
     }
 
-    protected function getEmbeddingsOrLoadFromCache(string $note, array $chunks): array
+    protected function getEmbeddingsOrLoadFromCache(array $texts): array
     {
-        $fileName = basename($note);
-        $path = storage_path("app/$fileName-" . $this->fileIdentifier . '.json');
-        $cacheKey = "$fileName-" . $this->fileIdentifier;
+        $path = storage_path('app/notes.json');
+        $cacheKey = 'notes_cache_' . md5(json_encode($texts));
 
         if (array_key_exists($cacheKey, $this->embeddingsCache)) {
             //info("Loaded embeddings from cache for $fileName");
@@ -197,16 +196,14 @@ class NotesSearchService
         }
 
         $textSplits = array_map(function ($chunk) {
-            return trim($chunk['text']);
-        }, $chunks);
-
-        $textSplits = array_filter($textSplits);
+            return $chunk['text'];
+        }, $texts);
 
         $embeddings = $this->llm->embed($textSplits, $this->embdeddingModel);
 
         $data = [
             'embeddings' => $embeddings,
-            'chunks' => $chunks
+            'chunks' => $texts
         ];
 
         $this->embeddingsCache[$cacheKey] = $data;
@@ -269,6 +266,9 @@ class NotesSearchService
 
     protected function cosineSimilarity(array $u, array $v): float
     {
+        dump($u);
+        dd($v);
+
         try {
             $dotProduct = 0.0;
             $uLength = 0.0;
@@ -284,25 +284,6 @@ class NotesSearchService
         } catch (Exception) {
             return 0;
         }
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function extractTextFromFile(string $file): array
-    {
-        $content = file_get_contents($file);
-        $lines = explode("\n", $content);
-        $text = [];
-
-        foreach ($lines as $lineNumber => $line) {
-            $text[] = [
-                'text' => $this->getCleanedText($line),
-                'metadata' => ['source' => basename($file), 'line' => $lineNumber + 1]
-            ];
-        }
-
-        return $text;
     }
 
     /**
