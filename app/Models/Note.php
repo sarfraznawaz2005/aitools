@@ -37,7 +37,7 @@ class Note extends Model
 
     public function folder(): BelongsTo
     {
-        return $this->belongsTo(NoteFolder::class);
+        return $this->belongsTo(NoteFolder::class, 'note_folder_id');
     }
 
     public function scopeWithNonRecurringReminderAt($query, Carbon $time)

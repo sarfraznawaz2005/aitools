@@ -1,6 +1,9 @@
 <?php
 
 use App\Constants;
+use App\Enums\ApiKeyTypeEnum;
+use App\Models\Note;
+use App\Services\NotesSearchService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -50,11 +53,41 @@ Artisan::command('cleanup', function () {
 
 
 Artisan::command('test', function () {
-    $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+//    $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+//
+//    $title = $llm->chat(
+//        'Create only a single title from the text, it should not be more than 25 characters, keep the language spoken: Hello World'
+//    );
+//
+//    echo $title;
 
-    $title = $llm->chat(
-        'Create only a single title from the text, it should not be more than 25 characters, keep the language spoken: Hello World'
-    );
+    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+    $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
 
-    echo $title;
+    $embeddingModel = match ($llmModel->llm_type) {
+        ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
+        ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
+        default => Constants::OLLAMA_EMBEDDING_MODEL,
+    };
+
+    $embdeddingsBatchSize = match ($llmModel->llm_type) {
+        ApiKeyTypeEnum::GEMINI->value => 100,
+        ApiKeyTypeEnum::OPENAI->value => 2048,
+        default => 1000,
+    };
+
+    $notes = Note::with('folder')->get()->map(function ($note) {
+        return [
+            'id' => $note->id,
+            'title' => $note->title,
+            'content' => $note->content,
+            'folder' => $note->folder->name,
+        ];
+    })->toArray();
+
+    $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 2000);
+    $results = $searchService->searchTexts($notes, 'hi');
+
+    dd($results);
+
 });
