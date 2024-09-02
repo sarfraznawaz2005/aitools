@@ -154,6 +154,13 @@ class TextNote extends Component
         Finally, if you cannot extract an article or main content from given html, just say 'No Content Found'. Do not
         assume or provide answer from your own knowledge.
 
+        At the end of extracted content, provide summary of main topics or points covered in the content in bullet points.
+
+        Summary:
+        1. Point 1
+        2. Point 2
+        3. Point 3
+
         HTML: '$html'
         ";
 
