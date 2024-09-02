@@ -36,6 +36,7 @@ class TextNote extends Component
 
     public array $linkErrors = [];
     public bool $useAI = true;
+    public string $linkFetchStatus = '';
 
     public function mount(): void
     {
@@ -93,26 +94,71 @@ class TextNote extends Component
 
         try {
 
+            $this->stream(
+                to: 'linkFetchStatus',
+                content: 'Fetching HTML..',
+                replace: true,
+            );
+
             $html = fetchUrlContent($link);
             //info($html);
 
             if (!$html) {
                 $this->linkErrors = ['link' => 'Failed to fetch content from the provided link, please try again.'];
+
+                $this->stream(
+                    to: 'linkFetchStatus',
+                    content: '',
+                    replace: true,
+                );
+
                 return;
             }
 
+            $this->stream(
+                to: 'linkFetchStatus',
+                content: 'Fetching main content..',
+                replace: true,
+            );
+
             $articleData = ArticleExtractor::getArticle($html);
+
+            $this->stream(
+                to: 'linkFetchStatus',
+                content: 'HTML fetched...',
+                replace: true,
+            );
 
             $this->title = $articleData->title ?? '';
             $this->content = $articleData->content ?? '';
 
             if ($this->useAI && strlen($html) > 100) {
+
+                $this->stream(
+                    to: 'linkFetchStatus',
+                    content: 'Using AI to improve readability & generate summary...',
+                    replace: true,
+                );
+
                 $content = $this->getContentAI($html, $link);
 
                 if ($content === 'No Content Found') {
                     $this->linkErrors = ['link' => 'Failed to extract content from the provided link, please try again.'];
+
+                    $this->stream(
+                        to: 'linkFetchStatus',
+                        content: '',
+                        replace: true,
+                    );
+
                     return;
                 }
+
+                $this->stream(
+                    to: 'linkFetchStatus',
+                    content: 'AI finished processing...',
+                    replace: true,
+                );
 
                 $markdown = app(MarkdownRenderer::class);
                 $this->content = $markdown->toHtml($content);
@@ -120,13 +166,27 @@ class TextNote extends Component
                 $this->reset(['useAI']);
             }
 
+            $this->stream(
+                to: 'linkFetchStatus',
+                content: 'Done, please wait...',
+                replace: true,
+            );
+
             $this->linkErrors = [];
             unset($html);
             unset($articleData);
 
+            sleep(1);
+
             $this->dispatch('close-dialog', id: 'linkdialog');
         } catch (Exception) {
             $this->linkErrors = ['link' => 'Failed to fetch content from the provided link, please try again.'];
+
+            $this->stream(
+                to: 'linkFetchStatus',
+                content: '',
+                replace: true,
+            );
         }
     }
 

@@ -41,17 +41,17 @@
                         </div>
                     @endif
 
-                        <div class="mb-4">
-                            <div class="flex">
-                                <input type="checkbox"
-                                       wire:model.change="useAI"
-                                       class="shrink-0 mt-0.5 cursor-pointer border-gray-500 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                       id="reminder_checkbox">
-                                <label for="reminder_checkbox" class="cursor-pointer text-sm text-gray-700 ms-3">
-                                    Fetch with AI (Improved Readability with Summary)
-                                </label>
-                            </div>
+                    <div class="mb-4">
+                        <div class="flex">
+                            <input type="checkbox"
+                                   wire:model.change="useAI"
+                                   class="shrink-0 mt-0.5 cursor-pointer border-gray-500 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                   id="reminder_checkbox">
+                            <label for="reminder_checkbox" class="cursor-pointer text-sm text-gray-700 ms-3">
+                                Fetch with AI (Improved Readability with Summary)
+                            </label>
                         </div>
+                    </div>
 
                     <div class="p-1.5 flex flex-col sm:flex-row items-center gap-2 border border-gray-300 rounded-lg"
                          x-data>
@@ -75,6 +75,10 @@
                             </svg>
                         </button>
                     </div>
+
+                        <p wire:stream="linkFetchStatus" class="text-xs text-gray-600 mt-2 text-center font-semibold">
+                            {{ $linkFetchStatus }}
+                        </p>
 
                 </x-dialog>
             </div>
