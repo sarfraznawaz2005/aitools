@@ -13,7 +13,7 @@
              x-transition:leave="transition ease-in duration-300"
              x-transition:leave-start="transform translate-x-0"
              x-transition:leave-end="transform translate-x-full"
-             class="fixed inset-0 z-50 flex justify-end">
+             class="fixed inset-0 z-[60] top-14 flex justify-end sm:justify-center md:justify-end">
             <div
                 @click.away="open = false"
                 class="relative w-full max-w-md h-full bg-gray-50 shadow-2xl flex flex-col">
@@ -22,7 +22,7 @@
                 <div class="flex-1 p-4 overflow-y-auto">
                     <div class="flex items-center">
                         <div class="flex-grow border-t border-gray-300"></div>
-                        <span class="uppercase text-xs px-1 text-gray-500">
+                        <span class="uppercase text-xs px-1 text-gray-500 text-center">
                             chat with {{ $this->totalNotesCount }} notes in {{ $this->folders->count() }} folders
                         </span>
                         <div class="flex-grow border-t border-gray-300"></div>
@@ -42,11 +42,11 @@
                 <!-- Chat Input at the Bottom -->
                 <div
                     class="p-2 flex flex-col sm:flex-row bg-white items-center border border-gray-300 rounded-lg m-3 mx-4">
-                    <div>
+                    <div class="w-full sm:w-auto sm:mr-2">
                         <livewire:general.model-selector for="{{App\Constants::NOTES_SELECTED_LLM_KEY}}"/>
                     </div>
 
-                    <div class="relative w-full">
+                    <div class="relative w-full mt-2 sm:mt-0">
                         <input type="url" autofocus autocomplete="off"
                                {{!$this->totalNotesCount ? 'disabled' : ''}}
                                class="py-1 block w-full border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
