@@ -19,10 +19,10 @@ class DocumentSearchService
     private function __construct(protected LlmProvider $llm,
                                  protected string      $fileIdentifier,
                                  protected string      $embdeddingModel,
-                                 protected int         $embdeddingsBatchSize = 100,
-                                 protected int         $chunkSize = 500,
-                                 protected float       $similarityThreshold = 0.6,
-                                 protected int         $maxResults = 3)
+                                 protected int         $embdeddingsBatchSize,
+                                 protected int         $chunkSize,
+                                 protected float       $similarityThreshold,
+                                 protected int         $maxResults)
     {
         $config = new Config();
         $config->setRetainImageContent(false);
@@ -36,7 +36,7 @@ class DocumentSearchService
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 500,
-        float       $similarityThreshold = 0.6,
+        float       $similarityThreshold = 0.54,
         int         $maxResults = 3
     ): DocumentSearchService
     {

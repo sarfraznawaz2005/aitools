@@ -86,7 +86,7 @@ Artisan::command('test', function () {
     })->toArray();
 
     $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 2000);
-    $results = $searchService->searchTexts($notes, 'incremental backup solutions');
+    $results = $searchService->searchTexts($notes, 'distributed');
 
     dd($results);
 

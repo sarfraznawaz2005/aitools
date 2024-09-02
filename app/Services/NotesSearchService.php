@@ -15,10 +15,10 @@ class NotesSearchService
 
     private function __construct(protected LlmProvider $llm,
                                  protected string      $embdeddingModel,
-                                 protected int         $embdeddingsBatchSize = 100,
-                                 protected int         $chunkSize = 500,
-                                 protected float       $similarityThreshold = 0.6,
-                                 protected int         $maxResults = 3)
+                                 protected int         $embdeddingsBatchSize,
+                                 protected int         $chunkSize,
+                                 protected float       $similarityThreshold,
+                                 protected int         $maxResults)
     {
     }
 
@@ -27,7 +27,7 @@ class NotesSearchService
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 500,
-        float       $similarityThreshold = 0.6,
+        float       $similarityThreshold = 0.54,
         int         $maxResults = 3
     ): NotesSearchService
     {
@@ -95,21 +95,19 @@ class NotesSearchService
         $results = [];
         $cleanedQuery = $this->getCleanedText($query, true);
 
-        foreach ($notes as $file) {
-            foreach ($this->textSplits[$file] as $chunks) {
-                foreach ($chunks as $index => $chunk) {
-                    $exactMatchScore = $this->calculateExactMatchScore($cleanedQuery, $chunk['text']);
-                    $fuzzyMatchScore = $this->calculateFuzzyMatchScore($cleanedQuery, $chunk['text']);
+        foreach ($this->textSplits as $chunks) {
+            foreach ($chunks as $index => $chunk) {
+                $exactMatchScore = $this->calculateExactMatchScore($cleanedQuery, $chunk['text']);
+                $fuzzyMatchScore = $this->calculateFuzzyMatchScore($cleanedQuery, $chunk['text']);
 
-                    $maxScore = max($exactMatchScore, $fuzzyMatchScore);
+                $maxScore = max($exactMatchScore, $fuzzyMatchScore);
 
-                    if ($maxScore >= $this->similarityThreshold) {
-                        $results[] = [
-                            'similarity' => $maxScore,
-                            'index' => $index,
-                            'matchedChunk' => ['text' => $chunk['text'], 'metadata' => $chunk['metadata']],
-                        ];
-                    }
+                if ($maxScore >= $this->similarityThreshold) {
+                    $results[] = [
+                        'similarity' => $maxScore,
+                        'index' => $index,
+                        'matchedChunk' => ['text' => $chunk['text'], 'metadata' => $chunk['metadata']],
+                    ];
                 }
             }
         }
@@ -266,9 +264,6 @@ class NotesSearchService
 
     protected function cosineSimilarity(array $u, array $v): float
     {
-        dump($u);
-        dd($v);
-
         try {
             $dotProduct = 0.0;
             $uLength = 0.0;
@@ -308,15 +303,15 @@ class NotesSearchService
 
         foreach ($this->embeddings as $topIndex => $embeddings) {
             foreach ($embeddings as $mainIndex => $embeddingEntry) {
-                foreach ($embeddingEntry as $embeddingIndex => $entry) {
+                foreach ($embeddingEntry as $index => $entry) {
 
                     // Gemini or OpenAI
-                    $embedding = $queryEmbeddings['values'] ?? $queryEmbeddings;
+                    $embedding = $entry['values'] ?? $entry;
 
                     $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
+                    //dump($similarity);
 
                     if ($similarity >= $this->similarityThreshold) {
-
                         if (isset($this->textSplits[$topIndex][$mainIndex][$index])) {
                             $matchedText = $this->textSplits[$topIndex][$mainIndex][$index];
                             $hash = md5($matchedText['text']);
