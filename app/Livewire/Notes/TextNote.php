@@ -147,6 +147,7 @@ class TextNote extends Component
         - If there is an image (img tag) in main content, convert it into full url based on '$url' so we don't get broken images.
         - If there is table in main content, convert it to markdown table.
         - You can skip styles and javascript code.
+        - Avoid double line breaks where not necessary.
         - Convert html tags into markdown counterparts where possible.
         - Your answer must not contain any html tags (except, ul, li, pre, code, img, svg or videos) but you must give your
         answer in markdown foramtted text.
