@@ -227,7 +227,7 @@
                 <div class="relative bg-transparent mt-4 sm:mt-0 w-full sm:w-auto">
 
                     <div>
-                        <x-icons.search class="absolute top-2 left-8 text-gray-500"/>
+                        <x-icons.search class="absolute top-2 left-4 text-gray-500"/>
                     </div>
 
                     <input type="text" wire:model.live.debounce.500ms="searchQuery"
