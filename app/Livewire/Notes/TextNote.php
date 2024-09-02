@@ -231,6 +231,8 @@ class TextNote extends Component
             3. Point 3
 
         HTML: '$html'
+
+        Your Answer:
         ";
 
         return $llm->chat($prompt);
