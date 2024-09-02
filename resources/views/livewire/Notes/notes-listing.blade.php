@@ -4,13 +4,13 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-12 border-t sm:border-t-0 sm:border-l border-gray-300">
+        <main class="flex-1 pt-10 border-t sm:border-t-0 sm:border-l border-gray-300">
 
             <div class="mx-4 sm:mx-8 my-4">
                 <livewire:apikeys.api-key-banner/>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-20 mt-8 px-4 sm:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-20 mt-8 px-4 sm:px-6">
                 @foreach($this->notes as $note)
                     <div
                         class="p-4 bg-gray-50 rounded-lg border relative flex flex-col"
