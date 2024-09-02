@@ -48,7 +48,7 @@
                                        class="shrink-0 mt-0.5 cursor-pointer border-gray-500 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                        id="reminder_checkbox">
                                 <label for="reminder_checkbox" class="cursor-pointer text-sm text-gray-700 ms-3">
-                                    Fetch with AI (Improved Readability)
+                                    Fetch with AI (Improved Readability with Summary)
                                 </label>
                             </div>
                         </div>
