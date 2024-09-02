@@ -78,7 +78,7 @@ class NotesSearchService
 
         $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->embdeddingModel);
 
-        $this->setTextEmbeddingsFromFiles($notes);
+        $this->setTextEmbeddingsFromTexts($notes);
 
         $results = array_merge($results, $this->compareEmbeddings($queryEmbeddings));
 
@@ -135,7 +135,7 @@ class NotesSearchService
     /**
      * @throws Exception
      */
-    protected function setTextEmbeddingsFromFiles(array $notes): void
+    protected function setTextEmbeddingsFromTexts(array $notes): void
     {
         $splits = [];
         $entries = [];
