@@ -21,7 +21,7 @@
                     <button type="button"
                             @click.prevent="$wire.title = ''; $wire.content = ''; $dispatch('open-dialog', { id: 'linkdialog', width: '600px' })"
                             class="mb-2 inline-flex mr-1 items-center text-sm font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800">
-                        Get From Link
+                        Get From Link Using AI
                     </button>
                 </div>
 

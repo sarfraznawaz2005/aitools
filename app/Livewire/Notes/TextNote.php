@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Notes;
 
+use App\Constants;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
@@ -15,6 +16,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Lorisleiva\CronTranslator\CronTranslator;
 use Pforret\PfArticleExtractor\ArticleExtractor;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 class TextNote extends Component
 {
@@ -102,6 +104,18 @@ class TextNote extends Component
             $this->title = $articleData->title ?? '';
             $this->content = $articleData->content ?? '';
 
+            if (strlen($this->content) > 100) {
+                $this->content = $this->getContentAI($html);
+
+                if ($this->content === 'No Content Found') {
+                    $this->linkErrors = ['link' => 'Failed to extract content from the provided link, please try again.'];
+                    return;
+                }
+
+                $markdown = app(MarkdownRenderer::class);
+                $this->content = $markdown->toHtml($this->content);
+            }
+
             $this->linkErrors = [];
             unset($html);
             unset($articleData);
@@ -110,6 +124,30 @@ class TextNote extends Component
         } catch (Exception) {
             $this->linkErrors = ['link' => 'Failed to fetch content from the provided link, please try again.'];
         }
+    }
+
+    private function getContentAI(string $html): string
+    {
+        $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+
+        $prompt = "
+        You are amazing Researcher on the web content.
+
+        Analyze below content and try your best to extract main content or article from html given below. Ensure you
+        extract entire article without skipping anything. Follow these rules:
+
+        - Do not tell anything about url, page, author or website itself, only the main content or article.
+        - Your answer must not contain any html tags but you must give your answer in markdown foramtted text.
+        - You can use any markdown formatting like bold, italic, code block, etc.
+        - Extracted content should have line breaks where necessary for improved readability.
+
+        Finally, if you cannot extract an article or main content from given html, just say 'No Content Found'. Do not
+        assume or provide answer from your own knowledge.
+
+        HTML: '$html'
+        ";
+
+        return $llm->chat($prompt);
     }
 
     public function saveNote(): void
