@@ -1,6 +1,5 @@
 <?php
 /*
- * search icon on all search fields
  * responsive notes bottom toolbar
  * use ai to fetch articles
  * backup to one drive, etc

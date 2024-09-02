@@ -221,13 +221,16 @@
                     </div>
                 </div>
 
-                @if($this->notes->count() > 0)
+                <div class="relative bg-transparent">
+
                     <div>
-                        <input type="text" wire:model.live.debounce.500ms="searchQuery"
-                               placeholder="Search Content..."
-                               class="py-2 px-4 block w-full min-w-96 bg-white shadow focus:outline-none border-none border-transparent outline-0 text-center rounded-full text-sm focus:ring-0"/>
+                        <x-icons.search class="absolute top-2 left-8 text-gray-500"/>
                     </div>
-                @endif
+
+                    <input type="text" wire:model.live.debounce.500ms="searchQuery"
+                           placeholder="Search Content..."
+                           class="py-2 pl-12 pr-6 ml-4 block w-full min-w-96 bg-white shadow focus:outline-none border-none border-transparent outline-0 text-center rounded-full text-sm focus:ring-0"/>
+                </div>
 
                 <livewire:notes.chat-side-bar/>
             </div>
