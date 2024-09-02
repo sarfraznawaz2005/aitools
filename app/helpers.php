@@ -3,6 +3,7 @@
  * backup to one drive, etc
  * empty title on icon hover
  * setup updator
+ * Setup proper roles when prompting AI?
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator
