@@ -279,7 +279,7 @@ class DocumentSearchService
 
                 //file_put_contents('pdf_text', json_encode($text, JSON_PRETTY_PRINT));
 
-                return array_filter($text, fn($item) => !empty($item['text']) && strlen($item['text']) > 25);
+                return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen($item['text']) > 25);
             case 'txt':
             case 'md':
             case 'html':
@@ -295,7 +295,7 @@ class DocumentSearchService
                     ];
                 }
 
-                return array_filter($text, fn($item) => !empty($item['text']) && strlen($item['text']) > 25);
+                return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen($item['text']) > 25);
             default:
                 throw new Exception("Unsupported file type: $extension");
         }
