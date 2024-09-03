@@ -67,7 +67,7 @@
                 <!-- Chat Input at the Bottom -->
                 <div
                     class="p-2 flex flex-col sm:flex-row bg-white items-center border border-gray-300 rounded-lg m-3 mx-4">
-                    <div class="w-full sm:w-auto sm:mr-2">
+                    <div class="w-full sm:w-auto">
                         <livewire:general.model-selector for="{{App\Constants::NOTES_SELECTED_LLM_KEY}}"/>
                     </div>
 
