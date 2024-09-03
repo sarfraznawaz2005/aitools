@@ -44,9 +44,6 @@ class Note extends Model
 
     public static function reIndexNotes(): void
     {
-        # important: delete the old index file
-        @unlink(storage_path('app/notes.json'));
-
         ReIndexNotesJob::dispatch();
     }
 
