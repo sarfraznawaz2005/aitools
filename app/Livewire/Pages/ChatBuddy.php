@@ -101,6 +101,7 @@ class ChatBuddy extends Component
                 $selectedModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
                 //Log::info("consolidatedResponse: $consolidatedResponse");
+
                 $latestMessage->update([
                     'body' => processMarkdownToHtml($consolidatedResponse),
                     'llm' => $selectedModel->llm_type . ' (' . $selectedModel->model_name . ')' ?? '',
@@ -210,6 +211,8 @@ class ChatBuddy extends Component
                 });
 
                 $selectedModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
+
+                //info("consolidatedResponse: " . processMarkdownToHtml($consolidatedResponse));
 
                 $latestMessage->update([
                     'body' => processMarkdownToHtml($consolidatedResponse),
