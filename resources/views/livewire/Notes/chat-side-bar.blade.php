@@ -44,12 +44,12 @@
             <div class="flex-1 overflow-y-auto relative" x-ref="chatContent">
 
                 <!-- Sidebar Header -->
-                <div class="flex items-center sticky top-0 w-full bg-gray-100 p-3 rounded-lg">
-                    <div class="flex-grow border-t border-gray-300"></div>
+                <div class="flex items-center sticky top-0 w-full bg-gray-100 p-3 px-4 rounded-lg">
+                    <div class="flex-grow border-t mx-1 border-gray-300"></div>
                     <span class="uppercase text-xs px-1 text-gray-500 text-center font-semibold">
                         chat with {{ $this->totalNotesCount }} notes in {{ $this->folders->count() }} folders
                     </span>
-                    <div class="flex-grow border-t border-gray-300"></div>
+                    <div class="flex-grow border-t mx-1 border-gray-300"></div>
                 </div>
 
                 @if(!$this->totalNotesCount)
