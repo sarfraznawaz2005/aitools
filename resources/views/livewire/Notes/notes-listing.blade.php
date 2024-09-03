@@ -141,7 +141,7 @@
                                     wire:click="viewNote({{$note->id}})"
                                     class="content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full overflow-hidden">
                                     <div class="line-clamp-5">
-                                        {!! $note->content !!}
+                                        <bdi>{!! $note->content !!}</bdi>
                                     </div>
                                 </div>
                             </div>

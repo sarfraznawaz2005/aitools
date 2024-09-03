@@ -209,7 +209,7 @@
                                 <div class="bg-white border border-gray-200 rounded-lg px-4 py-2">
                                     <div x-ref="content"
                                          class="text-gray-500 aibot-message-content prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full word-break-all break-long-words scrollbar-code">
-                                        {!! $message->body !!}
+                                        <bdi>{!! $message->body !!}</bdi>
                                     </div>
                                 </div>
                                 <!-- End Card -->
