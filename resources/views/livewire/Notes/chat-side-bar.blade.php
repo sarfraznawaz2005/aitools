@@ -39,7 +39,8 @@
                     <div class="space-y-4 mt-4">
                         <!-- User message -->
                         <div class="flex flex-col">
-                            <div class="bg-blue-100 text-gray-600 text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
+                            <div
+                                class="bg-blue-100 text-gray-600 text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
                                 <p>Hello, can you summarize my notes about machine learning?</p>
                             </div>
                             <span class="text-xs text-gray-500 mt-1 self-end">You • 2:30 PM</span>
@@ -47,7 +48,8 @@
 
                         <!-- AI response -->
                         <div class="flex flex-col">
-                            <div class="bg-white text-gray-800 text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                            <div
+                                class="bg-white text-gray-800 text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                 <p>Is there any specific aspect you'd like more information on?</p>
                             </div>
                             <span class="text-xs text-gray-500 mt-1">AI Assistant • 2:31 PM</span>
@@ -65,10 +67,29 @@
                     </div>
 
                     <div class="relative w-full mt-2 sm:mt-0">
-                        <input type="url" autofocus autocomplete="off"
-                               {{!$this->totalNotesCount ? 'disabled' : ''}}
-                               class="py-1 block w-full border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
-                               placeholder="Ask me anything...">
+
+                        <form wire:submit.prevent="sendMessage" class="relative w-full mt-2 sm:mt-0">
+
+                            <input type="text" wire:model.defer="userMessage"
+                                   {{!$this->totalNotesCount ? 'disabled' : ''}}
+                                   {{!hasApiKeysCreated() ? 'disabled' : ''}}
+                                   autofocus
+                                   autocomplete="off"
+                                   dir="auto"
+                                   wire:loading.attr="disabled"
+                                   class="py-2 pr-10 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:bg-gray-200 disabled:pointer-events-none"
+                                   placeholder="Ask me anything...">
+
+                            <button type="submit"
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             </div>

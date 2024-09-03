@@ -90,7 +90,7 @@
                             @paste="setTimeout(() => adjustHeight(), 0)"
                             @keydown="handleKeyDown"
                             wire:loading.attr="disabled"
-                            tabindex="-10"
+                            tabindex="0"
                             autofocus
                             autocomplete="off"
                             dir="auto"
