@@ -16,7 +16,7 @@
          class="fixed inset-0 z-[60] top-14 flex justify-end sm:justify-center md:justify-end">
         <div
             @click.away="open = false"
-            class="relative w-full max-w-md h-full bg-gray-100 shadow-2xl flex flex-col" x-data="{
+            class="relative w-full max-w-md h-full bg-gray-100 shadow-2xl flex flex-col rounded-lg" x-data="{
             focusInput() {
                 if (open) {
                     $refs.chatInput.focus();
@@ -41,8 +41,8 @@
             x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
 
             <!-- Sidebar Content -->
-            <div class="flex-1 p-4 overflow-y-auto" x-ref="chatContent">
-                <div class="flex items-center">
+            <div class="flex-1 overflow-y-auto relative" x-ref="chatContent">
+                <div class="flex items-center sticky top-0 w-full bg-gray-100 py-3 rounded-lg">
                     <div class="flex-grow border-t border-gray-300"></div>
                     <span class="uppercase text-xs px-1 text-gray-500 text-center">
                         chat with {{ $this->totalNotesCount }} notes in {{ $this->folders->count() }} folders
@@ -58,7 +58,7 @@
                 @endif
 
                 <!-- Chat content -->
-                <div class="space-y-4 mt-4">
+                <div class="space-y-4 pt-20 px-4">
                     @foreach($conversation as $message)
                         @if($message['role'] === 'user')
                             <div class="flex flex-col">
