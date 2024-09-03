@@ -15,11 +15,11 @@ Artisan::command('cleanup', function () {
         'pak-constitution-bot',
     ];
 
-    Artisan::call('optimize:clear');
-    $this->info('Cache cleared successfully!');
-
     File::cleanDirectory(base_path('dist'));
     File::deleteDirectory(base_path('dist'));
+
+    Artisan::call('optimize:clear');
+    $this->info('Cache cleared successfully!');
 
     File::cleanDirectory(storage_path('app/livewire-tmp'));
     File::deleteDirectory(storage_path('app/livewire-tmp'));
