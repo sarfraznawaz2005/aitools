@@ -23,26 +23,22 @@ class Note extends Model
 
     protected static function booted(): void
     {
-        static::created(function () {
-            static::reIndexNotes();
+        static::created(function (Note $note) {
+            $note->dispatchReIndexJob();
         });
 
-//        static::updated(function (Note $note) {
-//            if ($note->wasChanged(['title', 'content'])) {
-//                static::reIndexNotes();
-//            }
-//        });
-
-        static::updated(function () {
-            static::reIndexNotes();
+        static::updated(function (Note $note) {
+            // if ($note->wasChanged(['title', 'content'])) {
+            $note->dispatchReIndexJob();
+            // }
         });
 
-        static::deleted(function () {
-            static::reIndexNotes();
+        static::deleted(function (Note $note) {
+            $note->dispatchReIndexJob();
         });
     }
 
-    public static function reIndexNotes(): void
+    protected function dispatchReIndexJob(): void
     {
         ReIndexNotesJob::dispatch();
     }

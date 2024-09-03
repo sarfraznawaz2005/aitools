@@ -68,6 +68,7 @@ class NotesSearchService
     {
         $results = [];
 
+        info('embedding query');
         $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->getEmbdeddingModel());
 
         $this->setTextEmbeddingsFromTexts($notes);
@@ -116,7 +117,7 @@ class NotesSearchService
     {
         $splits = [];
         $entries = [];
-
+        info('setTextEmbeddingsFromTexts');
         foreach ($notes as $note) {
             $textWithMetadata = $this->getTextWithMetaData($note);
             $splits[] = $this->splitTextIntoChunks($textWithMetadata);
@@ -158,16 +159,16 @@ class NotesSearchService
     protected function getEmbeddingsOrLoadFromCache(array $texts): array
     {
         $path = storage_path('app/notes.json');
-        $cacheKey = 'notes_cache_' . md5(json_encode($texts));
 
-        if (array_key_exists($cacheKey, $this->embeddingsCache)) {
-            //info("Loaded embeddings from cache for $fileName");
-            return $this->embeddingsCache[$cacheKey]['embeddings'];
-        }
+//        $cacheKey = 'notes_cache_' . md5(json_encode($texts));
+//        if (array_key_exists($cacheKey, $this->embeddingsCache)) {
+//            //info("Loaded embeddings from cache for $fileName");
+//            return $this->embeddingsCache[$cacheKey]['embeddings'];
+//        }
 
         if (file_exists($path)) {
             $data = json_decode(file_get_contents($path), true);
-            //info("Loaded embeddings from file for $fileName");
+            info("Loaded embeddings from file for $path");
             return $data['embeddings'];
         }
 
@@ -182,9 +183,10 @@ class NotesSearchService
             'chunks' => $texts
         ];
 
-        $this->embeddingsCache[$cacheKey] = $data;
+        //$this->embeddingsCache[$cacheKey] = $data;
 
         file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
+        info("file saved at: $path");
 
         return $embeddings;
     }
@@ -200,7 +202,7 @@ class NotesSearchService
         if (count($this->textSplits) !== count($this->embeddings)) {
             throw new Exception("Splits and embeddings count mismatch!");
         }
-
+        info('compareEmbeddings');
         // Standardize the query embeddings
         if (isset($queryEmbeddings['embeddings'])) {
             // Gemini structure
