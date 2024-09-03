@@ -19,7 +19,6 @@ class ReIndexNotesJob implements ShouldQueue
 
     public int $timeout = 300; // The number of seconds the job can run before timing out.
     public bool $failOnTimeout = true; // If the job should fail when it times out.
-    public bool $deleteWhenMissingModels = true; // If the job should be deleted if the model no longer exists.
 
     /**
      * @throws Throwable
