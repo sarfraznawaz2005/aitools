@@ -248,12 +248,12 @@ function fetchUrlContent($url): bool|string
 
 function processMarkdownToHtml($markdownContent)
 {
-    // Ensure the content is UTF-8 encoded
-    $utf8Content = mb_convert_encoding($markdownContent, 'UTF-8', 'auto');
-
     // Convert Markdown to HTML using Spatie's MarkdownRenderer
     $markdownRenderer = app(MarkdownRenderer::class);
-    $htmlContent = $markdownRenderer->toHtml($utf8Content);
+    $htmlContent = $markdownRenderer->toHtml($markdownContent);
+
+    // Ensure the content is UTF-8 encoded
+    $htmlContent = mb_convert_encoding($htmlContent, 'UTF-8', 'auto');
 
     // Fix any broken HTML and ensure UTF-8 encoding
     libxml_use_internal_errors(true); // Suppress libxml errors and warnings
