@@ -1,6 +1,5 @@
 <?php
 /*
- * openai chunks issue
  * metadata duplication
  * notes settings?
  * related questions broken html sometimes, should use strucutred output machanism
