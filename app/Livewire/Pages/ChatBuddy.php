@@ -102,10 +102,9 @@ class ChatBuddy extends Component
 
                 //Log::info("consolidatedResponse: $consolidatedResponse");
                 $latestMessage->update([
-                    'body' => fixBrokenHtml($markdown->toHtml($consolidatedResponse)),
+                    'body' => processMarkdownToHtml($consolidatedResponse),
                     'llm' => $selectedModel->llm_type . ' (' . $selectedModel->model_name . ')' ?? '',
                 ]);
-
 
             } catch (Exception $e) {
                 Log::error(__CLASS__ . ': ' . $e->getMessage());
@@ -213,7 +212,7 @@ class ChatBuddy extends Component
                 $selectedModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
                 $latestMessage->update([
-                    'body' => fixBrokenHtml($markdown->toHtml($consolidatedResponse)),
+                    'body' => processMarkdownToHtml($consolidatedResponse),
                     'llm' => $selectedModel->llm_type . ' (' . $selectedModel->model_name . ')' ?? '',
                 ]);
 

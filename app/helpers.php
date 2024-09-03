@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Log;
 use Native\Laravel\Facades\Settings;
 use Native\Laravel\Facades\Window;
 use Native\Laravel\Windows\PendingOpenWindow;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 function getLLM(ApiKey $model): LlmProvider
 {
@@ -246,19 +247,30 @@ function fetchUrlContent($url): bool|string
     }
 }
 
-function fixBrokenHtml($html)
+function processMarkdownToHtml($markdownContent)
 {
+    // Ensure the content is UTF-8 encoded
+    $utf8Content = mb_convert_encoding($markdownContent, 'UTF-8', 'auto');
+
+    // Convert Markdown to HTML using Spatie's MarkdownRenderer
+    $markdownRenderer = app(MarkdownRenderer::class);
+    $htmlContent = $markdownRenderer->toHtml($utf8Content);
+
+    // Fix any broken HTML and ensure UTF-8 encoding
     libxml_use_internal_errors(true); // Suppress libxml errors and warnings
 
-    $dom = new DOMDocument();
-    $success = $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $dom->encoding = 'UTF-8';
+
+    // Load the HTML, adding an XML declaration to ensure UTF-8 is properly handled
+    $success = $dom->loadHTML('<?xml encoding="UTF-8">' . $htmlContent, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
     libxml_clear_errors();
 
     if ($success) {
         $fixedHtml = $dom->saveHTML();
-        return $fixedHtml !== false ? $fixedHtml : $html;
+        return $fixedHtml !== false ? $fixedHtml : $htmlContent;
     }
 
-    return $html;
+    return $htmlContent;
 }
