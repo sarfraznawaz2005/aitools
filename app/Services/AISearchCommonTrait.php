@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Constants;
+use App\Enums\ApiKeyTypeEnum;
+use App\LLM\GeminiProvider;
 use App\LLM\OpenAiProvider;
 use Exception;
 
@@ -46,6 +49,39 @@ trait AISearchCommonTrait
                 }
             }
         }
+    }
+
+    protected function getEmbdeddingModel(): string
+    {
+        if ($this->llm instanceof OpenAiProvider) {
+            $llmType = ApiKeyTypeEnum::OPENAI->value;
+        } elseif ($this->llm instanceof GeminiProvider) {
+            $llmType = ApiKeyTypeEnum::GEMINI->value;
+        } else {
+            $llmType = ApiKeyTypeEnum::OLLAMA->value;
+        }
+
+        return match ($llmType) {
+            ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
+            ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
+            default => $this->llm->model,
+        };
+    }
+
+    protected function getEmbdeddingBatchSize(): string
+    {
+        if ($this->llm instanceof OpenAiProvider) {
+            $llmType = ApiKeyTypeEnum::OPENAI->value;
+        } elseif ($this->llm instanceof GeminiProvider) {
+            $llmType = ApiKeyTypeEnum::GEMINI->value;
+        } else {
+            $llmType = ApiKeyTypeEnum::OLLAMA->value;
+        }
+
+        return match ($llmType) {
+            ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_BATCHSIZE,
+            default => Constants::OPENAI_EMBEDDING_BATCHSIZE,
+        };
     }
 
     protected function getMetadataForChunk(array $textWithMetadata, int $start, int $end): array

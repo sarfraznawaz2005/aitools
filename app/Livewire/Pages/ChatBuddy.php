@@ -3,7 +3,6 @@
 namespace App\Livewire\Pages;
 
 use App\Constants;
-use App\Enums\ApiKeyTypeEnum;
 use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
@@ -165,14 +164,11 @@ class ChatBuddy extends Component
 
             try {
 
-                $markdown = app(MarkdownRenderer::class);
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
-                $embeddingModel = $this->getEmbeddingsModel();
-                $embdeddingsBatchSize = $this->getEmbeddingsBatchSize();
 
                 // About Chunk Size: if too long, it will not answer granular details, and if it is too short, it will
                 // not answer long details so this is trade off.
-                $searchService = DocumentSearchService::getInstance($llm, $conversation->id, $embeddingModel, $embdeddingsBatchSize, 2000);
+                $searchService = DocumentSearchService::getInstance($llm, $conversation->id, 2000);
 
                 $isIndexingDone = true;
                 foreach ($files as $file) {
@@ -272,26 +268,5 @@ class ChatBuddy extends Component
         }
 
         return $uniqueMessages;
-    }
-
-    protected function getEmbeddingsModel(): string
-    {
-        $llmModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
-
-        return match ($llmModel->llm_type) {
-            ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
-            ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
-            default => $llmModel->model_name,
-        };
-    }
-
-    protected function getEmbeddingsBatchSize(): int
-    {
-        $llmModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
-
-        return match ($llmModel->llm_type) {
-            ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_BATCHSIZE,
-            default => Constants::OPENAI_EMBEDDING_BATCHSIZE,
-        };
     }
 }

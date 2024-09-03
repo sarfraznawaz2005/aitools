@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Constants;
-use App\Enums\ApiKeyTypeEnum;
 use App\Services\NotesSearchService;
 use Carbon\Carbon;
 use Exception;
@@ -27,15 +26,15 @@ class Note extends Model
 
     protected static function booted(): void
     {
-        static::created(function ($note) {
+        static::created(function () {
             static::reIndexNotes();
         });
 
-        static::updated(function ($note) {
+        static::updated(function () {
             static::reIndexNotes();
         });
 
-        static::deleted(function ($note) {
+        static::deleted(function () {
             static::reIndexNotes();
         });
     }
@@ -47,18 +46,6 @@ class Note extends Model
             info('Re-indexing Notes...');
 
             $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
-            $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
-
-            $embeddingModel = match ($llmModel->llm_type) {
-                ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
-                ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
-                default => $llmModel->model_name,
-            };
-
-            $embdeddingsBatchSize = match ($llmModel->llm_type) {
-                ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_BATCHSIZE,
-                default => Constants::OPENAI_EMBEDDING_BATCHSIZE,
-            };
 
             // get all notes
             $notes = Note::with('folder')->get()->map(function ($note) {
@@ -72,7 +59,7 @@ class Note extends Model
 
             @unlink(storage_path('app/notes.json'));
 
-            $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 2000);
+            $searchService = NotesSearchService::getInstance($llm, 2000);
 
             return $searchService->searchTexts($notes, $query);
         } catch (Exception $e) {
@@ -96,7 +83,6 @@ class Note extends Model
 
         return $query;
     }
-
 
     public function scopeWithRecurringReminderAt($query, Carbon $time)
     {

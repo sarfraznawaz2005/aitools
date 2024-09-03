@@ -3,7 +3,7 @@
  * metadata duplication
  * notes settings?
  * related questions broken html sometimes, should use strucutred output machanism
- * backup to one drive, etc
+ * backup to one drive, etc.
  * empty title on icon hover
  * setup updator
  * Setup proper roles when prompting AI?
@@ -52,8 +52,8 @@ function getSelectedLLMModel(string $key): ApiKey
 {
     $selectedModel = Settings::get($key . '.selectedModel');
 
-    if ($selectedModel && ApiKey::where('model_name', $selectedModel)->exists()) {
-        $model = ApiKey::where('model_name', $selectedModel)->first();
+    if ($selectedModel && ApiKey::query()->where('model_name', $selectedModel)->exists()) {
+        $model = ApiKey::query()->where('model_name', $selectedModel)->first();
     } else {
         $model = ApiKey::whereActive()->first();
     }
@@ -163,11 +163,6 @@ function htmlToText($html, $removeWhiteSpace = true): string
 function getBotIcon(Conversation $conversation = null): string
 {
     return $conversation?->bot?->icon ?? '🤖';
-}
-
-function getBotName(Conversation $conversation = null): string
-{
-    return $conversation?->bot?->name ?? 'General';
 }
 
 function openWindow(

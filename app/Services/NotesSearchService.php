@@ -16,8 +16,6 @@ class NotesSearchService
     protected array $textSplits = [];
 
     private function __construct(protected LlmProvider $llm,
-                                 protected string      $embdeddingModel,
-                                 protected int         $embdeddingsBatchSize,
                                  protected int         $chunkSize,
                                  protected int         $maxResults)
     {
@@ -25,14 +23,12 @@ class NotesSearchService
 
     public static function getInstance(
         LlmProvider $llm,
-        string      $embdeddingModel,
-        int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 1000,
         int         $maxResults = 2
     ): NotesSearchService
     {
         if (self::$instance === null) {
-            self::$instance = new self($llm, $embdeddingModel, $embdeddingsBatchSize, $chunkSize, $maxResults);
+            self::$instance = new self($llm, $chunkSize, $maxResults);
         }
 
         return self::$instance;
@@ -72,7 +68,7 @@ class NotesSearchService
     {
         $results = [];
 
-        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->embdeddingModel);
+        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->getEmbdeddingModel());
 
         $this->setTextEmbeddingsFromTexts($notes);
 
@@ -126,8 +122,7 @@ class NotesSearchService
             $splits[] = $this->splitTextIntoChunks($textWithMetadata);
         }
 
-        // Chunk the text based on $embdeddingsBatchSize
-        $chunks = array_chunk($splits, $this->embdeddingsBatchSize);
+        $chunks = array_chunk($splits, $this->getEmbdeddingBatchSize());
 
         foreach ($chunks as $chunk) {
             foreach ($chunk as $chunkEntry) {
@@ -180,7 +175,7 @@ class NotesSearchService
             return $chunk['text'];
         }, $texts);
 
-        $embeddings = $this->llm->embed($textSplits, $this->embdeddingModel);
+        $embeddings = $this->llm->embed($textSplits, $this->getEmbdeddingModel());
 
         $data = [
             'embeddings' => $embeddings,

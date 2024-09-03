@@ -306,7 +306,7 @@ class TextNote extends Component
             }
 
             return ucfirst($humanReadable);
-        } catch (Exception $e) {
+        } catch (Exception) {
             return 'Invalid cron expression';
         }
     }
@@ -344,7 +344,7 @@ class TextNote extends Component
             }
 
             return $nextRuns;
-        } catch (Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }

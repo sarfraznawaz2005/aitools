@@ -20,8 +20,6 @@ class DocumentSearchService
 
     private function __construct(protected LlmProvider $llm,
                                  protected string      $fileIdentifier,
-                                 protected string      $embdeddingModel,
-                                 protected int         $embdeddingsBatchSize,
                                  protected int         $chunkSize,
                                  protected int         $maxResults)
     {
@@ -34,14 +32,12 @@ class DocumentSearchService
     public static function getInstance(
         LlmProvider $llm,
         string      $fileIdentifier,
-        string      $embdeddingModel,
-        int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 1000,
         int         $maxResults = 2
     ): DocumentSearchService
     {
         if (self::$instance === null) {
-            self::$instance = new self($llm, $fileIdentifier, $embdeddingModel, $embdeddingsBatchSize, $chunkSize, $maxResults);
+            self::$instance = new self($llm, $fileIdentifier, $chunkSize, $maxResults);
         }
 
         return self::$instance;
@@ -86,7 +82,7 @@ class DocumentSearchService
     {
         $results = [];
 
-        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->embdeddingModel);
+        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->getEmbdeddingModel());
 
         $this->setTextEmbeddingsFromFiles($files);
 
@@ -191,7 +187,7 @@ class DocumentSearchService
             return trim($chunk['text']);
         }, $chunks);
 
-        $embeddings = $this->llm->embed($textSplits, $this->embdeddingModel);
+        $embeddings = $this->llm->embed($textSplits, $this->getEmbdeddingModel());
 
         $data = [
             'embeddings' => $embeddings,
@@ -221,8 +217,7 @@ class DocumentSearchService
             $textWithMetadata = $this->extractTextFromFile($file);
             $chunks = $this->splitTextIntoChunks($textWithMetadata);
 
-            // Chunk the text based on $embdeddingsBatchSize
-            $chunkedTextArray = array_chunk($chunks, $this->embdeddingsBatchSize);
+            $chunkedTextArray = array_chunk($chunks, $this->getEmbdeddingBatchSize());
 
             $chunkedEmbeddings = [];
             $chunkedTextSplits = [];
@@ -321,7 +316,7 @@ class DocumentSearchService
 
         $iterations = 0;
 
-        foreach ($this->embeddings as $file => $fileEmbeddings) {
+        foreach ($this->embeddings as $fileEmbeddings) {
             foreach ($fileEmbeddings as $mainIndex => $embeddings) {
                 foreach ($embeddings as $index => $embedding) {
                     // Check the structure and handle accordingly
