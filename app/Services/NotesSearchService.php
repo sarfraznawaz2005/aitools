@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\LLM\LlmProvider;
+use App\LLM\OpenAiProvider;
 use Exception;
 
 class NotesSearchService
@@ -19,7 +20,6 @@ class NotesSearchService
                                  protected string      $embdeddingModel,
                                  protected int         $embdeddingsBatchSize,
                                  protected int         $chunkSize,
-                                 protected float       $similarityThreshold,
                                  protected int         $maxResults)
     {
     }
@@ -29,12 +29,11 @@ class NotesSearchService
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 500,
-        float       $similarityThreshold = 0.6,
-        int         $maxResults = 3
+        int         $maxResults = 2
     ): NotesSearchService
     {
         if (self::$instance === null) {
-            self::$instance = new self($llm, $embdeddingModel, $embdeddingsBatchSize, $chunkSize, $similarityThreshold, $maxResults);
+            self::$instance = new self($llm, $embdeddingModel, $embdeddingsBatchSize, $chunkSize, $maxResults);
         }
 
         return self::$instance;
@@ -100,7 +99,7 @@ class NotesSearchService
 
                 $maxScore = max($exactMatchScore, $fuzzyMatchScore);
 
-                if ($maxScore >= $this->similarityThreshold) {
+                if ($maxScore >= $this->getSimiliarityThreashold()) {
                     $results[] = [
                         'similarity' => $maxScore,
                         'index' => $index,
@@ -250,13 +249,23 @@ class NotesSearchService
         return $results;
     }
 
+    protected function getSimiliarityThreashold(): float
+    {
+        // because there is difference in the cosine similarity values between OpenAI and Gemini
+        if ($this->llm instanceof OpenAiProvider) {
+            return 0.75;
+        } else {
+            return 0.6;
+        }
+    }
+
     protected function processEmbedding(array $embeddingValues, array $queryEmbeddingValues, int $mainIndex, int $index, int $iterations, array &$results, array &$alreadyAdded): void
     {
         // Calculate cosine similarity
         $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
         info("Iteration #: $iterations");
 
-        if ($similarity >= $this->similarityThreshold) {
+        if ($similarity >= $this->getSimiliarityThreashold()) {
             if (isset($this->textSplits[$mainIndex][$index])) {
                 $matchedText = $this->textSplits[$mainIndex][$index];
                 $hash = md5($matchedText['text']);
@@ -271,6 +280,9 @@ class NotesSearchService
                     ];
                 }
             }
+        } else {
+            // Log when similarity is too low
+            info("No match for iteration $iterations with similarity $similarity");
         }
     }
 

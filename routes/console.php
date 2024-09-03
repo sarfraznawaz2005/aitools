@@ -63,14 +63,14 @@ Artisan::command('test', function () {
 //
 //    echo $title;
 
-//    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
-//    $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
+    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+    $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
 
-    $llm = new OpenAiProvider(
-        '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',
-        'gpt-4o-mini', ['max_tokens' => 4096, 'temperature' => 0.7]
-    );
-    $llmModel = ApiKey::where('model_name', 'gpt-4o-mini')->first();
+//    $llm = new OpenAiProvider(
+//        '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',
+//        'gpt-4o-mini', ['max_tokens' => 4096, 'temperature' => 0.7]
+//    );
+//    $llmModel = ApiKey::where('model_name', 'gpt-4o-mini')->first();
 
     $embeddingModel = match ($llmModel->llm_type) {
         ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
@@ -95,8 +95,8 @@ Artisan::command('test', function () {
 
     @unlink(storage_path('app/notes.json'));
 
-    $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 500);
-    $results = $searchService->searchTexts($notes, 'lorem');
+    $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 2000);
+    $results = $searchService->searchTexts($notes, 'ipsum');
 
     dd($results);
 

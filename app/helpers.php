@@ -2,7 +2,6 @@
 /*
  * openai chunks issue
  * metadata duplication
- * smaller chunks for notes
  * notes settings?
  * related questions broken html sometimes, should use strucutred output machanism
  * backup to one drive, etc
