@@ -16,7 +16,7 @@
              class="fixed inset-0 z-[60] top-14 flex justify-end sm:justify-center md:justify-end">
             <div
                 @click.away="open = false"
-                class="relative w-full max-w-md h-full bg-gray-50 shadow-2xl flex flex-col">
+                class="relative w-full max-w-md h-full bg-gray-100 shadow-2xl flex flex-col">
 
                 <!-- Sidebar Content -->
                 <div class="flex-1 p-4 overflow-y-auto">
@@ -28,7 +28,6 @@
                         <div class="flex-grow border-t border-gray-300"></div>
                     </div>
 
-
                     @if(!$this->totalNotesCount)
                         <div class="p-4 text-center text-gray-500">
                             <p class="text-lg font-semibold">No notes found</p>
@@ -36,7 +35,33 @@
                         </div>
                     @endif
 
-                    <!-- Your chat content goes here -->
+                    <!-- Chat content -->
+                    <div class="space-y-4 mt-4">
+                        <!-- User message -->
+                        <div class="flex flex-col">
+                            <div class="bg-blue-100 text-gray-600 text-xs p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
+                                <p class="text-sm">Hello, can you summarize my notes about machine learning?</p>
+                            </div>
+                            <span class="text-xs text-gray-500 mt-1 self-end">You • 2:30 PM</span>
+                        </div>
+
+                        <!-- AI response -->
+                        <div class="flex flex-col">
+                            <div class="bg-white border border-gray-200 text-gray-800 p-3 rounded-lg rounded-bl-none self-start max-w-full">
+                                <p class="text-sm">Certainly! Based on your notes, here's a summary of machine learning:</p>
+                                <ul class="list-disc list-inside mt-2 text-sm">
+                                    <li>Machine learning is a subset of AI that enables systems to learn and improve from experience.</li>
+                                    <li>Key types include supervised, unsupervised, and reinforcement learning.</li>
+                                    <li>Common algorithms: linear regression, decision trees, neural networks, and k-means clustering.</li>
+                                    <li>Applications span various fields like image recognition, natural language processing, and predictive analytics.</li>
+                                </ul>
+                                <p class="text-sm mt-2">Is there any specific aspect you'd like more information on?</p>
+                            </div>
+                            <span class="text-xs text-gray-500 mt-1">AI Assistant • 2:31 PM</span>
+                        </div>
+                    </div>
+                    <!-- Chat content End -->
+
                 </div>
 
                 <!-- Chat Input at the Bottom -->
