@@ -20,6 +20,8 @@ class ChatSideBar extends Component
     #[Session(key: 'notes-conversation')]
     public array $conversation = [];
 
+    public string $aiStreamResponse = '';
+
     public function sendMessage(): void
     {
         $this->dispatch('focusInput');
@@ -96,8 +98,13 @@ class ChatSideBar extends Component
         $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
             $consolidatedResponse .= $chunk;
 
-            sendStream($chunk);
+            $this->stream(
+                to: 'aiStreamResponse',
+                content: '$chunk',
+            );
         });
+
+        return '$consolidatedResponse';
     }
 
     function setMessages(): void

@@ -90,6 +90,14 @@
                                     {{ $message['content'] }}
                                 </div>
                             </div>
+
+                            <div class="flex flex-col">
+                                <div
+                                    wire:stream="aiStreamResponse"
+                                    class="bg-white text-gray-800 cursor-pointer text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                                    {!! $aiStreamResponse !!}
+                                </div>
+                            </div>
                         @endif
                     @endforeach
                 </div>
