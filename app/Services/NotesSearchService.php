@@ -29,7 +29,7 @@ class NotesSearchService
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 500,
-        float       $similarityThreshold = 0.54,
+        float       $similarityThreshold = 0.6,
         int         $maxResults = 3
     ): NotesSearchService
     {
@@ -196,9 +196,6 @@ class NotesSearchService
         return $embeddings;
     }
 
-    /**
-     * @throws Exception
-     */
     protected function compareEmbeddings(array $queryEmbeddings): array
     {
         $results = [];
@@ -208,49 +205,71 @@ class NotesSearchService
             throw new Exception("Splits and embeddings count mismatch!");
         }
 
-        // Gemini structure for queryEmbeddings
+        // Standardize the query embeddings
         if (isset($queryEmbeddings['embeddings'])) {
+            // Gemini structure
             $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
+        } elseif (isset($queryEmbeddings[0]['embedding'])) {
+            // OpenAI structure
+            $queryEmbeddingValues = $queryEmbeddings[0]['embedding'];
         } else {
-            // OpenAI structure for queryEmbeddings
-            $queryEmbeddingValues = $queryEmbeddings;
+            throw new Exception("Unknown query embeddings format.");
         }
 
+        $iterations = 0; // Initialize iteration counter
+
         foreach ($this->embeddings as $mainIndex => $embeddings) {
-
-            if (isset($embeddings['embeddings'])) {
-                // Gemini structure: 'embeddings' => array of arrays with 'values'
-                $embeddingValues = array_column($embeddings['embeddings'], 'values');
-            } else {
-                // OpenAI structure: direct array of embedding values
-                $embeddingValues = [$embeddings];
-            }
-
-            foreach ($embeddingValues as $index => $embedding) {
-
-                $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
-                //dump($similarity);
-
-                if ($similarity >= $this->similarityThreshold) {
-                    if (isset($this->textSplits[$mainIndex][$index])) {
-                        $matchedText = $this->textSplits[$mainIndex][$index];
-                        $hash = md5($matchedText['text']);
-
-                        if (!isset($alreadyAdded[$hash])) {
-                            $alreadyAdded[$hash] = true;
-
-                            $results[] = [
-                                'similarity' => $similarity,
-                                'index' => $index,
-                                'matchedChunk' => $matchedText,
-                            ];
-                        }
+            foreach ($embeddings as $index => $embedding) {
+                // Check the structure and handle accordingly
+                if (isset($embedding['embedding'])) {
+                    // OpenAI structure
+                    $embeddingValues = $embedding['embedding'];
+                    $iterations++;
+                    $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $mainIndex, $index, $iterations, $results, $alreadyAdded);
+                } elseif (isset($embedding['values'])) {
+                    // Gemini structure, single embedding with 'values' key
+                    $embeddingValues = $embedding['values'];
+                    $iterations++;
+                    $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $mainIndex, $index, $iterations, $results, $alreadyAdded);
+                } elseif (isset($embedding[0]['values'])) {
+                    // Gemini structure, multiple embeddings within an array
+                    foreach ($embedding as $subIndex => $subEmbedding) {
+                        $embeddingValues = $subEmbedding['values'];
+                        $iterations++;
+                        $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $mainIndex, (int)$subIndex, $iterations, $results, $alreadyAdded);
                     }
-
+                } else {
+                    throw new Exception("Unknown embedding format.");
                 }
             }
         }
 
         return $results;
     }
+
+    protected function processEmbedding(array $embeddingValues, array $queryEmbeddingValues, int $mainIndex, int $index, int $iterations, array &$results, array &$alreadyAdded): void
+    {
+        // Calculate cosine similarity
+        $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
+        info("Iteration #: $iterations");
+
+        if ($similarity >= $this->similarityThreshold) {
+            if (isset($this->textSplits[$mainIndex][$index])) {
+                $matchedText = $this->textSplits[$mainIndex][$index];
+                $hash = md5($matchedText['text']);
+
+                if (!isset($alreadyAdded[$hash])) {
+                    $alreadyAdded[$hash] = true;
+
+                    $results[] = [
+                        'similarity' => $similarity,
+                        'index' => $index,
+                        'matchedChunk' => $matchedText,
+                    ];
+                }
+            }
+        }
+    }
+
+
 }
