@@ -116,7 +116,7 @@
                                dir="auto"
                                wire:loading.attr="disabled"
                                class="py-2 z-0 pr-4 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
-                               placeholder="press enter to chat with your notes...">
+                               placeholder="Press enter to chat with your notes...">
                     </form>
                 </div>
 
