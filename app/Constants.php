@@ -19,5 +19,7 @@ final class Constants
 
     const string OPENAI_EMBEDDING_MODEL = 'text-embedding-ada-002';
     const string GEMINI_EMBEDDING_MODEL = 'embedding-001';
-    const string OLLAMA_EMBEDDING_MODEL = 'mistral:latest';
+
+    const int GEMINI_EMBEDDING_BATCHSIZE = 100;
+    const int OPENAI_EMBEDDING_BATCHSIZE = 2048;
 }

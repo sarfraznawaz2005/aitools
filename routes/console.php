@@ -2,8 +2,6 @@
 
 use App\Constants;
 use App\Enums\ApiKeyTypeEnum;
-use App\LLM\OpenAiProvider;
-use App\Models\ApiKey;
 use App\Models\Note;
 use App\Services\NotesSearchService;
 use Illuminate\Foundation\Inspiring;
@@ -55,6 +53,7 @@ Artisan::command('cleanup', function () {
 
 
 Artisan::command('test', function () {
+    
 //    $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 //
 //    $title = $llm->chat(
@@ -66,22 +65,15 @@ Artisan::command('test', function () {
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
     $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
 
-//    $llm = new OpenAiProvider(
-//        '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',
-//        'gpt-4o-mini', ['max_tokens' => 4096, 'temperature' => 0.7]
-//    );
-//    $llmModel = ApiKey::where('model_name', 'gpt-4o-mini')->first();
-
     $embeddingModel = match ($llmModel->llm_type) {
         ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
         ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
-        default => Constants::OLLAMA_EMBEDDING_MODEL,
+        default => $llmModel->model_name,
     };
 
     $embdeddingsBatchSize = match ($llmModel->llm_type) {
-        ApiKeyTypeEnum::GEMINI->value => 100,
-        ApiKeyTypeEnum::OPENAI->value => 2048,
-        default => 1000,
+        ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_BATCHSIZE,
+        default => Constants::OPENAI_EMBEDDING_BATCHSIZE,
     };
 
     $notes = Note::with('folder')->get()->map(function ($note) {

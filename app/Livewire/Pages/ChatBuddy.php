@@ -281,7 +281,7 @@ class ChatBuddy extends Component
         return match ($llmModel->llm_type) {
             ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
             ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
-            default => Constants::OLLAMA_EMBEDDING_MODEL,
+            default => $llmModel->model_name,
         };
     }
 
@@ -290,9 +290,8 @@ class ChatBuddy extends Component
         $llmModel = getSelectedLLMModel(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
         return match ($llmModel->llm_type) {
-            ApiKeyTypeEnum::GEMINI->value => 100,
-            ApiKeyTypeEnum::OPENAI->value => 2048,
-            default => 1000,
+            ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_BATCHSIZE,
+            default => Constants::OPENAI_EMBEDDING_BATCHSIZE,
         };
     }
 }
