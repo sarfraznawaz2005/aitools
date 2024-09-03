@@ -39,22 +39,25 @@
                     <div class="space-y-4 mt-4">
                         @foreach($conversation as $message)
                             @if($message['role'] === 'user')
-                        <div class="flex flex-col">
-                            <div
-                                class="bg-blue-100 text-gray-600 text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
-                                {{ $message['content'] }}
-                            </div>
-                            <span class="text-xs text-gray-500 mt-1 self-end">You • {{ $message['timestamp'] }}</span>
-                        </div>
+                                <div class="flex flex-col">
+                                    <div
+                                        class="bg-blue-100 text-gray-600 text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
+                                        {{ $message['content'] }}
+                                    </div>
+                                    <span
+                                        class="text-xs text-gray-500 mt-1 self-end">You • {{ $message['timestamp'] }}
+                                    </span>
+                                </div>
                             @else
-                        <!-- AI response -->
-                        <div class="flex flex-col">
-                            <div
-                                class="bg-white text-gray-800 text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                                {{ $message['content'] }}
-                            </div>
-                            <span class="text-xs text-gray-500 mt-1">AI Assistant • {{ $message['timestamp'] }}</span>
-                        </div>
+                                <div class="flex flex-col">
+                                    <div
+                                        class="bg-white text-gray-800 text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                                        {{ $message['content'] }}
+                                    </div>
+                                    <span
+                                        class="text-xs text-gray-500 mt-1">AI Assistant • {{ $message['timestamp'] }}
+                                    </span>
+                                </div>
                             @endif
                         @endforeach
                     </div>
