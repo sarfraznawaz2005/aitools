@@ -259,7 +259,14 @@ class NotesSearchService
         }
     }
 
-    protected function processEmbedding(array $embeddingValues, array $queryEmbeddingValues, int $mainIndex, int $index, int $iterations, array &$results, array &$alreadyAdded): void
+    protected function processEmbedding(
+        array $embeddingValues,
+        array $queryEmbeddingValues,
+        int   $mainIndex,
+        int   $index,
+        int   $iterations,
+        array &$results,
+        array &$alreadyAdded): void
     {
         // Calculate cosine similarity
         $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
