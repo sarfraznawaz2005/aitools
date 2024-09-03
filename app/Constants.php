@@ -14,6 +14,7 @@ final class Constants
     const int CHATBUDDY_TOTAL_CONVERSATION_HISTORY = 50;
 
     const string NOTES_SELECTED_LLM_KEY = 'Notes-LLM';
+    const int NOTES_TOTAL_CONVERSATION_HISTORY = 100;
 
     const string TEXTSTYLER_SELECTED_LLM_KEY = 'TextStyler-LLM';
 

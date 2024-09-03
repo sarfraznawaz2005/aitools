@@ -2,7 +2,10 @@
 
 namespace App\Livewire\Notes;
 
+use App\Constants;
+use App\Models\Note;
 use App\Models\NoteFolder;
+use App\Services\NotesSearchService;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Session;
@@ -32,17 +35,16 @@ class ChatSideBar extends Component
         $this->conversation[] = [
             'role' => 'user',
             'content' => $this->userMessage,
-            'timestamp' => now()->format('g:i A')
+            'timestamp' => time()
         ];
 
-        // TODO: Process the message and get AI response
         $aiResponse = $this->getAIResponse($this->userMessage);
 
         // Add AI response to conversation
         $this->conversation[] = [
             'role' => 'ai',
             'content' => $aiResponse,
-            'timestamp' => now()->format('g:i A')
+            'timestamp' => time()
         ];
 
         // Clear user message
@@ -51,10 +53,108 @@ class ChatSideBar extends Component
         $this->dispatch('focusInput');
     }
 
-    private function getAIResponse($message)
+    private function getAIResponse($userMessage)
     {
-        // TODO: Implement AI response logic
-        return 'AI response for: ' . $message;
+        $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+
+        $notes = $this->notes;
+
+        $searchService = NotesSearchService::getInstance($llm, 2000);
+        $results = $searchService->searchTexts($notes, $userMessage);
+        //dd($results);
+
+        $context = '';
+
+        foreach ($results as $result) {
+            $text = $result['matchedChunk']['text'];
+
+            // Collect unique sources
+            $sources = [];
+            foreach ($result['matchedChunk']['metadata'] as $metadata) {
+                $title = $metadata['title'];
+                $source = $metadata['source'];
+                $sources[$title] = $source; // Use title as the key to ensure uniqueness
+            }
+
+            $formattedSources = [];
+            foreach ($sources as $title => $source) {
+                $formattedSources[] = "'$title' ($source)";
+            }
+
+            $metaDataString = 'Sources: ' . implode(', ', $formattedSources);
+
+            $context .= $text . "\n\n<sources>" . $metaDataString . "</sources>\n\n";
+        }
+
+        $this->setMessages();
+        $conversationHistory = implode("\n", $this->conversation);
+
+        $prompt = makePromoptForNotes($context, $userMessage, $conversationHistory);
+
+        $consolidatedResponse = '';
+
+        $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
+            $consolidatedResponse .= $chunk;
+
+            sendStream($chunk);
+        });
+    }
+
+    function setMessages(): void
+    {
+        $uniqueMessages = [];
+
+        // Strings to filter out from the conversation
+
+        // Sort the array by timestamp in descending order
+        usort($this->conversation, function ($a, $b) {
+            return $b['timestamp'] - $a['timestamp'];
+        });
+
+        // Remove duplicates and empty content entries, and filter by role and content
+        $this->conversation = array_values(array_filter(array_unique($this->conversation, SORT_REGULAR), function ($item) {
+            $filterOutStrings = [
+                "conversation history",
+                "have enough information to answer this question accurately",
+                "provided context"
+            ];
+
+            if ($item['role'] !== 'user') {
+                foreach ($filterOutStrings as $str) {
+                    if (str_contains(strtolower($item['content']), strtolower($str))) {
+                        return false;
+                    }
+                }
+            }
+
+            // Also ensure that the content is not empty
+            return !empty($item['content']);
+        }));
+
+        // Format and filter unique messages
+        foreach ($this->conversation as $message) {
+            $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'ASSISTANT: ') . $message['content'];
+
+            if (!in_array($formattedMessage, $uniqueMessages)) {
+                $uniqueMessages[] = htmlToText($formattedMessage);
+            }
+        }
+
+        $this->conversation = array_slice($uniqueMessages, 0, Constants::NOTES_TOTAL_CONVERSATION_HISTORY);
+    }
+
+
+    #[Computed]
+    private function notes(): array
+    {
+        return Note::with('folder')->get()->map(function ($note) {
+            return [
+                'id' => $note->id,
+                'title' => $note->title,
+                'content' => $note->content,
+                'folder' => $note->folder->name,
+            ];
+        })->toArray();
     }
 
     public function resetConversation(): void

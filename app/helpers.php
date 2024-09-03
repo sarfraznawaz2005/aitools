@@ -1,7 +1,7 @@
 <?php
 /*
- * metadata duplication
  * notes settings?
+ * wysiwyg editor typing issue (livewire model live updates most likely causing issue)
  * backup to one drive, etc.
  * related questions broken html sometimes, should use strucutred output machanism
  * Setup proper roles when prompting AI?
@@ -111,6 +111,27 @@ function makePromoptForDocumentBot(Bot $bot, string $infoHeader, string $context
     $prompt = config('prompts.documentBotPrompt');
 
     $prompt = str_ireplace('{{INFO}}', $infoHeader, $prompt);
+    $prompt = str_ireplace('{{CONTEXT}}', $context, $prompt);
+    $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
+    $prompt = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $prompt);
+
+    $prompt .= $relatedQuestionsPrompt;
+    $prompt .= "\nPlease provide answer here:";
+
+    if (app()->environment('local')) {
+        Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+    }
+
+    return $prompt;
+}
+
+function makePromoptForNotes(string $context, string $userQuery, string $conversationHistory): string
+{
+    // documentBotRelatedQuestionsPrompt looks good for notes too
+    $relatedQuestionsPrompt = config('prompts.documentBotRelatedQuestionsPrompt');
+
+    $prompt = config('prompts.notesPrompt');
+
     $prompt = str_ireplace('{{CONTEXT}}', $context, $prompt);
     $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
     $prompt = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $prompt);
