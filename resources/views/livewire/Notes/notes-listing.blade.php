@@ -64,7 +64,7 @@
                                     <a href="#" @click.prevent="copy"
                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                         <x-icons.copy class="inline-block mr-2 text-gray-500"/>
-                                        <span x-text="copied ? 'Copied' : 'Copy'"></span>
+                                        <span x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : 'Copy'"></span>
                                     </a>
 
                                     <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"

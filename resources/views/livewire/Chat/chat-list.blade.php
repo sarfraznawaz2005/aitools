@@ -173,7 +173,7 @@
                                             @click="copy"
                                             class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
                                         <x-icons.copy class="hover:text-gray-600"/>
-                                        <span x-text="copied ? 'Copied' : ''"></span>
+                                        <span x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
                                     </button>
                                 </div>
                                 <div>
@@ -237,7 +237,7 @@
                                                     @click="copy"
                                                     class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
                                                 <x-icons.copy class="hover:text-gray-600"/>
-                                                <span x-text="copied ? 'Copied' : ''"></span>
+                                                <span x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
                                             </button>
 
                                             <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data

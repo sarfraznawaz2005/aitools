@@ -56,7 +56,7 @@
                     <div class="justify-center border-t border-gray-300 p-5 hidden" id="copyButtonContainer">
                         <x-gradient-button @click="copy">
                             <x-icons.copy/>
-                            <span x-text="copied ? 'Copied' : 'Copy Output'"></span>
+                            <span x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : 'Copy Output'"></span>
                         </x-gradient-button>
                     </div>
                 </fieldset>
