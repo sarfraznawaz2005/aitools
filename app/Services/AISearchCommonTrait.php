@@ -2,10 +2,21 @@
 
 namespace App\Services;
 
+use App\LLM\OpenAiProvider;
 use Exception;
 
 trait AISearchCommonTrait
 {
+    protected function getSimiliarityThreashold(): float
+    {
+        // because there is difference in the cosine similarity values between OpenAI and Gemini
+        if ($this->llm instanceof OpenAiProvider) {
+            return 0.75;
+        } else {
+            return 0.6;
+        }
+    }
+
     protected function getMetadataForChunk(array $textWithMetadata, int $start, int $end): array
     {
         $metadata = [];

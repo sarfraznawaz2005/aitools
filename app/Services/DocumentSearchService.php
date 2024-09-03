@@ -23,7 +23,6 @@ class DocumentSearchService
                                  protected string      $embdeddingModel,
                                  protected int         $embdeddingsBatchSize,
                                  protected int         $chunkSize,
-                                 protected float       $similarityThreshold,
                                  protected int         $maxResults)
     {
         $config = new Config();
@@ -38,12 +37,11 @@ class DocumentSearchService
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 500,
-        float       $similarityThreshold = 0.6,
         int         $maxResults = 3
     ): DocumentSearchService
     {
         if (self::$instance === null) {
-            self::$instance = new self($llm, $fileIdentifier, $embdeddingModel, $embdeddingsBatchSize, $chunkSize, $similarityThreshold, $maxResults);
+            self::$instance = new self($llm, $fileIdentifier, $embdeddingModel, $embdeddingsBatchSize, $chunkSize, $maxResults);
         }
 
         return self::$instance;
@@ -115,7 +113,7 @@ class DocumentSearchService
 
                     $maxScore = max($exactMatchScore, $fuzzyMatchScore);
 
-                    if ($maxScore >= $this->similarityThreshold) {
+                    if ($maxScore >= $this->getSimiliarityThreashold()) {
                         $results[] = [
                             'similarity' => $maxScore,
                             'index' => $index,
@@ -158,7 +156,7 @@ class DocumentSearchService
         $llmResult = $this->llm->chat($prompt);
 
         return [[
-            'similarity' => $this->similarityThreshold,
+            'similarity' => $this->getSimiliarityThreashold(),
             'index' => 0,
             'matchedChunk' => ['text' => $llmResult, 'metadata' => []],
         ]];
@@ -333,7 +331,7 @@ class DocumentSearchService
 
                     $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
 
-                    if ($similarity >= $this->similarityThreshold) {
+                    if ($similarity >= $this->getSimiliarityThreashold()) {
 
                         if (isset($this->textSplits[$file][$mainIndex][$index])) {
                             $matchedText = $this->textSplits[$file][$mainIndex][$index];

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\LLM\LlmProvider;
-use App\LLM\OpenAiProvider;
 use Exception;
 
 class NotesSearchService
@@ -247,16 +246,6 @@ class NotesSearchService
         }
 
         return $results;
-    }
-
-    protected function getSimiliarityThreashold(): float
-    {
-        // because there is difference in the cosine similarity values between OpenAI and Gemini
-        if ($this->llm instanceof OpenAiProvider) {
-            return 0.75;
-        } else {
-            return 0.6;
-        }
     }
 
     protected function processEmbedding(
