@@ -196,6 +196,9 @@ class NotesSearchService
         return $embeddings;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function compareEmbeddings(array $queryEmbeddings): array
     {
         $results = [];
