@@ -1,6 +1,5 @@
 <?php
 /*
- * unicode issue
  * prompt format issue
  * openai chunks issue
  * metadata duplication
