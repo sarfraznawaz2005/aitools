@@ -36,8 +36,8 @@ class DocumentSearchService
         string      $fileIdentifier,
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
-        int         $chunkSize = 500,
-        int         $maxResults = 3
+        int         $chunkSize = 1000,
+        int         $maxResults = 2
     ): DocumentSearchService
     {
         if (self::$instance === null) {
@@ -308,46 +308,42 @@ class DocumentSearchService
             throw new Exception("Splits and embeddings count mismatch!");
         }
 
-        // Gemini structure for queryEmbeddings
+        // Standardize the query embeddings
         if (isset($queryEmbeddings['embeddings'])) {
+            // Gemini structure
             $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
+        } elseif (isset($queryEmbeddings[0]['embedding'])) {
+            // OpenAI structure
+            $queryEmbeddingValues = $queryEmbeddings[0]['embedding'];
         } else {
-            // OpenAI structure for queryEmbeddings
-            $queryEmbeddingValues = $queryEmbeddings;
+            throw new Exception("Unknown query embeddings format.");
         }
+
+        $iterations = 0;
 
         foreach ($this->embeddings as $file => $fileEmbeddings) {
             foreach ($fileEmbeddings as $mainIndex => $embeddings) {
-
-                if (isset($embeddings['embeddings'])) {
-                    // Gemini structure: 'embeddings' => array of arrays with 'values'
-                    $embeddingValues = array_column($embeddings['embeddings'], 'values');
-                } else {
-                    // OpenAI structure: direct array of embedding values
-                    $embeddingValues = [$embeddings];
-                }
-
-                foreach ($embeddingValues as $index => $embedding) {
-
-                    $similarity = $this->cosineSimilarity($embedding, $queryEmbeddingValues);
-
-                    if ($similarity >= $this->getSimiliarityThreashold()) {
-
-                        if (isset($this->textSplits[$file][$mainIndex][$index])) {
-                            $matchedText = $this->textSplits[$file][$mainIndex][$index];
-                            $hash = md5($matchedText['text']);
-
-                            if (!isset($alreadyAdded[$hash])) {
-                                $alreadyAdded[$hash] = true;
-
-                                $results[] = [
-                                    'similarity' => $similarity,
-                                    'index' => $index,
-                                    'matchedChunk' => $matchedText,
-                                ];
-                            }
+                foreach ($embeddings as $index => $embedding) {
+                    // Check the structure and handle accordingly
+                    if (isset($embedding['embedding'])) {
+                        // OpenAI structure
+                        $embeddingValues = $embedding['embedding'];
+                        $iterations++;
+                        $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $mainIndex, $index, $iterations, $results, $alreadyAdded);
+                    } elseif (isset($embedding['values'])) {
+                        // Gemini structure, single embedding with 'values' key
+                        $embeddingValues = $embedding['values'];
+                        $iterations++;
+                        $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $mainIndex, $index, $iterations, $results, $alreadyAdded);
+                    } elseif (isset($embedding[0]['values'])) {
+                        // Gemini structure, multiple embeddings within an array
+                        foreach ($embedding as $subIndex => $subEmbedding) {
+                            $embeddingValues = $subEmbedding['values'];
+                            $iterations++;
+                            $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $mainIndex, (int)$subIndex, $iterations, $results, $alreadyAdded);
                         }
-
+                    } else {
+                        throw new Exception("Unknown embedding format.");
                     }
                 }
             }

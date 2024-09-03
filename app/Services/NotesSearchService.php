@@ -27,7 +27,7 @@ class NotesSearchService
         LlmProvider $llm,
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
-        int         $chunkSize = 500,
+        int         $chunkSize = 1000,
         int         $maxResults = 2
     ): NotesSearchService
     {
@@ -217,7 +217,7 @@ class NotesSearchService
             throw new Exception("Unknown query embeddings format.");
         }
 
-        $iterations = 0; // Initialize iteration counter
+        $iterations = 0;
 
         foreach ($this->embeddings as $mainIndex => $embeddings) {
             foreach ($embeddings as $index => $embedding) {
@@ -247,36 +247,4 @@ class NotesSearchService
 
         return $results;
     }
-
-    protected function processEmbedding(
-        array $embeddingValues,
-        array $queryEmbeddingValues,
-        int   $mainIndex,
-        int   $index,
-        int   $iterations,
-        array &$results,
-        array &$alreadyAdded): void
-    {
-        // Calculate cosine similarity
-        $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
-        //info("Iteration #: $iterations");
-
-        if ($similarity >= $this->getSimiliarityThreashold()) {
-            if (isset($this->textSplits[$mainIndex][$index])) {
-                $matchedText = $this->textSplits[$mainIndex][$index];
-                $hash = md5($matchedText['text']);
-
-                if (!isset($alreadyAdded[$hash])) {
-                    $alreadyAdded[$hash] = true;
-
-                    $results[] = [
-                        'similarity' => $similarity,
-                        'index' => $index,
-                        'matchedChunk' => $matchedText,
-                    ];
-                }
-            }
-        }
-    }
-
 }

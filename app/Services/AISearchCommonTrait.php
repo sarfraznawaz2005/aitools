@@ -17,6 +17,37 @@ trait AISearchCommonTrait
         }
     }
 
+    protected function processEmbedding(
+        array $embeddingValues,
+        array $queryEmbeddingValues,
+        int   $mainIndex,
+        int   $index,
+        int   $iterations,
+        array &$results,
+        array &$alreadyAdded): void
+    {
+        // Calculate cosine similarity
+        $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
+        //info("Iteration #: $iterations");
+
+        if ($similarity >= $this->getSimiliarityThreashold()) {
+            if (isset($this->textSplits[$mainIndex][$index])) {
+                $matchedText = $this->textSplits[$mainIndex][$index];
+                $hash = md5($matchedText['text']);
+
+                if (!isset($alreadyAdded[$hash])) {
+                    $alreadyAdded[$hash] = true;
+
+                    $results[] = [
+                        'similarity' => $similarity,
+                        'index' => $index,
+                        'matchedChunk' => $matchedText,
+                    ];
+                }
+            }
+        }
+    }
+
     protected function getMetadataForChunk(array $textWithMetadata, int $start, int $end): array
     {
         $metadata = [];
@@ -94,7 +125,7 @@ trait AISearchCommonTrait
 
     protected function calculateExactMatchScore(string $query, string $text): float
     {
-        return stripos($text, $query) !== false ? $this->similarityThreshold : 0.0;
+        return stripos($text, $query) !== false ? $this->getSimiliarityThreashold() : 0.0;
     }
 
     protected function calculateFuzzyMatchScore(string $query, string $text): float
@@ -102,7 +133,7 @@ trait AISearchCommonTrait
         $distance = levenshtein($query, $text);
         $maxLength = max(strlen($query), strlen($text));
 
-        return $maxLength === 0 ? $this->similarityThreshold : 1 - ($distance / $maxLength);
+        return $maxLength === 0 ? $this->getSimiliarityThreashold() : 1 - ($distance / $maxLength);
     }
 
     protected function getCleanedText(string $text, bool $removeStopWords = false): string
