@@ -42,9 +42,9 @@
 
             <!-- Sidebar Content -->
             <div class="flex-1 overflow-y-auto relative" x-ref="chatContent">
-                <div class="flex items-center sticky top-0 w-full bg-gray-100 py-3 rounded-lg">
+                <div class="flex items-center sticky top-0 w-full bg-gray-100 p-3 rounded-lg">
                     <div class="flex-grow border-t border-gray-300"></div>
-                    <span class="uppercase text-xs px-1 text-gray-500 text-center">
+                    <span class="uppercase text-xs px-1 text-gray-500 text-center font-semibold">
                         chat with {{ $this->totalNotesCount }} notes in {{ $this->folders->count() }} folders
                     </span>
                     <div class="flex-grow border-t border-gray-300"></div>
