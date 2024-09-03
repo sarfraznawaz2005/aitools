@@ -60,5 +60,5 @@ Artisan::command('test', function () {
 //    echo $title;
 
 
-    dd(Note::reIndexNotes('lorem'));
+    //Note::reIndexNotes();
 });

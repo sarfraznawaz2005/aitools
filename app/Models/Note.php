@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants;
+use App\Jobs\ReIndexNotesJob;
 use App\Services\NotesSearchService;
 use Carbon\Carbon;
 use Exception;
@@ -39,33 +40,9 @@ class Note extends Model
         });
     }
 
-    public static function reIndexNotes($query = 'whatever'): array
+    public static function reIndexNotes(): void
     {
-        try {
-
-            info('Re-indexing Notes...');
-
-            $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
-
-            // get all notes
-            $notes = Note::with('folder')->get()->map(function ($note) {
-                return [
-                    'id' => $note->id,
-                    'title' => $note->title,
-                    'content' => $note->content,
-                    'folder' => $note->folder->name,
-                ];
-            })->toArray();
-
-            @unlink(storage_path('app/notes.json'));
-
-            $searchService = NotesSearchService::getInstance($llm, 2000);
-
-            return $searchService->searchTexts($notes, $query);
-        } catch (Exception $e) {
-            Log::error('Error re-indexing notes: ' . $e->getMessage());
-            return [];
-        }
+        ReIndexNotesJob::dispatch();
     }
 
     public function folder(): BelongsTo
