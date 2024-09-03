@@ -63,6 +63,12 @@ class ChatSideBar extends Component
         return 'AI response for: ' . $message;
     }
 
+    public function resetConversation(): void
+    {
+        session()->forget('chat_conversation');
+        $this->conversation = [];
+    }
+
     #[Computed]
     public function folders(): Collection
     {

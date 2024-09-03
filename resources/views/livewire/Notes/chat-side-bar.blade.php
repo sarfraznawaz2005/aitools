@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div x-data="{ open: true }">
 
     <button type="button" @click="open = true"
             class="py-2 px-4 mr-2 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
@@ -41,7 +41,9 @@
             x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
 
             <!-- Sidebar Content -->
-            <div class="flex-1 overflow-y-auto relative" x-ref="chatContent">
+            <div class="flex-1 overflow-y-auto relative mb-4" x-ref="chatContent">
+
+                <!-- Sidebar Header -->
                 <div class="flex items-center sticky top-0 w-full bg-gray-100 p-3 rounded-lg">
                     <div class="flex-grow border-t border-gray-300"></div>
                     <span class="uppercase text-xs px-1 text-gray-500 text-center font-semibold">
@@ -89,7 +91,7 @@
 
             <!-- Chat Input at the Bottom -->
             <div
-                class="p-2 flex flex-col sm:flex-row bg-white items-center border border-gray-300 rounded-lg m-3 mx-4">
+                class="p-1 flex flex-col sm:flex-row bg-white items-center border border-gray-300 rounded-lg m-3 mx-4">
                 <div class="w-full sm:w-auto">
                     <livewire:general.model-selector for="{{App\Constants::NOTES_SELECTED_LLM_KEY}}"/>
                 </div>
@@ -113,20 +115,17 @@
                                tabindex="0"
                                dir="auto"
                                wire:loading.attr="disabled"
-                               class="py-2 pr-10 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
-                               placeholder="Ask me anything about your notes...">
-
-                        <button type="submit"
-                                class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                            </svg>
-                        </button>
+                               class="py-2 z-0 pr-4 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
+                               placeholder="press enter to chat with your notes...">
                     </form>
-
                 </div>
+
+                <x-confirm-dialog call="resetConversation"
+                                  x-data x-tooltip.raw="Reset Conversation"
+                                  text="Are you sure you want reset the conversation?"
+                                  class="inline-flex mr-2 mt-2 items-center text-sm border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
+                    <x-icons.delete class="w-5 h-5 text-gray-500"/>
+                </x-confirm-dialog>
             </div>
         </div>
     </div>
