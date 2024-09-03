@@ -75,6 +75,7 @@
                                    {{!hasApiKeysCreated() ? 'disabled' : ''}}
                                    autofocus
                                    autocomplete="off"
+                                   tabindex="0"
                                    dir="auto"
                                    wire:loading.attr="disabled"
                                    class="py-2 pr-10 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:bg-gray-200 disabled:pointer-events-none"
