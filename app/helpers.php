@@ -1,7 +1,7 @@
 <?php
 /*
- * prompt format issue
  * openai chunks issue
+ * prompt format issue
  * metadata duplication
  * smaller chunks for notes
  * notes settings?
