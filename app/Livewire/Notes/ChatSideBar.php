@@ -52,6 +52,8 @@ class ChatSideBar extends Component
 
         // Clear user message
         $this->userMessage = '';
+
+        $this->dispatch('focusInput');
     }
 
     private function getAIResponse($message)

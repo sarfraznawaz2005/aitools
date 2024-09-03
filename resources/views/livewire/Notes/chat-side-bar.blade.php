@@ -81,14 +81,17 @@
                         <div
                             x-data="{
                                 focusInput() {
-                                    $nextTick(() => {
-                                        if (typeof this.$refs.chatInput !== 'undefined' && this.$refs.chatInput !== null) {
-                                            this.$refs.chatInput.focus();
-                                        }
-                                    });
+                                    if (typeof $refs.chatInput !== 'undefined' && $refs.chatInput !== null) {
+                                        $refs.chatInput.focus();
+                                    }
                                 }
                             }"
-                            x-init="Livewire.on('focusInput', () => focusInput());"
+
+                            x-init="
+                                focusInput();
+                                Livewire.on('focusInput', () => focusInput());
+                            "
+
                             x-intersect="focusInput">
 
                             <form wire:submit.prevent="sendMessage" @submit.prevent="focusInput"
@@ -98,7 +101,6 @@
                                        wire:model="userMessage"
                                        x-ref="chatInput"
                                        {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
-                                       @blur="focusInput()"
                                        autofocus
                                        autocomplete="off"
                                        tabindex="0"
