@@ -39,8 +39,12 @@ class ReIndexNotesJob implements ShouldQueue
             ];
         })->toArray();
 
-        $searchService = NotesSearchService::getInstance($llm);
-        $searchService->searchTexts($notes, 'whatever');
+        if (count($notes) > 0) {
+            @unlink(storage_path('app/notes.json')); #important to delete the file first
+
+            $searchService = NotesSearchService::getInstance($llm);
+            $searchService->searchTexts($notes, 'whatever');
+        }
 
         info('Indexing Done...');
     }

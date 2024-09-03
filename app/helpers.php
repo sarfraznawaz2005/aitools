@@ -245,7 +245,7 @@ function processMarkdownToHtml($markdownContent): string
     $htmlContent = $markdownRenderer->toHtml($markdownContent);
 
     // Replace empty p tags, including those with only whitespace or newlines
-    $htmlContent = preg_replace('/<p[^>]*>\s*<\/p[^>]*>/s', '', $htmlContent);
+    $htmlContent = preg_replace('/<p[^>]*>\s*<\/p[^>]*>/', '', $htmlContent);
 
     // Fix any remaining broken HTML and ensure UTF-8 encoding
     libxml_use_internal_errors(true); // Suppress libxml errors and warnings
