@@ -65,7 +65,7 @@ trait OpenAICompatibleTrait
             'model' => $embeddingModel
         ], false, true);
 
-        return $response['data'][0]['embedding'] ?? [];
+        return $response['data'] ?? [];
     }
 
     protected function getResult(array $response): string
