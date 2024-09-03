@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use App\Constants;
 use App\Jobs\ReIndexNotesJob;
-use App\Services\NotesSearchService;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Log;
 
 class Note extends Model
 {
@@ -31,6 +27,12 @@ class Note extends Model
             static::reIndexNotes();
         });
 
+//        static::updated(function (Note $note) {
+//            if ($note->wasChanged(['title', 'content'])) {
+//                static::reIndexNotes();
+//            }
+//        });
+
         static::updated(function () {
             static::reIndexNotes();
         });
@@ -42,6 +44,9 @@ class Note extends Model
 
     public static function reIndexNotes(): void
     {
+        # important: delete the old index file
+        @unlink(storage_path('app/notes.json'));
+
         ReIndexNotesJob::dispatch();
     }
 

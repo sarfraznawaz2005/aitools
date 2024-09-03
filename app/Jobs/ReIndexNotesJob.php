@@ -40,9 +40,6 @@ class ReIndexNotesJob implements ShouldQueue
             ];
         })->toArray();
 
-        # important: delete the old index file
-        @unlink(storage_path('app/notes.json'));
-
         $searchService = NotesSearchService::getInstance($llm);
         $searchService->searchTexts($notes, 'whatever');
 
