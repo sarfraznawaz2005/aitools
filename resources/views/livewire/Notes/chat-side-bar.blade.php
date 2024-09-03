@@ -82,12 +82,13 @@
                             x-data="{
                                 focusInput() {
                                     $nextTick(() => {
-                                        this.$refs.chatInput.focus();
+                                        if (typeof this.$refs.chatInput !== 'undefined' && this.$refs.chatInput !== null) {
+                                            this.$refs.chatInput.focus();
+                                        }
                                     });
                                 }
                             }"
-                            x-init="focusInput"
-                            @blur="focusInput()"
+                            x-init="Livewire.on('focusInput', () => focusInput());"
                             x-intersect="focusInput">
 
                             <form wire:submit.prevent="sendMessage" @submit.prevent="focusInput"
@@ -96,7 +97,7 @@
                                 <input type="text"
                                        wire:model="userMessage"
                                        x-ref="chatInput"
-                                       :disabled="!$this->totalNotesCount || !hasApiKeysCreated()"
+                                       {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
                                        @blur="focusInput()"
                                        autofocus
                                        autocomplete="off"

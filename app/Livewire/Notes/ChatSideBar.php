@@ -22,6 +22,8 @@ class ChatSideBar extends Component
 
     public function sendMessage(): void
     {
+        $this->dispatch('focusInput');
+
         $this->validate();
 
         if (empty(trim($this->userMessage))) {
