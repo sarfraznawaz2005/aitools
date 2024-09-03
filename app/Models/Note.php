@@ -23,14 +23,15 @@ class Note extends Model
 
     protected static function booted(): void
     {
+        //todo: use laravel's new defer method when it is available
         static::created(function (Note $note) {
             $note->dispatchReIndexJob();
         });
 
         static::updated(function (Note $note) {
-            // if ($note->wasChanged(['title', 'content'])) {
-            $note->dispatchReIndexJob();
-            // }
+            if ($note->wasChanged(['title', 'content'])) {
+                $note->dispatchReIndexJob();
+            }
         });
 
         static::deleted(function (Note $note) {
