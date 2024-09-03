@@ -38,7 +38,7 @@ class DocumentSearchService
         string      $embdeddingModel,
         int         $embdeddingsBatchSize = 100,
         int         $chunkSize = 500,
-        float       $similarityThreshold = 0.54,
+        float       $similarityThreshold = 0.6,
         int         $maxResults = 3
     ): DocumentSearchService
     {
