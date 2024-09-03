@@ -18,6 +18,9 @@ Artisan::command('cleanup', function () {
     Artisan::call('optimize:clear');
     $this->info('Cache cleared successfully!');
 
+    File::cleanDirectory(base_path('dist'));
+    File::deleteDirectory(base_path('dist'));
+
     File::cleanDirectory(storage_path('app/livewire-tmp'));
     File::deleteDirectory(storage_path('app/livewire-tmp'));
 
