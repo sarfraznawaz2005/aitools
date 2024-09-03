@@ -34,6 +34,7 @@ class ChatInput extends Component
         $this->validate();
 
         if (!$this->query) {
+            $this->addError('query', 'Please enter a message.');
             return;
         }
 

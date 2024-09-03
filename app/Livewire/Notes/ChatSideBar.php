@@ -27,6 +27,7 @@ class ChatSideBar extends Component
         $this->validate();
 
         if (empty(trim($this->userMessage))) {
+            $this->addError('userMessage', 'Please enter a message.');
             return;
         }
 
