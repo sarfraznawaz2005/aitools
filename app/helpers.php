@@ -2,11 +2,11 @@
 /*
  * metadata duplication
  * notes settings?
- * related questions broken html sometimes, should use strucutred output machanism
  * backup to one drive, etc.
+ * related questions broken html sometimes, should use strucutred output machanism
+ * Setup proper roles when prompting AI?
  * empty title on icon hover
  * setup updator
- * Setup proper roles when prompting AI?
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator
@@ -243,6 +243,9 @@ function processMarkdownToHtml($markdownContent): string
 {
     $markdownRenderer = app(MarkdownRenderer::class);
     $htmlContent = $markdownRenderer->toHtml($markdownContent);
+
+    // Replace empty p tags, including those with only whitespace or newlines
+    $htmlContent = preg_replace('/<p[^>]*>\s*<\/p[^>]*>/s', '', $htmlContent);
 
     // Fix any remaining broken HTML and ensure UTF-8 encoding
     libxml_use_internal_errors(true); // Suppress libxml errors and warnings
