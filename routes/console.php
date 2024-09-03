@@ -1,9 +1,6 @@
 <?php
 
-use App\Constants;
-use App\Enums\ApiKeyTypeEnum;
 use App\Models\Note;
-use App\Services\NotesSearchService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -53,7 +50,7 @@ Artisan::command('cleanup', function () {
 
 
 Artisan::command('test', function () {
-    
+
 //    $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 //
 //    $title = $llm->chat(
@@ -62,34 +59,6 @@ Artisan::command('test', function () {
 //
 //    echo $title;
 
-    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
-    $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
 
-    $embeddingModel = match ($llmModel->llm_type) {
-        ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
-        ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
-        default => $llmModel->model_name,
-    };
-
-    $embdeddingsBatchSize = match ($llmModel->llm_type) {
-        ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_BATCHSIZE,
-        default => Constants::OPENAI_EMBEDDING_BATCHSIZE,
-    };
-
-    $notes = Note::with('folder')->get()->map(function ($note) {
-        return [
-            'id' => $note->id,
-            'title' => $note->title,
-            'content' => $note->content,
-            'folder' => $note->folder->name,
-        ];
-    })->toArray();
-
-    @unlink(storage_path('app/notes.json'));
-
-    $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 2000);
-    $results = $searchService->searchTexts($notes, 'ipsum');
-
-    dd($results);
-
+    dd(Note::reIndexNotes('lorem'));
 });

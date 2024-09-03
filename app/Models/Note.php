@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Constants;
+use App\Enums\ApiKeyTypeEnum;
+use App\Services\NotesSearchService;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Log;
 
 class Note extends Model
 {
@@ -23,16 +28,57 @@ class Note extends Model
     protected static function booted(): void
     {
         static::created(function ($note) {
-            info('A note was created: ', ['note' => $note->id]);
+            static::reIndexNotes();
         });
 
         static::updated(function ($note) {
-            info('A note was updated: ', ['note' => $note->id]);
+            static::reIndexNotes();
         });
 
         static::deleted(function ($note) {
-            info('A note was deleted: ', ['note' => $note->id]);
+            static::reIndexNotes();
         });
+    }
+
+    public static function reIndexNotes($query = 'whatever'): array
+    {
+        try {
+
+            info('Re-indexing Notes...');
+
+            $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+            $llmModel = getSelectedLLMModel(Constants::NOTES_SELECTED_LLM_KEY);
+
+            $embeddingModel = match ($llmModel->llm_type) {
+                ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_MODEL,
+                ApiKeyTypeEnum::OPENAI->value => Constants::OPENAI_EMBEDDING_MODEL,
+                default => $llmModel->model_name,
+            };
+
+            $embdeddingsBatchSize = match ($llmModel->llm_type) {
+                ApiKeyTypeEnum::GEMINI->value => Constants::GEMINI_EMBEDDING_BATCHSIZE,
+                default => Constants::OPENAI_EMBEDDING_BATCHSIZE,
+            };
+
+            // get all notes
+            $notes = Note::with('folder')->get()->map(function ($note) {
+                return [
+                    'id' => $note->id,
+                    'title' => $note->title,
+                    'content' => $note->content,
+                    'folder' => $note->folder->name,
+                ];
+            })->toArray();
+
+            @unlink(storage_path('app/notes.json'));
+
+            $searchService = NotesSearchService::getInstance($llm, $embeddingModel, $embdeddingsBatchSize, 2000);
+
+            return $searchService->searchTexts($notes, $query);
+        } catch (Exception $e) {
+            Log::error('Error re-indexing notes: ' . $e->getMessage());
+            return [];
+        }
     }
 
     public function folder(): BelongsTo
