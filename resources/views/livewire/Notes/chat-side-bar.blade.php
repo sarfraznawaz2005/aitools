@@ -79,7 +79,7 @@
                                    dir="auto"
                                    wire:loading.attr="disabled"
                                    class="py-2 pr-10 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:bg-gray-200 disabled:pointer-events-none"
-                                   placeholder="Ask me anything...">
+                                   placeholder="Ask me anything about your notes...">
 
                             <button type="submit"
                                     class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
