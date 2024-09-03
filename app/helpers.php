@@ -246,7 +246,7 @@ function fetchUrlContent($url): bool|string
     }
 }
 
-function processMarkdownToHtml($markdownContent)
+function processMarkdownToHtml($markdownContent): array|false|string|null
 {
     // Convert Markdown to HTML using Spatie's MarkdownRenderer
     $markdownRenderer = app(MarkdownRenderer::class);
