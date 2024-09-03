@@ -41,7 +41,7 @@
             x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
 
             <!-- Sidebar Content -->
-            <div class="flex-1 overflow-y-auto relative mb-4" x-ref="chatContent">
+            <div class="flex-1 overflow-y-auto relative" x-ref="chatContent">
 
                 <!-- Sidebar Header -->
                 <div class="flex items-center sticky top-0 w-full bg-gray-100 p-3 rounded-lg">
@@ -60,7 +60,7 @@
                 @endif
 
                 <!-- Chat content -->
-                <div class="space-y-4 pt-20 px-4">
+                <div class="space-y-4 pt-2 px-4">
                     @foreach($conversation as $message)
                         @if($message['role'] === 'user')
                             <div class="flex flex-col">
