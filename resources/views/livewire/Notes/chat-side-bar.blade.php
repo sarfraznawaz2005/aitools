@@ -37,23 +37,26 @@
 
                     <!-- Chat content -->
                     <div class="space-y-4 mt-4">
-                        <!-- User message -->
+                        @foreach($conversation as $message)
+                            @if($message['role'] === 'user')
                         <div class="flex flex-col">
                             <div
                                 class="bg-blue-100 text-gray-600 text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
-                                <p>Hello, can you summarize my notes about machine learning?</p>
+                                {{ $message['content'] }}
                             </div>
-                            <span class="text-xs text-gray-500 mt-1 self-end">You • 2:30 PM</span>
+                            <span class="text-xs text-gray-500 mt-1 self-end">You • {{ $message['timestamp'] }}</span>
                         </div>
-
+                            @else
                         <!-- AI response -->
                         <div class="flex flex-col">
                             <div
                                 class="bg-white text-gray-800 text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                                <p>Is there any specific aspect you'd like more information on?</p>
+                                {{ $message['content'] }}
                             </div>
-                            <span class="text-xs text-gray-500 mt-1">AI Assistant • 2:31 PM</span>
+                            <span class="text-xs text-gray-500 mt-1">AI Assistant • {{ $message['timestamp'] }}</span>
                         </div>
+                            @endif
+                        @endforeach
                     </div>
                     <!-- Chat content End -->
 
@@ -68,28 +71,48 @@
 
                     <div class="relative w-full mt-2 sm:mt-0">
 
-                        <form wire:submit.prevent="sendMessage" class="relative w-full mt-2 sm:mt-0">
+                        @error('userMessage')
+                        <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
+                        @enderror
 
-                            <input type="text" wire:model.defer="userMessage"
-                                   {{!$this->totalNotesCount ? 'disabled' : ''}}
-                                   {{!hasApiKeysCreated() ? 'disabled' : ''}}
-                                   autofocus
-                                   autocomplete="off"
-                                   tabindex="0"
-                                   dir="auto"
-                                   wire:loading.attr="disabled"
-                                   class="py-2 pr-10 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:bg-gray-200 disabled:pointer-events-none"
-                                   placeholder="Ask me anything about your notes...">
+                        <div
+                            x-data="{
+                                focusInput() {
+                                    $nextTick(() => {
+                                        this.$refs.chatInput.focus();
+                                    });
+                                }
+                            }"
+                            x-init="focusInput"
+                            @blur="focusInput()"
+                            x-intersect="focusInput">
 
-                            <button type="submit"
-                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                                </svg>
-                            </button>
-                        </form>
+                            <form wire:submit.prevent="sendMessage" @submit.prevent="focusInput"
+                                  class="relative w-full mt-2 sm:mt-0">
+
+                                <input type="text"
+                                       wire:model="userMessage"
+                                       x-ref="chatInput"
+                                       :disabled="!$this->totalNotesCount || !hasApiKeysCreated()"
+                                       @blur="focusInput()"
+                                       autofocus
+                                       autocomplete="off"
+                                       tabindex="0"
+                                       dir="auto"
+                                       wire:loading.attr="disabled"
+                                       class="py-2 pr-10 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
+                                       placeholder="Ask me anything about your notes...">
+
+                                <button type="submit"
+                                        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
 
                     </div>
                 </div>
