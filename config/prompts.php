@@ -107,11 +107,9 @@ EOF,
 
     Please always provide hyperlinks for the following related questions:
 
-    <ul>
-        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem">Question 1</a></li>
-        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
-        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
-    </ul>
+    - <a href="#" class="ai-suggested-answer text-sm">Question 1</a>
+    - <a href="#" class="ai-suggested-answer text-sm">Question 2</a>
+    - <a href="#" class="ai-suggested-answer text-sm">Question 3</a>
 
     EOF,
 
@@ -186,11 +184,9 @@ EOF,
 
     Please always provide hyperlinks for the following related questions:
 
-    <ul>
-        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem">Question 1</a></li>
-        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 2</a></li>
-        <li><a href="#" class="ai-suggested-answer" style="font-size: 0.9rem;">Question 3</a></li>
-    </ul>
+    - <a href="#" class="ai-suggested-answer text-sm">Question 1</a>
+    - <a href="#" class="ai-suggested-answer text-sm">Question 2</a>
+    - <a href="#" class="ai-suggested-answer text-sm">Question 3</a>
 
     4. Strictly follow below guidelines for related questions:
         - Build question solely from the context and conversation history provided.
