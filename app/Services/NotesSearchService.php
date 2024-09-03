@@ -270,7 +270,7 @@ class NotesSearchService
     {
         // Calculate cosine similarity
         $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
-        info("Iteration #: $iterations");
+        //info("Iteration #: $iterations");
 
         if ($similarity >= $this->getSimiliarityThreashold()) {
             if (isset($this->textSplits[$mainIndex][$index])) {
@@ -287,9 +287,6 @@ class NotesSearchService
                     ];
                 }
             }
-        } else {
-            // Log when similarity is too low
-            info("No match for iteration $iterations with similarity $similarity");
         }
     }
 
