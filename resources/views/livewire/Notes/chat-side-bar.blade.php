@@ -84,8 +84,8 @@
                     <div x-data="{show:false}"
                          x-init="
 
-                         $wire.on('goAhead', () => {  scrollToBottom(); show = true; Livewire.dispatch('getResponse'); });
-                         $wire.on('focusInput', () => { scrollToBottom(); show = false });
+                         $wire.on('goAhead', () => {  show = true; scrollToBottom(); Livewire.dispatch('getResponse'); });
+                         $wire.on('focusInput', () => { show = false; scrollToBottom(); });
 
                          ">
                         <div x-show="show" class="flex flex-col">
