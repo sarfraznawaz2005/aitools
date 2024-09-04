@@ -2,7 +2,7 @@
 
     <x-flash/>
 
-    <p class="text-xs text-gray-600 mb-2 text-center font-semibold bg-gray-50 border border-gray-100 p-1 rounded">
+    <p class="text-xs text-gray-600 mb-2 text-center font-semibold bg-gray-50 border border-gray-200 p-2 rounded-lg">
         📣 These settings take effect after re-starting the app.
     </p>
 
