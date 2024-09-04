@@ -86,29 +86,12 @@
                             $wire.on('goAhead', () => { console.log('here'); show = true; scrollToBottom(); Livewire.dispatch('getResponse'); });
                             $wire.on('focusInput', () => { show = false; scrollToBottom(); });
                          ">
+
                         <div x-show="show" class="flex flex-col">
                             <div
                                 wire:stream="aiStreamResponse"
                                 class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                            </div>
-                        </div>
-
-                        <div x-show="show">
-                            <div class="fixed inset-0 bg-transparent w-screen h-screen opacity-5 z-[70]"></div>
-                            <div class="fixed bottom-[20%] right-[13.5%]">
-                                <span
-                                    class="mb-4 animate-ping inline-flex justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
-                                >
-                                  <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      class="shrink-0 size-8"
-                                      fill="currentColor"
-                                      viewBox="0 0 16 16">
-                                    <path
-                                        d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"
-                                    />
-                                  </svg>
-                            </span>
+                                <span class="animate-ping">🤖</span>
                             </div>
                         </div>
                     </div>
