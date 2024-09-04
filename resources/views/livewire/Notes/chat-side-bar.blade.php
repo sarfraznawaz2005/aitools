@@ -60,16 +60,22 @@
                 @endif
 
                 <!-- Chat content -->
-                <div class="space-y-4 pt-2 px-4">
+                <div class="space-y-4 pt-2 px-4" x-data="{
+                            copy () {
+                              const $el = this.$refs.message;
+                              const originalText = $el.innerHTML;
+                              $clipboard($el.innerText);
+                              $el.innerHTML = 'Copied!';
+                              setTimeout(() => {
+                                $el.innerHTML = originalText
+                              }, 1000)
+                            }
+                          }">
                     @foreach($conversation as $message)
                         @if($message['role'] === 'user')
-                            <div class="flex flex-col">
+                            <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
                                 <div
-                                    @click="
-                                        navigator.clipboard.writeText('{{ $message['content'] }}');
-                                        $refs.message.innerText = 'Copied!';
-                                        setTimeout(() => { $refs.message.innerText = '{{ $message['content'] }}!'; }, 500);
-                                    "
+                                    @click="copy"
                                     x-ref="message"
                                     x-data x-tooltip.raw="click to copy"
                                     class="bg-blue-100 text-gray-600 cursor-pointer text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
@@ -77,13 +83,9 @@
                                 </div>
                             </div>
                         @else
-                            <div class="flex flex-col">
+                            <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
                                 <div
-                                    @click="
-                                        navigator.clipboard.writeText('{{ $message['content'] }}');
-                                        $refs.message.innerText = 'Copied!';
-                                        setTimeout(() => { $refs.message.innerText = '{{ $message['content'] }}!'; }, 500);
-                                    "
+                                    @click="copy"
                                     x-ref="message"
                                     x-data x-tooltip.raw="click to copy"
                                     class="bg-white note-message text-gray-800 cursor-pointer text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
