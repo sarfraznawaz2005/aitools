@@ -28,7 +28,7 @@
                 const chatContent = this.$refs.chatContent;
 
                 if (chatContent && open) {
-                    chatContent.scrollTop = chatContent.scrollHeight;
+                    chatContent.scrollTop = chatContent.scrollHeight + 1000;
                 }
             }
             }"
@@ -92,16 +92,16 @@
                                     <bdi>{!! $message['content'] !!}</bdi>
                                 </div>
                             </div>
-
-                            <div class="flex flex-col">
-                                <div
-                                    wire:stream="aiStreamResponse"
-                                    class="bg-white text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                                    {!! $aiStreamResponse !!}
-                                </div>
-                            </div>
                         @endif
                     @endforeach
+
+                    <div class="flex flex-col">
+                        <div
+                            wire:stream="aiStreamResponse"
+                            class="bg-white text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                            {!! $aiStreamResponse !!}
+                        </div>
+                    </div>
                 </div>
                 <!-- Chat content End -->
 
@@ -175,7 +175,7 @@
             });
 
             // Start observing the document body for changes
-            observer.observe(document.body, { childList: true, subtree: true });
+            observer.observe(document.body, {childList: true, subtree: true});
         }
 
         setupSuggestedLinks();
