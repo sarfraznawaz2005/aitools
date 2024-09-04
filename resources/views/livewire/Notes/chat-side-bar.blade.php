@@ -94,10 +94,10 @@
                         </div>
 
                         <div x-show="show">
-                            <div class="fixed inset-0 bg-transparent pointer-events-none opacity-5 z-[70]"></div>
-                            <div class="absolute bottom-[10%] left-[45%]">
+                            <div class="fixed inset-0 bg-transparent w-screen h-screen opacity-5 z-[70]"></div>
+                            <div class="fixed bottom-[20%] right-[13.5%]">
                                 <span
-                                    class="mb-4 animate-ping pointer-events-none inline-flex justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
+                                    class="mb-4 animate-ping inline-flex justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
                                 >
                                   <svg
                                       xmlns="http://www.w3.org/2000/svg"
