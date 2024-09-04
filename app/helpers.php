@@ -273,8 +273,10 @@ function processMarkdownToHtml($markdownContent): string
 
     $doc = new DOMDocument();
     $doc->substituteEntities = false;
+
     $content = mb_convert_encoding($htmlContent, 'html-entities', 'utf-8');
-    $success = $doc->loadHTML($content);
+
+    $success = $doc->loadHTML('<html lang=""><body>' . $content . '</body></html>');
 
     libxml_clear_errors();
 
