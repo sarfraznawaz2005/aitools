@@ -147,4 +147,38 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function setupSuggestedLinks() {
+            function attachLinkEventListeners() {
+                document.querySelectorAll('.ai-suggested-answer').forEach(link => {
+                    link.removeEventListener('click', handleLinkClick); // Remove existing listener to avoid duplicates
+                    link.addEventListener('click', handleLinkClick);
+                });
+            }
+
+            function handleLinkClick(e) {
+                e.preventDefault();
+                Livewire.dispatch('suggestedAnswer', [e.target.textContent]);
+            }
+
+            // Attach initial event listeners
+            attachLinkEventListeners();
+
+            // MutationObserver to detect changes in the DOM
+            const observer = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                        attachLinkEventListeners();
+                    }
+                }
+            });
+
+            // Start observing the document body for changes
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
+
+        setupSuggestedLinks();
+    </script>
+
 </div>

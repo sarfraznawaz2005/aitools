@@ -8,6 +8,7 @@ use App\Models\NoteFolder;
 use App\Services\NotesSearchService;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -21,6 +22,14 @@ class ChatSideBar extends Component
     public array $conversation = [];
 
     public string $aiStreamResponse = '';
+
+    #[On('suggestedAnswer')]
+    function suggestedAnswer(string $linkText): void
+    {
+        $this->userMessage = $linkText;
+
+        $this->sendMessage();
+    }
 
     public function sendMessage(): void
     {
@@ -55,7 +64,7 @@ class ChatSideBar extends Component
         $this->dispatch('focusInput');
     }
 
-    private function getAIResponse($userMessage)
+    private function getAIResponse($userMessage): string
     {
         $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 
