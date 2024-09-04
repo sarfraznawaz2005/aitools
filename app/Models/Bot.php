@@ -44,6 +44,6 @@ class Bot extends Model
 
     public function conversations(): HasMany
     {
-        return $this->hasMany(Conversation::class);
+        return $this->hasMany(Conversation::class)->chaperone('conversation');
     }
 }

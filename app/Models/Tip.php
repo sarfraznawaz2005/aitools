@@ -20,6 +20,6 @@ class Tip extends Model
 
     public function contents(): HasMany
     {
-        return $this->hasMany(TipContent::class);
+        return $this->hasMany(TipContent::class)->chaperone('tip');
     }
 }

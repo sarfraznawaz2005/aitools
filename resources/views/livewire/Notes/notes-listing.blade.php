@@ -279,10 +279,14 @@
                 });
             });
 
-            observer.observe(document.querySelector('.content'), {
-                childList: true,
-                subtree: true
-            });
+            const targetNode = document.querySelector('.content');
+
+            if (targetNode) {
+                observer.observe(targetNode, {
+                    childList: true,
+                    subtree: true
+                });
+            }
 
             // Also set target="_blank" for existing links on page load
             document.querySelectorAll('.content a').forEach((link) => {
