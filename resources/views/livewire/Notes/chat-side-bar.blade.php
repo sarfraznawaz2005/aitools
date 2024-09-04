@@ -67,14 +67,14 @@
                         @if($message['role'] === 'user')
                             <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
                                 <div
-                                    class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 py-1 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
+                                    class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 py-1 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
                                     {!! nl2br(e($message['content'])) !!}
                                 </div>
                             </div>
                         @else
                             <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
                                 <div
-                                    class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                                    class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                     <bdi>{!! $message['content'] !!}</bdi>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                         <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col">
                             <div
                                 wire:stream="aiStreamResponse"
-                                class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                                class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                 <span class="animate-ping">🤖</span>
                             </div>
                         </div>
