@@ -39,6 +39,7 @@ class ChatSideBar extends Component
 
         if (empty(trim($this->userMessage))) {
             $this->addError('userMessage', 'Please enter a message.');
+            $this->dispatch('focusInput');
             return;
         }
 

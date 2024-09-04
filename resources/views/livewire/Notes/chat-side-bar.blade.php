@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div x-data="{ open: true }">
 
     <button type="button" @click="open = true"
             class="py-2 px-4 mr-2 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
@@ -112,43 +112,62 @@
             </div>
 
             <!-- Chat Input at the Bottom -->
-            <div
-                class="p-1 flex flex-col sm:flex-row bg-white items-center border border-gray-300 rounded-lg m-3 mx-4">
-                <div class="w-full sm:w-auto">
-                    <livewire:general.model-selector for="{{App\Constants::NOTES_SELECTED_LLM_KEY}}"/>
-                </div>
 
-                <div class="relative w-full mt-2 sm:mt-0">
+            <div class="flex justify-between items-center w-full">
+                <div
+                    class="p-1 flex flex-col sm:flex-row bg-white items-center w-full border border-r-0 rounded-tr-none rounded-br-none border-gray-300 rounded-lg m-3 mx-4 mr-0">
+                    <div class="w-full sm:w-auto">
+                        <livewire:general.model-selector for="{{App\Constants::NOTES_SELECTED_LLM_KEY}}"/>
+                    </div>
 
-                    @error('userMessage')
-                    <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
-                    @enderror
+                    <div class="relative w-full mt-2 sm:mt-0">
 
-                    <input type="text"
-                           wire:ignore
-                           wire:model="userMessage"
-                           x-ref="chatInput"
-                           @keydown.enter="
+                        <input type="text"
+                               wire:ignore
+                               wire:model="userMessage"
+                               x-ref="chatInput"
+                               @keydown.enter="
                                $wire.call('setMessage', $refs.chatInput.value);
                                $refs.chatInput.disabled = true;
                            "
-                           {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
-                           autofocus
-                           autocomplete="off"
-                           tabindex="0"
-                           dir="auto"
-                           wire:loading.attr="disabled"
-                           class="py-2 z-0 pr-4 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
-                           placeholder="Press enter to chat with your notes...">
+                               {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
+                               autofocus
+                               autocomplete="off"
+                               tabindex="0"
+                               dir="auto"
+                               wire:loading.attr="disabled"
+                               class="py-2 z-0 pr-12 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
+                               placeholder="Chat with your notes...">
+
+                        <button type="button"
+                                x-data x-tooltip.raw="Send Message"
+                                @click="
+                               $wire.call('setMessage', $refs.chatInput.value);
+                               $refs.chatInput.disabled = true;
+                           "
+                                class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
-                <x-confirm-dialog call="resetConversation"
-                                  x-data x-tooltip.raw="Reset Conversation"
-                                  text="Are you sure you want reset the conversation?"
-                                  class="inline-flex mr-2 mt-2 items-center text-sm border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
-                    <x-icons.delete class="w-5 h-5 text-gray-500"/>
-                </x-confirm-dialog>
+                <div class="bg-gray-200 mr-4 border border-gray-300 rounded-lg pl-4 border-l-0 p-1.5 rounded-tl-none rounded-bl-none">
+                    <x-confirm-dialog call="resetConversation"
+                                      x-data x-tooltip.raw="Reset Conversation"
+                                      text="Are you sure you want reset the conversation?"
+                                      class="inline-flex mr-2 mt-2 items-center text-sm border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
+                        <x-icons.delete class="w-5 h-5 text-gray-500 hover:text-gray-700"/>
+                    </x-confirm-dialog>
+                </div>
             </div>
+            @error('userMessage')
+            <div class="text-red-500 text-sm em p-1 flex justify-center items-center mt-[-14px]">{{ $message }}</div>
+            @enderror
+
         </div>
     </div>
 
