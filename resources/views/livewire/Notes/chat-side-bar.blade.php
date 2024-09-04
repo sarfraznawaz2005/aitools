@@ -78,8 +78,8 @@
                                     @click="copy"
                                     x-ref="message"
                                     x-data x-tooltip.raw="click to copy"
-                                    class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
-                                    {{ $message['content'] }}
+                                    class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 py-1 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
+                                    {!! nl2br(e($message['content'])) !!}
                                 </div>
                             </div>
                         @else
@@ -88,7 +88,7 @@
                                     @click="copy"
                                     x-ref="message"
                                     x-data x-tooltip.raw="click to copy"
-                                    class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                                    class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                     <bdi>{!! $message['content'] !!}</bdi>
                                 </div>
                             </div>
