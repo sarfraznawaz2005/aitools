@@ -87,13 +87,14 @@
                             $wire.on('focusInput', () => { show = false; scrollToBottom(); });
                          ">
 
-                        <div x-show="show" class="flex flex-col">
+                        <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col">
                             <div
                                 wire:stream="aiStreamResponse"
                                 class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                 <span class="animate-ping">🤖</span>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
