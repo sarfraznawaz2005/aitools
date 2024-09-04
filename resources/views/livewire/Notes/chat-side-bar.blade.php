@@ -88,6 +88,7 @@
                             {!! $aiStreamResponse !!}
                         </div>
                     </div>
+
                 </div>
                 <!-- Chat content End -->
 
