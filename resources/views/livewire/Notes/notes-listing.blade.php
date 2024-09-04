@@ -64,7 +64,8 @@
                                     <a href="#" @click.prevent="copy"
                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                         <x-icons.copy class="inline-block mr-2 text-gray-500"/>
-                                        <span x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : 'Copy'"></span>
+                                        <span
+                                            x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : 'Copy'"></span>
                                     </a>
 
                                     <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"
@@ -263,6 +264,35 @@
     </div>
 
     <livewire:notes.text-note :folder="$folder"/>
+
+    <script data-navigate-once>
+
+        function openLinksExternally() {
+            // setup mutation observer for div with content class to open any links in new tab
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === 1 && node.tagName === 'A') {
+                            node.setAttribute('target', '_blank');
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.querySelector('.content'), {
+                childList: true,
+                subtree: true
+            });
+
+            // Also set target="_blank" for existing links on page load
+            document.querySelectorAll('.content a').forEach((link) => {
+                link.setAttribute('target', '_blank');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => openLinksExternally());
+        document.addEventListener('livewire:navigated', () => openLinksExternally());
+    </script>
 
     <style>
         iframe {

@@ -126,17 +126,17 @@
     margin-bottom: 20px !important;
 }
 
-.aibot-message-content a {
+.aibot-message-content a, .note-message a {
     color: rgb(59 130 246);
     text-decoration: none !important;
 }
 
-.aibot-message-content li::marker {
+.aibot-message-content li::marker, .note-message li::marker {
     font-size: 1.1rem;
     color: #9ca3af;
 }
 
-.aibot-message-content li {
+.aibot-message-content li, .note-message li {
     list-style: square;
 }
 

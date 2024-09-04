@@ -104,7 +104,7 @@ class ChatSideBar extends Component
             );
         });
 
-        return $consolidatedResponse;
+        return processMarkdownToHtml($consolidatedResponse);
     }
 
     function getMessages(): array
