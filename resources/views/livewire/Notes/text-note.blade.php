@@ -1,10 +1,5 @@
 <div>
 
-    <div wire:ignore>
-        <script src="{{asset('/assets/js/quill/quill.js')}}"></script>
-        <link href="{{asset('/assets/js/quill/quill.snow.css')}}" rel="stylesheet">
-    </div>
-
     <x-modal id="textNoteModal" maxWidth="sm:max-w-2xl">
         <x-slot name="title">
             <div class="flex gap-x-2">
@@ -89,73 +84,24 @@
                        class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"/>
             </div>
 
-            <div class="mb-4 w-full" wire:ignore>
-                <div id="toolbar-container">
-                    <span class="ql-formats">
-                        <button class="ql-bold"></button>
-                        <button class="ql-italic"></button>
-                        <button class="ql-underline"></button>
-                        <button class="ql-strike"></button>
-                    </span>
-                    <span class="ql-formats">
-                        <select class="ql-color"></select>
-                        <select class="ql-background"></select>
-                    </span>
-                    <span class="ql-formats">
-                        <button class="ql-list" value="ordered"></button>
-                        <button class="ql-list" value="bullet"></button>
-                        <button class="ql-indent" value="-1"></button>
-                        <button class="ql-indent" value="+1"></button>
-                    </span>
-                    <span class="ql-formats">
-                        <button class="ql-link"></button>
-                        <button class="ql-image"></button>
-                        <button class="ql-video"></button>
-                    </span>
-                    <span class="ql-formats">
-                        <button class="ql-clean"></button>
-                    </span>
-                </div>
-
+            <div x-data="{ content: @entangle('content'), isFocused: false }" class="mb-4 relative">
                 <div
-                    class="bg-gray-100"
-                    style="height: 150px;"
-                    x-data
-                    x-ref="quillEditor"
-                    x-init="
-                    quill = new Quill($refs.quillEditor, {
-                        modules: {
-                            syntax: false,
-                            toolbar: '#toolbar-container',
-                        },
-                        theme: 'snow',
-                        placeholder: 'Contents...'
-                    });
-
-                    // Set initial content from Livewire if content is different
-                    if (quill.root.innerHTML !== $wire.get('content')) {
-                        quill.clipboard.dangerouslyPasteHTML($wire.get('content'));
-                    }
-
-                    // Watch for changes in the Livewire 'content' property and update Quill only if necessary
-                    $watch('$wire.content', value => {
-                        if (quill.root.innerHTML !== value) {
-                            quill.clipboard.dangerouslyPasteHTML(value);
-                        }
-                    });
-
-                    // Update the Livewire 'content' property when Quill content changes
-                    quill.on('text-change', function () {
-                        $dispatch('input', quill.root.innerHTML);
-                    });
-                "
-                    wire:model.debounce.500ms="content"
-                >
+                    contenteditable="true"
+                    class="p-4 min-h-40 block w-full bg-gray-100 prose prose-sm sm:prose lg:prose xl:prose rounded-lg text-sm focus:outline-none"
+                    :class="{ 'border-blue-500 ring-1 ring-blue-500': isFocused }"
+                    x-ref="editor"
+                    @focus="isFocused = true"
+                    @blur="content = $refs.editor.innerHTML; isFocused = false; if ($refs.editor.innerText.trim() === '') content = ''"
+                    x-html="content">
+                </div>
+                <div
+                    x-show="content === '' && !isFocused"
+                    class="absolute inset-0 p-4 text-xs text-gray-600 pointer-events-none">
+                    Contents...
                 </div>
             </div>
 
-
-            @if(!isset($folder))
+        @if(!isset($folder))
                 <div class="mb-4">
                     <select wire:model.change="note_folder_id"
                             class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">
