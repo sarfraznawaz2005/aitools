@@ -94,7 +94,6 @@
                                 <span class="animate-ping">🤖</span>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
