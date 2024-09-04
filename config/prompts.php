@@ -103,7 +103,7 @@ EOF,
 
     Follow below format for suggested questions:
 
-    *Related Questions:*
+    <small>Related Questions:</small>
 
     Please always provide hyperlinks for the following related questions:
 
@@ -149,6 +149,7 @@ EOF,
     assume sources, always extract from metadata.
 
     Sources Format:
+    <small>Sources:</small>
     - <span class="text-xs source">Source 1 with 'title' and (folder)</span>
     - <span class="text-xs source">Source 2 with 'title' and (folder)</span>
     - <span class="text-xs source">Source 3 with 'title' and (folder)</span>
@@ -206,6 +207,8 @@ EOF,
 
     <span class="text-xs">Sources: (example: Document1.txt, Document2.txt)</span>
 
+    Use <small></small> tags for sources.
+
     Do not mention sources if not available.
 
     If the information needed to answer the query is not present in the context or conversation history,
@@ -228,7 +231,7 @@ EOF,
 
     Suggest the user related questions (not more than 3) in below format:
 
-    *Related Questions:*
+    <small>Related Questions:</small>
 
     Please always provide hyperlinks for the following related questions:
 
