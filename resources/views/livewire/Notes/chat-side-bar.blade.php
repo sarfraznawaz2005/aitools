@@ -36,6 +36,8 @@
             x-init="
                 $nextTick(() => { focusInput(); scrollToBottom(); });
                 Livewire.on('focusInput', () => { $nextTick(() => { scrollToBottom(); focusInput(); }); });
+                Livewire.hook('message.received', () => scrollToBottom());
+                Livewire.hook('message.processed', () => scrollToBottom());
             "
 
             x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
