@@ -83,8 +83,18 @@
 
                     <div x-data="{show:false}"
                          x-init="
-                            $wire.on('goAhead', () => { show = true; scrollToBottom(); Livewire.dispatch('getResponse'); });
-                            $wire.on('focusInput', () => { show = false; scrollToBottom(); });
+                            $wire.on('goAhead', () => {
+                                $refs.chatInput.disabled = true;
+                                show = true;
+                                scrollToBottom();
+                                Livewire.dispatch('getResponse');
+                            });
+
+                            $wire.on('focusInput', () => {
+                                show = false;
+                                scrollToBottom();
+                                $refs.chatInput.disabled = false;
+                            });
                          ">
 
                         <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col">
@@ -115,9 +125,13 @@
                     @enderror
 
                     <input type="text"
+                           wire:ignore
                            wire:model="userMessage"
                            x-ref="chatInput"
-                           @keydown.enter="$wire.call('setMessage', $refs.chatInput.value)"
+                           @keydown.enter="
+                               $wire.call('setMessage', $refs.chatInput.value);
+                               $refs.chatInput.disabled = true;
+                           "
                            {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
                            autofocus
                            autocomplete="off"
