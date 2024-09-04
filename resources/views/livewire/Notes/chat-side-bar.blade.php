@@ -1,4 +1,4 @@
-<div x-data="{ open: true }">
+<div x-data="{ open: false }">
 
     <button type="button" @click="open = true"
             class="py-2 px-4 mr-2 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
@@ -159,7 +159,7 @@
                             <div
                                 wire:stream="aiStreamResponse"
                                 class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                                <span class="animate-ping">🤖</span>
+                                <span class="animate-ping text-2xl">🤖</span>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ use App\Constants;
 use App\Models\Note;
 use App\Models\NoteFolder;
 use App\Services\NotesSearchService;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -55,7 +56,7 @@ class ChatSideBar extends Component
         $this->conversation[] = [
             'role' => 'user',
             'content' => $this->userMessage,
-            'timestamp' => time()
+            'timestamp' => time(),
         ];
 
         $aiResponse = $this->getAIResponse($this->userMessage);
@@ -64,7 +65,7 @@ class ChatSideBar extends Component
         $this->conversation[] = [
             'role' => 'ai',
             'content' => $aiResponse,
-            'timestamp' => time()
+            'timestamp' => time(),
         ];
 
         // Clear user message
@@ -125,7 +126,7 @@ class ChatSideBar extends Component
             });
 
             return processMarkdownToHtml($consolidatedResponse);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $error = '<span class="text-red-600 text-xs">Oops! Failed to get a response due to some error, please try again.' . ' ' . $e->getMessage() . '</span>';
 
             $this->stream(
@@ -198,7 +199,10 @@ class ChatSideBar extends Component
     {
         unset($this->conversation[$index]);
 
-        $this->dispatch('refreshNotesChat')->self();
+        // Re-index the array to maintain consistency
+        $this->conversation = array_values($this->conversation);
+
+        $this->dispatch('refreshNotesChat');
     }
 
     public function resetConversation(): void
