@@ -268,7 +268,6 @@ EOF,
     6. Be clear, accurate and as detailed as poosible in your responses.
     7. If the same information is given again in <query></query> tags, provide different solution each time.
 
-
     <disallowed>
     {{DISALLOWED}}
     </disallowed>
