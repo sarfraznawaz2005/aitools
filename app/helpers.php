@@ -262,30 +262,38 @@ function fetchUrlContent($url): bool|string
 
 function processMarkdownToHtml($markdownContent): string
 {
+    // Use the MarkdownRenderer to convert markdown to HTML
     $markdownRenderer = app(MarkdownRenderer::class);
     $htmlContent = $markdownRenderer->toHtml($markdownContent);
 
     // Replace empty p tags, including those with only whitespace or newlines
     $htmlContent = preg_replace('/<p[^>]*>\s*<\/p[^>]*>/', '', $htmlContent);
 
-    // Fix any remaining broken HTML and ensure UTF-8 encoding
-    libxml_use_internal_errors(true); // Suppress libxml errors and warnings
+    // Suppress libxml errors and warnings
+    libxml_use_internal_errors(true);
 
+    // Initialize DOMDocument and prevent automatic DOCTYPE addition
     $doc = new DOMDocument();
     $doc->substituteEntities = false;
 
+    // Convert to HTML entities and load into DOMDocument with a dummy structure
     $content = mb_convert_encoding($htmlContent, 'html-entities', 'utf-8');
-
-    $success = $doc->loadHTML('<html lang=""><body>' . $content . '</body></html>');
+    $success = $doc->loadHTML('<html><body>' . $content . '</body></html>');
 
     libxml_clear_errors();
 
     if ($success) {
-        $fixedHtml = $doc->saveHTML();
-        return $fixedHtml !== false ? $fixedHtml : $htmlContent;
+        // Extract only the content inside the <body> tag
+        $bodyContent = '';
+        foreach ($doc->getElementsByTagName('body')->item(0)->childNodes as $childNode) {
+            $bodyContent .= $doc->saveHTML($childNode);
+        }
+
+        return $bodyContent !== false ? $bodyContent : $htmlContent;
     }
 
     return $htmlContent;
 }
+
 
 
