@@ -1,6 +1,5 @@
 <?php
 /*
- * backup to one drive, etc.
  * related questions broken html sometimes, should use strucutred output machanism
  * Setup proper roles when prompting AI?
  * empty title on icon hover

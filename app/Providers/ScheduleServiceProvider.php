@@ -22,6 +22,9 @@ class ScheduleServiceProvider extends ServiceProvider
 
         // tips notifier reminders
         $this->tipsNotifierReminders($schedule);
+
+        // backup database
+        $schedule->command('app:backup-database')->hourly();
     }
 
     private function tipsNotifierReminders(Schedule $schedule): void
