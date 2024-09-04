@@ -81,12 +81,10 @@
                         @endif
                     @endforeach
 
-                    <div x-data="{show:false}"
+                    <div x-data="{show:true}"
                          x-init="
-
-                         $wire.on('goAhead', () => {  show = true; scrollToBottom(); Livewire.dispatch('getResponse'); });
-                         $wire.on('focusInput', () => { show = false; scrollToBottom(); });
-
+                            $wire.on('goAhead', () => { console.log('here'); show = true; scrollToBottom(); Livewire.dispatch('getResponse'); });
+                            $wire.on('focusInput', () => { show = false; scrollToBottom(); });
                          ">
                         <div x-show="show" class="flex flex-col">
                             <div
