@@ -77,7 +77,7 @@
                           }">
                             @if($message['role'] === 'user')
                                 <div
-                                    class="flex flex-col" wire:key="note-message{{$message['timestamp'] . $index}}">
+                                    class="flex flex-col" wire:key="note-message{{$index}}">
                                     <div
                                         class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 py-1 rounded-2xl border border-blue-200 rounded-br-none self-end max-w-full">
                                         <bdi x-ref="message">{!! nl2br(e($message['content'])) !!}</bdi>
@@ -106,7 +106,7 @@
                                 </div>
                                 <!-- End Button Group -->
                             @else
-                                <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . $index}}">
+                                <div class="flex flex-col" wire:key="note-message{{$index}}">
                                     <div
                                         class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-2xl border border-gray-200 rounded-bl-none self-start max-w-full">
                                         <bdi x-ref="message">{!! $message['content'] !!}</bdi>
