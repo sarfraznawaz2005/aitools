@@ -1,11 +1,8 @@
 <?php
 /*
- * gmail
-session
-default days
-copy delete
 script
 enter button
+copy delete
  * notes settings?
  * backup to one drive, etc.
  * related questions broken html sometimes, should use strucutred output machanism

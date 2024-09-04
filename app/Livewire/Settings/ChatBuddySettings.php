@@ -16,9 +16,9 @@ class ChatBuddySettings extends Component
     public function mount(): void
     {
         try {
-            $this->chatBuddyDeleteOldDays = Settings::get('ChatBuddy.chatBuddyDeleteOldDays', 30);
+            $this->chatBuddyDeleteOldDays = Settings::get('ChatBuddy.chatBuddyDeleteOldDays', 365);
         } catch (Exception) {
-            $this->chatBuddyDeleteOldDays = 30;
+            $this->chatBuddyDeleteOldDays = 365;
         }
     }
 

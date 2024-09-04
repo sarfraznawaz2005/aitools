@@ -277,7 +277,7 @@ class TextNote extends Component
         $this->note->fill([
             'note_folder_id' => $this->note_folder_id,
             'title' => $this->title,
-            'content' => html_entity_decode($this->content), // allow iframes, etc
+            'content' => $this->removeDisallowedTags(html_entity_decode($this->content)),
             'reminder_at' => $reminderAt,
             'is_recurring' => $this->is_recurring,
             'recurring_frequency' => $this->is_recurring ? $this->recurring_frequency : null,
@@ -291,6 +291,23 @@ class TextNote extends Component
         $this->resetForm();
     }
 
+    private function removeDisallowedTags($content)
+    {
+        try {
+            // List of disallowed tags
+            $disallowedTags = ['script', 'style', 'object'];
+
+            foreach ($disallowedTags as $tag) {
+                $content = preg_replace('/<' . $tag . '.*?>.*?<\/' . $tag . '>/is', '', $content);
+                $content = preg_replace('/<' . $tag . '.*?\/>/is', '', $content);
+            }
+        } catch (\Exception) {
+            return $content;
+        }
+
+        return $content;
+    }
+    
     #[Computed]
     public function schedulePreview(): string
     {

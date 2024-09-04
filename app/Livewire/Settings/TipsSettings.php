@@ -16,9 +16,9 @@ class TipsSettings extends Component
     public function mount(): void
     {
         try {
-            $this->deleteOldDays = Settings::get('TipsNotifier.deleteOldDays', 30);
+            $this->deleteOldDays = Settings::get('TipsNotifier.deleteOldDays', 365);
         } catch (Exception) {
-            $this->deleteOldDays = 30;
+            $this->deleteOldDays = 365;
         }
     }
 
