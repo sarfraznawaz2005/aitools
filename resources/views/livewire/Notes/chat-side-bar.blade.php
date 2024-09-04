@@ -81,12 +81,36 @@
                         @endif
                     @endforeach
 
-                    <div class="flex flex-col">
-                        <div
-                            wire:stream="aiStreamResponse"
-                            class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                            <div x-show="true" class="animate-spin size-5 border-[2px] border-current border-t-transparent text-blue-600 rounded-full" style="position: relative; z-index: 80;">
-                                <span class="sr-only">Loading...</span>
+                    <div x-data="{show:false}"
+                         x-init="
+
+                         $wire.on('goAhead', () => {  show = true; Livewire.dispatch('getResponse'); });
+                         $wire.on('focusInput', () => show = false);
+
+                         ">
+                        <div x-show="show" class="flex flex-col">
+                            <div
+                                wire:stream="aiStreamResponse"
+                                class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                            </div>
+                        </div>
+
+                        <div x-show="show">
+                            <div class="fixed inset-0 bg-transparent opacity-5 z-[70]"></div>
+                            <div class="absolute bottom-[10%] left-[45%]">
+                                <span
+                                    class="mb-4 animate-ping inline-flex justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
+                                >
+                                  <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      class="shrink-0 size-8"
+                                      fill="currentColor"
+                                      viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"
+                                    />
+                                  </svg>
+                            </span>
                             </div>
                         </div>
                     </div>
@@ -109,22 +133,18 @@
                     <div class="text-red-500 text-sm em p-1">{{ $message }}</div>
                     @enderror
 
-                    <form wire:submit.prevent="sendMessage"
-                          @submit.prevent="$nextTick(() => { focusInput(); scrollToBottom(); })"
-                          class="relative w-full mt-2 sm:mt-0">
-
-                        <input type="text"
-                               wire:model="userMessage"
-                               x-ref="chatInput"
-                               {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
-                               autofocus
-                               autocomplete="off"
-                               tabindex="0"
-                               dir="auto"
-                               wire:loading.attr="disabled"
-                               class="py-2 z-0 pr-4 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
-                               placeholder="Press enter to chat with your notes...">
-                    </form>
+                    <input type="text"
+                           wire:model="userMessage"
+                           x-ref="chatInput"
+                           @keydown.enter="$wire.call('setMessage', $refs.chatInput.value)"
+                           {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
+                           autofocus
+                           autocomplete="off"
+                           tabindex="0"
+                           dir="auto"
+                           wire:loading.attr="disabled"
+                           class="py-2 z-0 pr-4 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
+                           placeholder="Press enter to chat with your notes...">
                 </div>
 
                 <x-confirm-dialog call="resetConversation"

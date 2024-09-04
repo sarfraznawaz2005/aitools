@@ -28,12 +28,12 @@ class ChatSideBar extends Component
     {
         $this->userMessage = $linkText;
 
-        $this->sendMessage();
+        $this->dispatch('goAhead');
     }
 
-    public function sendMessage(): void
+    public function setMessage(string $message): void
     {
-        $this->dispatch('focusInput');
+        $this->userMessage = $message;
 
         $this->validate();
 
@@ -42,6 +42,12 @@ class ChatSideBar extends Component
             return;
         }
 
+        $this->dispatch('goAhead');
+    }
+
+    #[On('getResponse')]
+    public function getResponse(): void
+    {
         // Add user message to conversation
         $this->conversation[] = [
             'role' => 'user',
