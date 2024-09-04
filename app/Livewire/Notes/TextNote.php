@@ -140,6 +140,9 @@ class TextNote extends Component
 
             if ($this->useAI && strlen($html) > 100) {
 
+                $this->resetValidation();
+                $this->resetErrorBag();
+
                 $this->stream(
                     to: 'linkFetchStatus',
                     content: 'Using AI to improve readability & generate summary...',
