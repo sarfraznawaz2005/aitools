@@ -84,8 +84,8 @@
                     <div x-data="{show:false}"
                          x-init="
 
-                         $wire.on('goAhead', () => {  show = true; Livewire.dispatch('getResponse'); });
-                         $wire.on('focusInput', () => show = false);
+                         $wire.on('goAhead', () => {  scrollToBottom(); show = true; Livewire.dispatch('getResponse'); });
+                         $wire.on('focusInput', () => { scrollToBottom(); show = false });
 
                          ">
                         <div x-show="show" class="flex flex-col">
@@ -96,10 +96,10 @@
                         </div>
 
                         <div x-show="show">
-                            <div class="fixed inset-0 bg-transparent opacity-5 z-[70]"></div>
+                            <div class="fixed inset-0 bg-transparent pointer-events-none opacity-5 z-[70]"></div>
                             <div class="absolute bottom-[10%] left-[45%]">
                                 <span
-                                    class="mb-4 animate-ping inline-flex justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
+                                    class="mb-4 animate-ping pointer-events-none inline-flex justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
                                 >
                                   <svg
                                       xmlns="http://www.w3.org/2000/svg"

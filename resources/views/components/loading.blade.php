@@ -16,11 +16,11 @@
     x-show="show"
     wire:ignore
     x-cloak
-    class="fixed inset-0 flex items-center justify-center z-[1000]">
+    class="fixed inset-0 flex items-center pointer-events-none justify-center z-[1000]">
     <div class="fixed inset-0 bg-transparent opacity-5 z-[70]"></div>
 
     <span
-        class="mb-4 animate-ping inline-flex justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
+        class="mb-4 animate-ping inline-flex pointer-events-none justify-center items-center size-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100"
     >
           <svg
               xmlns="http://www.w3.org/2000/svg"
