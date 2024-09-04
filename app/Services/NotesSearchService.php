@@ -152,7 +152,7 @@ class NotesSearchService
 
         $text = array_map(fn($item) => ['text' => $this->getCleanedText($item['text']), 'metadata' => $item['metadata']], $text);
 
-        return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
+        return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 10);
     }
 
     protected function getEmbeddingsOrLoadFromCache(array $texts): array

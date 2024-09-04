@@ -264,7 +264,7 @@ class DocumentSearchService
                     return $item;
                 }, $text);
 
-                return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
+                return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 10);
             case 'txt':
             case 'md':
             case 'html':
@@ -285,7 +285,7 @@ class DocumentSearchService
                     return $item;
                 }, $text);
 
-                return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 25);
+                return array_filter($text, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 10);
             default:
                 throw new Exception("Unsupported file type: $extension");
         }
