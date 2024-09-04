@@ -78,7 +78,7 @@
                                     @click="copy"
                                     x-ref="message"
                                     x-data x-tooltip.raw="click to copy"
-                                    class="bg-blue-100 text-gray-600 cursor-pointer text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
+                                    class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm p-3 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
                                     {{ $message['content'] }}
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                     @click="copy"
                                     x-ref="message"
                                     x-data x-tooltip.raw="click to copy"
-                                    class="bg-white note-message text-gray-800 cursor-pointer text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                                    class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                     <bdi>{!! $message['content'] !!}</bdi>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                             <div class="flex flex-col">
                                 <div
                                     wire:stream="aiStreamResponse"
-                                    class="bg-white text-gray-800 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                                    class="bg-white text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                     {!! $aiStreamResponse !!}
                                 </div>
                             </div>

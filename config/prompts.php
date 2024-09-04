@@ -149,6 +149,8 @@ EOF,
     assume sources, always extract from metadata.
 
     Sources Format:
+
+    [INSERT NEW LINE HERE]
     - <span class="text-xs source">Source 1</span>
     - <span class="text-xs source">Source 2</span>
     - <span class="text-xs source">Source 3</span>

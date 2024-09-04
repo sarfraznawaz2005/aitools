@@ -131,7 +131,7 @@
     text-decoration: none !important;
 }
 
-.aibot-message-content li::marker, .note-message li::marker {
+.aibot-message-content li::marker {
     font-size: 1.1rem;
     color: #9ca3af;
 }
