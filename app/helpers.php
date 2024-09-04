@@ -127,7 +127,7 @@ function makePromoptForDocumentBot(Bot $bot, string $infoHeader, string $context
 function makePromoptForNotes(string $context, string $userQuery, string $conversationHistory): string
 {
     // documentBotRelatedQuestionsPrompt looks good for notes too
-    //$relatedQuestionsPrompt = config('prompts.documentBotRelatedQuestionsPrompt');
+    $relatedQuestionsPrompt = config('prompts.documentBotRelatedQuestionsPrompt');
 
     $prompt = config('prompts.notesPrompt');
 
@@ -135,7 +135,7 @@ function makePromoptForNotes(string $context, string $userQuery, string $convers
     $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
     $prompt = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $prompt);
 
-    //$prompt .= $relatedQuestionsPrompt;
+    $prompt .= $relatedQuestionsPrompt;
     $prompt .= "\nPlease provide answer here:";
 
     if (app()->environment('local')) {
