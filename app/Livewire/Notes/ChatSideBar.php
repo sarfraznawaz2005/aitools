@@ -23,6 +23,8 @@ class ChatSideBar extends Component
 
     public string $aiStreamResponse = '';
 
+    protected $listeners = ['refreshNotesChat' => '$refresh'];
+
     #[On('suggestedAnswer')]
     function suggestedAnswer(string $linkText): void
     {
@@ -192,9 +194,18 @@ class ChatSideBar extends Component
         })->toArray();
     }
 
+    public function deleteMessage($index): void
+    {
+        unset($this->conversation[$index]);
+
+        $this->dispatch('refreshNotesChat')->self();
+    }
+
     public function resetConversation(): void
     {
         $this->conversation = [];
+
+        $this->dispatch('focusInput');
     }
 
     #[Computed]

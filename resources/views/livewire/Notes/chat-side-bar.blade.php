@@ -63,22 +63,80 @@
 
                 <!-- Chat content -->
                 <div class="space-y-4 pt-2 px-4">
-                    @foreach($conversation as $message)
-                        @if($message['role'] === 'user')
-                            <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
+
+                    @foreach($conversation as $index => $message)
+                        <div x-data="{
+                            copied: false,
+                            copy () {
+                              $clipboard($refs.message.innerText)
+                              this.copied = true
+                              setTimeout(() => {
+                                this.copied = false
+                              }, 1000)
+                            }
+                          }">
+                            @if($message['role'] === 'user')
                                 <div
-                                    class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 py-1 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
-                                    {!! nl2br(e($message['content'])) !!}
+                                    class="flex flex-col" wire:key="note-message{{$message['timestamp'] . $index}}">
+                                    <div
+                                        class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 py-1 rounded-2xl border border-blue-200 rounded-br-none self-end max-w-full">
+                                        <bdi x-ref="message">{!! nl2br(e($message['content'])) !!}</bdi>
+                                    </div>
                                 </div>
-                            </div>
-                        @else
-                            <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
-                                <div
-                                    class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                                    <bdi>{!! $message['content'] !!}</bdi>
+
+                                <!-- Button Group -->
+                                <div class="flex justify-end mt-2 items-center">
+                                    <div>
+                                        <button type="button"
+                                                x-data x-tooltip.raw="Copy"
+                                                @click="copy"
+                                                class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.copy class="hover:text-gray-600"/>
+                                            <span
+                                                x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <x-confirm-dialog call="deleteMessage({{$index}})" x-data
+                                                          x-tooltip.raw="Delete"
+                                                          class="inline-flex items-center ml-3 text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.delete class="size-4 text-gray-400 hover:text-red-600"/>
+                                        </x-confirm-dialog>
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
+                                <!-- End Button Group -->
+                            @else
+                                <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . $index}}">
+                                    <div
+                                        class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-2xl border border-gray-200 rounded-bl-none self-start max-w-full">
+                                        <bdi x-ref="message">{!! $message['content'] !!}</bdi>
+                                    </div>
+                                </div>
+
+                                <!-- Button Group -->
+                                <div class="flex mt-2 items-center">
+                                    <div>
+                                        <button type="button"
+                                                x-data x-tooltip.raw="Copy"
+                                                @click="copy"
+                                                class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.copy class="hover:text-gray-600"/>
+                                            <span
+                                                x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <x-confirm-dialog call="deleteMessage({{$index}})" x-data
+                                                          x-tooltip.raw="Delete"
+                                                          class="inline-flex items-center mt-[-3px] ml-3 text-sm rounded-full border border-transparent text-gray-500">
+                                            <x-icons.delete class="size-4 text-gray-400 hover:text-red-600"/>
+                                        </x-confirm-dialog>
+                                    </div>
+                                </div>
+                                <!-- End Button Group -->
+
+                            @endif
+                        </div>
                     @endforeach
 
                     <div x-data="{show:false}"
@@ -155,12 +213,13 @@
                     </div>
                 </div>
 
-                <div class="bg-gray-200 mr-4 border border-gray-300 rounded-lg pl-4 border-l-0 p-1.5 rounded-tl-none rounded-bl-none">
+                <div
+                    class="bg-gray-200 mr-4 border border-gray-300 rounded-lg pl-4 border-l-0 p-1.5 rounded-tl-none rounded-bl-none">
                     <x-confirm-dialog call="resetConversation"
                                       x-data x-tooltip.raw="Reset Conversation"
                                       text="Are you sure you want reset the conversation?"
                                       class="inline-flex mr-2 mt-2 items-center text-sm border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
-                        <x-icons.delete class="w-5 h-5 text-gray-500 hover:text-gray-700"/>
+                        <x-icons.delete class="w-5 h-5 text-gray-400 hover:text-red-600"/>
                     </x-confirm-dialog>
                 </div>
             </div>
