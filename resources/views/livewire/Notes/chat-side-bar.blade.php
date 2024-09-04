@@ -62,24 +62,11 @@
                 @endif
 
                 <!-- Chat content -->
-                <div class="space-y-4 pt-2 px-4" x-data="{
-                            copy () {
-                              const $el = this.$refs.message;
-                              const originalText = $el.innerHTML;
-                              $clipboard($el.innerText);
-                              $el.innerHTML = 'Copied!';
-                              setTimeout(() => {
-                                $el.innerHTML = originalText
-                              }, 1000)
-                            }
-                          }">
+                <div class="space-y-4 pt-2 px-4">
                     @foreach($conversation as $message)
                         @if($message['role'] === 'user')
                             <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
                                 <div
-                                    @click="copy"
-                                    x-ref="message"
-                                    x-data x-tooltip.raw="click to copy"
                                     class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 py-1 rounded-lg border border-blue-200 rounded-br-none self-end max-w-full">
                                     {!! nl2br(e($message['content'])) !!}
                                 </div>
@@ -87,9 +74,6 @@
                         @else
                             <div class="flex flex-col" wire:key="note-message{{$message['timestamp'] . uniqid()}}">
                                 <div
-                                    @click="copy"
-                                    x-ref="message"
-                                    x-data x-tooltip.raw="click to copy"
                                     class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                                     <bdi>{!! $message['content'] !!}</bdi>
                                 </div>
