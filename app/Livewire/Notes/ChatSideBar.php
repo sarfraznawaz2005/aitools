@@ -88,8 +88,8 @@ class ChatSideBar extends Component
             $context .= $text . "\n\n<sources>" . $metaDataString . "</sources>\n\n";
         }
 
-        $this->setMessages();
-        $conversationHistory = implode("\n", $this->conversation);
+        $messages = $this->getMessages();
+        $conversationHistory = implode("\n", $messages);
 
         $prompt = makePromoptForNotes($context, $userMessage, $conversationHistory);
 
@@ -100,26 +100,27 @@ class ChatSideBar extends Component
 
             $this->stream(
                 to: 'aiStreamResponse',
-                content: '$chunk',
+                content: $chunk,
             );
         });
 
-        return '$consolidatedResponse';
+        return $consolidatedResponse;
     }
 
-    function setMessages(): void
+    function getMessages(): array
     {
         $uniqueMessages = [];
+        $messages = $this->conversation;
 
         // Strings to filter out from the conversation
 
         // Sort the array by timestamp in descending order
-        usort($this->conversation, function ($a, $b) {
+        usort($messages, function ($a, $b) {
             return $b['timestamp'] - $a['timestamp'];
         });
 
         // Remove duplicates and empty content entries, and filter by role and content
-        $this->conversation = array_values(array_filter(array_unique($this->conversation, SORT_REGULAR), function ($item) {
+        $messages = array_values(array_filter(array_unique($messages, SORT_REGULAR), function ($item) {
             $filterOutStrings = [
                 "conversation history",
                 "have enough information to answer this question accurately",
@@ -139,7 +140,7 @@ class ChatSideBar extends Component
         }));
 
         // Format and filter unique messages
-        foreach ($this->conversation as $message) {
+        foreach ($messages as $message) {
             $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'ASSISTANT: ') . $message['content'];
 
             if (!in_array($formattedMessage, $uniqueMessages)) {
@@ -147,9 +148,8 @@ class ChatSideBar extends Component
             }
         }
 
-        $this->conversation = array_slice($uniqueMessages, 0, Constants::NOTES_TOTAL_CONVERSATION_HISTORY);
+        return array_slice($uniqueMessages, 0, Constants::NOTES_TOTAL_CONVERSATION_HISTORY);
     }
-
 
     #[Computed]
     private function notes(): array
