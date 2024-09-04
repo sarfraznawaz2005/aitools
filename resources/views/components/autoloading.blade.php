@@ -8,7 +8,9 @@
 >
     <div class="fixed inset-0 bg-black opacity-0 z-[70]"></div>
 
-    <div x-show="!error" class="animate-spin size-12 border-[5px] border-current border-t-transparent text-blue-600 rounded-full" style="position: relative; z-index: 80;">
+    <div x-show="!error"
+         class="animate-spin size-12 border-[5px] border-current border-t-transparent text-blue-600 rounded-full"
+         style="position: relative; z-index: 80;">
         <span class="sr-only">Loading...</span>
     </div>
 
@@ -32,15 +34,27 @@
     }
 
     function initializeLoading() {
-        Livewire.hook('request', ({ uri, options, payload, respond, succeed, fail }) => {
+        Livewire.hook('request', ({component, options, payload, respond, succeed, fail}) => {
+
+            // Define the methods that should ignore the loading spinner
+            const ignoreMethodsForLoading = ['userMessage'];
+
+            // loop over the ignoreMethodsForLoading array and skip execution if payload contains any of the methods
+            for (let i = 0; i < ignoreMethodsForLoading.length; i++) {
+                if (payload.includes(ignoreMethodsForLoading[i])) {
+                    return;
+                }
+            }
+
+            // Otherwise, show the loading spinner
             Alpine.store('loading', true);
             Alpine.store('error', false);
 
-            succeed(({ status, json }) => {
+            succeed(({status, json}) => {
                 Alpine.store('loading', false);
             });
 
-            fail(({ status, body }) => {
+            fail(({status, body}) => {
                 Alpine.store('loading', false);
                 Alpine.store('error', true);
                 setTimeout(() => {

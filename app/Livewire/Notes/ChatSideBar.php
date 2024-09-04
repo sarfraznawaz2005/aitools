@@ -76,50 +76,62 @@ class ChatSideBar extends Component
 
         $notes = $this->notes;
 
-        $searchService = NotesSearchService::getInstance($llm, 2000);
-        $results = $searchService->searchTexts($notes, $userMessage);
-        //dd($results);
+        try {
 
-        $context = '';
+            $searchService = NotesSearchService::getInstance($llm, 2000);
+            $results = $searchService->searchTexts($notes, $userMessage);
+            //dd($results);
 
-        foreach ($results as $result) {
-            $text = $result['matchedChunk']['text'];
+            $context = '';
 
-            // Collect unique sources
-            $sources = [];
-            foreach ($result['matchedChunk']['metadata'] as $metadata) {
-                $title = $metadata['title'];
-                $source = $metadata['source'];
-                $sources[$title] = $source; // Use title as the key to ensure uniqueness
+            foreach ($results as $result) {
+                $text = $result['matchedChunk']['text'];
+
+                // Collect unique sources
+                $sources = [];
+                foreach ($result['matchedChunk']['metadata'] as $metadata) {
+                    $title = $metadata['title'];
+                    $source = $metadata['source'];
+                    $sources[$title] = $source; // Use title as the key to ensure uniqueness
+                }
+
+                $formattedSources = [];
+                foreach ($sources as $title => $source) {
+                    $formattedSources[] = "'$title' ($source)";
+                }
+
+                $metaDataString = 'Sources: ' . implode(', ', $formattedSources);
+
+                $context .= $text . "\n\n<sources>" . $metaDataString . "</sources>\n\n";
             }
 
-            $formattedSources = [];
-            foreach ($sources as $title => $source) {
-                $formattedSources[] = "'$title' ($source)";
-            }
+            $messages = $this->getMessages();
+            $conversationHistory = implode("\n", $messages);
 
-            $metaDataString = 'Sources: ' . implode(', ', $formattedSources);
+            $prompt = makePromoptForNotes($context, $userMessage, $conversationHistory);
 
-            $context .= $text . "\n\n<sources>" . $metaDataString . "</sources>\n\n";
-        }
+            $consolidatedResponse = '';
 
-        $messages = $this->getMessages();
-        $conversationHistory = implode("\n", $messages);
+            $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
+                $consolidatedResponse .= $chunk;
 
-        $prompt = makePromoptForNotes($context, $userMessage, $conversationHistory);
+                $this->stream(
+                    to: 'aiStreamResponse',
+                    content: $chunk,
+                );
+            });
 
-        $consolidatedResponse = '';
-
-        $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
-            $consolidatedResponse .= $chunk;
+            return processMarkdownToHtml($consolidatedResponse);
+        } catch (\Exception $e) {
+            $error = '<span class="text-red-600 text-xs">Oops! Failed to get a response due to some error, please try again.' . ' ' . $e->getMessage() . '</span>';
 
             $this->stream(
                 to: 'aiStreamResponse',
-                content: $chunk,
+                content: $error,
             );
-        });
 
-        return processMarkdownToHtml($consolidatedResponse);
+            return $error;
+        }
     }
 
     function getMessages(): array
