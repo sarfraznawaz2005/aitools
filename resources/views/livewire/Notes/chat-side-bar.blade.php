@@ -83,7 +83,7 @@
 
                     <div x-data="{show:false}"
                          x-init="
-                            $wire.on('goAhead', () => { console.log('here'); show = true; scrollToBottom(); Livewire.dispatch('getResponse'); });
+                            $wire.on('goAhead', () => { show = true; scrollToBottom(); Livewire.dispatch('getResponse'); });
                             $wire.on('focusInput', () => { show = false; scrollToBottom(); });
                          ">
 
