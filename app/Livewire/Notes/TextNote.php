@@ -277,7 +277,7 @@ class TextNote extends Component
         $this->note->fill([
             'note_folder_id' => $this->note_folder_id,
             'title' => $this->title,
-            'content' => $this->content,
+            'content' => html_entity_decode($this->content), // allow iframes, etc
             'reminder_at' => $reminderAt,
             'is_recurring' => $this->is_recurring,
             'recurring_frequency' => $this->is_recurring ? $this->recurring_frequency : null,
