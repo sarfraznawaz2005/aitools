@@ -274,9 +274,9 @@
             pointer-events: none !important;
         }
 
-        .content {
+        .content p {
             font-size: 0.9rem !important;
-            line-height: 1.7rem !important;
+            line-height: 1.6rem !important;
         }
 
         .content img {

@@ -76,9 +76,9 @@
                         </button>
                     </div>
 
-                        <p wire:stream="linkFetchStatus" class="text-xs text-gray-600 mt-4 text-center font-semibold">
-                            {{ $linkFetchStatus }}
-                        </p>
+                    <p wire:stream="linkFetchStatus" class="text-xs text-gray-600 mt-4 text-center font-semibold">
+                        {{ $linkFetchStatus }}
+                    </p>
 
                 </x-dialog>
             </div>
@@ -91,9 +91,6 @@
 
             <div class="mb-4 w-full" wire:ignore>
                 <div id="toolbar-container">
-                    <span class="ql-formats">
-                        <select class="ql-size"></select>
-                    </span>
                     <span class="ql-formats">
                         <button class="ql-bold"></button>
                         <button class="ql-italic"></button>
@@ -135,23 +132,28 @@
                         placeholder: 'Contents...'
                     });
 
-                    // Set initial content from Livewire
-                    quill.root.innerHTML = $wire.get('content');
+                    // Set initial content from Livewire if content is different
+                    if (quill.root.innerHTML !== $wire.get('content')) {
+                        quill.clipboard.dangerouslyPasteHTML($wire.get('content'));
+                    }
 
-                    // Watch for changes in the Livewire 'content' property and update Quill
+                    // Watch for changes in the Livewire 'content' property and update Quill only if necessary
                     $watch('$wire.content', value => {
-                        quill.root.innerHTML = value;
+                        if (quill.root.innerHTML !== value) {
+                            quill.clipboard.dangerouslyPasteHTML(value);
+                        }
                     });
 
                     // Update the Livewire 'content' property when Quill content changes
                     quill.on('text-change', function () {
                         $dispatch('input', quill.root.innerHTML);
                     });
-                   "
+                "
                     wire:model.debounce.500ms="content"
                 >
                 </div>
             </div>
+
 
             @if(!isset($folder))
                 <div class="mb-4">
