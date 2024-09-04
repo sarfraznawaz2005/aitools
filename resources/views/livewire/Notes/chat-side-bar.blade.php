@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div x-data="{ open: true }">
 
     <button type="button" @click="open = true"
             class="py-2 px-4 mr-2 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
@@ -43,7 +43,7 @@
             x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
 
             <!-- Sidebar Content -->
-            <div class="flex-1 overflow-y-auto relative" x-ref="chatContent">
+            <div class="flex-1 overflow-y-auto relative px-6 w-full" x-ref="chatContent">
 
                 <!-- Sidebar Header -->
                 <div class="flex items-center sticky top-0 w-full bg-gray-100 p-3 px-4 rounded-lg">
@@ -84,8 +84,10 @@
                     <div class="flex flex-col">
                         <div
                             wire:stream="aiStreamResponse"
-                            class="bg-white text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm p-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
-                            {!! $aiStreamResponse !!}
+                            class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose cursor-pointer text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                            <div x-show="true" class="animate-spin size-5 border-[2px] border-current border-t-transparent text-blue-600 rounded-full" style="position: relative; z-index: 80;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                         </div>
                     </div>
 
