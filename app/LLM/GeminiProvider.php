@@ -75,7 +75,7 @@ class GeminiProvider extends BaseLLMProvider
      */
     public function embed(array $texts, string $embeddingModel, $taskType = 'RETRIEVAL_DOCUMENT'): array|string
     {
-        $url = $this->baseUrl . 'models/' . $embeddingModel . ":batchEmbedContents?key=" . $this->apiKey;
+        $url = $this->baseUrl . "models/$embeddingModel:batchEmbedContents?key=" . $this->apiKey;
 
         $content = [];
 

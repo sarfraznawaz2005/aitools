@@ -21,7 +21,7 @@ final class Constants
     const string TEXTSTYLER_SELECTED_LLM_KEY = 'TextStyler-LLM';
 
     const string OPENAI_EMBEDDING_MODEL = 'text-embedding-ada-002';
-    const string GEMINI_EMBEDDING_MODEL = 'embedding-001';
+    const string GEMINI_EMBEDDING_MODEL = 'text-embedding-004';
 
     const int GEMINI_EMBEDDING_BATCHSIZE = 100;
     const int OPENAI_EMBEDDING_BATCHSIZE = 2048;
