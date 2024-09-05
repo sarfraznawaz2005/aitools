@@ -42,7 +42,7 @@
 
             <div class="flex justify-between">
                 <div class="w-full flex items-center">
-                    <a wire:navigate
+                    <a wire:navigate.hover
                        x-show="!editable"
                        class="flex-nowrap text-sm text-gray-700 block w-full p-2"
                        href="{{route($tools['chat-buddy']['route'] . '.loadconversation', $conversationItem->id)}}">

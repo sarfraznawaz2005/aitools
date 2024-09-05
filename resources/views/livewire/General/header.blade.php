@@ -13,7 +13,7 @@
 
                     <div class="inline-flex items-center py-0.5">
 
-                        <a href="{{route('home')}}" wire:navigate>
+                        <a href="{{route('home')}}" wire:navigate.hover>
                             <div class="inline-flex items-center px-4 ml-1 mt-1">
                                 <x-icons.home
                                     class="shrink-0 size-7 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-500"/>
@@ -51,7 +51,7 @@
                                     <ul class="flex flex-col space-y-0.5">
                                         @foreach(config('tools') as $tool)
                                             <li wire:key="{{ $tool['name'] }}">
-                                                <a href="{{route($tool['route'])}}" wire:navigate
+                                                <a href="{{route($tool['route'])}}" wire:navigate.hover
                                                    class="font-semibold w-full flex items-center gap-x-2 px-5 py-2 text-sm text-gray-500 hover:bg-gray-200 dark:text-neutral-200 dark:hover:bg-neutral-700 {{ str_contains(strtolower($currentRoute), strtolower($tool['route'])) ? 'bg-gray-200' : '' }}"
                                                 >
                                                     <img width="24" height="24" alt="{{$tool['name']}}"
@@ -72,7 +72,7 @@
                         @if($currentRoute === 'home')
                             <h2>&nbsp;</h2>
                         @else
-                            <a href="{{route('home')}}" wire:navigate>
+                            <a href="{{route('home')}}" wire:navigate.hover>
                                 <h2 class="text-xl text-gray-500 font-[600] md:mr-24 lg:mr-24 hover:text-gray-700">
                                     <img width="32" height="32" class="inline" alt="{{$title}}"
                                          src="{{config('tools.' . Request::segment(1) . '.icon_data')}}">
