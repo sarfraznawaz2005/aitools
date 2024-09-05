@@ -210,7 +210,6 @@ class JsonFileVectorStore
         return $splits;
     }
 
-
     /**
      * @throws Exception
      */
@@ -240,48 +239,39 @@ class JsonFileVectorStore
             if (isset($split['embeddings'])) {
                 $embeddingValues = $split['embeddings'];
 
+                // Increment iterations
                 $iterations++;
-                $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $index, $iterations, $results, $alreadyAdded);
+
+                // Calculate cosine similarity
+                $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
+
+                // Log similarity and iteration for debugging (optional)
+                //info("Iteration #: $iterations, Similarity: $similarity");
+
+                if ($similarity >= $this->getSimiliarityThreashold()) {
+                    if (isset($this->textSplits[$index])) {
+                        $matchedText = $this->textSplits[$index];
+                        $hash = md5($matchedText['text']);
+
+                        if (!isset($alreadyAdded[$hash])) {
+                            $alreadyAdded[$hash] = true;
+
+                            $results[] = [
+                                'similarity' => $similarity,
+                                'index' => $index,
+                                'matchedChunk' => $matchedText,
+                            ];
+                        }
+                    }
+                } else {
+                    //info("NOT FOUND at #: $iterations, Similarity: $similarity");
+                }
             } else {
                 throw new Exception("Unknown embedding format!.");
             }
         }
 
         return $results;
-    }
-
-    protected function processEmbedding(
-        array $embeddingValues,
-        array $queryEmbeddingValues,
-        int   $index,
-        int   $iterations,
-        array &$results,
-        array &$alreadyAdded): void
-    {
-        // Calculate cosine similarity
-        $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
-
-        // Log similarity and iteration for debugging
-        //info("Iteration #: $iterations, Similarity: $similarity");
-
-        if ($similarity >= $this->getSimiliarityThreashold()) {
-            if (isset($this->textSplits[$index])) {
-                $matchedText = $this->textSplits[$index];
-                $hash = md5($matchedText['text']);
-
-                if (!isset($alreadyAdded[$hash])) {
-                    $alreadyAdded[$hash] = true;
-
-                    $results[] = [
-                        'similarity' => $similarity,
-                        'index' => $index,
-                        'matchedChunk' => $matchedText,
-                    ];
-                }
-            }
-        } else {
-            //info("NOT FOUND at #: $iterations, Similarity: $similarity");
-        }
     }
 
     protected function getEmbdeddingModel(): string
