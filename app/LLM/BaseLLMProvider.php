@@ -9,9 +9,9 @@ abstract class BaseLLMProvider implements LlmProvider
 {
     protected string $apiKey;
     protected string $baseUrl;
-    protected string $model;
     protected array $options;
     protected int $retries;
+    public string $model;
 
     public function __construct(string $apiKey, string $baseUrl, string $model, array $options = [], int $retries = 1)
     {
