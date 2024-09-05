@@ -192,9 +192,7 @@ class JsonFileVectorStore
             $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
             //file_put_contents(storage_path('app/dump.json'), json_encode($embeddings, JSON_PRETTY_PRINT));
 
-            if (isset($embeddings['embeddings'])) {
-                $embeddings = $embeddings['embeddings']; // gemini
-            }
+            $embeddings = $embeddings['embeddings'] ?? $embeddings; // gemini or openai
 
             foreach ($embeddings as $embeddingIndex => $embedding) {
                 // Map the embedding back to the correct split in the original $splits array
