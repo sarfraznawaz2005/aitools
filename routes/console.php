@@ -3,6 +3,7 @@
 use App\Constants;
 use App\Models\Note;
 use App\Services\JsonFileVectorStore;
+use App\Services\NotesSearchService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -64,6 +65,41 @@ Artisan::command('test', function () {
 //
 //    echo $title;
 
+
+    $noteResults = searchWithNotesService('otwell');
+    $jsonResults = searchWithJsonFileVectorStore('otwell');
+
+    dump($noteResults);
+    dump('-----------------------------------------------------------');
+    dump($jsonResults);
+});
+
+function searchWithNotesService($query): array
+{
+    @unlink(storage_path('app/notes.json'));
+
+    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+
+    $notes = Note::with('folder')->get()->map(function ($note) {
+        return [
+            'id' => $note->id,
+            'title' => $note->title,
+            'content' => $note->content,
+            'folder' => $note->folder->name,
+        ];
+    })->toArray();
+
+    $searchService = NotesSearchService::getInstance($llm, 2000);
+
+    return $searchService->searchTexts($notes, $query);
+}
+
+function searchWithJsonFileVectorStore($query): array
+{
+    @unlink(storage_path('app/data.json'));
+
+    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+
     $notes = Note::with('folder')->get()->map(function ($note) {
         return [
             'text' => $note->content,
@@ -71,12 +107,7 @@ Artisan::command('test', function () {
         ];
     })->toArray();
 
-    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
-
-    @unlink(storage_path('app/data.json'));
-
     $searchService = JsonFileVectorStore::getInstance($llm, 2000);
-    $results = $searchService->searchTexts($notes, 'otwell');
 
-    dd($results);
-});
+    return $searchService->searchTexts($notes, $query);
+}

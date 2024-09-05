@@ -260,7 +260,7 @@ class JsonFileVectorStore
         $similarity = $this->cosineSimilarity($embeddingValues, $queryEmbeddingValues);
 
         // Log similarity and iteration for debugging
-        info("Iteration #: $iterations, Similarity: $similarity");
+        //info("Iteration #: $iterations, Similarity: $similarity");
 
         if ($similarity >= $this->getSimiliarityThreashold()) {
             if (isset($this->textSplits[$index])) {
