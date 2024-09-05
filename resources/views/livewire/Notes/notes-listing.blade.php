@@ -302,7 +302,7 @@
 
         /* Container for the content */
         .content {
-            max-height: 15rem; /* This is equivalent to max-h-60 in Tailwind */
+            max-height: 20rem; /* This is equivalent to max-h-60 in Tailwind */
             overflow-y: auto;
             position: relative;
             font-size: 0.9rem;
@@ -357,7 +357,7 @@
         /* Style iframes (videos) */
         .content iframe {
             width: 100% !important;
-            height: 14rem !important;
+            height: 20rem !important;
             margin: 1rem 0;
         }
 
