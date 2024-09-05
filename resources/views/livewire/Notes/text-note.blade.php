@@ -71,9 +71,7 @@
                         </button>
                     </div>
 
-                    <p wire:stream="linkFetchStatus" class="text-xs text-gray-600 mt-4 text-center font-semibold">
-                        {{ $linkFetchStatus }}
-                    </p>
+                    <p wire:stream="linkFetchStatus" class="text-xs text-gray-600 mt-4 text-center font-semibold"></p>
 
                 </x-dialog>
             </div>
@@ -101,7 +99,7 @@
                 </div>
             </div>
 
-        @if(!isset($folder))
+            @if(!isset($folder))
                 <div class="mb-4">
                     <select wire:model.change="note_folder_id"
                             class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50">

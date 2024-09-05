@@ -36,7 +36,6 @@ class TextNote extends Component
 
     public array $linkErrors = [];
     public bool $useAI = true;
-    public string $linkFetchStatus = '';
 
     public function mount(): void
     {
@@ -307,7 +306,7 @@ class TextNote extends Component
 
         return $content;
     }
-    
+
     #[Computed]
     public function schedulePreview(): string
     {
