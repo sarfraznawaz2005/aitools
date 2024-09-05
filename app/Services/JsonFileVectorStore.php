@@ -119,9 +119,7 @@ class JsonFileVectorStore
             $splits[] = $this->splitTextIntoChunks($textWithMetadata);
         }
 
-        $chunks = array_chunk($splits, $this->getEmbdeddingBatchSize());
-
-        $this->textSplits = $this->getEmbeddingsOrLoadFromCache($chunks);
+        $this->textSplits = $this->getEmbeddingsOrLoadFromCache($splits);
     }
 
     protected function splitTextIntoChunks(array $textWithMetadata): array
@@ -195,11 +193,11 @@ class JsonFileVectorStore
         return array_filter($texts, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 2);
     }
 
-    protected function getEmbeddingsOrLoadFromCache(array $chunks): array
+    protected function getEmbeddingsOrLoadFromCache(array $splits): array
     {
         $path = storage_path('app/notes.json');
 
-        $cacheKey = 'notes_cache_' . md5(json_encode($chunks));
+        $cacheKey = 'notes_cache_' . md5(json_encode($splits));
         if (array_key_exists($cacheKey, $this->embeddingsCache)) {
             //info("Loaded embeddings from cache for $fileName");
             return $this->embeddingsCache[$cacheKey];
@@ -212,20 +210,30 @@ class JsonFileVectorStore
         }
 
         $data = [];
-        foreach ($chunks as $chunk) {
-            foreach ($chunk as $item) {
-                $textSplits = array_column($item, 'text');
-
-                $embeddings = $this->llm->embed($textSplits, $this->getEmbdeddingModel());
-
-                foreach ($item as $splitIndex => $splitItem) {
-                    $item[$splitIndex]['embeddings'] = $embeddings['embeddings'][$splitIndex]['values'];
-                }
-
-                $data[] = $item;
-            }
+        $textSplits = [];
+        foreach ($splits as $split) {
+            $textSplits[] = array_column($split, 'text');
         }
 
+        dd($textSplits);
+
+        // flatten the array
+        $textSplits = array_merge(...$textSplits);
+
+        $chunks = array_chunk($textSplits, $this->getEmbdeddingBatchSize());
+
+        foreach ($chunks as $chunk) {
+            $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
+            dd($chunk);
+
+            foreach ($chunk as $splitIndex => $splitItem) {
+                $entry[$splitIndex]['embeddings'] = $embeddings['embeddings'][$splitIndex]['values'];
+            }
+
+            $data[] = $entry;
+        }
+
+        dd($data);
         $this->embeddingsCache[$cacheKey] = $data;
 
         file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));

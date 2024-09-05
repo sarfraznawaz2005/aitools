@@ -189,4 +189,12 @@
         </x-slot>
     </x-modal>
 
+    <style>
+        iframe {
+            width: 100% !important;
+            height: 20rem !important;
+            margin: 1rem 0;
+        }
+    </style>
+
 </div>
