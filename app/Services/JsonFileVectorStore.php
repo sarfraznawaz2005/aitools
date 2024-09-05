@@ -87,20 +87,18 @@ class JsonFileVectorStore
         $results = [];
         $cleanedQuery = $this->getCleanedText($query, true);
 
-        foreach ($this->textSplits as $chunks) {
-            foreach ($chunks as $index => $chunk) {
-                $exactMatchScore = $this->calculateExactMatchScore($cleanedQuery, $chunk['text']);
-                $fuzzyMatchScore = $this->calculateFuzzyMatchScore($cleanedQuery, $chunk['text']);
+        foreach ($this->textSplits as $index => $chunk) {
+            $exactMatchScore = $this->calculateExactMatchScore($cleanedQuery, $chunk['text']);
+            $fuzzyMatchScore = $this->calculateFuzzyMatchScore($cleanedQuery, $chunk['text']);
 
-                $maxScore = max($exactMatchScore, $fuzzyMatchScore);
+            $maxScore = max($exactMatchScore, $fuzzyMatchScore);
 
-                if ($maxScore >= $this->getSimiliarityThreashold()) {
-                    $results[] = [
-                        'similarity' => $maxScore,
-                        'index' => $index,
-                        'matchedChunk' => ['text' => $chunk['text'], 'metadata' => $chunk['metadata']],
-                    ];
-                }
+            if ($maxScore >= $this->getSimiliarityThreashold()) {
+                $results[] = [
+                    'similarity' => $maxScore,
+                    'index' => $index,
+                    'matchedChunk' => ['text' => $chunk['text'], 'metadata' => $chunk['metadata']],
+                ];
             }
         }
 
@@ -277,6 +275,8 @@ class JsonFileVectorStore
                     ];
                 }
             }
+        } else {
+            info("Not FOUND #: $iterations, Similarity: $similarity");
         }
     }
 
