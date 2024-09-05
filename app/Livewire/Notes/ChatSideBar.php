@@ -22,8 +22,6 @@ class ChatSideBar extends Component
     #[Session(key: 'notes-conversation')]
     public array $conversation = [];
 
-    public string $aiStreamResponse = '';
-
     protected $listeners = ['refreshNotesChat' => '$refresh'];
 
     #[On('suggestedAnswer')]

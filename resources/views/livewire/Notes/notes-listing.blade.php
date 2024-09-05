@@ -4,7 +4,7 @@
 
         <livewire:notes.sidebar :folder="$folder"/>
 
-        <main class="flex-1 pt-10 border-t sm:border-t-0 h-screen sm:border-l border-gray-300">
+        <main class="flex-1 pt-10 border-t sm:border-t-0 h-screen overflow-y-auto mb-4 sm:border-l border-gray-300">
 
             <div class="mx-4 sm:mx-8 my-4">
                 <livewire:apikeys.api-key-banner/>
@@ -299,60 +299,71 @@
     </script>
 
     <style>
-        iframe {
-            width: 100% !important;
-            height: 400px !important;
+
+        /* Container for the content */
+        .content {
+            max-height: 15rem; /* This is equivalent to max-h-60 in Tailwind */
+            overflow-y: auto;
+            position: relative;
+            font-size: 0.9rem;
+            line-height: 1.6rem;
         }
 
-        .quill-editor iframe, .ql-editor iframe {
-            pointer-events: none !important;
+        /* Ensure all direct children are visible */
+        .content > * {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            overflow: visible;
+            width: 100%;
+            margin-bottom: 1rem;
         }
 
-        .content p {
-            font-size: 0.9rem !important;
-            line-height: 1.6rem !important;
-        }
-
+        /* Responsive images */
         .content img {
-            width: 100% !important;
-            max-height: 300px !important;
-            height: auto !important;
-            object-fit: contain !important;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
         }
 
+        /* Style links */
         .content a {
             color: rgb(59 130 246);
-            text-decoration: none !important;
+            text-decoration: none;
         }
 
-        .content li::marker {
-            font-size: 1.1rem;
-            color: #9ca3af;
+        /* Style lists */
+        .content ul, .content ol {
+            padding-left: 1.5rem;
         }
 
         .content li {
             list-style: square;
         }
 
-        .content h1 {
-            color: #5c616c;
-            font-size: 1.1rem;
-            margin: 0 0 5px;
-            font-weight: 600 !important;
+        .content li::marker {
+            color: #9ca3af;
         }
 
-        .content h2 {
+        /* Style headings */
+        .content h1, .content h2, .content h3 {
             color: #5c616c;
             font-size: 1.1rem;
-            margin: 0 0 5px;
-            font-weight: 600 !important;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        .content h3 {
-            color: #5c616c;
-            font-size: 1.1rem;
-            margin: 0 0 5px;
-            font-weight: 600 !important;
+        /* Style iframes (videos) */
+        .content iframe {
+            width: 100% !important;
+            height: 14rem !important;
+            margin: 1rem 0;
         }
+
+        .content * {
+            position: static !important;
+        }
+
     </style>
 </div>
