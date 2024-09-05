@@ -169,7 +169,7 @@ class JsonFileVectorStore
 
     protected function getEmbeddingsOrLoadFromCache(array $splits): array
     {
-        $path = storage_path('app/notes.json');
+        $path = storage_path('app/data.json');
 
         $cacheKey = 'notes_cache_' . md5(json_encode($splits));
         if (array_key_exists($cacheKey, $this->embeddingsCache)) {
@@ -183,7 +183,6 @@ class JsonFileVectorStore
             return $data;
         }
 
-        $data = [];
         $textSplits = [];
         foreach ($splits as $split) {
             $textSplits[] = $split['text'];
@@ -194,20 +193,22 @@ class JsonFileVectorStore
         foreach ($chunks as $chunk) {
             $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
 
-            foreach ($splits as $splitIndex => $splitItem) {
-                $splits[$splitIndex]['embeddings'] = $embeddings['embeddings'][$splitIndex]['values'];
+            foreach ($embeddings['embeddings'] as $embeddingIndex => $embeddingData) {
+                // Map the embedding back to the correct split in the original $splits array
+                if (isset($splits[$embeddingIndex])) {
+                    $splits[$embeddingIndex]['embeddings'] = $embeddingData['values'];
+                }
             }
-
-            $data[] = $splits;
         }
 
-        $this->embeddingsCache[$cacheKey] = $data;
-
-        file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
+        // Store in cache and save to file
+        $this->embeddingsCache[$cacheKey] = $splits;
+        file_put_contents($path, json_encode($splits, JSON_PRETTY_PRINT));
         info("notes indexing file saved at: $path");
 
-        return $data;
+        return $splits;
     }
+
 
     /**
      * @throws Exception
@@ -232,18 +233,14 @@ class JsonFileVectorStore
 
         $iterations = 0;
 
-        // Iterate over the main text splits array
-        foreach ($this->textSplits as $mainIndex => $textItems) {
-            foreach ($textItems as $index => $textItem) {
-                if (isset($textItem['embeddings'])) {
-                    $embeddingValues = $textItem['embeddings'];
+        foreach ($this->textSplits as $index => $split) {
+            if (isset($split['embeddings'])) {
+                $embeddingValues = $split['embeddings'];
 
-                    $iterations++;
-                    // Process embedding using the helper function
-                    $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $mainIndex, $index, $iterations, $results, $alreadyAdded);
-                } else {
-                    throw new Exception("Unknown embedding format!.");
-                }
+                $iterations++;
+                $this->processEmbedding($embeddingValues, $queryEmbeddingValues, $index, $iterations, $results, $alreadyAdded);
+            } else {
+                throw new Exception("Unknown embedding format!.");
             }
         }
 
@@ -253,7 +250,6 @@ class JsonFileVectorStore
     protected function processEmbedding(
         array $embeddingValues,
         array $queryEmbeddingValues,
-        int   $mainIndex,
         int   $index,
         int   $iterations,
         array &$results,
@@ -266,8 +262,8 @@ class JsonFileVectorStore
         info("Iteration #: $iterations, Similarity: $similarity");
 
         if ($similarity >= $this->getSimiliarityThreashold()) {
-            if (isset($this->textSplits[$mainIndex][$index])) {
-                $matchedText = $this->textSplits[$mainIndex][$index];
+            if (isset($this->textSplits[$index])) {
+                $matchedText = $this->textSplits[$index];
                 $hash = md5($matchedText['text']);
 
                 if (!isset($alreadyAdded[$hash])) {

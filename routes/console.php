@@ -73,10 +73,10 @@ Artisan::command('test', function () {
 
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 
-    //@unlink(storage_path('app/notes.json'));
+    @unlink(storage_path('app/data.json'));
 
     $searchService = JsonFileVectorStore::getInstance($llm, 2000);
-    $results = $searchService->searchTexts($notes, 'ipsum');
+    $results = $searchService->searchTexts($notes, 'otwell');
 
     dd($results);
 });
