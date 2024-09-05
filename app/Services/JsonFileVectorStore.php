@@ -249,19 +249,17 @@ class JsonFileVectorStore
                 //info("Iteration #: $iterations, Similarity: $similarity");
 
                 if ($similarity >= $this->getSimiliarityThreashold()) {
-                    if (isset($this->textSplits[$index])) {
-                        $matchedText = $this->textSplits[$index];
-                        $hash = md5($matchedText['text']);
+                    $matchedText = $this->textSplits[$index];
+                    $hash = md5($matchedText['text']);
 
-                        if (!isset($alreadyAdded[$hash])) {
-                            $alreadyAdded[$hash] = true;
+                    if (!isset($alreadyAdded[$hash])) {
+                        $alreadyAdded[$hash] = true;
 
-                            $results[] = [
-                                'similarity' => $similarity,
-                                'index' => $index,
-                                'matchedChunk' => $matchedText,
-                            ];
-                        }
+                        $results[] = [
+                            'similarity' => $similarity,
+                            'index' => $index,
+                            'matchedChunk' => $matchedText,
+                        ];
                     }
                 } else {
                     //info("NOT FOUND at #: $iterations, Similarity: $similarity");
