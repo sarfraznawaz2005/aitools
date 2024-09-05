@@ -1,10 +1,8 @@
 <?php
 
 use App\Constants;
-use App\LLM\OpenAiProvider;
 use App\Models\Note;
 use App\Services\JsonFileVectorStore;
-use App\Services\NotesSearchService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -68,16 +66,16 @@ Artisan::command('test', function () {
 
 
     //$jsonResults = searchWithJsonFileVectorStore('ipsum');
-    $jsonResults = searchWithJsonFileVectorStore('who is taylor otwell');
+    $jsonResults = searchWithJsonFileVectorStore('pwd');
+    dump($jsonResults);
 
-    //dump($noteResults);
-    //dump('-----------------------------------------------------------');
+    $jsonResults = searchWithJsonFileVectorStore('who is taylor');
     dump($jsonResults);
 });
 
 function searchWithJsonFileVectorStore($query): array
 {
-    @unlink(storage_path('app/data.json'));
+    //@unlink(storage_path('app/data.json'));
 
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 //    $llm = new OpenAiProvider(
