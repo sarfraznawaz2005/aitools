@@ -1,6 +1,8 @@
 <?php
 
+use App\Constants;
 use App\Models\Note;
+use App\Services\JsonFileVectorStore;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -62,6 +64,19 @@ Artisan::command('test', function () {
 //
 //    echo $title;
 
+    $notes = Note::with('folder')->get()->map(function ($note) {
+        return [
+            'text' => $note->content,
+            'source' => "$note->title (" . $note->folder->name . ")",
+        ];
+    })->toArray();
 
-    //Note::reIndexNotes();
+    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+
+    @unlink(storage_path('app/notes.json'));
+
+    $searchService = JsonFileVectorStore::getInstance($llm, 2000);
+    $results = $searchService->searchTexts($notes, 'ipsum');
+
+    dd($results);
 });

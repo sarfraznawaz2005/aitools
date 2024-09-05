@@ -1,5 +1,6 @@
 <?php
 /*
+ * notes chat - recall last message on up key
  * quick temp chat
  * related questions broken html sometimes, should use strucutred output machanism
  * Setup proper roles when prompting AI?
@@ -293,5 +294,10 @@ function processMarkdownToHtml($markdownContent): string
     return $htmlContent;
 }
 
+function out($data): void
+{
+    file_put_contents(storage_path('logs/laravel.log'), '');
 
+    info($data);
+}
 
