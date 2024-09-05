@@ -25,7 +25,7 @@ class JsonFileVectorStore
     public static function getInstance(
         LlmProvider $llm,
         int         $chunkSize = 1000,
-        int         $maxResults = 2
+        int         $maxResults = 3
     ): JsonFileVectorStore
     {
         if (self::$instance === null) {
