@@ -65,7 +65,9 @@ Artisan::command('test', function () {
 //    echo $title;
 
 
-    //$jsonResults = searchWithJsonFileVectorStore('ipsum');
+    $jsonResults = searchWithJsonFileVectorStore('ipsum');
+    dump($jsonResults);
+
     $jsonResults = searchWithJsonFileVectorStore('pwd');
     dump($jsonResults);
 
@@ -75,7 +77,7 @@ Artisan::command('test', function () {
 
 function searchWithJsonFileVectorStore($query): array
 {
-    //@unlink(storage_path('app/data.json'));
+    @unlink(storage_path('app/data.json'));
 
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 //    $llm = new OpenAiProvider(

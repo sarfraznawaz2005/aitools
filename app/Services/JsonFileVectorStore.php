@@ -71,7 +71,6 @@ class JsonFileVectorStore
         $queryEmbeddings = $this->llm->embed(
             [$this->getCleanedText($query, true)],
             $this->getEmbdeddingModel(),
-            'RETRIEVAL_QUERY'
         );
 
         $this->setTextEmbeddingsFromTexts($texts);
