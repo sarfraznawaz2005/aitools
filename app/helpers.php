@@ -3,6 +3,8 @@
  * the overlap is not being used or given to ai in final results
  * notes chat - recall last message on up key
  * quick temp chat
+ * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
+ *
  * related questions broken html sometimes, should use strucutred output machanism
  * Setup proper roles when prompting AI?
  * empty title on icon hover
