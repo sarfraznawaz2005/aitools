@@ -1,6 +1,7 @@
 <?php
 /*
  * notes chat - recall last message on up key
+ * Implement JsonFileVectorStore for Notes and Document Bots.
  * quick temp chat
  * related questions broken html sometimes, should use strucutred output machanism (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/JSON_mode_REST.ipynb)
  * https://github.com/Doriandarko/gemini-ui-to-code
