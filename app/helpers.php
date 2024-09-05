@@ -3,6 +3,7 @@
  * the overlap is not being used or given to ai in final results
  * notes chat - recall last message on up key
  * quick temp chat
+ * https://github.com/Doriandarko/gemini-ui-to-code
  * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
  * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
