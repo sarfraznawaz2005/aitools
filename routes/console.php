@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants;
+use App\LLM\OpenAiProvider;
 use App\Models\Note;
 use App\Services\JsonFileVectorStore;
 use App\Services\NotesSearchService;
@@ -100,6 +101,10 @@ function searchWithJsonFileVectorStore($query): array
     @unlink(storage_path('app/data.json'));
 
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+//    $llm = new OpenAiProvider(
+//        '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',
+//        'gpt-4o-mini'
+//    );
 
     $notes = Note::with('folder')->get()->map(function ($note) {
         return [

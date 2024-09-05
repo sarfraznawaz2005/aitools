@@ -192,10 +192,14 @@ class JsonFileVectorStore
             $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
             //file_put_contents(storage_path('app/dump.json'), json_encode($embeddings, JSON_PRETTY_PRINT));
 
-            foreach ($embeddings['embeddings'] as $embeddingIndex => $embeddingData) {
+            if (isset($embeddings['embeddings'])) {
+                $embeddings = $embeddings['embeddings']; // gemini
+            }
+
+            foreach ($embeddings as $embeddingIndex => $embedding) {
                 // Map the embedding back to the correct split in the original $splits array
                 if (isset($splits[$embeddingIndex])) {
-                    $splits[$embeddingIndex]['embeddings'] = $embeddingData['values'];
+                    $splits[$embeddingIndex]['embeddings'] = $embedding['embedding'] ?? $embedding['values'];
                 }
             }
         }
