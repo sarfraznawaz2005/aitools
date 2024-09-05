@@ -276,7 +276,7 @@ class JsonFileVectorStore
                 }
             }
         } else {
-            info("Not FOUND #: $iterations, Similarity: $similarity");
+            //info("NOT FOUND at #: $iterations, Similarity: $similarity");
         }
     }
 
