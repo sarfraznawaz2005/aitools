@@ -65,19 +65,19 @@ Artisan::command('test', function () {
 //    echo $title;
 
 
-    $jsonResults = searchWithJsonFileVectorStore('ipsum');
+    $jsonResults = searchWithJsonFileVectorStore('tell me about ipsum');
     dump($jsonResults);
 
-    $jsonResults = searchWithJsonFileVectorStore('pwd');
+    $jsonResults = searchWithJsonFileVectorStore('what is my gmail password?');
     dump($jsonResults);
 
-    $jsonResults = searchWithJsonFileVectorStore('who is taylor');
+    $jsonResults = searchWithJsonFileVectorStore('what is laracon?');
     dump($jsonResults);
 });
 
 function searchWithJsonFileVectorStore($query): array
 {
-    @unlink(storage_path('app/data.json'));
+    //@unlink(storage_path('app/data.json'));
 
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 //    $llm = new OpenAiProvider(
