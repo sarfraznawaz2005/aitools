@@ -66,11 +66,11 @@ Artisan::command('test', function () {
 //    echo $title;
 
 
-    $noteResults = searchWithNotesService('otwell');
+    //$noteResults = searchWithNotesService('otwell');
     $jsonResults = searchWithJsonFileVectorStore('otwell');
 
-    dump($noteResults);
-    dump('-----------------------------------------------------------');
+    //dump($noteResults);
+    //dump('-----------------------------------------------------------');
     dump($jsonResults);
 });
 

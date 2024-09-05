@@ -68,7 +68,7 @@ class JsonFileVectorStore
     {
         $results = [];
 
-        $queryEmbeddings = $this->llm->embed([$this->getCleanedText($query, true)], $this->getEmbdeddingModel());
+        $queryEmbeddings = $this->llm->embed($this->getCleanedText($query, true), $this->getEmbdeddingModel());
 
         $this->setTextEmbeddingsFromTexts($texts);
 
@@ -224,6 +224,8 @@ class JsonFileVectorStore
         // Standardize the query embeddings
         if (isset($queryEmbeddings['embeddings'])) {
             $queryEmbeddingValues = $queryEmbeddings['embeddings'][0]['values'];
+        } elseif (isset($queryEmbeddings['embedding']['values'])) {
+            $queryEmbeddingValues = $queryEmbeddings['embedding']['values'];
         } elseif (isset($queryEmbeddings[0]['embedding'])) {
             $queryEmbeddingValues = $queryEmbeddings[0]['embedding'];
         } else {
