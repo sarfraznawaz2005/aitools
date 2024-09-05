@@ -2,18 +2,18 @@
 /*
  * notes chat - recall last message on up key
  * quick temp chat
- * https://github.com/Doriandarko/gemini-ui-to-code
- * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
- * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
- * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
  * related questions broken html sometimes, should use strucutred output machanism (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/JSON_mode_REST.ipynb)
+ * https://github.com/Doriandarko/gemini-ui-to-code
+ * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
+ * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
+ * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
  * Setup proper roles when prompting AI? (https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/System_instructions_REST.ipynb)
  * empty title on icon hover
  * setup updator
+ * GraphRAG
  * Researcher Agent
  * UpWork AI extension
  * Image/Video Generator
- * GraphRAG
  * https://www.youtube.com/watch?v=7rYR_l9oqQg
  *
  * Interesting PHP Libraries and Tools
