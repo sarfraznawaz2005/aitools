@@ -324,21 +324,17 @@ class JsonFileVectorStore
 
     protected function cosineSimilarity(array $u, array $v): float
     {
-        try {
-            $dotProduct = 0.0;
-            $uLength = 0.0;
-            $vLength = 0.0;
+        $dotProduct = 0.0;
+        $uLength = 0.0;
+        $vLength = 0.0;
 
-            foreach ($u as $i => $value) {
-                $dotProduct += $value * $v[$i];
-                $uLength += $value * $value;
-                $vLength += $v[$i] * $v[$i];
-            }
-
-            return $dotProduct / (sqrt($uLength) * sqrt($vLength));
-        } catch (Exception) {
-            return 0;
+        foreach ($u as $i => $value) {
+            $dotProduct += $value * $v[$i];
+            $uLength += $value * $value;
+            $vLength += $v[$i] * $v[$i];
         }
+
+        return $dotProduct / (sqrt($uLength) * sqrt($vLength));
     }
 
     protected function getEmbdeddingBatchSize(): string
