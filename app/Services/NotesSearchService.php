@@ -176,6 +176,7 @@ class NotesSearchService
         }, $texts);
 
         $embeddings = $this->llm->embed($textSplits, $this->getEmbdeddingModel());
+        //file_put_contents(storage_path('app/dddd.json'), json_encode($embeddings, JSON_PRETTY_PRINT));
 
         $data = [
             'embeddings' => $embeddings,
