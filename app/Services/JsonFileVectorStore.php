@@ -107,29 +107,26 @@ class JsonFileVectorStore
         return $results;
     }
 
-    /**
-     * @throws Exception
-     */
     protected function setTextEmbeddingsFromTexts(array $texts): void
     {
-        $splits = [];
+        // filter out bad stuff
+        $texts = array_map(fn($item) => ['text' => $this->getCleanedText($item['text']), 'source' => $item['source']], $texts);
+        $texts = array_filter($texts, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 2);
 
-        foreach ($texts as $text) {
-            $textWithMetadata = $this->getTextWithMetaData($text);
-            $splits[] = $this->splitTextIntoChunks($textWithMetadata);
-        }
+        $splits = $this->splitTextIntoChunks($texts);
 
         $this->textSplits = $this->getEmbeddingsOrLoadFromCache($splits);
     }
 
+    //file_put_contents(storage_path('app/dump.json'), json_encode($textWithMetadata, JSON_PRETTY_PRINT));
     protected function splitTextIntoChunks(array $textWithMetadata): array
     {
         $chunks = [];
-        $overlapPercentage = 30; // 30% overlap, adjust as needed
+        $overlapPercentage = 3; // 30% overlap
         $overlapSize = max(1, (int)($this->chunkSize * ($overlapPercentage / 100)));
 
         foreach ($textWithMetadata as $item) {
-            $fullText = implode("\n", [$item['text']]);
+            $fullText = $item['text'];
             $totalLength = strlen($fullText);
 
             $chunkStart = 0;
@@ -137,60 +134,22 @@ class JsonFileVectorStore
                 $chunkEnd = min($chunkStart + $this->chunkSize, $totalLength);
                 $chunk = substr($fullText, $chunkStart, $chunkEnd - $chunkStart);
 
+                // Append the chunk
                 $chunks[] = [
                     'text' => trim($chunk),
-                    'metadata' => $this->getMetadataForChunk($textWithMetadata, $chunkStart, $chunkEnd - 1)
+                    'metadata' => $item['source']
                 ];
 
                 if ($chunkEnd == $totalLength) {
                     break;
                 }
 
-                $chunkStart += max(1, $this->chunkSize - $overlapSize);
+                $nextChunkStart = max(0, $chunkEnd - $overlapSize);
+                $chunkStart = $nextChunkStart;
             }
         }
 
         return $chunks;
-    }
-
-    protected function getMetadataForChunk(array $textWithMetadata, int $start, int $end): array
-    {
-        $metadata = [];
-        $currentPosition = 0;
-
-        foreach ($textWithMetadata as $item) {
-            $length = strlen($item['text']);
-
-            if ($currentPosition + $length >= $start && $currentPosition <= $end) {
-                $metadata[] = $item['metadata'];
-            }
-
-            if ($currentPosition > $end) {
-                break;
-            }
-
-            $currentPosition += $length + 1; // +1 for the newline
-        }
-
-        return $metadata;
-    }
-
-    protected function getTextWithMetaData(array $textPiece): array
-    {
-        $texts = [];
-
-        $lines = explode("\n", $textPiece['text']);
-
-        foreach ($lines as $lineNumber => $line) {
-            $texts[] = [
-                'text' => $line,
-                'metadata' => ['source' => $textPiece['source'], 'line' => $lineNumber + 1]
-            ];
-        }
-
-        $texts = array_map(fn($item) => ['text' => $this->getCleanedText($item['text']), 'metadata' => $item['metadata']], $texts);
-
-        return array_filter($texts, fn($item) => !empty(trim($item['text'])) && strlen(trim($item['text'])) > 2);
     }
 
     protected function getEmbeddingsOrLoadFromCache(array $splits): array
@@ -215,7 +174,7 @@ class JsonFileVectorStore
             $textSplits[] = array_column($split, 'text');
         }
 
-        dd($textSplits);
+        dd($splits);
 
         // flatten the array
         $textSplits = array_merge(...$textSplits);
