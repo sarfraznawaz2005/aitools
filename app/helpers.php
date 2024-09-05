@@ -5,9 +5,9 @@
  * quick temp chat
  * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
- * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Function_calling.ipynb
- * related questions broken html sometimes, should use strucutred output machanism (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/JSON_mode.ipynb)
- * Setup proper roles when prompting AI?
+ * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
+ * related questions broken html sometimes, should use strucutred output machanism (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/JSON_mode_REST.ipynb)
+ * Setup proper roles when prompting AI? (https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/System_instructions_REST.ipynb)
  * empty title on icon hover
  * setup updator
  * Researcher Agent
