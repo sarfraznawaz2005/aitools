@@ -84,6 +84,15 @@ class ChatSideBar extends Component
             $results = $searchService->searchTexts($notes, $userMessage);
             //dd($results);
 
+            if (!count($results)) {
+                $this->stream(
+                    to: 'aiStreamResponse',
+                    content: Constants::NO_RESULTS_FOUND,
+                );
+
+                return Constants::NO_RESULTS_FOUND;
+            }
+
             $context = '';
 
             foreach ($results as $result) {

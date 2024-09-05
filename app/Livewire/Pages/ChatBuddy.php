@@ -184,6 +184,12 @@ class ChatBuddy extends Component
                 $results = $searchService->searchDocuments($files, $userQuery->body);
                 //dd($results);
 
+                if (!count($results)) {
+                    sendStream(Constants::NO_RESULTS_FOUND, true);
+                    $latestMessage->update(['body' => Constants::NO_RESULTS_FOUND]);
+                    return;
+                }
+
                 $context = '';
                 foreach ($results as $result) {
                     $context .= $result['matchedChunk']['text'] . "\nMetadata:" . json_encode($result['matchedChunk']['metadata']) . "\n\n";

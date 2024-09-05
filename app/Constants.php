@@ -9,6 +9,8 @@ final class Constants
 
     const bool RELATED_QUESTIONS_ENABLED = true;
 
+    const string NO_RESULTS_FOUND = "Sorry, I don't have enough information to answer this question accurately.";
+
     const string CHATBUDDY_SELECTED_LLM_KEY = 'ChatBuddy-LLM';
     const string CHATBUDDY_LOADING_STRING = 'Thinking...';
     const int CHATBUDDY_TOTAL_CONVERSATION_HISTORY = 50;
