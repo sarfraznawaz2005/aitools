@@ -191,6 +191,7 @@ class JsonFileVectorStore
         $chunks = array_chunk($textSplits, $this->getEmbdeddingBatchSize());
 
         foreach ($chunks as $chunk) {
+            //dd($chunk);
             $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
 
             foreach ($embeddings['embeddings'] as $embeddingIndex => $embeddingData) {
