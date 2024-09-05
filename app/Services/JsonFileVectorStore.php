@@ -107,6 +107,19 @@ class JsonFileVectorStore
         return $results;
     }
 
+    protected function getTopResults(array $results): array
+    {
+        $topResults = array_slice($results, 0, $this->maxResults);
+
+        foreach ($topResults as &$result) {
+            if (isset($result['matchedChunk']['embeddings'])) {
+                unset($result['matchedChunk']['embeddings']);
+            }
+        }
+
+        return $topResults;
+    }
+
     protected function setTextEmbeddingsFromTexts(array $texts): void
     {
         // filter out bad stuff
@@ -171,28 +184,21 @@ class JsonFileVectorStore
         $data = [];
         $textSplits = [];
         foreach ($splits as $split) {
-            $textSplits[] = array_column($split, 'text');
+            $textSplits[] = $split['text'];
         }
-
-        dd($splits);
-
-        // flatten the array
-        $textSplits = array_merge(...$textSplits);
 
         $chunks = array_chunk($textSplits, $this->getEmbdeddingBatchSize());
 
         foreach ($chunks as $chunk) {
             $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
-            dd($chunk);
 
-            foreach ($chunk as $splitIndex => $splitItem) {
-                $entry[$splitIndex]['embeddings'] = $embeddings['embeddings'][$splitIndex]['values'];
+            foreach ($splits as $splitIndex => $splitItem) {
+                $splits[$splitIndex]['embeddings'] = $embeddings['embeddings'][$splitIndex]['values'];
             }
 
-            $data[] = $entry;
+            $data[] = $splits;
         }
 
-        dd($data);
         $this->embeddingsCache[$cacheKey] = $data;
 
         file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
