@@ -67,7 +67,8 @@ Artisan::command('test', function () {
 
 
     //$noteResults = searchWithNotesService('otwell');
-    $jsonResults = searchWithJsonFileVectorStore('otwell');
+    //$jsonResults = searchWithJsonFileVectorStore('ipsum');
+    $jsonResults = searchWithJsonFileVectorStore('taylor otwell');
 
     //dump($noteResults);
     //dump('-----------------------------------------------------------');
@@ -76,7 +77,7 @@ Artisan::command('test', function () {
 
 function searchWithNotesService($query): array
 {
-    @unlink(storage_path('app/notes.json'));
+    //@unlink(storage_path('app/notes.json'));
 
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 

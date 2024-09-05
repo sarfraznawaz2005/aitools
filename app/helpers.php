@@ -1,5 +1,6 @@
 <?php
 /*
+ * the overlap is not being used or given to ai in final results
  * notes chat - recall last message on up key
  * quick temp chat
  * related questions broken html sometimes, should use strucutred output machanism
