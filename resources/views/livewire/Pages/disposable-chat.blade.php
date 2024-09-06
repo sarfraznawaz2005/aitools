@@ -69,7 +69,7 @@
                           }">
                         @if($message['role'] === 'user')
                             <div
-                                class="flex flex-col" wire:key="note-message{{$index}}">
+                                class="flex flex-col" wire:key="quick-message{{$index}}">
                                 <div
                                     class="bg-blue-100 text-gray-600 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 py-1 rounded-2xl border border-blue-200 rounded-br-none self-end max-w-full">
                                     <bdi x-ref="message">{!! nl2br(e($message['content'])) !!}</bdi>
@@ -98,9 +98,9 @@
                             </div>
                             <!-- End Button Group -->
                         @else
-                            <div class="flex flex-col" wire:key="note-message{{$index}}">
+                            <div class="flex flex-col" wire:key="quick-message{{$index}}">
                                 <div
-                                    class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-2xl border border-gray-200 rounded-bl-none self-start max-w-full">
+                                    class="bg-white quick-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-2xl border border-gray-200 rounded-bl-none self-start max-w-full">
                                     <bdi x-ref="message">{!! $message['content'] !!}</bdi>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                     <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col">
                         <div
                             wire:stream="aiStreamResponse"
-                            class="bg-white note-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
+                            class="bg-white quick-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
                             <span class="animate-ping text-2xl">🤖</span>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
             <div
                 class="p-1 flex flex-col sm:flex-row bg-white items-center w-full border border-r-0 rounded-tr-none rounded-br-none border-gray-300 rounded-lg m-3 mr-0">
                 <div class="w-full sm:w-auto">
-                    <livewire:general.model-selector for="{{App\Constants::NOTES_SELECTED_LLM_KEY}}"/>
+                    <livewire:general.model-selector for="{{App\Constants::QUICKCHAT_SELECTED_LLM_KEY}}"/>
                 </div>
 
                 <div class="relative w-full mt-2 sm:mt-0">
@@ -185,7 +185,7 @@
                            dir="auto"
                            wire:loading.attr="disabled"
                            class="py-2 z-0 pr-12 block w-full border-gray-300 border-transparent rounded-lg text-sm focus:border-transparent focus:ring-transparent disabled:opacity-50 disabled:pointer-events-none"
-                           placeholder="Chat with your notes...">
+                           placeholder="Ask me anything...">
 
                     <button type="button"
                             x-data x-tooltip.raw="Send Message"
@@ -230,7 +230,7 @@
 
             // Function to convert both escaped and non-escaped related_question tags to links
             function convertRelatedQuestionsToLinks() {
-                document.querySelectorAll('.note-message li').forEach(li => {
+                document.querySelectorAll('.quick-message li').forEach(li => {
                     // First, handle escaped related_question tags
                     if (li.innerHTML.includes('&lt;related_question&gt;')) {
                         const decodedHTML = decodeHTMLEntities(li.innerHTML);
