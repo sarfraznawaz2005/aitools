@@ -50,6 +50,9 @@ class ChatSideBar extends Component
     #[On('getResponse')]
     public function getResponse(): void
     {
+        $this->resetValidation();
+        $this->resetErrorBag();
+
         // Add user message to conversation
         $this->conversation[] = [
             'role' => 'user',
