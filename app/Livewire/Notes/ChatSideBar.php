@@ -94,13 +94,13 @@ class ChatSideBar extends Component
             }
 
             $context = '';
-            
+
             foreach ($results as $result) {
                 $text = $result['matchedChunk']['text'];
                 $context .= $text . "\n\n<sources>" . $result['matchedChunk']['metadata'] . "</sources>\n\n";
             }
 
-            $messages = $this->getMessages();
+            $messages = getMessages($this->conversation);
             $conversationHistory = implode("\n", $messages);
 
             $prompt = makePromoptForNotes($context, $userMessage, $conversationHistory);
@@ -118,7 +118,8 @@ class ChatSideBar extends Component
 
             return processMarkdownToHtml($consolidatedResponse);
         } catch (Exception $e) {
-            $message = $e->getMessage() . ' on line ' . $e->getLine() . ' in ' . $e->getFile();
+            //$message = $e->getMessage() . ' on line ' . $e->getLine() . ' in ' . $e->getFile();
+            $message = $e->getMessage();
             $error = '<span class="text-red-600 text-xs">Oops! Failed to get a response due to some error, please try again, error: ' . $message . '</span>';
 
             $this->stream(
@@ -128,50 +129,6 @@ class ChatSideBar extends Component
 
             return $error;
         }
-    }
-
-    function getMessages(): array
-    {
-        $uniqueMessages = [];
-        $messages = $this->conversation;
-
-        // Strings to filter out from the conversation
-
-        // Sort the array by timestamp in descending order
-        usort($messages, function ($a, $b) {
-            return $b['timestamp'] - $a['timestamp'];
-        });
-
-        // Remove duplicates and empty content entries, and filter by role and content
-        $messages = array_values(array_filter(array_unique($messages, SORT_REGULAR), function ($item) {
-            $filterOutStrings = [
-                "conversation history",
-                "have enough information to answer this question accurately",
-                "provided context"
-            ];
-
-            if ($item['role'] !== 'user') {
-                foreach ($filterOutStrings as $str) {
-                    if (str_contains(strtolower($item['content']), strtolower($str))) {
-                        return false;
-                    }
-                }
-            }
-
-            // Also ensure that the content is not empty
-            return !empty($item['content']);
-        }));
-
-        // Format and filter unique messages
-        foreach ($messages as $message) {
-            $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'ASSISTANT: ') . $message['content'];
-
-            if (!in_array($formattedMessage, $uniqueMessages)) {
-                $uniqueMessages[] = htmlToText($formattedMessage);
-            }
-        }
-
-        return array_slice($uniqueMessages, 0, Constants::NOTES_TOTAL_CONVERSATION_HISTORY);
     }
 
     #[Computed]

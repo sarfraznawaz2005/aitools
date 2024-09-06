@@ -22,6 +22,7 @@
  * https://github.com/BenSampo/laravel-embed
  * */
 
+use App\Constants;
 use App\LLM\GeminiProvider;
 use App\LLM\LlmProvider;
 use App\LLM\OllamaProvider;
@@ -146,6 +147,69 @@ function makePromoptForNotes(string $context, string $userQuery, string $convers
     }
 
     return $prompt;
+}
+
+function makePromptQuickChat(string $userQuery, string $conversationHistory, int $version = 1): string
+{
+    $relatedQuestionsPrompt = config('prompts.textBotRelatedQuestionsPrompt');
+
+    $generalBotPrompt = Bot::query()->where('name', 'General')->first()->prompt;
+
+    $prompt = config("prompts.v$version");
+
+    $prompt = str_ireplace('{{USER_QUESTION}}', $userQuery, $prompt);
+    $prompt = str_ireplace('{{PROMPT}}', $generalBotPrompt, $prompt);
+    $prompt = str_ireplace('{{CONVERSATION_HISTORY}}', $conversationHistory, $prompt);
+
+    $prompt .= $relatedQuestionsPrompt;
+    $prompt .= "\nPlease provide answer here:";
+
+    if (app()->environment('local')) {
+        Log::info("\n" . str_repeat('-', 100) . "\n" . $prompt . "\n");
+    }
+
+    return $prompt;
+}
+
+function getMessages(array $messages): array
+{
+    $uniqueMessages = [];
+
+    // Sort the array by timestamp in descending order
+    usort($messages, function ($a, $b) {
+        return $b['timestamp'] - $a['timestamp'];
+    });
+
+    // Remove duplicates and empty content entries, and filter by role and content
+    $messages = array_values(array_filter(array_unique($messages, SORT_REGULAR), function ($item) {
+        $filterOutStrings = [
+            "conversation history",
+            "have enough information to answer this question accurately",
+            "provided context"
+        ];
+
+        if ($item['role'] !== 'user') {
+            foreach ($filterOutStrings as $str) {
+                if (str_contains(strtolower($item['content']), strtolower($str))) {
+                    return false;
+                }
+            }
+        }
+
+        // Also ensure that the content is not empty
+        return !empty($item['content']);
+    }));
+
+    // Format and filter unique messages
+    foreach ($messages as $message) {
+        $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'ASSISTANT: ') . $message['content'];
+
+        if (!in_array($formattedMessage, $uniqueMessages)) {
+            $uniqueMessages[] = htmlToText($formattedMessage);
+        }
+    }
+
+    return array_slice($uniqueMessages, 0, Constants::NOTES_TOTAL_CONVERSATION_HISTORY);
 }
 
 function sendStream($text, $sendCloseSignal = false): void
