@@ -17,7 +17,7 @@
         ],
     ];
 
-    $searchService = JsonFileVectorStore::getInstance($llm, 2000);
+    $searchService = JsonFileVectorStore::getInstance($llm, 'data.json', 2000);
     return $searchService->searchTexts($texts, $query);
 
  */
@@ -41,22 +41,27 @@ class JsonFileVectorStore
     private static ?JsonFileVectorStore $instance = null;
 
     private array $embeddingsCache = [];
-    protected array $textSplits = [];
+    private array $textSplits = [];
+    private string $fileName;
 
-    private function __construct(protected LlmProvider $llm,
-                                 protected int         $chunkSize,
-                                 protected int         $maxResults)
+    private function __construct(
+        protected LlmProvider $llm,
+        string                $fileName,
+        protected int         $chunkSize,
+        protected int         $maxResults)
     {
+        $this->fileName = $fileName;
     }
 
     public static function getInstance(
         LlmProvider $llm,
+        string      $fileName,
         int         $chunkSize = 1000,
         int         $maxResults = 3
     ): JsonFileVectorStore
     {
         if (self::$instance === null) {
-            self::$instance = new self($llm, $chunkSize, $maxResults);
+            self::$instance = new self($llm, $fileName, $chunkSize, $maxResults);
         }
 
         return self::$instance;
@@ -68,11 +73,11 @@ class JsonFileVectorStore
     public function searchTexts(array $notes, string $query): array
     {
         // full semantic search
-        $results = $this->performCosineSimilaritySearch($notes, $query);
+        $results = $this->performLLMSemanticSearch($notes, $query);
 
         if (!empty($results)) {
             if (app()->environment('local')) {
-                info('Resutls found via cosine similarity');
+                info('Resutls found via semantic search');
             }
 
             return $this->getTopResults($results);
@@ -83,7 +88,7 @@ class JsonFileVectorStore
 
         if (!empty($results)) {
             if (app()->environment('local')) {
-                info('Resutls found via TFIDF similarity');
+                info('Resutls found via partial semantic search');
             }
 
             return $this->getTopResults($results);
@@ -104,7 +109,7 @@ class JsonFileVectorStore
     /**
      * @throws Exception
      */
-    protected function performCosineSimilaritySearch(array $texts, string $query): array
+    protected function performLLMSemanticSearch(array $texts, string $query): array
     {
         $results = [];
 
@@ -297,7 +302,7 @@ class JsonFileVectorStore
 
     protected function getEmbeddingsOrLoadFromCache(array $splits): array
     {
-        $path = storage_path('app/data.json');
+        $path = storage_path('app/' . $this->fileName);
 
         $cacheKey = 'notes_cache_' . md5(json_encode($splits));
         if (array_key_exists($cacheKey, $this->embeddingsCache)) {

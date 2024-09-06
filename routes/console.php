@@ -92,7 +92,7 @@ function searchWithJsonFileVectorStore($query): array
         ];
     })->toArray();
 
-    $searchService = JsonFileVectorStore::getInstance($llm, 2000);
+    $searchService = JsonFileVectorStore::getInstance($llm, 'test.json', 2000);
 
     return $searchService->searchTexts($notes, $query);
 }
