@@ -262,6 +262,7 @@ class ChatBuddy extends Component
         $uniqueMessages = [];
         foreach ($latestMessages as $message) {
 
+            // do not add latest user query to conversation history
             if ($message->id === $userQuery->id) {
                 continue;
             }

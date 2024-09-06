@@ -104,6 +104,10 @@ class ChatSideBar extends Component
             }
 
             $messages = getMessages($this->conversation);
+
+            // remove very last message - user query
+            array_pop($messages);
+
             $conversationHistory = implode("\n", array_map(fn($message) => htmlToText($message), $messages));
 
             $prompt = makePromoptForNotes($context, $userMessage, $conversationHistory);
