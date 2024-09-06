@@ -33,17 +33,16 @@
                 handleKeyDown(event) {
                     if (event.key === 'Enter' && !event.shiftKey) {
                         event.preventDefault();
-                        this.lastQuery = $refs.chatInput.value; // Store the current message before sending
+                        this.lastQuery = $refs.chatInput.value;
                         $wire.call('setMessage', $refs.chatInput.value);
-                        $refs.chatInput.value = ''; // Clear the input after sending
-                        $refs.chatInput.focus(); // Retain focus
+                        $refs.chatInput.focus();
                     } else if (event.key === 'ArrowUp' && $refs.chatInput.value === '') {
                         event.preventDefault();
                         if (this.lastQuery) {
-                            $refs.chatInput.value = this.lastQuery; // Recall the last message
+                            $refs.chatInput.value = this.lastQuery;
                             this.$nextTick(() => {
-                                $refs.chatInput.selectionStart = $refs.chatInput.selectionEnd = $refs.chatInput.value.length; // Move the cursor to the end
-                                $refs.chatInput.focus(); // Keep the focus
+                                $refs.chatInput.selectionStart = $refs.chatInput.selectionEnd = $refs.chatInput.value.length;
+                                $refs.chatInput.focus();
                             });
                         }
                     }
