@@ -1,4 +1,10 @@
 <?php
+/*
+ * Requires: yooper/php-text-analysis
+ *
+ * How To Use:
+ * todo
+ * */
 
 namespace App\Services;
 
@@ -392,24 +398,29 @@ class JsonFileVectorStore
 
     protected function removeStopwords(string $text): string
     {
-        $stopwords = [
-            'the', 'a', 'an', 'and', 'but', 'if', 'or', 'because', 'as', 'until',
-            'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between',
-            'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to',
-            'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again',
-            'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why',
-            'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other',
-            'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than',
-            'too', 'very', 'can', 'will', 'just', 'don', 'should', 'now', 'what',
-            'is', 'am', 'are', 'was', 'were', 'be', 'been', 'being', 'has', 'have',
-            'had', 'do', 'does', 'did', 'having', 'he', 'she', 'it', 'they', 'them',
-            'his', 'her', 'its', 'their', 'my', 'your', 'our', 'we', 'you', 'who',
-            'whom', 'which', 'this', 'that', 'these', 'those', 'I', 'me', 'mine',
-            'yours', 'ours', 'himself', 'herself', 'itself', 'themselves'
+        $stopWords = [
+            'the', 'a', 'an', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at',
+            'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before',
+            'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over',
+            'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how',
+            'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor',
+            'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 'can', 'will', 'just', 'don',
+            'should', 'now', 'what', 'is', 'am', 'are', 'was', 'were', 'be', 'been', 'being', 'has',
+            'have', 'had', 'do', 'does', 'did', 'having', 'he', 'she', 'it', 'they', 'them', 'his',
+            'her', 'its', 'their', 'my', 'your', 'our', 'we', 'you', 'who', 'whom', 'which', 'this',
+            'that', 'these', 'those', 'I', 'me', 'mine', 'yours', 'ours', 'himself', 'herself', 'itself',
+            'themselves', 'aren\'t', 'can\'t', 'cannot', 'could', 'couldn\'t', 'didn\'t', 'doesn\'t',
+            'doing', 'don\'t', 'hadn\'t', 'hasn\'t', 'haven\'t', 'he\'d', 'he\'ll', 'he\'s', 'here\'s',
+            'hers', 'him', 'how\'s', 'i', 'i\'d', 'i\'ll', 'i\'m', 'i\'ve', 'isn\'t', 'it\'s', 'let\'s',
+            'mustn\'t', 'myself', 'ought', 'ourselves', 'she\'d', 'she\'ll', 'she\'s', 'shouldn\'t',
+            'that\'s', 'theirs', 'there\'s', 'they\'d', 'they\'ll', 'they\'re', 'they\'ve', 'wasn\'t',
+            'we\'d', 'we\'ll', 'we\'re', 'we\'ve', 'weren\'t', 'what\'s', 'when\'s', 'where\'s',
+            'who\'s', 'why\'s', 'won\'t', 'would', 'wouldn\'t', 'you\'d', 'you\'ll', 'you\'re',
+            'you\'ve', 'yourself', 'yourselves'
         ];
 
         $words = explode(' ', $text);
-        $filteredWords = array_diff($words, $stopwords);
+        $filteredWords = array_diff($words, $stopWords);
 
         return implode(' ', $filteredWords);
     }

@@ -21,7 +21,8 @@
         "pforret/pf-article-extractor": "^0.3.0",
         "smalot/pdfparser": "^2.11",
         "spatie/laravel-markdown": "^2.5",
-        "symfony/yaml": "^7.1"
+        "symfony/yaml": "^7.1",
+        "yooper/php-text-analysis": "^1.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
