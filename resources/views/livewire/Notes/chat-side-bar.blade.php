@@ -185,9 +185,9 @@
                                wire:model="userMessage"
                                x-ref="chatInput"
                                @keydown.enter="
-                               $wire.call('setMessage', $refs.chatInput.value);
-                               $refs.chatInput.disabled = true;
-                           "
+                                   $wire.call('setMessage', $refs.chatInput.value);
+                                   $refs.chatInput.disabled = true;
+                               "
                                {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
                                autofocus
                                autocomplete="off"
@@ -200,9 +200,9 @@
                         <button type="button"
                                 x-data x-tooltip.raw="Send Message"
                                 @click="
-                               $wire.call('setMessage', $refs.chatInput.value);
-                               $refs.chatInput.disabled = true;
-                           "
+                                   $wire.call('setMessage', $refs.chatInput.value);
+                                   $refs.chatInput.disabled = true;
+                                "
                                 class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                  xmlns="http://www.w3.org/2000/svg">
