@@ -207,7 +207,7 @@ function getMessages(array $messages): array
             $uniqueMessages[] = $formattedMessage; // allow all user messages
         } else {
             if (!in_array($formattedMessage, $uniqueMessages)) {
-                $uniqueMessages[] = $formattedMessage;
+                $uniqueMessages[] = htmlToText($formattedMessage);
             }
         }
 
@@ -229,6 +229,8 @@ function htmlToText($html, $removeWhiteSpace = true): string
 
     // Remove <related_question> tags including their contents
     $text = preg_replace('/<related_question>.*?<\/related_question>/is', '', $text);
+
+    $text = preg_replace('/Sources:.*(\n|$)/s', '', $text);
 
     // Replace <br> tags with newlines
     $text = preg_replace('/<br\s*\/?>/i', "\n", $text);

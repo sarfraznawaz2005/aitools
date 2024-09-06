@@ -269,9 +269,14 @@ class ChatBuddy extends Component
 
             $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
 
-            if (!in_array($formattedMessage, $uniqueMessages)) {
-                $uniqueMessages[] = htmlToText($formattedMessage);
+            if (!$message->is_ai) {
+                $uniqueMessages[] = $formattedMessage; // allow all user messages
+            } else {
+                if (!in_array($formattedMessage, $uniqueMessages)) {
+                    $uniqueMessages[] = htmlToText($formattedMessage);
+                }
             }
+
         }
 
         return $uniqueMessages;
