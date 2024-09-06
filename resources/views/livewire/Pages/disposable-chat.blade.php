@@ -46,12 +46,12 @@
 
             <!-- Header -->
             <div class="flex items-center w-full sticky top-0 bg-gray-50 py-3 px-2 rounded-lg">
-                <div class="flex-grow border-t mx-2 border-gray-300"></div>
+                <div class="flex-grow border-t mx-2 border-blue-400"></div>
                 <x-gradient-button wire:click="resetConversation">
                     <x-icons.delete class="size-4"/>
                     Reset Conversation
                 </x-gradient-button>
-                <div class="flex-grow border-t mx-2 border-gray-300"></div>
+                <div class="flex-grow border-t mx-2 border-purple-400"></div>
             </div>
 
             <!-- Chat content -->
