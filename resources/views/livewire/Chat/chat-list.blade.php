@@ -185,6 +185,13 @@
                                         <span x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
                                     </button>
                                 </div>
+                                <button type="button"
+                                        wire:click="$dispatch('startFoward', [{{$message->id}}])"
+                                        x-data x-tooltip.raw="Forward to another bot"
+                                        class="inline-flex items-center ml-3 mt-[-6px] text-sm rounded-full border border-transparent text-gray-500">
+                                    <x-icons.share
+                                        class="size-5 text-gray-400 hover:text-gray-600"/>
+                                </button>
                                 <div>
                                     <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
                                                       x-tooltip.raw="Delete"
@@ -192,13 +199,6 @@
                                         <x-icons.delete class="size-4 text-gray-400 hover:text-red-600"/>
                                     </x-confirm-dialog>
                                 </div>
-                                <button type="button"
-                                        wire:click="$dispatch('startFoward', [{{$message->id}}])"
-                                        x-data x-tooltip.raw="Forward to another bot"
-                                        class="inline-flex items-center ml-2 mr-1 text-sm rounded-full border border-transparent text-gray-500">
-                                    <x-icons.share
-                                        class="size-5 text-gray-400 hover:text-gray-600"/>
-                                </button>
                             </div>
                             <!-- End Button Group -->
                         </li>
@@ -250,11 +250,13 @@
                                                     x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
                                             </button>
 
-                                            <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
-                                                              x-tooltip.raw="Delete"
-                                                              class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                                <x-icons.delete class="size-4 text-gray-400 hover:text-red-600"/>
-                                            </x-confirm-dialog>
+                                            <button type="button"
+                                                    wire:click="$dispatch('startFoward', [{{$message->id}}])"
+                                                    x-data x-tooltip.raw="Forward to another bot"
+                                                    class="inline-flex items-center ml-2 mr-1 text-sm rounded-full border border-transparent text-gray-500">
+                                                <x-icons.share
+                                                    class="size-5 text-gray-400 hover:text-gray-600"/>
+                                            </button>
 
                                             @if($loop->last)
                                                 <button type="button"
@@ -264,15 +266,13 @@
                                                     <x-icons.refresh
                                                         class="size-5 text-gray-500 hover:text-gray-600"/>
                                                 </button>
-
-                                                <button type="button"
-                                                        wire:click="$dispatch('startFoward', [{{$message->id}}])"
-                                                        x-data x-tooltip.raw="Forward to another bot"
-                                                        class="inline-flex items-center ml-2 mr-1 text-sm rounded-full border border-transparent text-gray-500">
-                                                    <x-icons.share
-                                                        class="size-5 text-gray-400 hover:text-gray-600"/>
-                                                </button>
                                             @endif
+
+                                            <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
+                                                              x-tooltip.raw="Delete"
+                                                              class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
+                                                <x-icons.delete class="size-4 text-gray-400 hover:text-red-600"/>
+                                            </x-confirm-dialog>
                                         </div>
                                     </div>
                                     <!-- End Button Group -->
