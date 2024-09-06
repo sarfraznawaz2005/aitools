@@ -160,6 +160,10 @@
                             });
                          ">
 
+                    <template x-if="show">
+                        <div class="fixed inset-0 z-40"></div>
+                    </template>
+
                     <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col">
                         <div
                             wire:stream="aiStreamResponse"
