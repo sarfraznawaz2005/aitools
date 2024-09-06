@@ -151,6 +151,7 @@ EOF,
     assume sources, always extract from metadata.
 
     Sources Format:
+    [insert new line here]
     <small>Sources:</small>
     - <small>Source 1</small>
     - <small>Source 2</small>
@@ -203,6 +204,7 @@ EOF,
     metadata. Please always try to provide file names and page numbers if available in given context.
 
     Sources Format:
+    [insert new line here]
     <small>Sources: (example: Document1.pdf, Document2.pdf, pages: 1-5)</small>
 
     of below format if "pages" are not mentioned or available:
