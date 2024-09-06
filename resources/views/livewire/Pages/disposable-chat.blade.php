@@ -146,7 +146,7 @@
                     </div>
                 @endforeach
 
-                <div x-data="{show:false}"
+                <div class="inline-flex" x-data="{show:false}"
                      x-init="
                             $wire.on('goAhead', () => {
                                 $refs.chatInput.disabled = true;
@@ -177,9 +177,9 @@
         </div>
 
         <!-- Chat Input at the Bottom -->
-        <div class="flex justify-between items-center w-full px-4">
+        <div class="flex justify-between items-center w-full px-4 mt-2">
             <div
-                class="p-1 flex flex-col sm:flex-row bg-white items-center w-full border border-r-0 rounded-tr-none rounded-br-none border-gray-300 rounded-lg m-3 mr-0">
+                class="p-1 flex flex-col sm:flex-row bg-white items-center w-full border border-gray-300 rounded-lg mx-2 mb-3">
                 <div class="w-full sm:w-auto">
                     <livewire:general.model-selector for="{{App\Constants::QUICKCHAT_SELECTED_LLM_KEY}}"/>
                 </div>

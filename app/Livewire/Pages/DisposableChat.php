@@ -62,6 +62,9 @@ class DisposableChat extends Component
     #[On('getResponse')]
     public function getResponse(): void
     {
+        $this->resetValidation();
+        $this->resetErrorBag();
+
         if (trim($this->userMessage)) {
             // Add user message to conversation
             $this->conversation[] = [
