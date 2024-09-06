@@ -220,8 +220,10 @@ function sendStream($text, $sendCloseSignal = false): void
 
 function htmlToText($html, $removeWhiteSpace = true): string
 {
+    $text = str_ireplace('related questions:', '', $html);
+
     // Replace <br> tags with newlines
-    $text = preg_replace('/<br\s*\/?>/i', "\n", $html);
+    $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
 
     // Replace </p> tags with double newlines
     $text = preg_replace('/<\/p>/i', "\n\n", $text);
