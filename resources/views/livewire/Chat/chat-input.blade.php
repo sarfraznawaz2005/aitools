@@ -17,42 +17,42 @@
     </div>
 
     <!-- Input -->
-    <div class="flex w-full items-center" x-data="{
-        lastQuery: '',
-        adjustHeight() {
-            $nextTick(() => {
-                this.$refs.textarea.style.height = 'auto';
-                const lines = this.$refs.textarea.value.split('\n').length;
-                const lineHeight = parseInt(window.getComputedStyle(this.$refs.textarea).lineHeight);
-                const maxHeight = lineHeight * 5;
-                this.$refs.textarea.style.height = Math.min(this.$refs.textarea.scrollHeight, maxHeight) + 'px';
-            });
-        },
-        handleKeyDown(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                this.lastQuery = $wire.query;
-                $wire.save();
-            } else if (event.key === 'ArrowUp' && $wire.query === '') {
-                event.preventDefault();
-                $wire.query = this.lastQuery;
-                this.$nextTick(() => {
-                    this.$refs.textarea.selectionStart = this.$refs.textarea.selectionEnd = this.$refs.textarea.value.length;
-                });
-            }
-        },
-        init() {
-            this.$watch('$wire.query', (value) => {
-                this.adjustHeight();
-            });
+            <div class="flex w-full items-center" x-data="{
+                lastQuery: '',
+                adjustHeight() {
+                    $nextTick(() => {
+                        this.$refs.textarea.style.height = 'auto';
+                        const lines = this.$refs.textarea.value.split('\n').length;
+                        const lineHeight = parseInt(window.getComputedStyle(this.$refs.textarea).lineHeight);
+                        const maxHeight = lineHeight * 5;
+                        this.$refs.textarea.style.height = Math.min(this.$refs.textarea.scrollHeight, maxHeight) + 'px';
+                    });
+                },
+                handleKeyDown(event) {
+                    if (event.key === 'Enter' && !event.shiftKey) {
+                        event.preventDefault();
+                        this.lastQuery = $wire.query;
+                        $wire.save();
+                    } else if (event.key === 'ArrowUp' && $wire.query === '') {
+                        event.preventDefault();
+                        $wire.query = this.lastQuery;
+                        this.$nextTick(() => {
+                            this.$refs.textarea.selectionStart = this.$refs.textarea.selectionEnd = this.$refs.textarea.value.length;
+                        });
+                    }
+                },
+                init() {
+                    this.$watch('$wire.query', (value) => {
+                        this.adjustHeight();
+                    });
 
-            Livewire.on('focusInput', () => {
-                if (typeof this.$refs.textarea !== 'undefined' && this.$refs.textarea !== null) {
-                    this.$refs.textarea.focus();
+                    Livewire.on('focusInput', () => {
+                        if (typeof this.$refs.textarea !== 'undefined' && this.$refs.textarea !== null) {
+                            this.$refs.textarea.focus();
+                        }
+                    });
                 }
-            });
-        }
-    }"
+            }"
          @submit-success="lastQuery = $wire.query">
         <div
             class="flex w-full flex-col gap-1.5 rounded p-1 transition-colors bg-gray-200 dark:bg-token-main-surface-secondary">
