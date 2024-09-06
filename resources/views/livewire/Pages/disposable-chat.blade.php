@@ -10,10 +10,10 @@
                     }
                 },
                 scrollToBottom() {
-                    const chatContent = this.$refs.chatContent;
-                    if (chatContent) {
-                        chatContent.scrollTop = chatContent.scrollHeight;
-                    }
+                    window.scrollTo({
+                        top: document.body.scrollHeight + 10000,
+                        behavior: 'smooth'
+                    });
                 },
                 handleKeyDown(event) {
                     if (event.key === 'Enter' && !event.shiftKey) {
