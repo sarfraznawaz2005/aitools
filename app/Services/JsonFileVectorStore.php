@@ -1,10 +1,26 @@
 <?php
 /*
  * Requires: yooper/php-text-analysis
- *
- * How To Use:
- * todo
- * */
+
+    HOW TO USE:
+
+    $llm = new GeminiProvider($model->api_key, $model->model_name, ['maxOutputTokens' => 8192, 'temperature' => 1.0]);
+
+    $texts = [
+        [
+            'text' => 'Text 1',
+            'source' => 'Text 1 Source',
+        ],
+        [
+            'text' => 'Text 2',
+            'source' => 'Text 2 Source',
+        ],
+    ];
+
+    $searchService = JsonFileVectorStore::getInstance($llm, 2000);
+    return $searchService->searchTexts($texts, $query);
+
+ */
 
 namespace App\Services;
 
