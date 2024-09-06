@@ -95,9 +95,6 @@ class DisposableChat extends Component
             $messages = getMessages($this->conversation);
             $conversationHistory = implode("\n", $messages);
 
-            // add user's current question
-            //$conversationHistory .= "\nUSER:" . $userMessage;
-
             $prompt = makePromptQuickChat($userMessage, $conversationHistory, 2);
 
             $consolidatedResponse = '';
