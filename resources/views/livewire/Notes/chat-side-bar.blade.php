@@ -245,6 +245,40 @@
 
     <script>
         function setupSuggestedLinks() {
+            // Function to decode escaped HTML entities
+            function decodeHTMLEntities(text) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, "text/html");
+                return doc.documentElement.textContent;
+            }
+
+            // Function to convert both escaped and non-escaped related_question tags to links
+            function convertRelatedQuestionsToLinks() {
+                document.querySelectorAll('li').forEach(li => {
+                    // First, handle escaped related_question tags
+                    if (li.innerHTML.includes('&lt;related_question&gt;')) {
+                        const decodedHTML = decodeHTMLEntities(li.innerHTML);
+
+                        // Replace related_question tags in the decoded HTML
+                        const replacedHTML = decodedHTML.replace(/&lt;related_question&gt;/g, '<a class="ai-suggested-answer text-sm" href="#">')
+                            .replace(/&lt;\/related_question&gt;/g, '</a>');
+
+                        // Update the li element with the new HTML (converted links)
+                        li.innerHTML = replacedHTML;
+                    }
+
+                    // Then handle non-escaped related_question tags
+                    if (li.innerHTML.includes('<related_question>')) {
+                        // Replace non-escaped related_question tags directly
+                        const replacedHTML = li.innerHTML.replace(/<related_question>/g, '<a class="ai-suggested-answer text-sm" href="#">')
+                            .replace(/<\/related_question>/g, '</a>');
+
+                        // Update the li element with the new HTML (converted links)
+                        li.innerHTML = replacedHTML;
+                    }
+                });
+            }
+
             function attachLinkEventListeners() {
                 document.querySelectorAll('.ai-suggested-answer').forEach(link => {
                     link.removeEventListener('click', handleLinkClick); // Remove existing listener to avoid duplicates
@@ -257,13 +291,17 @@
                 Livewire.dispatch('suggestedAnswer', [e.target.textContent]);
             }
 
-            // Attach initial event listeners
+            // Convert related_question elements (escaped or not) to links initially
+            convertRelatedQuestionsToLinks();
+            // Attach initial event listeners to the links
             attachLinkEventListeners();
 
             // MutationObserver to detect changes in the DOM
             const observer = new MutationObserver((mutationsList) => {
                 for (const mutation of mutationsList) {
                     if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                        // Re-run the conversion and listener attachment when new nodes are added
+                        convertRelatedQuestionsToLinks();
                         attachLinkEventListeners();
                     }
                 }
@@ -275,5 +313,6 @@
 
         setupSuggestedLinks();
     </script>
+
 
 </div>

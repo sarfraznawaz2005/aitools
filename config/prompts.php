@@ -143,6 +143,7 @@ EOF,
     5. If the answer can be found in the context, provide specific details and explanations.
     6. If you need to make any assumptions or inferences, clearly state them as such.
     7. Please do not be sensitive to the user's current query, just answer from given context and conversation history.
+    8. Do reply to messages like "hi", "hello", "thanks" from your own knowledge base and only in this case.
 
     Please always try to extract Metadata from <sources></sources> tags and present it below in this format. Do not
     assume sources, always extract from metadata.
