@@ -238,9 +238,12 @@
             <!-- Chat content End -->
 
         </div>
+        @error('userMessage')
+        <div class="text-red-500 text-sm em p-1 flex justify-center items-center">{{ $message }}</div>
+        @enderror
 
         <!-- Chat Input at the Bottom -->
-        <div class="flex justify-between items-center w-full px-4 mt-2">
+        <div class="flex justify-between items-center w-full px-2 pt-3 sticky bottom-0 bg-gray-50">
             <div
                 class="p-1 flex flex-col sm:flex-row bg-white items-center w-full border border-gray-300 rounded-lg mx-2 mb-3">
                 <div class="w-full sm:w-auto">
@@ -280,9 +283,6 @@
                 </div>
             </div>
         </div>
-        @error('userMessage')
-        <div class="text-red-500 text-sm em p-1 flex justify-center items-center mt-[-14px]">{{ $message }}</div>
-        @enderror
 
     </div>
 
