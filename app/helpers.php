@@ -260,10 +260,12 @@ function openWindow(
     bool   $minimizable = true,
     bool   $maximizable = true,
     int    $width = 1280,
-    int    $height = 800
+    int    $height = 800,
+    string $title = ''
 ): PendingOpenWindow
 {
     return Window::open($id)
+        ->title(config('app.name') . ($title ? ' - ' . $title : ''))
         ->route($route, $routeParams)
         ->showDevTools(false)
         //->frameless()

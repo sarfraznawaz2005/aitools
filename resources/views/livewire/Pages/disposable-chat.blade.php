@@ -46,11 +46,14 @@
 
             <!-- Header -->
             <div class="flex items-center w-full sticky top-0 bg-gray-50 py-3 rounded-lg">
-                <div class="flex-grow border-t mx-1 border-gray-300"></div>
-                <span class="uppercase text-xs px-1 text-gray-500 text-center font-semibold">
-                        Quick Disposable Chat
-                    </span>
-                <div class="flex-grow border-t mx-1 border-gray-300"></div>
+                <div class="flex-grow border-t mx-2 border-gray-300"></div>
+                <button wire:click="resetConversation"
+                        text="Are you sure you want to delete all?"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-red-300 disabled:opacity-50 disabled:pointer-events-none">
+                    <x-icons.delete class="inline-block mt-[-3px]"/>
+                    Reset Conversation
+                </button>
+                <div class="flex-grow border-t mx-2 border-gray-300"></div>
             </div>
 
             <!-- Chat content -->
@@ -174,7 +177,6 @@
         </div>
 
         <!-- Chat Input at the Bottom -->
-
         <div class="flex justify-between items-center w-full px-4">
             <div
                 class="p-1 flex flex-col sm:flex-row bg-white items-center w-full border border-r-0 rounded-tr-none rounded-br-none border-gray-300 rounded-lg m-3 mr-0">
@@ -213,16 +215,6 @@
                         </svg>
                     </button>
                 </div>
-            </div>
-
-            <div
-                class="bg-gray-200 mr-4 border border-gray-300 rounded-lg pl-4 border-l-0 p-1.5 rounded-tl-none rounded-bl-none">
-                <x-confirm-dialog call="resetConversation"
-                                  x-data x-tooltip.raw="Reset Conversation"
-                                  text="Are you sure you want reset the conversation?"
-                                  class="inline-flex mr-2 mt-2 items-center text-sm border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
-                    <x-icons.delete class="w-5 h-5 text-gray-400 hover:text-red-600"/>
-                </x-confirm-dialog>
             </div>
         </div>
         @error('userMessage')
