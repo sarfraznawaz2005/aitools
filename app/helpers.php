@@ -1,5 +1,6 @@
 <?php
 /*
+ * jsonvectorstore for document bot
  * https://github.com/Doriandarko/gemini-ui-to-code
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
  * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
