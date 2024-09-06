@@ -14,6 +14,9 @@ use App\LLM\GeminiProvider;
 use App\LLM\LlmProvider;
 use App\LLM\OpenAiProvider;
 use Exception;
+use TextAnalysis\Analysis\FreqDist;
+use TextAnalysis\Documents\TokensDocument;
+use TextAnalysis\Exceptions\InvalidParameterSizeException;
 use TextAnalysis\Stemmers\PorterStemmer;
 use TextAnalysis\Tokenizers\GeneralTokenizer;
 
@@ -48,6 +51,7 @@ class JsonFileVectorStore
      */
     public function searchTexts(array $notes, string $query): array
     {
+        // full semantic search
         $results = $this->performCosineSimilaritySearch($notes, $query);
 
         if (!empty($results)) {
@@ -58,6 +62,18 @@ class JsonFileVectorStore
             return $this->getTopResults($results);
         }
 
+        // partial semantic search
+        $results = $this->performTFIDFSearch($notes, $query);
+
+        if (!empty($results)) {
+            if (app()->environment('local')) {
+                info('Resutls found via TFIDF similarity');
+            }
+
+            return $this->getTopResults($results);
+        }
+
+        // direct text search
         $results = $this->performTextSearch($query);
 
         if (!empty($results)) {
@@ -90,6 +106,53 @@ class JsonFileVectorStore
         return $results;
     }
 
+    protected function performTFIDFSearch(array $texts, string $query): array
+    {
+        $texts = array_map(function ($doc) {
+            return $doc['text'];
+        }, $texts);
+
+        $tokenizedDocs = array_map(function ($doc) {
+            $cleanedText = $this->getCleanedText($doc, true);
+
+            return new TokensDocument(explode(' ', $cleanedText));
+        }, $texts);
+
+        // Clean and tokenize the query
+        $cleanedQuery = $this->getCleanedText($query, true);
+        $tokenizedQuery = new TokensDocument(explode(' ', $cleanedQuery));
+
+        $totalDocs = count($tokenizedDocs);
+        $docDF = $this->calculateDF($tokenizedDocs); // Document Frequencies
+
+        $docVectors = [];
+        foreach ($tokenizedDocs as $doc) {
+            $tf = $this->calculateTF($doc->getDocumentData());
+            $docVectors[] = $this->calculateTFIDF($tf, $docDF, $totalDocs);
+        }
+
+        $queryTF = $this->calculateTF($tokenizedQuery->getDocumentData());
+        $queryVector = $this->calculateTFIDF($queryTF, $docDF, $totalDocs);
+
+        $rankedResults = [];
+        foreach ($docVectors as $key => $docVector) {
+            $similarity = $this->cosineSimilarity($docVector, $queryVector);
+
+            $rankedResults[] = [
+                'similarity' => $similarity,
+                'index' => $key,
+                'matchedChunk' => ['text' => $this->getCleanedText($texts[$key]), 'metadata' => $this->textSplits[$key]['metadata']],
+            ];
+        }
+
+        usort($rankedResults, function ($a, $b) {
+            return $b['similarity'] <=> $a['similarity'];
+        });
+
+        // Only return results with similarity > 0
+        return array_filter($rankedResults, fn($item) => $item['similarity'] > 0);
+    }
+
     /**
      * @throws Exception
      */
@@ -116,6 +179,46 @@ class JsonFileVectorStore
         usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
 
         return $results;
+    }
+
+    protected function calculateTF($tokens): array
+    {
+        try {
+            $freqDist = new FreqDist($tokens);
+        } catch (InvalidParameterSizeException $e) {
+            return $tokens;
+        }
+
+        return $freqDist->getKeyValuesByFrequency();
+    }
+
+    protected function calculateDF($documents): array
+    {
+        $df = [];
+
+        foreach ($documents as $tokens) {
+            $uniqueTokens = array_unique($tokens->getDocumentData());
+            foreach ($uniqueTokens as $token) {
+                if (!isset($df[$token])) {
+                    $df[$token] = 0;
+                }
+                $df[$token]++;
+            }
+        }
+
+        return $df;
+    }
+
+    protected function calculateTFIDF($tf, $df, $totalDocs): array
+    {
+        $tfidf = [];
+
+        foreach ($tf as $term => $count) {
+            $idf = log($totalDocs / ($df[$term] ?? 1)); // Inverse Document Frequency
+            $tfidf[$term] = $count * $idf;
+        }
+
+        return $tfidf;
     }
 
     protected function getTopResults(array $results): array
@@ -323,19 +426,27 @@ class JsonFileVectorStore
         return $maxLength === 0 ? $this->getSimiliarityThreashold() : 1 - ($distance / $maxLength);
     }
 
-    protected function cosineSimilarity(array $u, array $v): float
+    protected function cosineSimilarity(array $vecA, array $vecB): float
     {
-        $dotProduct = 0.0;
-        $uLength = 0.0;
-        $vLength = 0.0;
+        $dotProduct = 0;
+        $magnitudeA = 0;
+        $magnitudeB = 0;
 
-        foreach ($u as $i => $value) {
-            $dotProduct += $value * $v[$i];
-            $uLength += $value * $value;
-            $vLength += $v[$i] * $v[$i];
+        foreach ($vecA as $key => $valueA) {
+            $valueB = $vecB[$key] ?? 0;
+            $dotProduct += $valueA * $valueB;
+            $magnitudeA += $valueA * $valueA;
+            $magnitudeB += $valueB * $valueB;
         }
 
-        return $dotProduct / (sqrt($uLength) * sqrt($vLength));
+        $magnitudeA = sqrt($magnitudeA);
+        $magnitudeB = sqrt($magnitudeB);
+
+        if ($magnitudeA * $magnitudeB == 0) {
+            return 0;
+        }
+
+        return $dotProduct / ($magnitudeA * $magnitudeB);
     }
 
     protected function getEmbdeddingBatchSize(): string
