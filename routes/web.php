@@ -2,6 +2,7 @@
 
 use App\Livewire\Notes\NotesListing;
 use App\Livewire\Pages\ChatBuddy;
+use App\Livewire\Pages\DisposableChat;
 use App\Livewire\Pages\NoteWindow;
 use App\Livewire\Pages\SmartNotes;
 use App\Livewire\Pages\TextStyler;
@@ -36,3 +37,6 @@ Route::get('text-styler/chat', [TextStyler::class, 'chat']);
 
 Route::get('tips-notifier', TipsNotifier::class)->name('tips-notifier');
 Route::get('tip-window/{id}', TipWindow::class)->name('tip-window');
+
+Route::get('quick-chat', DisposableChat::class)->name('quick-chat');
+

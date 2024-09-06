@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\QuickChatClicked;
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Facades\Settings;
@@ -32,7 +33,13 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->minWidth(300)
             ->height($height)
             ->maxHeight($height)
-            ->minHeight(400);
+            ->minHeight(400)
+            ->withContextMenu(
+                Menu::new()
+                    ->event(QuickChatClicked::class, 'Quick Chat')
+                    ->separator()
+                    ->quit()
+            );
 
         //openWindow('main', 'home');
     }

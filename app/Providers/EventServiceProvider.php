@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\OnNoteNotificationShown;
 use App\Events\OnTipNotificationShown;
+use App\Events\QuickChatClicked;
 use Exception;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -18,6 +19,10 @@ class EventServiceProvider extends ServiceProvider
     {
         Event::listen(WindowMinimized::class, function () {
             //
+        });
+
+        Event::listen(QuickChatClicked::class, function () {
+            openWindow('quick-chat', 'quick-chat');
         });
 
         Event::listen(OnTipNotificationShown::class, function ($event) {
