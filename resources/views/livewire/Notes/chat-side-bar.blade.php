@@ -254,7 +254,7 @@
 
             // Function to convert both escaped and non-escaped related_question tags to links
             function convertRelatedQuestionsToLinks() {
-                document.querySelectorAll('li').forEach(li => {
+                document.querySelectorAll('.note-message li').forEach(li => {
                     // First, handle escaped related_question tags
                     if (li.innerHTML.includes('&lt;related_question&gt;')) {
                         const decodedHTML = decodeHTMLEntities(li.innerHTML);
@@ -309,6 +309,5 @@
 
         setupSuggestedLinks();
     </script>
-
 
 </div>
