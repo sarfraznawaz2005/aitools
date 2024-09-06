@@ -47,12 +47,10 @@
             <!-- Header -->
             <div class="flex items-center w-full sticky top-0 bg-gray-50 py-3 px-2 rounded-lg">
                 <div class="flex-grow border-t mx-2 border-gray-300"></div>
-                <button wire:click="resetConversation"
-                        text="Are you sure you want to delete all?"
-                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-red-300 disabled:opacity-50 disabled:pointer-events-none">
-                    <x-icons.delete class="inline-block mt-[-3px]"/>
+                <x-gradient-button wire:click="resetConversation">
+                    <x-icons.delete class="size-4"/>
                     Reset Conversation
-                </button>
+                </x-gradient-button>
                 <div class="flex-grow border-t mx-2 border-gray-300"></div>
             </div>
 
