@@ -1,5 +1,14 @@
 <div class="py-16 px-4 sm:px-6 md:px-8 chatlist mx-auto max-w-7xl w-full">
 
+    <script>
+        function scrollToBottom() {
+            window.scrollTo({
+                top: document.body.scrollHeight + 10000,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
     <x-flash/>
 
     <ul class="space-y-5 w-full max-w-none">
@@ -44,23 +53,23 @@
 
                 @if (count($this->messages) > 1 && isset($conversation) && $conversation)
 
-                        <script>
-                            function scrollToBottom() {
-                                window.scrollTo({
-                                    top: document.body.scrollHeight + 10000,
-                                    behavior: 'smooth'
-                                });
-                            }
-                        </script>
+                    <script>
+                        function scrollToBottom() {
+                            window.scrollTo({
+                                top: document.body.scrollHeight + 10000,
+                                behavior: 'smooth'
+                            });
+                        }
+                    </script>
 
-                        <li>
-                            <div class="flex justify-center align-center">
+                    <li>
+                        <div class="flex justify-center align-center">
                     <span
                         class="whitespace-nowrap inline-block py-1.5 px-3 rounded-lg border border-gray-200 font-medium bg-gray-100 text-gray-500 text-xs sm:text-sm md:text-base lg:text-base">
                         📅 Conversation created {{$conversation->created_at->diffForHumans()}}
                     </span>
-                            </div>
-                        </li>
+                        </div>
+                    </li>
 
                     <li class="flex justify-center ignore-mutation">
                         <div class="flex justify-end w-full fixed top-16 right-10 gap-x-2">
@@ -237,7 +246,8 @@
                                                     @click="copy"
                                                     class="ignore-mutation inline-flex items-center text-sm rounded-full border border-transparent text-gray-500">
                                                 <x-icons.copy class="hover:text-gray-600"/>
-                                                <span x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
+                                                <span
+                                                    x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
                                             </button>
 
                                             <x-confirm-dialog call="deleteMessage({{$message->id}})" x-data
@@ -395,7 +405,38 @@
     </script>
 
     <script>
+
         function setupSuggestedLinks() {
+            // Function to decode escaped HTML entities
+            function decodeHTMLEntities(text) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, "text/html");
+                return doc.documentElement.textContent;
+            }
+
+            // Function to convert both escaped and non-escaped related_question tags to links
+            function convertRelatedQuestionsToLinks() {
+                document.querySelectorAll('li').forEach(li => {
+                    // First, handle escaped related_question tags
+                    if (li.innerHTML.includes('&lt;related_question&gt;')) {
+                        const decodedHTML = decodeHTMLEntities(li.innerHTML);
+
+                        // Replace related_question tags in the decoded HTML
+                        // Update the li element with the new HTML (converted links)
+                        li.innerHTML = decodedHTML.replace(/&lt;related_question&gt;/g, '<a class="ai-suggested-answer block text-sm" href="#">')
+                            .replace(/&lt;\/related_question&gt;/g, '</a>');
+                    }
+
+                    // Then handle non-escaped related_question tags
+                    if (li.innerHTML.includes('<related_question>')) {
+                        // Replace non-escaped related_question tags directly
+                        // Update the li element with the new HTML (converted links)
+                        li.innerHTML = li.innerHTML.replace(/<related_question>/g, '<a class="ai-suggested-answer block text-sm" href="#">')
+                            .replace(/<\/related_question>/g, '</a>');
+                    }
+                });
+            }
+
             function attachLinkEventListeners() {
                 document.querySelectorAll('.ai-suggested-answer').forEach(link => {
                     link.removeEventListener('click', handleLinkClick); // Remove existing listener to avoid duplicates
@@ -408,20 +449,24 @@
                 Livewire.dispatch('suggestedAnswerClicked', [e.target.textContent]);
             }
 
-            // Attach initial event listeners
+            // Convert related_question elements (escaped or not) to links initially
+            convertRelatedQuestionsToLinks();
+            // Attach initial event listeners to the links
             attachLinkEventListeners();
 
             // MutationObserver to detect changes in the DOM
             const observer = new MutationObserver((mutationsList) => {
                 for (const mutation of mutationsList) {
                     if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                        // Re-run the conversion and listener attachment when new nodes are added
+                        convertRelatedQuestionsToLinks();
                         attachLinkEventListeners();
                     }
                 }
             });
 
             // Start observing the document body for changes
-            observer.observe(document.body, { childList: true, subtree: true });
+            observer.observe(document.body, {childList: true, subtree: true});
         }
 
         setupSuggestedLinks();

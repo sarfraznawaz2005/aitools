@@ -105,6 +105,8 @@ EOF,
 
     <small>Related Questions:</small>
 
+    Please always provide related questions in markdown list format as shown below:
+
     - <related_question>Question 1</related_question>
     - <related_question>Question 2</related_question>
     - <related_question>Question 3</related_question>
@@ -233,7 +235,7 @@ EOF,
 
     <small>Related Questions:</small>
 
-    Please always provide hyperlinks for the following related questions:
+    Please always provide related questions in markdown list format as shown below:
 
     - <related_question>Question 1</related_question>
     - <related_question>Question 2</related_question>

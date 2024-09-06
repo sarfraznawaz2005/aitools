@@ -260,21 +260,17 @@
                         const decodedHTML = decodeHTMLEntities(li.innerHTML);
 
                         // Replace related_question tags in the decoded HTML
-                        const replacedHTML = decodedHTML.replace(/&lt;related_question&gt;/g, '<a class="ai-suggested-answer text-sm" href="#">')
-                            .replace(/&lt;\/related_question&gt;/g, '</a>');
-
                         // Update the li element with the new HTML (converted links)
-                        li.innerHTML = replacedHTML;
+                        li.innerHTML = decodedHTML.replace(/&lt;related_question&gt;/g, '<a class="ai-suggested-answer text-blue-500 hover:text-blue-700 cursor-pointer block text-sm" href="#">')
+                            .replace(/&lt;\/related_question&gt;/g, '</a>');
                     }
 
                     // Then handle non-escaped related_question tags
                     if (li.innerHTML.includes('<related_question>')) {
                         // Replace non-escaped related_question tags directly
-                        const replacedHTML = li.innerHTML.replace(/<related_question>/g, '<a class="ai-suggested-answer text-sm" href="#">')
-                            .replace(/<\/related_question>/g, '</a>');
-
                         // Update the li element with the new HTML (converted links)
-                        li.innerHTML = replacedHTML;
+                        li.innerHTML = li.innerHTML.replace(/<related_question>/g, '<a class="ai-suggested-answer block text-blue-500 hover:text-blue-700 cursor-pointer text-sm" href="#">')
+                            .replace(/<\/related_question>/g, '</a>');
                     }
                 });
             }
