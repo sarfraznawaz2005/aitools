@@ -14,6 +14,8 @@ use App\LLM\GeminiProvider;
 use App\LLM\LlmProvider;
 use App\LLM\OpenAiProvider;
 use Exception;
+use TextAnalysis\Stemmers\PorterStemmer;
+use TextAnalysis\Tokenizers\GeneralTokenizer;
 
 class JsonFileVectorStore
 {
@@ -354,9 +356,7 @@ class JsonFileVectorStore
 
     protected function getCleanedText(string $text, bool $removeStopWords = false): string
     {
-        $text = strtolower($text);
-        $text = strip_tags($text);
-        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5);
+        $text = strtolower(strip_tags(html_entity_decode($text, ENT_QUOTES | ENT_HTML5)));
 
         // we mean literal stings here not actual new lines, so do not use " characters
         $text = str_replace(['\n', '\r', '\r\n'], ' ', $text);
@@ -389,11 +389,21 @@ class JsonFileVectorStore
             $text
         );
 
+        // Tokenize text
+        $tokenizer = new GeneralTokenizer();
+        $tokens = $tokenizer->tokenize($text);
+
         if ($removeStopWords) {
-            $text = $this->removeStopwords($text);
+            $text = implode(' ', $tokens); // Join tokens to remove stopwords
+            $text = $this->removeStopwords($text); // Use your custom stopword removal function
+            $tokens = explode(' ', $text); // Tokenize again
         }
 
-        return trim($text);
+        // Apply stemming
+        $stemmer = new PorterStemmer();
+        $tokens = array_map([$stemmer, 'stem'], $tokens);
+
+        return implode(' ', $tokens);
     }
 
     protected function removeStopwords(string $text): string

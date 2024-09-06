@@ -65,7 +65,7 @@ Artisan::command('test', function () {
 //    echo $title;
 
 
-    $jsonResults = searchWithJsonFileVectorStore('tell me about ipsum');
+    $jsonResults = searchWithJsonFileVectorStore('what is ipsum');
     dump($jsonResults);
 
     $jsonResults = searchWithJsonFileVectorStore('what is my gmail password?');
