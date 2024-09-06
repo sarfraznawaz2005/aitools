@@ -1,13 +1,12 @@
 <?php
 /*
- * Implement JsonFileVectorStore for Notes and Document Bots.
  * quick temp chat
- * related questions broken html sometimes, should use strucutred output machanism (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/JSON_mode_REST.ipynb)
  * https://github.com/Doriandarko/gemini-ui-to-code
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
  * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
  * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
  * Setup proper roles when prompting AI? (https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/System_instructions_REST.ipynb)
+ * json output -  (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/JSON_mode_REST.ipynb)
  * empty title on icon hover
  * setup updator
  * GraphRAG

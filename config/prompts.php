@@ -105,11 +105,9 @@ EOF,
 
     <small>Related Questions:</small>
 
-    Please always provide hyperlinks for the following related questions:
-
-    - <a href="#" class="ai-suggested-answer text-sm">Question 1</a>
-    - <a href="#" class="ai-suggested-answer text-sm">Question 2</a>
-    - <a href="#" class="ai-suggested-answer text-sm">Question 3</a>
+    - <related_question>Question 1</related_question>
+    - <related_question>Question 2</related_question>
+    - <related_question>Question 3</related_question>
 
     EOF,
 
@@ -144,6 +142,7 @@ EOF,
     4. Ensure your answer is clear, concise, and directly addresses the query.
     5. If the answer can be found in the context, provide specific details and explanations.
     6. If you need to make any assumptions or inferences, clearly state them as such.
+    7. Please do not be sensitive to the user's current query, just answer from given context and conversation history.
 
     Please always try to extract Metadata from <sources></sources> tags and present it below in this format. Do not
     assume sources, always extract from metadata.
@@ -235,9 +234,9 @@ EOF,
 
     Please always provide hyperlinks for the following related questions:
 
-    - <a href="#" class="ai-suggested-answer text-sm">Question 1</a>
-    - <a href="#" class="ai-suggested-answer text-sm">Question 2</a>
-    - <a href="#" class="ai-suggested-answer text-sm">Question 3</a>
+    - <related_question>Question 1</related_question>
+    - <related_question>Question 2</related_question>
+    - <related_question>Question 3</related_question>
 
     4. Strictly follow below guidelines for related questions:
         - Build question solely from the context and conversation history provided.
