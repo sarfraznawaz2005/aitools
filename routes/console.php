@@ -71,7 +71,7 @@ Artisan::command('test', function () {
     $jsonResults = searchWithJsonFileVectorStore('what is my gmail password?');
     dump($jsonResults);
 
-    $jsonResults = searchWithJsonFileVectorStore('taylor otwell with laravel team');
+    $jsonResults = searchWithJsonFileVectorStore('who is taylor otwell?');
     dump($jsonResults);
 });
 

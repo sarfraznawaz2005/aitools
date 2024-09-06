@@ -5,7 +5,7 @@ namespace App\Livewire\Notes;
 use App\Constants;
 use App\Models\Note;
 use App\Models\NoteFolder;
-use App\Services\NotesSearchService;
+use App\Services\JsonFileVectorStore;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
@@ -80,7 +80,7 @@ class ChatSideBar extends Component
 
         try {
 
-            $searchService = NotesSearchService::getInstance($llm, 2000);
+            $searchService = JsonFileVectorStore::getInstance($llm, 'notes.json', 2000);
             $results = $searchService->searchTexts($notes, $userMessage);
             //dd($results);
 
@@ -94,26 +94,10 @@ class ChatSideBar extends Component
             }
 
             $context = '';
-
+            
             foreach ($results as $result) {
                 $text = $result['matchedChunk']['text'];
-
-                // Collect unique sources
-                $sources = [];
-                foreach ($result['matchedChunk']['metadata'] as $metadata) {
-                    $title = $metadata['title'];
-                    $source = $metadata['source'];
-                    $sources[$title] = $source; // Use title as the key to ensure uniqueness
-                }
-
-                $formattedSources = [];
-                foreach ($sources as $title => $source) {
-                    $formattedSources[] = "'$title' ($source)";
-                }
-
-                $metaDataString = 'Sources: ' . implode(', ', $formattedSources);
-
-                $context .= $text . "\n\n<sources>" . $metaDataString . "</sources>\n\n";
+                $context .= $text . "\n\n<sources>" . $result['matchedChunk']['metadata'] . "</sources>\n\n";
             }
 
             $messages = $this->getMessages();
@@ -134,7 +118,8 @@ class ChatSideBar extends Component
 
             return processMarkdownToHtml($consolidatedResponse);
         } catch (Exception $e) {
-            $error = '<span class="text-red-600 text-xs">Oops! Failed to get a response due to some error, please try again.' . ' ' . $e->getMessage() . '</span>';
+            $message = $e->getMessage() . ' on line ' . $e->getLine() . ' in ' . $e->getFile();
+            $error = '<span class="text-red-600 text-xs">Oops! Failed to get a response due to some error, please try again, error: ' . $message . '</span>';
 
             $this->stream(
                 to: 'aiStreamResponse',
@@ -196,8 +181,8 @@ class ChatSideBar extends Component
             return [
                 'id' => $note->id,
                 'title' => $note->title,
-                'content' => $note->content,
-                'folder' => $note->folder->name,
+                'text' => $note->content,
+                'source' => "$note->title (" . $note->folder->name . ")",
             ];
         })->toArray();
     }

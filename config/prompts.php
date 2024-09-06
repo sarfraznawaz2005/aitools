@@ -150,9 +150,9 @@ EOF,
 
     Sources Format:
     <small>Sources:</small>
-    - <span class="text-xs source">Source 1 with 'title' and (folder)</span>
-    - <span class="text-xs source">Source 2 with 'title' and (folder)</span>
-    - <span class="text-xs source">Source 3 with 'title' and (folder)</span>
+    - <small>Source 1</small>
+    - <small>Source 2</small>
+    - <small>Source 3</small>
 
     Do not mention sources if not available.
 
@@ -201,11 +201,11 @@ EOF,
     metadata. Please always try to provide file names and page numbers if available in given context.
 
     Sources Format:
-    <span class="text-xs">Sources: (example: Document1.pdf, Document2.pdf, pages: 1-5)</span>
+    <small>Sources: (example: Document1.pdf, Document2.pdf, pages: 1-5)</small>
 
     of below format if "pages" are not mentioned or available:
 
-    <span class="text-xs">Sources: (example: Document1.txt, Document2.txt)</span>
+    <small>Sources: (example: Document1.txt, Document2.txt)</small>
 
     Use <small></small> tags for sources.
 
