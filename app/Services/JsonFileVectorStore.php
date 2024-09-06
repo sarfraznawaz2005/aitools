@@ -206,7 +206,7 @@ class JsonFileVectorStore
     {
         try {
             $freqDist = new FreqDist($tokens);
-        } catch (InvalidParameterSizeException $e) {
+        } catch (InvalidParameterSizeException) {
             return $tokens;
         }
 

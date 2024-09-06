@@ -255,6 +255,7 @@ EOF,
         - Don't build question from the user's previous queries.
         - Don't build question that are present in conversation history.
         - When building the questions, assume you are the user, not the AI assistant.
+        - Do not use first person question such as ones including "I" like "Can I do this?".
 
     EOF,
 

@@ -37,6 +37,13 @@ class DisposableChat extends Component
         $this->dispatch('goAhead');
     }
 
+    public function regenerate(int $index): void
+    {
+        unset($this->conversation[$index]);
+
+        $this->dispatch('goAhead');
+    }
+
     public function setMessage(string $message): void
     {
         $this->userMessage = $message;
@@ -55,12 +62,14 @@ class DisposableChat extends Component
     #[On('getResponse')]
     public function getResponse(): void
     {
-        // Add user message to conversation
-        $this->conversation[] = [
-            'role' => 'user',
-            'content' => $this->userMessage,
-            'timestamp' => time(),
-        ];
+        if (trim($this->userMessage)) {
+            // Add user message to conversation
+            $this->conversation[] = [
+                'role' => 'user',
+                'content' => $this->userMessage,
+                'timestamp' => time(),
+            ];
+        }
 
         $aiResponse = $this->getAIResponse($this->userMessage);
 
@@ -87,7 +96,7 @@ class DisposableChat extends Component
             $conversationHistory = implode("\n", $messages);
 
             // add user's current question
-            $conversationHistory .= "\nUSER:" . $userMessage;
+            //$conversationHistory .= "\nUSER:" . $userMessage;
 
             $prompt = makePromptQuickChat($userMessage, $conversationHistory, 2);
 

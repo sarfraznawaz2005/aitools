@@ -175,9 +175,8 @@ function getMessages(array $messages): array
 {
     $uniqueMessages = [];
 
-    // Sort the array by timestamp in descending order
     usort($messages, function ($a, $b) {
-        return $b['timestamp'] - $a['timestamp'];
+        return $a['timestamp'] - $b['timestamp'];
     });
 
     // Remove duplicates and empty content entries, and filter by role and content
