@@ -81,7 +81,7 @@ function searchWithJsonFileVectorStore($query): array
 
     $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 //    $llm = new OpenAiProvider(
-//        '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',
+//        xxxxxxxxxxxxxxxxxxxxxxxxxxxx,
 //        'gpt-4o-mini'
 //    );
 
