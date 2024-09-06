@@ -19,10 +19,9 @@
         }
     }"
     class="inline"
-    {{ $attributes }}
 >
     <!-- Trigger Button -->
-    <button @click="openDialog">
+    <button @click="openDialog" {{ $attributes->merge(['class' => '']) }}>
         {{ $slot }}
     </button>
 
@@ -44,7 +43,8 @@
                     @click="closeDialog"
                     class="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700"
                 >
-                    <x-icons.ok class="size-4 inline-block"/> Delete
+                    <x-icons.ok class="size-4 inline-block"/>
+                    Delete
                 </button>
             </div>
         </div>
