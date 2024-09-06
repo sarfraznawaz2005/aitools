@@ -139,7 +139,7 @@ class ChatList extends Component
     {
         $filename = 'chat-' . strtolower(Str::slug($this->conversation->title)) . '.' . $format;
 
-        $content = '<div style="margin:50px;">';
+        $content = '<meta charset="utf-8"><div style="margin:50px;">';
         $content .= '<div align="center"><h2 style="margin-bottom: 0">Conversation Name: ' . $this->conversation->title . '</h2></div><br>';
         $content .= '<div align="center"><strong>Created On: ' . $this->conversation->created_at . '</strong></div><br>';
 
