@@ -74,7 +74,7 @@ class ChatBuddy extends Component
 
                 $latestMessages = $this->getLatestMessages($conversation);
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
-                $conversationHistory = implode("\n", $uniqueMessages);
+                $conversationHistory = implode("\n", array_map(fn($message) => htmlToText($message), $uniqueMessages));
 
                 // add user's current question
                 $conversationHistory .= "\nUSER:" . $userQuery->body;
@@ -199,7 +199,7 @@ class ChatBuddy extends Component
                 $attachedFilesCount = count(array_map(fn($file) => basename($file), $files));
                 $latestMessages = $this->getLatestMessages($conversation);
                 $uniqueMessages = $this->getUniqueMessages($latestMessages, $userQuery);
-                $conversationHistory = implode("\n", $uniqueMessages);
+                $conversationHistory = implode("\n", array_map(fn($message) => htmlToText($message), $uniqueMessages));
 
                 $info = "You have been provided below context and contents/details from $attachedFilesCount files/documents named $attachedFiles.\n";
                 $prompt = makePromoptForDocumentBot($conversation->bot, $info, $context, $userQuery->body, $conversationHistory);

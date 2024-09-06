@@ -104,7 +104,7 @@ class ChatSideBar extends Component
             }
 
             $messages = getMessages($this->conversation);
-            $conversationHistory = implode("\n", $messages);
+            $conversationHistory = implode("\n", array_map(fn($message) => htmlToText($message), $messages));
 
             $prompt = makePromoptForNotes($context, $userMessage, $conversationHistory);
 

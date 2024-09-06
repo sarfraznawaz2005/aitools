@@ -98,7 +98,7 @@ class DisposableChat extends Component
         try {
 
             $messages = getMessages($this->conversation);
-            $conversationHistory = implode("\n", $messages);
+            $conversationHistory = implode("\n", array_map(fn($message) => htmlToText($message), $messages));
 
             $prompt = makePromptQuickChat($userMessage, $conversationHistory, 2);
 
