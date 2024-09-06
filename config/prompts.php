@@ -105,6 +105,7 @@ EOF,
 
     [insert new line here]
     <small>Related Questions:</small>
+    [insert new line here]
 
     Please ensure to always provide related questions using <related_question></related_question> tags in markdown list
     format as shown below:
@@ -239,6 +240,7 @@ EOF,
 
     [insert new line here]
     <small>Related Questions:</small>
+    [insert new line here]
 
     Please ensure to always provide related questions using <related_question></related_question> tags in markdown list
     format as shown below:
