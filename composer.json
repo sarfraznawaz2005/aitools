@@ -17,7 +17,7 @@
         "laravel/framework": "^11.9",
         "livewire/livewire": "^3.5",
         "lorisleiva/cron-translator": "^0.4.5",
-        "nativephp/electron": "^0.6.5",
+        "nativephp/electron": "^0.7.1",
         "pforret/pf-article-extractor": "^0.3.0",
         "smalot/pdfparser": "^2.11",
         "spatie/laravel-markdown": "^2.5",
