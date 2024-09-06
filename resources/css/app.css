@@ -140,6 +140,10 @@
     list-style: square;
 }
 
+.note-message a, .quick-message a, .aibot-message-content a, .note-message ul, .quick-message ul, .aibot-message-content ul  {
+    display: block;
+}
+
 .chatlist ul li:last-child {
     padding-bottom: 2rem !important;
 }
