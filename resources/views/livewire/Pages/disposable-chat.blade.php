@@ -89,16 +89,6 @@
                                     </button>
                                 </div>
 
-                                @if($loop->last)
-                                <button type="button"
-                                        wire:click="regenerate({{$index}})"
-                                        x-data x-tooltip.raw="Regenerate"
-                                        class="inline-flex items-center ml-2 text-sm rounded-full border border-transparent text-gray-500">
-                                    <x-icons.refresh
-                                        class="size-5 text-gray-500 hover:text-gray-600"/>
-                                </button>
-                                @endif
-
                                 <div>
                                     <x-confirm-dialog call="deleteMessage({{$index}})" x-data
                                                       x-tooltip.raw="Delete"
@@ -128,6 +118,17 @@
                                             x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : ''"></span>
                                     </button>
                                 </div>
+
+                                @if($loop->last)
+                                    <button type="button"
+                                            wire:click="regenerate({{$index}})"
+                                            x-data x-tooltip.raw="Regenerate"
+                                            class="inline-flex items-center ml-3 mt-[-4px] text-sm rounded-full border border-transparent text-gray-500">
+                                        <x-icons.refresh
+                                            class="size-5 text-gray-500 hover:text-gray-600"/>
+                                    </button>
+                                @endif
+
                                 <div>
                                     <x-confirm-dialog call="deleteMessage({{$index}})" x-data
                                                       x-tooltip.raw="Delete"
