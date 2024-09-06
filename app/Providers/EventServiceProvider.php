@@ -22,7 +22,7 @@ class EventServiceProvider extends ServiceProvider
         });
 
         Event::listen(QuickChatClicked::class, function () {
-            openWindow('quick-chat', 'quick-chat', [], true, true, true, true, 800, 600);
+            openWindow('quick-chat', 'quick-chat', [], true, true, true, false, 800, 600);
         });
 
         Event::listen(OnTipNotificationShown::class, function ($event) {
