@@ -7,11 +7,13 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DisposableChat extends Component
 {
@@ -141,5 +143,54 @@ class DisposableChat extends Component
         $this->conversation = [];
 
         $this->dispatch('focusInput');
+    }
+
+    public function export($format): StreamedResponse
+    {
+        $filename = 'quick-chat-export' . '.' . $format;
+
+        $content = '<meta charset="utf-8"><div style="margin:50px;">';
+
+        if ($format === 'txt') {
+            $content .= str_repeat('-', 100);
+        }
+
+        foreach ($this->conversation as $message) {
+            $body = trim($message['content']);
+
+            if ($message['role'] === 'ai') {
+                $content .= <<<HTML
+<div style='border-radius: 10px; border: 1px solid #555; padding: 15px; margin-bottom: 25px;'>
+<hr>
+$body
+</div>
+HTML;
+            } else {
+                $content .= <<<HTML
+<div style='border-radius: 10px; border: 1px solid #555; padding: 15px; margin-bottom: 25px; background: #dbeafe;'>
+<strong>User:</strong>
+<hr>
+$body
+</div>
+HTML;
+
+            }
+
+            if ($format === 'txt') {
+                $content .= str_repeat('-', 100);
+            }
+        }
+
+        $content .= '</div>';
+
+        $content = trim($content);
+
+        if ($format === 'txt') {
+            $content = htmlToText($content, false);
+        }
+
+        return response()->streamDownload(function () use ($content) {
+            echo $content;
+        }, $filename);
     }
 }
