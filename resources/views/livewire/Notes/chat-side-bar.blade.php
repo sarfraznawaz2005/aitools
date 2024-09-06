@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div x-data="{ open: false, lastQuery: '', userMessage: '' }">
 
     <button type="button" @click="open = true"
             class="py-2 px-4 mr-2 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
@@ -16,46 +16,45 @@
          class="fixed inset-0 z-[60] top-14 flex justify-end sm:justify-center md:justify-end">
         <div
             @click.away="open = false"
-            class="relative w-full max-w-md h-full bg-gray-100 shadow-2xl flex flex-col rounded-lg" x-data="{
-            lastQuery: '',
-
-            focusInput() {
-                if (open && typeof $refs.chatInput !== 'undefined' && $refs.chatInput !== null) {
-                    $refs.chatInput.focus();
+            class="relative w-full max-w-md h-full bg-gray-100 shadow-2xl flex flex-col rounded-lg"
+            x-data="{
+                lastQuery: '',
+                focusInput() {
+                    if (open && $refs.chatInput) {
+                        $refs.chatInput.focus();
+                    }
+                },
+                scrollToBottom() {
+                    const chatContent = this.$refs.chatContent;
+                    if (chatContent && open) {
+                        chatContent.scrollTop = chatContent.scrollHeight;
+                    }
+                },
+                handleKeyDown(event) {
+                    if (event.key === 'Enter' && !event.shiftKey) {
+                        event.preventDefault();
+                        this.lastQuery = $refs.chatInput.value; // Store the current message before sending
+                        $wire.call('setMessage', $refs.chatInput.value);
+                        $refs.chatInput.value = ''; // Clear the input after sending
+                        $refs.chatInput.focus(); // Retain focus
+                    } else if (event.key === 'ArrowUp' && $refs.chatInput.value === '') {
+                        event.preventDefault();
+                        if (this.lastQuery) {
+                            $refs.chatInput.value = this.lastQuery; // Recall the last message
+                            this.$nextTick(() => {
+                                $refs.chatInput.selectionStart = $refs.chatInput.selectionEnd = $refs.chatInput.value.length; // Move the cursor to the end
+                                $refs.chatInput.focus(); // Keep the focus
+                            });
+                        }
+                    }
                 }
-
-                this.scrollToBottom();
-            },
-            scrollToBottom() {
-                const chatContent = this.$refs.chatContent;
-
-                if (chatContent && open) {
-                    chatContent.scrollTop = chatContent.scrollHeight + 1000;
-                }
-            },
-            handleKeyDown(event) {
-                if (event.key === 'Enter' && !event.shiftKey) {
-                    event.preventDefault();
-                    this.lastQuery = $wire.query;
-                    $wire.call('setMessage', $refs.chatInput.value);
-                    $refs.chatInput.disabled = true;
-                } else if (event.key === 'ArrowUp' && $wire.query === '') {
-                    event.preventDefault();
-                    $wire.query = this.lastQuery;
-                    this.$nextTick(() => {
-                        this.$refs.chatInput.selectionStart = this.$refs.chatInput.selectionEnd = this.$refs.chatInput.value.length;
-                    });
-                }
-            },
             }"
-
             x-init="
                 $nextTick(() => { focusInput(); scrollToBottom(); });
                 Livewire.on('focusInput', () => { $nextTick(() => { scrollToBottom(); focusInput(); }); });
                 Livewire.hook('message.received', () => scrollToBottom());
                 Livewire.hook('message.processed', () => scrollToBottom());
             "
-
             x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
 
             <!-- Sidebar Content -->
@@ -198,6 +197,7 @@
 
                         <input type="text"
                                wire:ignore
+                               x-model="userMessage"
                                wire:model="userMessage"
                                x-ref="chatInput"
                                @keydown="handleKeyDown"
@@ -213,9 +213,9 @@
                         <button type="button"
                                 x-data x-tooltip.raw="Send Message"
                                 @click="
-                                    this.lastQuery = $wire.query;
                                     $wire.call('setMessage', $refs.chatInput.value);
-                                    $refs.chatInput.disabled = true;
+                                    this.userMessage = '';
+                                    $refs.chatInput.focus();
                                 "
                                 class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
