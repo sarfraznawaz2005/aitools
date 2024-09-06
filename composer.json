@@ -21,6 +21,7 @@
         "pforret/pf-article-extractor": "^0.3.0",
         "smalot/pdfparser": "^2.11",
         "spatie/laravel-markdown": "^2.5",
+        "symfony/polyfill-mbstring": "^1.30",
         "symfony/yaml": "^7.1",
         "yooper/php-text-analysis": "^1.9"
     },
