@@ -203,9 +203,14 @@ function getMessages(array $messages): array
     foreach ($messages as $message) {
         $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'ASSISTANT: ') . $message['content'];
 
-        if (!in_array($formattedMessage, $uniqueMessages)) {
-            $uniqueMessages[] = htmlToText($formattedMessage);
+        if ($message['role'] === 'user') {
+            $uniqueMessages[] = $formattedMessage; // allow all user messages
+        } else {
+            if (!in_array($formattedMessage, $uniqueMessages)) {
+                $uniqueMessages[] = $formattedMessage;
+            }
         }
+
     }
 
     return array_slice($uniqueMessages, 0, Constants::NOTES_TOTAL_CONVERSATION_HISTORY);
