@@ -17,8 +17,10 @@
         <div
             @click.away="open = false"
             class="relative w-full max-w-md h-full bg-gray-100 shadow-2xl flex flex-col rounded-lg" x-data="{
+            lastQuery: '',
+
             focusInput() {
-                if (open) {
+                if (open && typeof $refs.chatInput !== 'undefined' && $refs.chatInput !== null) {
                     $refs.chatInput.focus();
                 }
 
@@ -30,7 +32,21 @@
                 if (chatContent && open) {
                     chatContent.scrollTop = chatContent.scrollHeight + 1000;
                 }
-            }
+            },
+            handleKeyDown(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    this.lastQuery = $wire.query;
+                    $wire.call('setMessage', $refs.chatInput.value);
+                    $refs.chatInput.disabled = true;
+                } else if (event.key === 'ArrowUp' && $wire.query === '') {
+                    event.preventDefault();
+                    $wire.query = this.lastQuery;
+                    this.$nextTick(() => {
+                        this.$refs.chatInput.selectionStart = this.$refs.chatInput.selectionEnd = this.$refs.chatInput.value.length;
+                    });
+                }
+            },
             }"
 
             x-init="
@@ -184,10 +200,7 @@
                                wire:ignore
                                wire:model="userMessage"
                                x-ref="chatInput"
-                               @keydown.enter="
-                                   $wire.call('setMessage', $refs.chatInput.value);
-                                   $refs.chatInput.disabled = true;
-                               "
+                               @keydown="handleKeyDown"
                                {{!hasApiKeysCreated() || !$this->totalNotesCount ? 'disabled' : ''}}
                                autofocus
                                autocomplete="off"
@@ -200,8 +213,9 @@
                         <button type="button"
                                 x-data x-tooltip.raw="Send Message"
                                 @click="
-                                   $wire.call('setMessage', $refs.chatInput.value);
-                                   $refs.chatInput.disabled = true;
+                                    this.lastQuery = $wire.query;
+                                    $wire.call('setMessage', $refs.chatInput.value);
+                                    $refs.chatInput.disabled = true;
                                 "
                                 class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
