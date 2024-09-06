@@ -42,7 +42,7 @@
         x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
 
         <!-- Content -->
-        <div class="flex-1 overflow-y-auto relative px-2 w-full" x-ref="chatContent">
+        <div class="flex-1 relative px-2 w-full" x-ref="chatContent">
 
             <!-- Header -->
             <div class="flex items-center w-full sticky top-0 bg-gray-50 py-3 px-2 rounded-lg">
