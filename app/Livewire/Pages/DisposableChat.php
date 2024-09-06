@@ -7,7 +7,6 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Session;
@@ -41,7 +40,11 @@ class DisposableChat extends Component
 
     public function regenerate(int $index): void
     {
+        $lastMessageTimestamp = $this->conversation[$index]['timestamp'];
         unset($this->conversation[$index]);
+
+        $lastMessage = end($this->conversation);
+        $lastMessage['timestamp'] = $lastMessageTimestamp;
 
         $this->dispatch('goAhead');
     }

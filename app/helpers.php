@@ -222,6 +222,9 @@ function htmlToText($html, $removeWhiteSpace = true): string
 {
     $text = str_ireplace('related questions:', '', $html);
 
+    // Remove <related_question> tags including their contents
+    $text = preg_replace('/<related_question>.*?<\/related_question>/is', '', $text);
+
     // Replace <br> tags with newlines
     $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
 
