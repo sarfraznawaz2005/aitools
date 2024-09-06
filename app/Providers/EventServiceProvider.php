@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
         Event::listen(QuickChatClicked::class, function () {
             openWindow(
                 'quick-chat', 'quick-chat', [], true, true,
-                true, false, 800, 600, 'Quick Disposable Chat'
+                true, false, 800, 700, 'Quick Disposable Chat'
             );
         });
 
