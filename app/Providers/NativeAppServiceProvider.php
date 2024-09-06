@@ -36,7 +36,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->minHeight(400)
             ->withContextMenu(
                 Menu::new()
-                    ->event(QuickChatClicked::class, 'Quick Disposable Chat')
+                    ->event(QuickChatClicked::class, 'Quick Chat')
                     ->separator()
                     ->quit()
             );
