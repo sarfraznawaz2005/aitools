@@ -142,7 +142,7 @@
                                     <div>
                                         <x-confirm-dialog call="deleteMessage({{$index}})" x-data
                                                           x-tooltip.raw="Delete"
-                                                          class="inline-flex items-center mt-[-3px] ml-3 text-sm rounded-full border border-transparent text-gray-500">
+                                                          class="inline-flex items-center mt-[-2px] ml-3 text-sm rounded-full border border-transparent text-gray-500">
                                             <x-icons.delete class="size-4 text-gray-400 hover:text-red-600"/>
                                         </x-confirm-dialog>
                                     </div>
@@ -213,7 +213,6 @@
                                 x-data x-tooltip.raw="Send Message"
                                 @click="
                                     $wire.call('setMessage', $refs.chatInput.value);
-                                    this.userMessage = '';
                                     $refs.chatInput.focus();
                                 "
                                 class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-blue-500">
