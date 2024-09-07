@@ -77,13 +77,9 @@ class ChatList extends Component
     function modelChanged(): void
     {
         if ($this->conversation && $this->conversation->bot->isDocumentBot()) {
-            $files = $this->conversation->bot->files();
+            $dataFilePath = storage_path('app/' . 'bot-' . $this->conversation->bot->id . '-data.json');
 
-            foreach ($files as $file) {
-                $fileName = basename($file);
-                $path = storage_path("app/$fileName-" . $this->conversation->id . '.json');
-                @unlink($path);
-            }
+            @unlink($dataFilePath);
         }
     }
 
