@@ -27,7 +27,7 @@
 
             <livewire:chat.bot-forward wire:key="chatbuddy-bot-forward"/>
 
-            @unless ($this->messages->count())
+            @unless (isset($this->messages))
                 <livewire:chat.bot-selector wire:key="chatbuddy-bot-selector"/>
 
                 <script>

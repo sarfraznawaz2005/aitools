@@ -12,6 +12,7 @@
     font-weight: 100;
     src: url('/public/fonts/inter-v18-latin-100.woff2') format('woff2');
 }
+
 /* inter-100italic - latin */
 @font-face {
     font-display: swap;
@@ -20,6 +21,7 @@
     font-weight: 100;
     src: url('/public/fonts/inter-v18-latin-100italic.woff2') format('woff2');
 }
+
 /* inter-200 - latin */
 @font-face {
     font-display: swap;
@@ -28,6 +30,7 @@
     font-weight: 200;
     src: url('/public/fonts/inter-v18-latin-200.woff2') format('woff2');
 }
+
 /* inter-200italic - latin */
 @font-face {
     font-display: swap;
@@ -36,6 +39,7 @@
     font-weight: 200;
     src: url('/public/fonts/inter-v18-latin-200italic.woff2') format('woff2');
 }
+
 /* inter-300 - latin */
 @font-face {
     font-display: swap;
@@ -44,6 +48,7 @@
     font-weight: 300;
     src: url('/public/fonts/inter-v18-latin-300.woff2') format('woff2');
 }
+
 /* inter-300italic - latin */
 @font-face {
     font-display: swap;
@@ -52,6 +57,7 @@
     font-weight: 300;
     src: url('/public/fonts/inter-v18-latin-300italic.woff2') format('woff2');
 }
+
 /* inter-regular - latin */
 @font-face {
     font-display: swap;
@@ -60,6 +66,7 @@
     font-weight: 400;
     src: url('/public/fonts/inter-v18-latin-regular.woff2') format('woff2');
 }
+
 /* inter-italic - latin */
 @font-face {
     font-display: swap;
@@ -68,6 +75,7 @@
     font-weight: 400;
     src: url('/public/fonts/inter-v18-latin-italic.woff2') format('woff2');
 }
+
 /* inter-500 - latin */
 @font-face {
     font-display: swap;
@@ -76,6 +84,7 @@
     font-weight: 500;
     src: url('/public/fonts/inter-v18-latin-500.woff2') format('woff2');
 }
+
 /* inter-500italic - latin */
 @font-face {
     font-display: swap;
@@ -84,6 +93,7 @@
     font-weight: 500;
     src: url('/public/fonts/inter-v18-latin-500italic.woff2') format('woff2');
 }
+
 /* inter-600 - latin */
 @font-face {
     font-display: swap;
@@ -92,6 +102,7 @@
     font-weight: 600;
     src: url('/public/fonts/inter-v18-latin-600.woff2') format('woff2');
 }
+
 /* inter-600italic - latin */
 @font-face {
     font-display: swap;
@@ -100,6 +111,7 @@
     font-weight: 600;
     src: url('/public/fonts/inter-v18-latin-600italic.woff2') format('woff2');
 }
+
 /* inter-700 - latin */
 @font-face {
     font-display: swap;
@@ -108,6 +120,7 @@
     font-weight: 700;
     src: url('/public/fonts/inter-v18-latin-700.woff2') format('woff2');
 }
+
 /* inter-700italic - latin */
 @font-face {
     font-display: swap;
@@ -140,7 +153,7 @@
     list-style: square;
 }
 
-.note-message a, .quick-message a, .aibot-message-content a  {
+.note-message a, .quick-message a, .aibot-message-content a {
     display: inline-block;
 }
 
@@ -150,6 +163,7 @@
 
 .notyf__toast {
     max-width: 50em !important;
+
     .notyf__ripple {
         height: 60em;
         width: 60em;
@@ -161,18 +175,8 @@ pre {
     color: #222 !important;
 }
 
-.chatlist h1 {
-    font-size: 1.5rem;
-    margin: 0 0 5px;
-}
-
-.chatlist h2 {
-    font-size: 1.25rem;
-    margin: 0 0 5px;
-}
-
-.chatlist h3 {
-    font-size: 1.1rem;
+.chatlist h1, .chatlist h2, .chatlist h3, .note-message h1, .note-message h2, .note-message h3, .quick-message h1, .quick-message h2, .quick-message h3 {
+    font-size: 1.2rem;
     margin: 0 0 5px;
 }
 
@@ -186,6 +190,7 @@ strong {
     word-wrap: break-word;
     word-break: break-word;
 }
+
 .prose > * {
     max-width: none !important;
 }
@@ -204,4 +209,91 @@ strong {
 }
 
 /* alpine titles */
-.tippy-box[data-animation=fade][data-state=hidden]{opacity:0}[data-tippy-root]{max-width:calc(100vw - 10px)}.tippy-box{position:relative;background-color:#333;color:#fff;border-radius:4px;font-size:14px;line-height:1.4;white-space:normal;outline:0;transition-property:transform,visibility,opacity}.tippy-box[data-placement^=top]>.tippy-arrow{bottom:0}.tippy-box[data-placement^=top]>.tippy-arrow:before{bottom:-7px;left:0;border-width:8px 8px 0;border-top-color:initial;transform-origin:center top}.tippy-box[data-placement^=bottom]>.tippy-arrow{top:0}.tippy-box[data-placement^=bottom]>.tippy-arrow:before{top:-7px;left:0;border-width:0 8px 8px;border-bottom-color:initial;transform-origin:center bottom}.tippy-box[data-placement^=left]>.tippy-arrow{right:0}.tippy-box[data-placement^=left]>.tippy-arrow:before{border-width:8px 0 8px 8px;border-left-color:initial;right:-7px;transform-origin:center left}.tippy-box[data-placement^=right]>.tippy-arrow{left:0}.tippy-box[data-placement^=right]>.tippy-arrow:before{left:-7px;border-width:8px 8px 8px 0;border-right-color:initial;transform-origin:center right}.tippy-box[data-inertia][data-state=visible]{transition-timing-function:cubic-bezier(.54,1.5,.38,1.11)}.tippy-arrow{width:16px;height:16px;color:#333}.tippy-arrow:before{content:"";position:absolute;border-color:transparent;border-style:solid}.tippy-content{position:relative;padding:5px 9px;z-index:1}
+.tippy-box[data-animation=fade][data-state=hidden] {
+    opacity: 0
+}
+
+[data-tippy-root] {
+    max-width: calc(100vw - 10px)
+}
+
+.tippy-box {
+    position: relative;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: normal;
+    outline: 0;
+    transition-property: transform, visibility, opacity
+}
+
+.tippy-box[data-placement^=top] > .tippy-arrow {
+    bottom: 0
+}
+
+.tippy-box[data-placement^=top] > .tippy-arrow:before {
+    bottom: -7px;
+    left: 0;
+    border-width: 8px 8px 0;
+    border-top-color: initial;
+    transform-origin: center top
+}
+
+.tippy-box[data-placement^=bottom] > .tippy-arrow {
+    top: 0
+}
+
+.tippy-box[data-placement^=bottom] > .tippy-arrow:before {
+    top: -7px;
+    left: 0;
+    border-width: 0 8px 8px;
+    border-bottom-color: initial;
+    transform-origin: center bottom
+}
+
+.tippy-box[data-placement^=left] > .tippy-arrow {
+    right: 0
+}
+
+.tippy-box[data-placement^=left] > .tippy-arrow:before {
+    border-width: 8px 0 8px 8px;
+    border-left-color: initial;
+    right: -7px;
+    transform-origin: center left
+}
+
+.tippy-box[data-placement^=right] > .tippy-arrow {
+    left: 0
+}
+
+.tippy-box[data-placement^=right] > .tippy-arrow:before {
+    left: -7px;
+    border-width: 8px 8px 8px 0;
+    border-right-color: initial;
+    transform-origin: center right
+}
+
+.tippy-box[data-inertia][data-state=visible] {
+    transition-timing-function: cubic-bezier(.54, 1.5, .38, 1.11)
+}
+
+.tippy-arrow {
+    width: 16px;
+    height: 16px;
+    color: #333
+}
+
+.tippy-arrow:before {
+    content: "";
+    position: absolute;
+    border-color: transparent;
+    border-style: solid
+}
+
+.tippy-content {
+    position: relative;
+    padding: 5px 9px;
+    z-index: 1
+}
