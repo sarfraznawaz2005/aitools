@@ -1,5 +1,6 @@
 <?php
 /*
+ * have a CSV file that you want to quickly query and visualize (https://supabase.com/blog/postgres-new)
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
  * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
  * Setup proper roles when prompting AI? (https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/System_instructions_REST.ipynb)
