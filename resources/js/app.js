@@ -4,7 +4,6 @@ import Clipboard from '@ryangjchandler/alpine-clipboard'
 import Tooltip from "@ryangjchandler/alpine-tooltip";
 import 'preline';
 import {Notyf} from 'notyf';
-import 'notyf/notyf.min.css'; // for React, Vue and Svelte
 //import './echo';
 
 Alpine.plugin(Tooltip);
