@@ -201,7 +201,7 @@ function getMessages(array $messages): array
 
     // Format and filter unique messages
     foreach ($messages as $message) {
-        $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'ASSISTANT: ') . $message['content'];
+        $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'YOU: ') . $message['content'];
 
         if ($message['role'] === 'user') {
             $uniqueMessages[] = $formattedMessage; // allow all user messages

@@ -271,7 +271,7 @@ class ChatBuddy extends Component
                 continue;
             }
 
-            $formattedMessage = ($message->is_ai ? 'ASSISTANT: ' : 'USER: ') . $message->body;
+            $formattedMessage = ($message->is_ai ? 'YOU: ' : 'USER: ') . $message->body;
 
             if (!$message->is_ai) {
                 $uniqueMessages[] = $formattedMessage; // allow all user messages
