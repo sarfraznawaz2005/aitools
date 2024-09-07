@@ -23,7 +23,7 @@
                     wire:key="foldersidebar-{{$folderItem->id}}">
                     <div class="flex justify-between items-center">
                         <a
-                            wire:navigate.hover
+                            wire:navigate
                             href="{{route($tools['smart-notes']['route'] . '.listing', $folderItem->id)}}"
                             class="items-center font-[500] p-2 text-sm w-full sm:w-52 overflow-hidden truncate whitespace-nowrap text-ellipsis
                             {{ $folderItem->color }} {{isset($folder) && $folder->exists && $folderItem->id === $folder->id ? $folder->getBackgroundColor() : ''}}">
