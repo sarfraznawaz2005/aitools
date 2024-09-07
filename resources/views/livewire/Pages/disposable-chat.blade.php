@@ -39,7 +39,7 @@
                 Livewire.hook('message.received', () => scrollToBottom());
                 Livewire.hook('message.processed', () => scrollToBottom());
             "
-        x-intersect="$nextTick(() => { focusInput(); scrollToBottom(); })">
+        x-intersect="$nextTick(() => focusInput())">
 
         <!-- Content -->
         <div class="flex-1 relative px-2 w-full" x-ref="chatContent">
