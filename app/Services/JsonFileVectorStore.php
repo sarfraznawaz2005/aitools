@@ -529,6 +529,7 @@ class JsonFileVectorStore
         }
 
         // Apply stemming
+        // NOTE: while it helps AI, but it also cuts words like "Abdullah Waheeed" to "Abdullah Wahe" in AI responses.
         $stemmer = new PorterStemmer();
         $tokens = array_map([$stemmer, 'stem'], $tokens);
 
