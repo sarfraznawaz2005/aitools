@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Native\Laravel\Facades\Settings;
 
 class BackupDatabase extends Command
 {
@@ -12,18 +11,22 @@ class BackupDatabase extends Command
 
     public function handle(): void
     {
-        $source = storage_path('database/database.sqlite');
-        $destination = Settings::get('settings.database-backup-path', '');
+        $source = base_path('database/database.sqlite');
 
-        if ($destination) {
-            $destination = rtrim($destination, '/\\') . '/aitools-database-backup.sqlite';
+        if (file_exists(storage_path('settings-database-backup-path'))) {
+            $destination = file_get_contents(storage_path('settings-database-backup-path'));
 
-            @unlink($destination);
+            if ($destination) {
+                $destination = rtrim($destination, '/\\') . '/aitools-database-backup.sqlite';
 
-            copy($source, $destination);
+                @unlink($destination);
 
-            $this->info('Database backup done successfully.');
-            info('Database backup done successfully.');
+                copy($source, $destination);
+
+                $this->info('Database backup done successfully.');
+                info('Database backup done successfully.');
+            }
         }
+
     }
 }
