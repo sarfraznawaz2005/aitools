@@ -472,4 +472,11 @@
         setupSuggestedLinks();
     </script>
 
+    <style>
+        .chatlist h1, .chatlist h2, .chatlist h3 {
+            font-size: 1.2rem;
+            margin: 0 0 5px;
+        }
+    </style>
+
 </div>

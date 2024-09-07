@@ -309,4 +309,11 @@
         setupSuggestedLinks();
     </script>
 
+    <style>
+        .note-message h1, .note-message h2, .note-message h3 {
+            font-size: 1.2rem;
+            margin: 0 0 5px;
+        }
+    </style>
+
 </div>
