@@ -1,6 +1,6 @@
 <?php
 /*
- * jsonvectorstore for document bot
+ * delete indexed files on model change etc
  * https://github.com/Doriandarko/gemini-ui-to-code
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
  * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
@@ -35,6 +35,8 @@ use Illuminate\Support\Facades\Log;
 use Native\Laravel\Facades\Settings;
 use Native\Laravel\Facades\Window;
 use Native\Laravel\Windows\PendingOpenWindow;
+use Smalot\PdfParser\Config;
+use Smalot\PdfParser\Parser;
 use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 function getLLM(ApiKey $model): LlmProvider
@@ -372,6 +374,53 @@ function processMarkdownToHtml($markdownContent): string
     }
 
     return $htmlContent;
+}
+
+/**
+ * @throws Exception
+ */
+function extractTextFromFile(string $file): array
+{
+    $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+    switch (strtolower($extension)) {
+        case 'pdf':
+
+            $config = new Config();
+            $config->setRetainImageContent(false);
+
+            $parser = new Parser([], $config);
+
+            $text = [];
+            $pdf = $parser->parseFile($file);
+            $pages = $pdf->getPages();
+
+            foreach ($pages as $pageNumber => $page) {
+                $text[] = [
+                    'text' => $page->getText(),
+                    'source' => basename($file) . '[' . $pageNumber + 1 . ']',
+                ];
+            }
+
+            //file_put_contents('pdf_text', json_encode($text, JSON_PRETTY_PRINT));
+            return $text;
+        case 'txt':
+        case 'md':
+        case 'html':
+        case 'htm':
+
+            $content = file_get_contents($file);
+            $lines = explode("\n", $content);
+
+            $text[] = [
+                'text' => $lines,
+                'source' => basename($file),
+            ];
+
+            return $text;
+        default:
+            throw new Exception("Unsupported file type: $extension");
+    }
 }
 
 function out($data): void

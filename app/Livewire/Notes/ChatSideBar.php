@@ -97,7 +97,6 @@ class ChatSideBar extends Component
             }
 
             $context = '';
-
             foreach ($results as $result) {
                 $text = $result['matchedChunk']['text'];
                 $context .= $text . "\n\n<sources>" . $result['matchedChunk']['metadata'] . "</sources>\n\n";

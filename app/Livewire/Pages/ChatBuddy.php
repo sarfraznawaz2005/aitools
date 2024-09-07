@@ -6,7 +6,7 @@ use App\Constants;
 use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
-use App\Services\DocumentSearchService;
+use App\Services\JsonFileVectorStore;
 use App\Traits\InteractsWithToast;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -166,23 +166,20 @@ class ChatBuddy extends Component
 
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
+                $texts = [];
+                foreach ($files as $file) {
+                    $texts[] = extractTextFromFile($file);
+                }
+
+                $flattenedTexts = [];
+                foreach ($texts as $subArray) {
+                    $flattenedTexts = array_merge($flattenedTexts, $subArray);
+                }
+
                 // About Chunk Size: if too long, it will not answer granular details, and if it is too short, it will
                 // not answer long details so this is trade off.
-                $searchService = DocumentSearchService::getInstance($llm, $conversation->id, 2000);
-
-                $isIndexingDone = true;
-                foreach ($files as $file) {
-                    if (!$searchService->isEmbdeddingDone($file, $conversation->id)) {
-                        $isIndexingDone = false;
-                    }
-                }
-
-                if (!$isIndexingDone) {
-                    sendStream("Indexing file data, please wait...");
-                }
-
-                $results = $searchService->searchDocuments($files, $userQuery->body);
-                //dd($results);
+                $searchService = JsonFileVectorStore::getInstance($llm, 'bot-' . $conversation->bot->id . '-data.json', 2000);
+                $results = $searchService->searchTexts($flattenedTexts, $userQuery->body);
 
                 if (!count($results)) {
                     sendStream(Constants::NO_RESULTS_FOUND, true);
@@ -192,7 +189,8 @@ class ChatBuddy extends Component
 
                 $context = '';
                 foreach ($results as $result) {
-                    $context .= $result['matchedChunk']['text'] . "\nMetadata:" . json_encode($result['matchedChunk']['metadata']) . "\n\n";
+                    $text = $result['matchedChunk']['text'];
+                    $context .= $text . "\n\n<sources>" . $result['matchedChunk']['metadata'] . "</sources>\n\n";
                 }
 
                 $attachedFiles = implode(',', array_map(fn($file) => basename($file), $files));
