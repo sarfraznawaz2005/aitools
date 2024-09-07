@@ -176,6 +176,12 @@ class ChatBuddy extends Component
                     $flattenedTexts = array_merge($flattenedTexts, $subArray);
                 }
 
+                $dataFilePath = storage_path('app/' . 'bot-' . $conversation->bot->id . '-data.json');
+
+                if (!file_exists($dataFilePath)) {
+                    sendStream("Indexing file data, please wait...");
+                }
+
                 // About Chunk Size: if too long, it will not answer granular details, and if it is too short, it will
                 // not answer long details so this is trade off.
                 $searchService = JsonFileVectorStore::getInstance($llm, 'bot-' . $conversation->bot->id . '-data.json', 2000);
