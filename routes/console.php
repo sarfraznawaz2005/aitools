@@ -51,7 +51,7 @@ Artisan::command('cleanup', function () {
         }
     }
 
-    // othere config files
+    // othere config files so users do not get these from my system
     @unlink(storage_path('settings-database-backup-path'));
 
 })->purpose('Clear cache and temp files');
