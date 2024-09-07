@@ -122,7 +122,7 @@
                             @else
                                 <div class="flex flex-col" wire:key="note-message{{$index}}">
                                     <div
-                                        class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-2xl border border-gray-200 rounded-bl-none self-start max-w-full">
+                                        class="bg-white note-message text-gray-800 prose prose-sm sm:prose lg:prose xl:prose text-sm py-2 px-3 rounded-2xl border border-gray-200 rounded-bl-none self-start max-w-full">
                                         <bdi x-ref="message">{!! $message['content'] !!}</bdi>
                                     </div>
                                 </div>
