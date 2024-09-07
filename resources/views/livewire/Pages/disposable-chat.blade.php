@@ -353,4 +353,10 @@
         setupSuggestedLinks();
     </script>
 
+    <style>
+        .quick-message h1, .quick-message h2, .quick-message h3 {
+            font-size: 1.2rem;
+            margin: 0 0 5px;
+        }
+    </style>
 </div>
