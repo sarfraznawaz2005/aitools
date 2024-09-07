@@ -54,6 +54,8 @@ class ChatList extends Component
         if ($this->conversation) {
             return $this->conversation->messages->sortBy('id');
         }
+
+        return collect();
     }
 
     protected function refresh(): void

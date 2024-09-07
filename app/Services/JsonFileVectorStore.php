@@ -311,9 +311,8 @@ class JsonFileVectorStore
         }
 
         if (file_exists($path)) {
-            $data = json_decode(file_get_contents($path), true);
             //info("Loaded embeddings from file for $path");
-            return $data;
+            return json_decode(file_get_contents($path), true);
         }
 
         $textSplits = [];
@@ -396,8 +395,6 @@ class JsonFileVectorStore
                             'matchedChunk' => $matchedText,
                         ];
                     }
-                } else {
-                    //info("NOT FOUND at #: $iterations, Similarity: $similarity");
                 }
             } else {
                 throw new Exception("Unknown embedding format!.");
@@ -505,11 +502,11 @@ class JsonFileVectorStore
         // Replace unwanted characters and clean the text
         $text = preg_replace(
             [
-                '/\r\n|\r/',                     // Handle different newline characters
-                '/(\s*\n\s*){3,}/',              // Replace multiple newlines with double newlines
-                '/\s+/',                         // Replace multiple spaces with single space
-                '/[^\w\s\-$%_.\/]/',            // Allow only letters, numbers, $, -, _, %, /, ., and space
-                '/(\$|%|_|-|\\|.|\/| )\1+/',     // Remove duplicate special characters
+                '/\r\n|\r/',                        // Handle different newline characters
+                '/(\s*\n\s*){3,}/',                 // Replace multiple newlines with double newlines
+                '/\s+/',                            // Replace multiple spaces with single space
+                '/[^\w\s\-$%_.\/]/',                // Allow only letters, numbers, $, -, _, %, /, ., and space
+                '/(\$|%|_|-|\\|.|\/| )\1+/',        // Remove duplicate special characters
             ],
             [
                 "\n",
@@ -526,9 +523,9 @@ class JsonFileVectorStore
         $tokens = $tokenizer->tokenize($text);
 
         if ($removeStopWords) {
-            $text = implode(' ', $tokens); // Join tokens to remove stopwords
-            $text = $this->removeStopwords($text); // Use your custom stopword removal function
-            $tokens = explode(' ', $text); // Tokenize again
+            $text = implode(' ', $tokens);
+            $text = $this->removeStopwords($text);
+            $tokens = explode(' ', $text);
         }
 
         // Apply stemming
