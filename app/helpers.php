@@ -1,10 +1,10 @@
 <?php
 /*
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
- * code execution - https://github.com/google-gemini/cookbook/blob/main/quickstarts/Code_Execution.ipynb
  * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
  * Setup proper roles when prompting AI? (https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/System_instructions_REST.ipynb)
- * json output -  (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/JSON_mode_REST.ipynb)
+ * json output -  (gemini - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/JSON_mode_REST.ipynb | https://github.com/google-gemini/cookbook/blob/main/examples/json_capabilities/Text_Classification.ipynb)
+ * Automatic hotel ordering handled by AI - https://github.com/google-gemini/cookbook/blob/main/examples/Agents_Function_Calling_Barista_Bot.ipynb
  * empty title on icon hover
  * setup updator
  * GraphRAG
