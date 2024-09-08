@@ -40,11 +40,11 @@ jobs:
 
       - name: Build NativePHP App on Windows
         if: matrix.os == 'windows-latest'
-        run: nativephp build --win
+        run: php artisan nativephp build --win --x64
 
       - name: Build NativePHP App on macOS
         if: matrix.os == 'macos-latest'
-        run: nativephp build --mac
+        run: php artisan nativephp build --mac --x86
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
