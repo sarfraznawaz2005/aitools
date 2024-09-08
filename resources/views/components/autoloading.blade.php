@@ -13,10 +13,6 @@
          style="position: relative; z-index: 80;">
         <span class="sr-only">Loading...</span>
     </div>
-
-    <div x-show="error" class="text-red-600 font-bold text-xl" style="position: relative; z-index: 80;">
-        An error occurred. Please try again.
-    </div>
 </div>
 
 <script>
