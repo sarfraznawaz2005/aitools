@@ -1,16 +1,11 @@
-name: Build App for Windows & Mac
+name: Build App for Mac
 
 on:
-  push:
-  pull_request:
-    types: [ opened, reopened, synchronize ]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ macos-latest, windows-latest ]
+    runs-on: macos-latest
 
     steps:
       - name: Checkout code
@@ -48,12 +43,7 @@ jobs:
           php artisan native:install --no-interaction
           npm install --no-audit --no-fund --loglevel=error
 
-      - name: Build NativePHP App on Windows
-        if: matrix.os == 'windows-latest'
-        run: php artisan native:build win x64 --no-interaction
-
       - name: Build NativePHP App on macOS
-        if: matrix.os == 'macos-latest'
         run: php artisan native:build mac x86 --no-interaction
 
       - name: Upload Artifacts
