@@ -3,9 +3,11 @@
 namespace App\Livewire\Pages;
 
 use App\Constants;
+use App\Models\Bot;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
@@ -23,6 +25,30 @@ class DisposableChat extends Component
     public array $conversation = [];
 
     protected $listeners = ['refreshQuickChat' => '$refresh'];
+
+    public bool $loaded = false;
+
+    public function mount(): void
+    {
+        $this->loaded = false;
+    }
+
+    public function load(): void
+    {
+        $this->loaded = true;
+    }
+
+    public function placeholder(): string
+    {
+        return '
+            <div class="flex justify-center items-center h-full w-full z-[1000]">
+                <svg class="animate-spin h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+            </div>
+    ';
+    }
 
     #[Layout('components/layouts/headerless')]
     public function render(): View|Factory|Application
