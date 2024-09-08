@@ -110,6 +110,8 @@ class DisposableChat extends Component
             $llm->chat($prompt, true, function ($chunk) use (&$consolidatedResponse) {
                 $consolidatedResponse .= $chunk;
 
+                usleep(300000); // 0.3 seconds
+
                 $this->stream(
                     to: 'aiStreamResponse',
                     content: $chunk,
