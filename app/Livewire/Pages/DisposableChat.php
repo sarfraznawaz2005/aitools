@@ -28,11 +28,6 @@ class DisposableChat extends Component
 
     public bool $loaded = false;
 
-    public function mount(): void
-    {
-        $this->loaded = false;
-    }
-
     public function load(): void
     {
         $this->loaded = true;
