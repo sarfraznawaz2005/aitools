@@ -43,7 +43,7 @@
             <div class="flex justify-between">
                 <div class="w-full flex items-center">
                     <a wire:navigate
-                       x-show="!editable"
+                       x-show="typeof editable !== 'undefined' && !editable"
                        class="flex-nowrap text-sm text-gray-700 block w-full p-2"
                        href="{{route($tools['chat-buddy']['route'] . '.loadconversation', $conversationItem->id)}}">
 
@@ -63,7 +63,7 @@
                         </div>
                     </a>
 
-                    <div x-show="editable"
+                    <div x-show="typeof editable !== 'undefined' && editable"
                          x-ref="titleEditable"
                          @blur="stopEdit"
                          @keydown="handleKeyDown"
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end items-center mr-2" x-show="!editable">
+                <div class="flex justify-end items-center mr-2" x-show="typeof editable !== 'undefined' && !editable">
                     @if($conversationItem->favorite)
                         <x-icons.star class="inline-block text-gray-500 size-4 mt-1" viewBox="0 0 24 24"/>
                     @endif

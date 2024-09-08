@@ -8,7 +8,6 @@ use App\Traits\InteractsWithToast;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -35,6 +34,9 @@ class BotSelector extends Component
     public int $newBotId = 0;
 
     protected $listeners = ['refreshBot' => '$refresh'];
+
+    public bool $loaded = false;
+    public Collection $bots;
 
     protected function rules(): array
     {
@@ -66,10 +68,11 @@ class BotSelector extends Component
         ];
     }
 
-    #[Computed]
-    public function bots(): Collection
+    public function load(): void
     {
-        return Bot::query()->orderBy('name')->get();
+        $this->bots = Bot::query()->orderBy('name')->get();
+
+        $this->loaded = true;
     }
 
     public function mount(Bot $bot = null): void

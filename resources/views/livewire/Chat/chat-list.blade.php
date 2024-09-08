@@ -25,10 +25,8 @@
             </script>
         @else
 
-            <livewire:chat.bot-forward wire:key="chatbuddy-bot-forward"/>
-
             @unless (isset($this->messages))
-                <livewire:chat.bot-selector wire:key="chatbuddy-bot-selector"/>
+                <livewire:chat.bot-selector />
 
                 <script>
                     function scrollToBottom() {
@@ -36,6 +34,8 @@
                     }
                 </script>
             @else
+
+                <livewire:chat.bot-forward />
 
                 @if($botFiles)
                     <fieldset

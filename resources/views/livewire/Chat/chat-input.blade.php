@@ -21,6 +21,10 @@
                 lastQuery: '',
                 adjustHeight() {
                     $nextTick(() => {
+                        if (typeof this.$refs.textarea === 'undefined' || this.$refs.textarea === null) {
+                            return;
+                        }
+
                         this.$refs.textarea.style.height = 'auto';
                         const lines = this.$refs.textarea.value.split('\n').length;
                         const lineHeight = parseInt(window.getComputedStyle(this.$refs.textarea).lineHeight);

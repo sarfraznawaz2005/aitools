@@ -7,7 +7,6 @@ use App\Models\Conversation;
 use App\Models\Message;
 use App\Traits\InteractsWithToast;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -19,10 +18,14 @@ class BotForward extends Component
     public ?Bot $bot = null;
     public ?Bot $forwarderBot = null;
 
-    #[Computed]
-    public function bots(): Collection
+    public bool $loaded = false;
+    public Collection $bots;
+
+    public function loadBots(): void
     {
-        return Bot::query()->orderBy('name')->get();
+        $this->bots = Bot::query()->orderBy('name')->get();
+
+        $this->loaded = true;
     }
 
     #[On('startFoward')]
