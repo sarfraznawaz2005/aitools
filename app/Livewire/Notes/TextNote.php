@@ -37,15 +37,19 @@ class TextNote extends Component
     public array $linkErrors = [];
     public bool $useAI = true;
 
+    public bool $loaded = false;
+    public Collection $folders;
+
+    public function load(): void
+    {
+        $this->folders = NoteFolder::query()->with('notes')->orderBy('name')->get();
+
+        $this->loaded = true;
+    }
+
     public function mount(): void
     {
         $this->note_folder_id = $this->folder->id ?? '';
-    }
-
-    #[Computed]
-    public function folders(): Collection
-    {
-        return NoteFolder::query()->with('notes')->orderBy('name')->get();
     }
 
     #[On('openTextNoteModal')]
