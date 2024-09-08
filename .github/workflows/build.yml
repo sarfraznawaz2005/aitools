@@ -25,6 +25,11 @@ jobs:
       - name: Install dependencies
         run: composer install --optimize-autoloader --no-dev
 
+      - name: Create SQLite Database File
+        run: |
+          touch database/database.sqlite
+          php artisan migrate
+
       - name: Build NativePHP App
         run: |
           if [[ "$RUNNER_OS" == "Windows" ]]; then
