@@ -47,7 +47,7 @@ jobs:
         run: php artisan native:build mac x86 --no-interaction
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: nativephp-app
           path: dist/*.dmg
