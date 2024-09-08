@@ -1,0 +1,39 @@
+name: Build App for Windows & Mac
+
+on:
+  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install dependencies
+        run: composer install --optimize-autoloader --no-dev
+
+      - name: Build NativePHP App
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            nativephp build --win;
+          else
+            nativephp build --mac;
+          fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nativephp-app
+          path: dist/
