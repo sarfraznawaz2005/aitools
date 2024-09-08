@@ -25,11 +25,11 @@ jobs:
           php-version: '8.3'
           extensions: fileinfo, mbstring, tokenizer, xml, ctype, json, pdo, sqlite3, openssl
 
-      - name: Install dependencies
-        run: composer install --optimize-autoloader --no-dev
-
       - name: Create SQLite Database File
         run: touch database/database.sqlite
+
+      - name: Install dependencies
+        run: composer install --optimize-autoloader --no-dev
 
       - name: Set up .env Database
         run: |
