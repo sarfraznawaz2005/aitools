@@ -33,17 +33,33 @@ class NotesListing extends Component
     public string $sortField = 'id';
     public bool $sortAsc = false;
 
+    public bool $loaded = false;
+    public Collection $folders;
+
+    public function load(): void
+    {
+        $this->folders = NoteFolder::query()->with('notes')->orderBy('name')->get();
+
+        $this->loaded = true;
+    }
+
+    public function placeholder(): string
+    {
+        return '
+            <div class="flex justify-center items-center h-full w-full z-[1000]">
+                <svg class="animate-spin h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+            </div>
+    ';
+    }
+
     public function mount(NoteFolder $folder): void
     {
         //openWindow('note', 'note-window', ['id' => 1]);
 
         $this->folder = $folder;
-    }
-
-    #[Computed]
-    public function folders(): Collection
-    {
-        return NoteFolder::query()->with('notes')->orderBy('name')->get();
     }
 
     #[Computed]

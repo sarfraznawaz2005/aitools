@@ -1,4 +1,4 @@
-<div>
+<div wire:init="load">
 
     <div class="flex flex-col sm:flex-row bg-white">
 
@@ -6,15 +6,21 @@
 
         <main class="flex-1 pt-10 border-t sm:border-t-0 h-screen overflow-y-auto sm:border-l border-gray-300">
 
+            <!-- Loading indicator -->
+            <div wire:loading class="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-10">
+                {!! $this->placeholder() !!}
+            </div>
+
             <div class="mx-4 sm:mx-8 my-4">
                 <livewire:apikeys.api-key-banner/>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-20 mt-8 pb-4 px-4 sm:px-6">
-                @foreach($this->notes as $note)
-                    <div
-                        class="p-4 bg-gray-50 rounded-lg border relative flex flex-col"
-                        wire:key="note-{{$note->id}}{{uniqid()}}" x-data="{
+            @if($loaded)
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-20 mt-8 pb-4 px-4 sm:px-6">
+                    @foreach($this->notes as $note)
+                        <div
+                            class="p-4 bg-gray-50 rounded-lg border relative flex flex-col"
+                            wire:key="note-{{$note->id}}{{uniqid()}}" x-data="{
                         copied: false,
                         copy () {
                           $clipboard($refs.content.innerText)
@@ -24,17 +30,17 @@
                           }, 1000)
                         }
                       }">
-                        <div class="relative min-h-10 flex flex-col h-full">
+                            <div class="relative min-h-10 flex flex-col h-full">
 
-                            <div
-                                x-data="{
+                                <div
+                                    x-data="{
                                         open: false,
                                         subOpen: false,
                                         subMenuLeft: false,
                                         subMenuBottom: false,
                                         subMenuTimer: null,
                                     }"
-                                class="absolute top-0 right-0" x-cloak x-init="
+                                    class="absolute top-0 right-0" x-cloak x-init="
                                     $nextTick(() => { open = false; subOpen = false; subMenuLeft = false; subMenuBottom = false; });
 
                                     $wire.on('updated', () => {
@@ -50,87 +56,89 @@
                                     });
                                 ">
 
-                                <button @click="open = !open" class="text-gray-500 hover:text-gray-700">
-                                    <x-icons.dotsv/>
-                                </button>
+                                    <button @click="open = !open" class="text-gray-500 hover:text-gray-700">
+                                        <x-icons.dotsv/>
+                                    </button>
 
-                                <div
-                                    x-cloak
-                                    x-show="open"
-                                    @click.away="open = false"
-                                    @click.outside="open = false"
-                                    class="absolute right-[4px] top-6 z-20 w-32 bg-white text-xs shadow-lg"
-                                >
-                                    <a href="#" @click.prevent="copy"
-                                       class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                        <x-icons.copy class="inline-block mr-2 text-gray-500"/>
-                                        <span
-                                            x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : 'Copy'"></span>
-                                    </a>
-
-                                    <a href="#" wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"
-                                       class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                        <x-icons.edit class="inline-block mr-2 text-gray-500"/>
-                                        Edit
-                                    </a>
                                     <div
-                                        class="relative"
-                                        @mouseenter="
+                                        x-cloak
+                                        x-show="open"
+                                        @click.away="open = false"
+                                        @click.outside="open = false"
+                                        class="absolute right-[4px] top-6 z-20 w-32 bg-white text-xs shadow-lg"
+                                    >
+                                        <a href="#" @click.prevent="copy"
+                                           class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                            <x-icons.copy class="inline-block mr-2 text-gray-500"/>
+                                            <span
+                                                x-text="typeof(copied) !== 'undefined' && copied ? 'Copied' : 'Copy'"></span>
+                                        </a>
+
+                                        <a href="#"
+                                           wire:click.prevent="$dispatch('openTextNoteModalEdit', [{{$note->id}}])"
+                                           class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                            <x-icons.edit class="inline-block mr-2 text-gray-500"/>
+                                            Edit
+                                        </a>
+                                        <div
+                                            class="relative"
+                                            @mouseenter="
                                             clearTimeout(subMenuTimer);
                                             subOpen = true;
                                             subMenuLeft = (window.innerWidth - $el.getBoundingClientRect().right < 150);
                                             subMenuBottom = (window.innerHeight - $el.getBoundingClientRect().bottom < 150);
                                             "
-                                        @mouseleave="
+                                            @mouseleave="
                                             subMenuTimer = setTimeout(() => { subOpen = false }, 200);
                                         "
-                                    >
-                                        <a href="#" @click.prevent="subOpen = !subOpen"
-                                           class="px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center justify-between">
+                                        >
+                                            <a href="#" @click.prevent="subOpen = !subOpen"
+                                               class="px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center justify-between">
                                             <span>
                                                 <x-icons.share class="inline-block mr-2 text-gray-400"/>
                                                 Move
                                             </span>
-                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
-                                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M9 5l7 7-7 7"></path>
-                                            </svg>
-                                        </a>
-                                        <div
-                                            x-cloak
-                                            x-show="subOpen"
-                                            @mouseenter="clearTimeout(subMenuTimer)"
-                                            @mouseleave="subMenuTimer = setTimeout(() => { subOpen = false }, 200)"
-                                            :class="{
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M9 5l7 7-7 7"></path>
+                                                </svg>
+                                            </a>
+                                            <div
+                                                x-cloak
+                                                x-show="subOpen"
+                                                @mouseenter="clearTimeout(subMenuTimer)"
+                                                @mouseleave="subMenuTimer = setTimeout(() => { subOpen = false }, 200)"
+                                                :class="{
                                                 'right-full': subMenuLeft,
                                                 'left-full': !subMenuLeft,
                                                 'bottom-full': subMenuBottom,
                                                 'top-0': !subMenuBottom
                                             }"
-                                            class="absolute z-20 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
-                                        >
-                                            @foreach($this->folders as $folderItem)
-                                                @if($folderItem->id !== $folder->id)
-                                                    <a wire:key="mvfolder-{{$folderItem->id}}" href="#"
-                                                       wire:click.prevent="moveToFolder({{$folderItem->id}}, {{$note->id}})"
-                                                       class="block px-4 py-2 font-[500] hover:bg-gray-100 {{$folderItem->color}}">
-                                                        {{$folderItem->name}}
-                                                    </a>
-                                                @endif
-                                            @endforeach
+                                                class="absolute z-20 min-w-40 max-w-48 ml-0.5 bg-white shadow-lg"
+                                            >
+                                                @foreach($folders as $folderItem)
+                                                    @if($folderItem->id !== $folder->id)
+                                                        <a wire:key="mvfolder-{{$folderItem->id}}" href="#"
+                                                           wire:click.prevent="moveToFolder({{$folderItem->id}}, {{$note->id}})"
+                                                           class="block px-4 py-2 font-[500] hover:bg-gray-100 {{$folderItem->color}}">
+                                                            {{$folderItem->name}}
+                                                        </a>
+                                                    @endif
+                                                @endforeach
+                                            </div>
                                         </div>
+                                        <x-confirm-dialog
+                                            call="deleteNote({{$note->id}}); open = false"
+                                            class="px-3 py-2 text-left block bg-white hover:bg-gray-100 w-full">
+                                            <x-icons.delete class="inline-block mr-2 ml-1 text-red-500"/>
+                                            Delete
+                                        </x-confirm-dialog>
                                     </div>
-                                    <x-confirm-dialog
-                                        call="deleteNote({{$note->id}}); open = false"
-                                        class="px-3 py-2 text-left block bg-white hover:bg-gray-100 w-full">
-                                        <x-icons.delete class="inline-block mr-2 ml-1 text-red-500"/>
-                                        Delete
-                                    </x-confirm-dialog>
                                 </div>
-                            </div>
 
-                            <div class="w-full flex-grow overflow-hidden" x-ref="content">
+                                <div class="w-full flex-grow overflow-hidden" x-ref="content">
                                 <span
                                     x-data
                                     wire:click="viewNote({{$note->id}})"
@@ -138,22 +146,23 @@
                                     class="font-semibold text-sm text-gray-700 cursor-pointer block mb-2 mr-4">
                                     {{$note->title}}
                                 </span>
-                                <div
-                                    wire:click="viewNote({{$note->id}})"
-                                    class="content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full overflow-hidden">
-                                    <div class="line-clamp-5">
-                                        <bdi>{!! $note->content !!}</bdi>
+                                    <div
+                                        wire:click="viewNote({{$note->id}})"
+                                        class="content text-gray-800 cursor-pointer prose prose-sm sm:prose lg:prose xl:prose max-w-none w-full overflow-hidden">
+                                        <div class="line-clamp-5">
+                                            <bdi>{!! $note->content !!}</bdi>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
 
-            <div class="items-center justify-center w-full px-5">
-                {{ $this->notes->links() }}
-            </div>
+                <div class="items-center justify-center w-full px-5">
+                    {{ $this->notes->links() }}
+                </div>
+            @endif
 
             <div
                 style="box-shadow: 0 -5px 15px -6px rgba(0, 0, 0, 0.25);"
@@ -191,14 +200,16 @@
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
                                                  viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
                                                       d="M5 15l7-7 7 7"/>
                                             </svg>
                                         @else
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
                                                  viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
                                                       d="M19 9l-7 7-7-7"/>
                                             </svg>
                                         @endif
@@ -215,14 +226,16 @@
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
                                                  viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
                                                       d="M5 15l7-7 7 7"/>
                                             </svg>
                                         @else
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  class="inline-block w-4 h-4 ml-2 text-gray-500" fill="none"
                                                  viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
                                                       d="M19 9l-7 7-7-7"/>
                                             </svg>
                                         @endif
@@ -238,7 +251,8 @@
                     </div>
 
                     <div>
-                        <x-gradient-button class="w-full" href="#" wire:click.prevent="$dispatch('openTextNoteModal')">
+                        <x-gradient-button class="w-full" href="#"
+                                           wire:click.prevent="$dispatch('openTextNoteModal')">
                             <x-icons.plus/>
                             Add Note
                         </x-gradient-button>
