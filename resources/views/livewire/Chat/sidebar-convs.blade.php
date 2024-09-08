@@ -1,11 +1,11 @@
 @php($tools = config('tools'))
 
 <div x-data="{ openDropdown: null }" wire:init="load" class="relative w-full min-h-[70vh] flex flex-col">
+
     <!-- Loading indicator -->
     <div wire:loading class="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-10">
         {!! $this->placeholder() !!}
     </div>
-
 
     <li>
         <div class="relative bg-transparent">
