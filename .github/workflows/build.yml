@@ -33,19 +33,18 @@ jobs:
         run: composer install --optimize-autoloader --no-dev
 
       - name: Set up Laravel Environment
-        run: |
-          php artisan key:generate
+        run: php artisan key:generate
 
       - name: Run migrations
         run: php artisan migrate --force
 
-      - name: Build NativePHP App
-        run: |
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            nativephp build --win;
-          else
-            nativephp build --mac;
-          fi
+      - name: Build NativePHP App on Windows
+        if: matrix.os == 'windows-latest'
+        run: nativephp build --win
+
+      - name: Build NativePHP App on macOS
+        if: matrix.os == 'macos-latest'
+        run: nativephp build --mac
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
