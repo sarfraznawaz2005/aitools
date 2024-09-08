@@ -26,7 +26,7 @@
         @else
 
             @unless (isset($this->messages))
-                <livewire:chat.bot-selector />
+                <livewire:chat.bot-selector lazy />
 
                 <script>
                     function scrollToBottom() {
