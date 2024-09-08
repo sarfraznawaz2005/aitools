@@ -20,15 +20,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: fileinfo, mbstring, tokenizer, xml, ctype, json, pdo, openssl
+          extensions: fileinfo, mbstring, tokenizer, xml, ctype, json, pdo, openssl, sqlite
+
+      - name: Create SQLite Database File Before Composer Scripts
+        run: touch database/database.sqlite
 
       - name: Install dependencies
         run: composer install --optimize-autoloader --no-dev
-
-      - name: Create SQLite Database File
-        run: |
-          touch database/database.sqlite
-          php artisan migrate
 
       - name: Build NativePHP App
         run: |
