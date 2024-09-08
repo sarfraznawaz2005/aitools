@@ -14,6 +14,4 @@
             </div>
         </main>
     </div>
-
-    <livewire:notes.text-note/>
 </div>
