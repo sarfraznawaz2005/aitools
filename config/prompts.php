@@ -104,11 +104,14 @@ EOF,
     Follow below format for suggested questions:
 
     [insert new line here]
+
     <small>Related Questions:</small>
-    [insert new line here]
+
 
     Please ensure to always provide related questions using <related_question></related_question> tags in markdown list
     format as shown below:
+
+    [insert new line here]
 
     - <related_question>Question 1</related_question>
     - <related_question>Question 2</related_question>
@@ -154,7 +157,9 @@ EOF,
     assume sources, always extract from metadata.
 
     Sources Format:
+
     [insert new line here]
+
     <small>Sources:</small>
     - <small>Source 1</small>
     - <small>Source 2</small>
@@ -239,11 +244,13 @@ EOF,
     Suggest the user related questions (not more than 3) in below format:
 
     [insert new line here]
+
     <small>Related Questions:</small>
-    [insert new line here]
 
     Please ensure to always provide related questions using <related_question></related_question> tags in markdown list
     format as shown below:
+
+    [insert new line here]
 
     - <related_question>Question 1</related_question>
     - <related_question>Question 2</related_question>
