@@ -1,7 +1,7 @@
 @php($tools = config('tools'))
 
 <div>
-    <aside class="w-full sm:w-52 bg-white sm:sticky top-0 h-screen sm:h-auto sm:pt-16 pt-4" x-data="{ openDropdown: false }" x-init="
+    <aside class="w-full sm:w-52 bg-white sm:sticky top-0 h-screen min-h-screen sm:h-auto sm:pt-16 pt-4" x-data="{ openDropdown: false }" x-init="
             $nextTick(() => { openDropdown = false; })
 
             $wire.on('updated', () => {
