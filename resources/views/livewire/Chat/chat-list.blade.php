@@ -26,7 +26,7 @@
         @else
 
             @unless (isset($this->messages))
-                <livewire:chat.bot-selector lazy />
+                <livewire:chat.bot-selector lazy/>
 
                 <script>
                     function scrollToBottom() {
@@ -35,7 +35,7 @@
                 </script>
             @else
 
-                <livewire:chat.bot-forward />
+                <livewire:chat.bot-forward/>
 
                 @if($botFiles)
                     <fieldset
