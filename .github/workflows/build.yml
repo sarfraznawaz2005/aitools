@@ -16,14 +16,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy .env.example to .env
-        run: cp .env.example .env
-
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: fileinfo, mbstring, tokenizer, xml, ctype, json, pdo, sqlite3, openssl
+          tools: composer
+          extensions: sqlite3, pdo_sqlite, sqlite, fileinfo, mbstring, tokenizer, xml, ctype, json, pdo, openssl
+
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
 
       - name: Create SQLite Database File
         run: touch database/database.sqlite
@@ -31,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: composer install --optimize-autoloader --no-dev
 
-      - name: Set up .env Database
+      - name: Set up Laravel Environment
         run: |
           php artisan key:generate
           if [[ "$RUNNER_OS" == "Windows" ]]; then
@@ -40,7 +41,6 @@ jobs:
           else
             sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' .env
             sed -i 's/DB_DATABASE=.*/DB_DATABASE=database\/database.sqlite/' .env
-          fi
 
       - name: Run migrations
         run: php artisan migrate --force
