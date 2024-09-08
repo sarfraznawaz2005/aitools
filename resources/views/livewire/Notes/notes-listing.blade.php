@@ -149,11 +149,10 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
 
-                <div class="items-center justify-center w-full">
-                    {{ $this->notes->links() }}
-                </div>
-
+            <div class="items-center justify-center w-full px-5">
+                {{ $this->notes->links() }}
             </div>
 
             <div
