@@ -221,12 +221,12 @@
                                 Livewire.dispatch('getResponse');
 
                                 interval = setInterval(() => {
-                                window.scrollTo({
-                                        top: document.body.scrollHeight + 10000,
-                                        behavior: 'smooth'
-                                    });
-                                }, 100)
-                            });
+                                    window.scrollTo({
+                                            top: document.body.scrollHeight + 10000,
+                                            behavior: 'smooth'
+                                        });
+                                    }, 100)
+                                });
 
                             $wire.on('focusInput', () => {
                                 show = false;
