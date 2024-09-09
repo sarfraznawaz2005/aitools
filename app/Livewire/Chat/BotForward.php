@@ -8,6 +8,7 @@ use App\Models\Message;
 use App\Traits\InteractsWithToast;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class BotForward extends Component
@@ -21,6 +22,7 @@ class BotForward extends Component
     public bool $loaded = false;
     public Collection $bots;
 
+    #[Renderless]
     public function loadBots(): void
     {
         $this->bots = Bot::query()->orderBy('name')->get();
