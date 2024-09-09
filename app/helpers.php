@@ -340,36 +340,36 @@ function fetchUrlContent($url): bool|string
     }
 }
 
-function processMarkdownToHtml($markdownContent): string
+function processMarkdownToHtml($markdownContent, $fixBroken = true): string
 {
     // Use the MarkdownRenderer to convert markdown to HTML
     $markdownRenderer = app(MarkdownRenderer::class);
     $htmlContent = $markdownRenderer->toHtml($markdownContent);
 
-    /*
-    // Suppress libxml errors and warnings
-    libxml_use_internal_errors(true);
+    if ($fixBroken) {
+        // Suppress libxml errors and warnings
+        libxml_use_internal_errors(true);
 
-    // Initialize DOMDocument and prevent automatic DOCTYPE addition
-    $doc = new DOMDocument();
-    $doc->substituteEntities = false;
+        // Initialize DOMDocument and prevent automatic DOCTYPE addition
+        $doc = new DOMDocument();
+        $doc->substituteEntities = false;
 
-    // Convert to HTML entities and load into DOMDocument with a dummy structure
-    $content = mb_convert_encoding($htmlContent, 'html-entities', 'utf-8');
-    $success = $doc->loadHTML('<html><body>' . $content . '</body></html>');
+        // Convert to HTML entities and load into DOMDocument with a dummy structure
+        $content = mb_convert_encoding($htmlContent, 'html-entities', 'utf-8');
+        $success = $doc->loadHTML('<html><body>' . $content . '</body></html>');
 
-    libxml_clear_errors();
+        libxml_clear_errors();
 
-    if ($success) {
-        // Extract only the content inside the <body> tag
-        $bodyContent = '';
-        foreach ($doc->getElementsByTagName('body')->item(0)->childNodes as $childNode) {
-            $bodyContent .= $doc->saveHTML($childNode);
+        if ($success) {
+            // Extract only the content inside the <body> tag
+            $bodyContent = '';
+            foreach ($doc->getElementsByTagName('body')->item(0)->childNodes as $childNode) {
+                $bodyContent .= $doc->saveHTML($childNode);
+            }
+
+            return $bodyContent !== false ? $bodyContent : $htmlContent;
         }
-
-        return $bodyContent !== false ? $bodyContent : $htmlContent;
     }
-    */
 
     return $htmlContent;
 }
