@@ -55,7 +55,7 @@ return [
             'default_protocol' => 'https', // defaults to 'http'
         ],
         'external_link' => [
-            'internal_hosts' => 'www.example.com', // TODO: Don't forget to set this!
+            'internal_hosts' => 'http://127.0.0.1:8100', // TODO: Don't forget to set this!
             'open_in_new_window' => true,
             'html_class' => 'external-link',
             'nofollow' => '',
@@ -69,13 +69,13 @@ return [
             Heading::class => [
                 'class' => static function (Heading $node) {
                     if ($node->getLevel() === 1) {
-                        return 'text-4xl';
+                        return 'text-lg';
                     } elseif ($node->getLevel() === 2) {
-                        return 'text-3xl';
+                        return 'text-lg';
                     } elseif ($node->getLevel() === 3) {
-                        return 'text-2xl';
+                        return 'text-lg';
                     } elseif ($node->getLevel() === 4) {
-                        return 'text-xl';
+                        return 'text-lg';
                     } elseif ($node->getLevel() === 5) {
                         return 'text-lg';
                     } elseif ($node->getLevel() === 6) {
