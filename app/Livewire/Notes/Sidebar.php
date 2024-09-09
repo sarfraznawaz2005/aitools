@@ -6,6 +6,7 @@ use App\Models\NoteFolder;
 use App\Traits\InteractsWithToast;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class Sidebar extends Component
@@ -30,6 +31,7 @@ class Sidebar extends Component
         return NoteFolder::query()->with('notes')->orderBy('name')->get();
     }
 
+    #[Renderless]
     public function addFolder(): void
     {
         $this->resetForm();
@@ -37,6 +39,7 @@ class Sidebar extends Component
         $this->dispatch('showModal', ['id' => 'notesFolderModal']);
     }
 
+    #[Renderless]
     public function editFolder(NoteFolder $folder): void
     {
         $this->dispatch('showModal', ['id' => 'notesFolderModal']);
@@ -77,6 +80,7 @@ class Sidebar extends Component
         $this->dispatch('folderDeleted')->to(NotesListing::class);
     }
 
+    #[Renderless]
     public function resetForm(): void
     {
         $this->reset();
