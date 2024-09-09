@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -150,6 +151,7 @@ class DisposableChat extends Component
         }
     }
 
+    #[Renderless]
     public function deleteMessage($index): void
     {
         unset($this->conversation[$index]);
@@ -167,6 +169,7 @@ class DisposableChat extends Component
         $this->dispatch('focusInput');
     }
 
+    #[Renderless]
     public function export($format): StreamedResponse
     {
         $filename = 'quick-chat-export' . '.' . $format;
