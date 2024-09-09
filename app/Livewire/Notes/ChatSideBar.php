@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -170,6 +171,7 @@ class ChatSideBar extends Component
         })->toArray();
     }
 
+    #[Renderless]
     public function deleteMessage($index): void
     {
         unset($this->conversation[$index]);
