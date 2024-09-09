@@ -14,6 +14,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -159,11 +160,13 @@ class TipsNotifier extends Component
         $this->resetForm();
     }
 
+    #[Renderless]
     public function edit(Tip $tip): void
     {
         $this->model = $tip;
 
         $this->resetErrorBag();
+        $this->resetValidation();
 
         $this->fill($tip->toArray());
 
@@ -196,6 +199,7 @@ class TipsNotifier extends Component
         $this->success('Tip schedule deleted successfully!');
     }
 
+    #[Renderless]
     public function viewContents(TipContent $content): void
     {
         try {
@@ -209,11 +213,13 @@ class TipsNotifier extends Component
         }
     }
 
+    #[Renderless]
     public function resetForm(): void
     {
         $this->reset();
 
         $this->resetErrorBag();
+        $this->resetValidation();
 
         $this->model = new Tip();
     }
