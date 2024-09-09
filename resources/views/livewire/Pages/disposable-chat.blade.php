@@ -1,7 +1,7 @@
 <div x-data="{ lastQuery: '', userMessage: '' }" class="w-full h-full" wire:init="load">
 
     <!-- Loading indicator -->
-    <div wire:loading class="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-10">
+    <div wire:loading class="fixed inset-0 start-0 w-full flex justify-center items-center bg-white bg-opacity-0 z-50">
         {!! $this->placeholder() !!}
     </div>
 

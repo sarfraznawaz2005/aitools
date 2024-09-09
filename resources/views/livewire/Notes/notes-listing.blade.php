@@ -7,7 +7,7 @@
         <main class="flex-1 pt-10 border-t sm:border-t-0 h-screen overflow-y-auto sm:border-l border-gray-300">
 
             <!-- Loading indicator -->
-            <div wire:loading class="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-10">
+            <div wire:loading class="absolute inset-0 flex justify-center items-center bg-white bg-opacity-0 z-50">
                 {!! $this->placeholder() !!}
             </div>
 

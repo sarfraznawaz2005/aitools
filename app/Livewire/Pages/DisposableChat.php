@@ -54,9 +54,7 @@ class DisposableChat extends Component
     #[On('suggestedAnswer')]
     function suggestedAnswer(string $linkText): void
     {
-        $this->userMessage = $linkText;
-
-        $this->dispatch('goAhead');
+        $this->setMessage($linkText);
     }
 
     public function regenerate(int $index): void
