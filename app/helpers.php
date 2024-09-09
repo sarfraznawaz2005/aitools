@@ -346,9 +346,6 @@ function processMarkdownToHtml($markdownContent): string
     $markdownRenderer = app(MarkdownRenderer::class);
     $htmlContent = $markdownRenderer->toHtml($markdownContent);
 
-    // Replace empty p tags, including those with only whitespace or newlines
-    $htmlContent = preg_replace('/<p[^>]*>\s*<\/p[^>]*>/', '', $htmlContent);
-
     // Suppress libxml errors and warnings
     libxml_use_internal_errors(true);
 
