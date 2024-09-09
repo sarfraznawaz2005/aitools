@@ -48,6 +48,7 @@ class BotForward extends Component
         $this->dispatch('botChosen', $bot->id);
     }
 
+    #[Renderless]
     public function forward(): void
     {
         if (!$this->bot) {
