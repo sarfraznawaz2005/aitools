@@ -10,6 +10,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -87,6 +88,7 @@ class NotesListing extends Component
     }
 
     #[On('folderDeleted')]
+    #[Renderless]
     public function folderDeleted(NoteFolder $folder): void
     {
         if ($folder->id === $this->folder->id) {
@@ -94,6 +96,7 @@ class NotesListing extends Component
         }
     }
 
+    #[Renderless]
     public function moveToFolder(NoteFolder $folder, Note $note): void
     {
         $note->update(['note_folder_id' => $folder->id]);
@@ -103,6 +106,7 @@ class NotesListing extends Component
         $this->success('Note moved successfully!');
     }
 
+    #[Renderless]
     public function viewNote(Note $note): void
     {
         try {
@@ -116,6 +120,7 @@ class NotesListing extends Component
         }
     }
 
+    #[Renderless]
     public function deleteNote(Note $note): void
     {
         if ($note->delete()) {
