@@ -1,9 +1,12 @@
 <x-layouts.app :title="''">
 
-    <div class="mt-20 px-8">
-        <x-flash/>
-        <livewire:apikeys.api-key-banner/>
-    </div>
+    @if(!hasApiKeysCreated())
+        <div class="mt-20 px-8">
+            <livewire:apikeys.api-key-banner/>
+        </div>
+    @endif
+
+    <x-flash/>
 
     <div class="flex items-center justify-center min-h-screen mx-auto px-8" tabindex="-1">
         <div class="grid sm:grid-cols-4 lg:grid-cols-4 gap-6 md:gap-10">
