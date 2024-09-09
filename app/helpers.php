@@ -344,7 +344,6 @@ function processMarkdownToHtml($markdownContent, $fixBroken = true): string
 {
     // Use the MarkdownRenderer to convert markdown to HTML
     $markdownRenderer = app(MarkdownRenderer::class);
-    $markdownRenderer->highlightCode(true);
     $htmlContent = $markdownRenderer->toHtml($markdownContent);
 
     if ($fixBroken) {
