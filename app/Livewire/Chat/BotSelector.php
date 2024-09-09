@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -72,6 +73,7 @@ class BotSelector extends Component
         return Bot::query()->orderBy('name')->get();
     }
 
+    #[Renderless]
     public function mount(Bot $bot = null): void
     {
         $this->model = $bot ?? new Bot();
