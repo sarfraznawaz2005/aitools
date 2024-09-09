@@ -13,6 +13,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -74,6 +75,7 @@ class ChatList extends Component
     }
 
     #[On('modelChanged')]
+    #[Renderless]
     function modelChanged(): void
     {
         if ($this->conversation && $this->conversation->bot->isDocumentBot()) {
