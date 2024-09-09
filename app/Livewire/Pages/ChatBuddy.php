@@ -158,7 +158,7 @@ class ChatBuddy extends Component
             if (!$files) {
                 sendStream("This bot does not have any files, please edit the bot and add files to it.");
                 sendStream("", true);
-                $latestMessage->update(['body' => "No files found!"]);
+                $latestMessage->update(['body' => "This bot does not have any files, please edit the bot and add files to it."]);
                 return;
             }
 
