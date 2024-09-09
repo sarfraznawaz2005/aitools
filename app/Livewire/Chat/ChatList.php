@@ -102,6 +102,7 @@ class ChatList extends Component
         $this->dispatch('createTempAImessage')->self();
     }
 
+    #[Renderless]
     public function deleteMessage(Message $message): void
     {
         if ($message->delete()) {
@@ -112,6 +113,7 @@ class ChatList extends Component
         }
     }
 
+    #[Renderless]
     public function clearConversation(): void
     {
         if ($this->conversation->messages()->delete()) {
@@ -133,6 +135,7 @@ class ChatList extends Component
         $this->dispatch('getChatBuddyAiResponse', $this->conversation->id);
     }
 
+    #[Renderless]
     public function export($format): StreamedResponse
     {
         $filename = 'chat-' . strtolower(Str::slug($this->conversation->title)) . '.' . $format;
