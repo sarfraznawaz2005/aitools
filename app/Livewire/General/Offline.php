@@ -12,7 +12,7 @@ class Offline extends Component
         $id = uniqid('', true);
 
         return <<<blade
-            <div class="w-full my-4 flex flex-row z-[1000] justify-center items-center mx-auto" wire:offline wire:key="offline-$id">
+            <div class="w-full my-4 mt-20 flex flex-row z-[1000] justify-center items-center mx-auto" wire:offline wire:key="offline-$id">
                 <div class="p-3 text-sm text-white break-words flex items-center rounded-lg bg-yellow-500">
                     <div class="flex items-center justify-center text-center">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
