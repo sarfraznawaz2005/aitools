@@ -24,7 +24,7 @@ class ModelSelector extends Component
 
     public bool $loaded = false;
 
-    public function load(): void
+    public function loadModels(): void
     {
         try {
             $selectedModel = Settings::get($this->for . '.selectedModel');

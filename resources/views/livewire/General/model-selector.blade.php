@@ -1,4 +1,4 @@
-<div wire:init="load" x-data="{
+<div wire:init="loadModels" x-data="{
     open: false,
     position: 'bottom',
     updatePosition() {

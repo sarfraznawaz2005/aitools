@@ -34,7 +34,7 @@
         Livewire.hook('request', ({component, options, payload, respond, succeed, fail}) => {
 
             // Define the methods that should ignore the loading spinner
-            const ignoreMethodsForLoading = ['userMessage', 'loadBots'];
+            const ignoreMethodsForLoading = ['userMessage', 'loadBots', 'loadModels'];
 
             // loop over the ignoreMethodsForLoading array and skip execution if payload contains any of the methods
             for (let i = 0; i < ignoreMethodsForLoading.length; i++) {
