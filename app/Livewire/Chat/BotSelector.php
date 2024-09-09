@@ -136,7 +136,6 @@ class BotSelector extends Component
         $this->dispatch('indexFiles', $this->model->id);
     }
 
-    #[Renderless]
     public function edit(Bot $bot): void
     {
         $this->newBotId = 0;
