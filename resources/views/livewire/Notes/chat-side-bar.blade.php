@@ -154,18 +154,20 @@
                             </div>
                         @endforeach
 
-                        <div x-data="{show:false}"
+                        <div x-data="{show:false, interval: null}"
                              x-init="
                             $wire.on('goAhead', () => {
                                 $refs.chatInput.disabled = true;
                                 show = true;
                                 scrollToBottom();
                                 Livewire.dispatch('getResponse');
+                                interval = setInterval(() => scrollToBottom(), 100)
                             });
 
                             $wire.on('focusInput', () => {
                                 show = false;
                                 scrollToBottom();
+                                clearInterval(interval);
                                 $refs.chatInput.disabled = false;
                             });
                          ">
