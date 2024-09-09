@@ -156,7 +156,7 @@ class ChatBuddy extends Component
             $files = $conversation->bot->files();
 
             if (!$files) {
-                sendStream("No files found!");
+                sendStream("This bot does not have any files, please edit the bot and add files to it.");
                 sendStream("", true);
                 $latestMessage->update(['body' => "No files found!"]);
                 return;
