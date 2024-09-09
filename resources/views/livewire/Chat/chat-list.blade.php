@@ -15,7 +15,7 @@
 
         @if(!hasApiKeysCreated())
             <li class="mb-5">
-                <livewire:apikeys.api-key-banner/>
+                <livewire:apikeys.api-key-banner wire:key="api-key-banner"/>
             </li>
 
             <script>
@@ -26,7 +26,7 @@
         @else
 
             @unless (isset($this->messages))
-                <livewire:chat.bot-selector lazy/>
+                <livewire:chat.bot-selector lazy wire:key="bot-selector"/>
 
                 <script>
                     function scrollToBottom() {
@@ -35,7 +35,7 @@
                 </script>
             @else
 
-                <livewire:chat.bot-forward/>
+                <livewire:chat.bot-forward wire:key="bot-forward"/>
 
                 @if($botFiles)
                     <fieldset
