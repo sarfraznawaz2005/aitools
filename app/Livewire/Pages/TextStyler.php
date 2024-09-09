@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -21,6 +22,7 @@ class TextStyler extends Component
 
     protected $listeners = ['apiKeysUpdated' => '$refresh'];
 
+    #[Renderless]
     public function getText(string $prompt): void
     {
         $this->validate();
@@ -31,6 +33,7 @@ class TextStyler extends Component
         $this->dispatch('getTextStylerAiResponse');
     }
 
+    #[Renderless]
     public function chat(): StreamedResponse
     {
         return response()->stream(function () {
