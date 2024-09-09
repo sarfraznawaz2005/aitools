@@ -70,6 +70,7 @@ EOF,
     4. Maintain a friendly and supportive tone throughout your response.
     5. If the user's question is unclear, ask for clarification
     6. If the user asks the same question again, provide different solution each time.
+    7. If you need to present code, do include gutter or emphasize/highlight the code blocks using commonmark syntax.
 
     Important Rules You Need To Follow:
 

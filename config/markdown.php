@@ -10,11 +10,9 @@ use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
-use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
-use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\Extension\Table\Table;
-use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
+use Tempest\Highlight\CommonMark\HighlightExtension;
 
 return [
     'code_highlighting' => [
@@ -23,7 +21,7 @@ return [
          *
          * More info: https://spatie.be/docs/laravel-markdown/v1/installation-setup
          */
-        'enabled' => true,
+        'enabled' => false,
 
         /*
          * The name of or path to a Shiki theme
@@ -162,6 +160,7 @@ return [
         FootnoteExtension::class,
         FrontMatterExtension::class,
         SmartPunctExtension::class,
+        HighlightExtension::class,
     ],
 
     /*
