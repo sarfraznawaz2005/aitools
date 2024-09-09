@@ -40,6 +40,7 @@ class BotForward extends Component
         $this->dispatch('showModal', ['id' => 'botForwardModal']);
     }
 
+    #[Renderless]
     public function selectBot(Bot $bot): void
     {
         $this->bot = $bot;
