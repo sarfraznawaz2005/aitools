@@ -7,6 +7,8 @@ use Livewire\Component;
 
 class ApiKeyBanner extends Component
 {
+    protected $listeners = ['apiKeysUpdated' => '$refresh'];
+
     #[Computed]
     public function hasApiKeys()
     {

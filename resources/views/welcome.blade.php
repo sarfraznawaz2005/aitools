@@ -1,8 +1,11 @@
 <x-layouts.app :title="''">
-    <div class="flex items-center justify-center min-h-screen mx-auto px-8" tabindex="-1">
-        <x-flash/>
-        <livewire:apikeys.api-key-banner />
 
+    <div class="mt-20 px-8">
+        <x-flash/>
+        <livewire:apikeys.api-key-banner/>
+    </div>
+
+    <div class="flex items-center justify-center min-h-screen mx-auto px-8" tabindex="-1">
         <div class="grid sm:grid-cols-4 lg:grid-cols-4 gap-6 md:gap-10">
             @foreach(config('tools') as $tool)
                 <a href="{{route($tool['route'])}}" wire:navigate.hover>
