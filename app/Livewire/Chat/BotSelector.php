@@ -83,6 +83,7 @@ class BotSelector extends Component
         $this->fill($this->model->toArray());
     }
 
+    #[Renderless]
     public function selectBot(Bot $bot): void
     {
         $this->dispatch('botSelected', $bot->id);
