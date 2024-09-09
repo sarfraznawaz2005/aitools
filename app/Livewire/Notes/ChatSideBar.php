@@ -46,9 +46,7 @@ class ChatSideBar extends Component
     #[On('suggestedAnswer')]
     function suggestedAnswer(string $linkText): void
     {
-        $this->userMessage = $linkText;
-
-        $this->dispatch('goAhead');
+        $this->setMessage($linkText);
     }
 
     public function setMessage(string $message): void
@@ -63,6 +61,13 @@ class ChatSideBar extends Component
             return;
         }
 
+        // Add user message to conversation
+        $this->conversation[] = [
+            'role' => 'user',
+            'content' => $this->userMessage,
+            'timestamp' => time(),
+        ];
+
         $this->dispatch('goAhead');
     }
 
@@ -71,13 +76,6 @@ class ChatSideBar extends Component
     {
         $this->resetValidation();
         $this->resetErrorBag();
-
-        // Add user message to conversation
-        $this->conversation[] = [
-            'role' => 'user',
-            'content' => $this->userMessage,
-            'timestamp' => time(),
-        ];
 
         $aiResponse = $this->getAIResponse($this->userMessage);
 
