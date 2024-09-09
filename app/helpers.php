@@ -346,6 +346,7 @@ function processMarkdownToHtml($markdownContent): string
     $markdownRenderer = app(MarkdownRenderer::class);
     $htmlContent = $markdownRenderer->toHtml($markdownContent);
 
+    /*
     // Suppress libxml errors and warnings
     libxml_use_internal_errors(true);
 
@@ -368,6 +369,7 @@ function processMarkdownToHtml($markdownContent): string
 
         return $bodyContent !== false ? $bodyContent : $htmlContent;
     }
+    */
 
     return $htmlContent;
 }
