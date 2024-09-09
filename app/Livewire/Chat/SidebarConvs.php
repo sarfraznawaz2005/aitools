@@ -6,6 +6,7 @@ use App\Models\Conversation;
 use App\Traits\InteractsWithToast;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class SidebarConvs extends Component
@@ -37,6 +38,7 @@ class SidebarConvs extends Component
             ->get();
     }
 
+    #[Renderless]
     public function toggleFavorite(Conversation $conversation): void
     {
         $conversation->favorite = !$conversation->favorite;
@@ -48,6 +50,7 @@ class SidebarConvs extends Component
         $this->dispatch('conversationsUpdated');
     }
 
+    #[Renderless]
     public function toggleArchived(Conversation $conversation): void
     {
         $conversation->archived = !$conversation->archived;
@@ -56,6 +59,7 @@ class SidebarConvs extends Component
         $this->redirect(route('chat-buddy'), true);
     }
 
+    #[Renderless]
     public function rename(Conversation $conversation, $title): void
     {
         if (trim($conversation->title) === trim($title)) {
@@ -78,6 +82,7 @@ class SidebarConvs extends Component
         $this->success('Conversation re-named successfully.');
     }
 
+    #[Renderless]
     public function delete(Conversation $conversation): void
     {
         $conversation->delete();
