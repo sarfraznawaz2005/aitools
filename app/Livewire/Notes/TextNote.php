@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Lorisleiva\CronTranslator\CronTranslator;
 use Pforret\PfArticleExtractor\ArticleExtractor;
@@ -40,6 +41,7 @@ class TextNote extends Component
     public bool $loaded = false;
     public Collection $folders;
 
+    #[Renderless]
     public function load(): void
     {
         $this->folders = NoteFolder::query()->with('notes')->orderBy('name')->get();
@@ -81,6 +83,7 @@ class TextNote extends Component
     }
 
     #[On('fetchLink')]
+    #[Renderless]
     public function fetchLink(string $link): void
     {
         $this->title = '';
@@ -387,6 +390,7 @@ class TextNote extends Component
         };
     }
 
+    #[Renderless]
     public function resetForm(): void
     {
         $this->reset(['title', 'content', 'reminder_datetime', 'is_recurring', 'recurring_frequency']);
