@@ -1,5 +1,5 @@
 @import 'notyf/notyf.min.css';
-@import "../../vendor/tempest/highlight/src/Themes/Css/catppuccin-latte.css";
+@import "../../vendor/tempest/highlight/src/Themes/Css/light-plus.css";
 
 @tailwind base;
 @tailwind components;
