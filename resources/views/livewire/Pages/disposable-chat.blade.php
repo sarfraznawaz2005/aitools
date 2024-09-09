@@ -232,7 +232,7 @@
                             <div class="fixed inset-0 z-40"></div>
                         </template>
 
-                        <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col">
+                        <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col" :class="{ 'mt-8': show }">
                             <div
                                 wire:stream="aiStreamResponse"
                                 class="bg-white quick-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
