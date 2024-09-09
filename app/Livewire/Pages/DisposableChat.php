@@ -80,6 +80,13 @@ class DisposableChat extends Component
             return;
         }
 
+        // Add user message to conversation
+        $this->conversation[] = [
+            'role' => 'user',
+            'content' => $this->userMessage,
+            'timestamp' => time(),
+        ];
+
         $this->dispatch('goAhead');
     }
 
@@ -88,15 +95,6 @@ class DisposableChat extends Component
     {
         $this->resetValidation();
         $this->resetErrorBag();
-
-        if (trim($this->userMessage)) {
-            // Add user message to conversation
-            $this->conversation[] = [
-                'role' => 'user',
-                'content' => $this->userMessage,
-                'timestamp' => time(),
-            ];
-        }
 
         $aiResponse = $this->getAIResponse($this->userMessage);
 
