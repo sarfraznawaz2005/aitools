@@ -4,6 +4,7 @@ namespace App\Livewire\Settings;
 
 use App\Models\Conversation;
 use Exception;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Native\Laravel\Facades\Settings;
@@ -31,6 +32,7 @@ class ChatBuddySettings extends Component
         session()->flash('message', 'Settings saved successfully.');
     }
 
+    #[Renderless]
     public function deleteAllConversations(): void
     {
         Conversation::query()->where('favorite', false)->delete();
