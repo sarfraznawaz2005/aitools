@@ -1,4 +1,4 @@
-<div x-data="{
+<div wire:init="load" x-data="{
     open: false,
     position: 'bottom',
     updatePosition() {
@@ -71,24 +71,26 @@
         role="menu"
     >
         <div class="py-2 first:pt-0 last:pb-0">
-            @foreach($this->apiKeys->groupBy('llm_type') as $llmType => $groupedApiKeys)
-                <ul class="m-3">
-                    <li class="font-bold text-sm text-gray-500 whitespace-nowrap">
-                        {{ $llmType }}
-                    </li>
+            @if($loaded)
+                @foreach($this->apiKeys->groupBy('llm_type') as $llmType => $groupedApiKeys)
+                    <ul class="m-3">
+                        <li class="font-bold text-sm text-gray-500 whitespace-nowrap">
+                            {{ $llmType }}
+                        </li>
 
-                    @foreach($groupedApiKeys as $apiKey)
-                        <li
-                            wire:click="setModel('{{ $apiKey->model_name }}'); open = false;"
-                            class="ml-4 text-sm cursor-pointer py-1.5 text-gray-500
+                        @foreach($groupedApiKeys as $apiKey)
+                            <li
+                                wire:click="setModel('{{ $apiKey->model_name }}'); open = false;"
+                                class="ml-4 text-sm cursor-pointer py-1.5 text-gray-500
                             {{$apiKey->model_name === $selectedModel ? 'font-bold pointer-events-none' : ''}}
                             hover:text-blue-600 p-1 list-disc list-inside whitespace-nowrap"
-                        >
-                            {{ $apiKey->model_name }}
-                        </li>
-                    @endforeach
-                </ul>
-            @endforeach
+                            >
+                                {{ $apiKey->model_name }}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endforeach
+            @endif
         </div>
     </div>
 </div>

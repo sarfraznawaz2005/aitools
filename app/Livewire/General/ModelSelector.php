@@ -6,6 +6,7 @@ use App\Models\ApiKey;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Native\Laravel\Facades\Settings;
 
@@ -21,7 +22,9 @@ class ModelSelector extends Component
         'apiKeysUpdated' => '$refresh',
     ];
 
-    public function boot(): void
+    public bool $loaded = false;
+
+    public function load(): void
     {
         try {
             $selectedModel = Settings::get($this->for . '.selectedModel');
@@ -36,6 +39,8 @@ class ModelSelector extends Component
             }
         } catch (Exception $e) {
             Log::error($e->getMessage());
+        } finally {
+            $this->loaded = true;
         }
     }
 
@@ -45,6 +50,7 @@ class ModelSelector extends Component
         return ApiKey::all()->sortBy('model_name');
     }
 
+    #[Renderless]
     public function setModel(string $model): void
     {
         Settings::set($this->for . '.selectedModel', $model);
