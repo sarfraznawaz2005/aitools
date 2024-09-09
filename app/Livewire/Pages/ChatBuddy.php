@@ -14,6 +14,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Spatie\LaravelMarkdown\MarkdownRenderer;
@@ -25,6 +26,7 @@ class ChatBuddy extends Component
 
     public Conversation $conversation;
 
+    #[Renderless]
     public function chat(Conversation $conversation = null): StreamedResponse
     {
         if (is_null($conversation)) {
@@ -244,7 +246,7 @@ class ChatBuddy extends Component
         ]);
     }
 
-    function getLatestMessages(Conversation $conversation): Collection|\Illuminate\Database\Eloquent\Collection
+    private function getLatestMessages(Conversation $conversation): Collection|\Illuminate\Database\Eloquent\Collection
     {
         return $conversation
             ->messages()
@@ -261,7 +263,7 @@ class ChatBuddy extends Component
             ->sortBy('id');
     }
 
-    function getUniqueMessages($latestMessages, Message $userQuery): array
+    private function getUniqueMessages($latestMessages, Message $userQuery): array
     {
         $uniqueMessages = [];
         foreach ($latestMessages as $message) {
