@@ -22,7 +22,10 @@ class ChatSideBar extends Component
     #[Session(key: 'notes-conversation')]
     public array $conversation = [];
 
-    protected $listeners = ['refreshNotesChat' => '$refresh'];
+    protected $listeners = [
+        'refreshNotesChat' => '$refresh',
+        'notesUpdated' => '$refresh',
+    ];
 
     public bool $loaded = false;
 
