@@ -236,7 +236,7 @@
                             });
                          ">
 
-                        <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col" :class="{ 'mb-8': show }">
+                        <div :style="show ? 'visibility: visible;' : 'visibility: hidden;'" class="flex flex-col">
                             <div
                                 wire:stream="aiStreamResponse"
                                 class="bg-white quick-message text-gray-800 prose p-2 prose-sm sm:prose lg:prose xl:prose text-sm px-3 rounded-lg border border-gray-200 rounded-bl-none self-start max-w-full">
