@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -29,6 +30,7 @@ class ChatInput extends Component
         $this->bot = $bot;
     }
 
+    #[Renderless]
     public function save(): void
     {
         $this->validate();
