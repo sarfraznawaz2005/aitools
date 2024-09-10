@@ -11,20 +11,27 @@ class BackupDatabase extends Command
 
     public function handle(): void
     {
-        $source = storage_path('database/database.sqlite');
+        // works only for Windows
+        $source = dirname(base_path(), 4) . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'database.sqlite';
+        $destinationSource = dirname(base_path(), 4) . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'settings-database-backup-path';
 
-        if (file_exists(storage_path('settings-database-backup-path'))) {
-            $destination = file_get_contents(storage_path('settings-database-backup-path'));
+        $source = str_ireplace(['local', 'programs'], ['Roaming', ''], $source);
+        $destinationSource = str_ireplace(['local', 'programs'], ['Roaming', ''], $destinationSource);
+
+        if (file_exists($destinationSource)) {
+            $destination = file_get_contents($destinationSource);
 
             if ($destination) {
                 $destination = rtrim($destination, '/\\') . '/aitools-database-backup.sqlite';
 
                 @unlink($destination);
 
-                copy($source, $destination);
+                $result = copy($source, $destination);
 
-                $this->info('Database backup done successfully.');
-                info('Database backup done successfully.');
+                if ($result) {
+                    $this->info('Database backup done successfully.');
+                    info('Database backup done successfully.');
+                }
             }
         }
 

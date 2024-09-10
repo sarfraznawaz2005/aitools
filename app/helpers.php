@@ -1,6 +1,5 @@
 <?php
 /*
- * make sure correct db is backuped up
  * foreach loop to separate components
  *
  *
