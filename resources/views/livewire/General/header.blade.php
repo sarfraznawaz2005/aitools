@@ -74,7 +74,7 @@
                         @else
                             <a href="{{route('home')}}" wire:navigate.hover>
                                 <h2 class="text-xl text-gray-500 font-[600] md:mr-24 lg:mr-24 hover:text-gray-700">
-                                    <img width="32" height="32" class="inline" alt="{{$title}}"
+                                    <img width="32" height="32" loading="lazy" class="inline" alt="{{$title}}"
                                          src="{{config('tools.' . Request::segment(1) . '.icon_data')}}">
                                     {{ $title }}
                                 </h2>
