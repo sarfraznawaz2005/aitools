@@ -1,10 +1,6 @@
 <?php
 /*
  * make sure correct db is backuped up
- * see font of chat interface to use
- * check app start event to avoid app close issue with window
- * validate cron expression
- * clean log file every hour
  * foreach loop to separate components
  *
  *

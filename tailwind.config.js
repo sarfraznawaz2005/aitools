@@ -135,7 +135,7 @@ export default {
     ],
     theme: {
         fontFamily: {
-            sans: ['Inter', 'Helvetica', 'sans-serif'],
+            sans: ['Segoe UI', 'Helvetica', 'sans-serif'],
         },
         extend: {
             utilities: {

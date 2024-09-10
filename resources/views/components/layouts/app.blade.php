@@ -9,7 +9,7 @@
     @livewireStyles
 </head>
 
-<body class="antialiased bg-gray-50 inter font-inter">
+<body class="antialiased bg-gray-50 'Segoe UI'">
 
 <x-autoloading/>
 <x-page-expired/>

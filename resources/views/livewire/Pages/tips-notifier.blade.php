@@ -298,7 +298,7 @@
                         </div>
                     @endif
 
-                    @if (!empty($cron))
+                    @if ($this->nextRuns)
                         <div class="mb-4">
                             <p class="text-sm italic font-bold mb-1">Next Runs:</p>
                             <ul class="list-disc list-inside ml-2">

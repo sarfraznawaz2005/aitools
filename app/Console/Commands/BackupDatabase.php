@@ -11,7 +11,7 @@ class BackupDatabase extends Command
 
     public function handle(): void
     {
-        $source = base_path('database/database.sqlite');
+        $source = storage_path('database/database.sqlite');
 
         if (file_exists(storage_path('settings-database-backup-path'))) {
             $destination = file_get_contents(storage_path('settings-database-backup-path'));

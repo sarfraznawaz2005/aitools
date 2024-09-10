@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use App\Events\QuickChatClicked;
+use Illuminate\Support\Facades\Event;
 use Native\Laravel\Contracts\ProvidesPhpIni;
+use Native\Laravel\Events\App\ApplicationBooted;
 use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Facades\Settings;
+use Native\Laravel\Facades\Window;
 use Native\Laravel\Menu\Menu;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
@@ -41,7 +44,16 @@ class NativeAppServiceProvider implements ProvidesPhpIni
                     ->quit()
             );
 
-        //openWindow('main', 'home');
+        // fix for stoping app from closing when quick chat window is opened first and closed
+        Event::listen(ApplicationBooted::class, function () {
+            Window::open()
+                ->showDevTools(false)
+                ->transparent()
+                ->invisibleFrameless()
+                ->position(-100000, -100000)
+                ->width(0)
+                ->height(0);
+        });
     }
 
     /**
