@@ -1,5 +1,13 @@
 <?php
 /*
+ * make sure correct db is backuped up
+ * see font of chat interface to use
+ * check app start event to avoid app close issue with window
+ * validate cron expression
+ * clean log file every hour
+ * foreach loop to separate components
+ *
+ *
  * have a CSV file that you want to quickly query and visualize (https://supabase.com/blog/postgres-new)
  * wikipedia research via tool calling - https://github.com/google-gemini/cookbook/blob/main/examples/Search_reranking_using_embeddings.ipynb
  * function calling - https://github.com/google-gemini/cookbook/blob/main/quickstarts/rest/Function_calling_REST.ipynb
