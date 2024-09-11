@@ -50,6 +50,7 @@
 pre {
     background: #f3f4f6 !important;
     color: #222 !important;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .chatlist h1, .chatlist h2, .chatlist h3, .note-message h1, .note-message h2, .note-message h3, .quick-message h1, .quick-message h2, .quick-message h3 {
