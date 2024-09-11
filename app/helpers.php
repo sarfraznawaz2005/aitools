@@ -1,6 +1,5 @@
 <?php
 /*
- * foreach loop to separate components
  *
  *
  * have a CSV file that you want to quickly query and visualize (https://supabase.com/blog/postgres-new)
