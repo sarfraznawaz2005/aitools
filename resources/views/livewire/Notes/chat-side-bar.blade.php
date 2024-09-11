@@ -231,7 +231,7 @@
                     <div
                         class="bg-gray-200 mr-4 border border-gray-300 rounded-lg pl-4 border-l-0 p-1.5 rounded-tl-none rounded-bl-none">
                         <x-confirm-dialog call="resetConversation"
-                                          x-data x-tooltip.raw="Reset Conversation"
+                                          x-data x-tooltip.raw="Clear Conversation"
                                           text="Are you sure you want reset the conversation?"
                                           class="inline-flex mr-2 mt-2 items-center text-sm border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
                             <x-icons.delete class="w-5 h-5 text-gray-400 hover:text-red-600"/>

@@ -56,7 +56,7 @@
                     <div class="flex-grow border-t mx-2 border-blue-400"></div>
                     <x-gradient-button wire:click="resetConversation">
                         <x-icons.delete class="size-4"/>
-                        Reset Conversation
+                        Clear Conversation
                     </x-gradient-button>
                     <div class="flex-grow border-t mx-2 border-purple-400"></div>
                 </div>
