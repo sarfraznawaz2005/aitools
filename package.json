@@ -17,7 +17,6 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "@preline/overlay": "^2.4.1",
         "@ryangjchandler/alpine-clipboard": "^2.3.0",
         "@ryangjchandler/alpine-tooltip": "^2.0.0",
         "@tailwindcss/typography": "^0.5.13",
