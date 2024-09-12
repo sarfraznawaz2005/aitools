@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Title;
@@ -168,10 +169,9 @@ class ChatBuddy extends Component
 
                 $llm = getSelectedLLMProvider(Constants::CHATBUDDY_SELECTED_LLM_KEY);
 
-                $texts = [];
-                foreach ($files as $file) {
-                    $texts[] = extractTextFromFile($file);
-                }
+                $texts = Concurrency::run(function () use ($files) {
+                    return array_map(fn($file) => extractTextFromFile($file), $files);
+                })[0];
 
                 $flattenedTexts = [];
                 foreach ($texts as $subArray) {
