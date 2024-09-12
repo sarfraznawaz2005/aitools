@@ -95,24 +95,29 @@
 </div>
 
 <script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
 
+    function toggleSidebar() {
         sidebar.classList.toggle('-translate-x-full');
         mainContent.classList.toggle('sm:ml-80');
     }
 
-    // Initialize sidebar state on page load
-    window.addEventListener('load', () => {
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
-
+    function updateSidebarState() {
         if (window.innerWidth >= 640) {
             sidebar.classList.remove('-translate-x-full');
             mainContent.classList.add('sm:ml-80');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            mainContent.classList.remove('sm:ml-80');
         }
-    });
+    }
+
+    // Initialize sidebar state on page load
+    window.addEventListener('load', updateSidebarState);
+
+    // Update sidebar state on window resize
+    window.addEventListener('resize', updateSidebarState);
 </script>
 </body>
 </html>
