@@ -24,3 +24,4 @@ yarn-error.log
 /public/last_notification.json
 last_notification.json
 /storage/settings-database-backup-path
+/packages
