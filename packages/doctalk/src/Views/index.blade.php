@@ -3,7 +3,7 @@
     <x-slot name="sidebar">
         <h2>Conversations</h2>
         <ul>
-            <li><a href="#">Chat 1</a></li>
+            <li><a href="#" class="active">Chat 1</a></li>
             <li><a href="#">Chat 2</a></li>
             <li><a href="#">Chat 3</a></li>
             <li><a href="#">Chat 4</a></li>
