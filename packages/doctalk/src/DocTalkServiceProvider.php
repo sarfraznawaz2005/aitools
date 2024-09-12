@@ -9,7 +9,7 @@ class DocTalkServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (!config('doctalk.enabled')) {
-            //return;
+            return;
         }
 
         // routes
