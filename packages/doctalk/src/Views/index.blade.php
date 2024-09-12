@@ -379,7 +379,9 @@
     </style>
 </head>
 <body>
+
 <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
 <div class="chat-container">
     <!-- Sticky Sidebar -->
     <div class="sidebar" id="sidebar">
