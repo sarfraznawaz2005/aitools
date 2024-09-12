@@ -17,12 +17,7 @@
 
 <div class="flex h-screen overflow-hidden font-sans text-gray-800">
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 sm:w-80 bg-gray-100 overflow-y-auto overflow-x-hidden border-r border-gray-200 transition-transform duration-300 ease-in-out transform -translate-x-full sm:translate-x-0">
-        <button onclick="toggleSidebar()" class="absolute top-4 right-4 sm:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
+    <div id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 sm:w-80 bg-gray-100 overflow-y-auto overflow-x-hidden border-r border-gray-200 transition-transform duration-300 ease-in-out transform -translate-x-full">
         <h2 class="text-xl font-semibold text-gray-600 my-5 text-center">Conversations</h2>
         <ul>
             <li class="mb-2"><a href="#" class="block px-3 py-3 hover:bg-gray-200 transition-colors duration-100">Chat 1</a></li>
@@ -32,15 +27,15 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col sm:ml-64 sm:ml-80">
+    <div id="main-content" class="flex-1 flex flex-col w-full transition-all duration-300 ease-in-out">
         <!-- Top bar -->
-        <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between sm:justify-end">
-            <button onclick="toggleSidebar()" class="sm:hidden">
+        <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+            <h1 class="text-xl font-semibold">Chat Interface</h1>
+            <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200" title="Toggle Sidebar">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
-            <h1 class="text-xl font-semibold sm:hidden">Chat Interface</h1>
         </div>
 
         <!-- Chat Messages -->
@@ -102,8 +97,22 @@
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('sidebar-open');
+        const mainContent = document.getElementById('main-content');
+
+        sidebar.classList.toggle('-translate-x-full');
+        mainContent.classList.toggle('sm:ml-80');
     }
+
+    // Initialize sidebar state on page load
+    window.addEventListener('load', () => {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        if (window.innerWidth >= 640) {
+            sidebar.classList.remove('-translate-x-full');
+            mainContent.classList.add('sm:ml-80');
+        }
+    });
 </script>
 </body>
 </html>
