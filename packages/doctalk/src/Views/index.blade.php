@@ -1,5 +1,15 @@
 <x-doctalk::layouts.doctalk :title="'DocTalk'">
 
+    <x-slot name="sidebar">
+        <h2>Conversations</h2>
+        <ul>
+            <li><a href="#">Chat 1</a></li>
+            <li><a href="#">Chat 2</a></li>
+            <li><a href="#">Chat 3</a></li>
+            <li><a href="#">Chat 4</a></li>
+        </ul>
+    </x-slot>
+
     <!-- Chat Messages -->
     <div class="chat-messages">
         <div class="message sent">

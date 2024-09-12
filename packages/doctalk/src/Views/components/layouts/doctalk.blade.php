@@ -16,7 +16,9 @@
 
 <div class="chat-container">
 
-    <x-doctalk::layouts.sidebar/>
+    <div class="sidebar" id="sidebar">
+        {{ $sidebar ?? '' }}
+    </div>
 
     <div class="main-content" id="main-content">
         {{ $slot }}
