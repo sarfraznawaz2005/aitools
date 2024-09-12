@@ -67,8 +67,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             'error_reporting' => 'E_ALL',
             'max_execution_time' => '0',
             'max_input_time' => '0',
-            'upload_max_filesize' => '40M',
-            'post_max_size' => '40M',
+            'upload_max_filesize' => '50M',
+            'post_max_size' => '50M',
         ];
     }
 }
