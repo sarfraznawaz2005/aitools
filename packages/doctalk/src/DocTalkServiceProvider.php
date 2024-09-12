@@ -23,7 +23,7 @@ class DocTalkServiceProvider extends ServiceProvider
         // publish our files over to main laravel app
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                //__DIR__ . '/Assets' => public_path('vendor/doctalk/assets'),
+                __DIR__ . '/Assets' => public_path('vendor/doctalk/assets'),
                 __DIR__ . '/Config/doctalk.php' => config_path('doctalk.php'),
                 __DIR__ . '/Migrations' => database_path('migrations')
             ]);
