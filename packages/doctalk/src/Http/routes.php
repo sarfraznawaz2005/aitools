@@ -5,7 +5,7 @@ use Package\DocTalk\Http\Controllers\DocTalkController;
 
 Route::group(
     [
-        'prefix' => 'doctalk'
+        'prefix' => config('doctalk.path', 'doctalk'),
     ],
     function () {
         Route::get('/', [DocTalkController::class, 'index'])->name('doctalk.index');
