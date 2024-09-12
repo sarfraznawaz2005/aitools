@@ -12,8 +12,6 @@
 </head>
 <body>
 
-<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
-
 <div class="chat-container">
 
     <div class="sidebar" id="sidebar">
@@ -21,6 +19,11 @@
     </div>
 
     <div class="main-content" id="main-content">
+        <div class="topbar">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+            <h3>{{ $title ?? 'DocTalk' }}</h3>
+        </div>
+
         {{ $slot }}
     </div>
 </div>
