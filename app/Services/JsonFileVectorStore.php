@@ -322,7 +322,7 @@ class JsonFileVectorStore
 
         $chunks = array_chunk($textSplits, $this->getEmbdeddingBatchSize());
 
-        foreach ($chunks as $chunk) {
+        foreach ($chunks as $index => $chunk) {
             $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
             //file_put_contents(storage_path('app/dump.json'), json_encode($embeddings, JSON_PRETTY_PRINT));
 
