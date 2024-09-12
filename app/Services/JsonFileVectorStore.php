@@ -315,23 +315,26 @@ class JsonFileVectorStore
             return json_decode(file_get_contents($path), true);
         }
 
-        $textSplits = [];
-        foreach ($splits as $split) {
-            $textSplits[] = $split['text'];
-        }
+        $textSplits = array_map(function ($split) {
+            return $split['text'];
+        }, $splits);
 
         $chunks = array_chunk($textSplits, $this->getEmbdeddingBatchSize());
 
-        foreach ($chunks as $index => $chunk) {
+        foreach ($chunks as $chunkIndex => $chunk) {
+            // Get embeddings for this chunk
             $embeddings = $this->llm->embed($chunk, $this->getEmbdeddingModel());
-            //file_put_contents(storage_path('app/dump.json'), json_encode($embeddings, JSON_PRETTY_PRINT));
+            $embeddings = $embeddings['embeddings'] ?? $embeddings; // Handle Gemini or OpenAI response
 
-            $embeddings = $embeddings['embeddings'] ?? $embeddings; // gemini or openai
+            // Calculate the starting index for this chunk
+            $startIndex = $chunkIndex * $this->getEmbdeddingBatchSize();
 
+            // Map embeddings to the corresponding original texts
             foreach ($embeddings as $embeddingIndex => $embedding) {
-                // Map the embedding back to the correct split in the original $splits array
-                if (isset($splits[$embeddingIndex])) {
-                    $splits[$embeddingIndex]['embeddings'] = $embedding['embedding'] ?? $embedding['values'];
+                $originalIndex = $startIndex + $embeddingIndex;
+
+                if (isset($splits[$originalIndex])) {
+                    $splits[$originalIndex]['embeddings'] = $embedding['embedding'] ?? $embedding['values'];
                 }
             }
         }
