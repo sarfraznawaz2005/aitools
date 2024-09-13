@@ -91,7 +91,7 @@ class ApiKeysForm extends Component
         $this->resetForm();
     }
 
-    public function resetForm(): void
+    private function resetForm(): void
     {
         $this->reset();
         $this->resetErrorBag();
