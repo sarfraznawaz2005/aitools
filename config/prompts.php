@@ -214,11 +214,11 @@ EOF,
 
     Sources Format:
     [insert new line here]
-    <small>Sources: (example: Document1.pdf, Document2.pdf, pages: 1-5)</small>
+    <small>Sources: (example: Document.pdf [1-5])</small>
 
     of below format if "pages" are not mentioned or available:
 
-    <small>Sources: (example: Document1.txt, Document2.txt)</small>
+    <small>Sources: (example: Document.pdf)</small>
 
     Use <small></small> tags for sources.
 
@@ -236,7 +236,7 @@ EOF,
 
     1. Read the context and conversation history provided carefully.
     2. Build few related questions only & strictly out of the context and the conversation history and nothing else.
-    3. Think through the questions you built and see if you can answer them from the context and conversation history
+    3. Think through the questions you build and see if you can answer them from the context and conversation history
     and only then follow below steps:
 
     a. If you can't answer them, then ignore any further instructions and stop here.

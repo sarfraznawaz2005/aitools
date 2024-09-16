@@ -119,7 +119,7 @@
                         </a>
                     </li>
                     <li>
-                        <x-confirm-dialog call="delete({{$conversationItem->id}})" title="Delete"
+                        <x-confirm-dialog call="delete({{$conversationItem->id}})"
                                           class="px-3 py-2 text-left block bg-white hover:bg-gray-100 w-full">
                             <x-icons.delete class="inline-block mr-2 text-red-500"/>
                             Delete

@@ -167,11 +167,17 @@ HTML;
 $body
 </div>
 HTML;
-
             }
 
             if ($format === 'txt') {
                 $content .= str_repeat('-', 100);
+            } else {
+                $content = str_ireplace('related questions:', '', $content);
+
+                // Remove <related_question> tags including their contents
+                $content = preg_replace('/<related_question>.*?<\/related_question>/is', '', $content);
+                $content = preg_replace('/&lt;related_question&gt;.*?&lt;\/related_question&gt;/is', '', $content);
+                $content = str_ireplace('<li></li>', '', $content);
             }
         }
 

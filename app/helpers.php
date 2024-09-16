@@ -74,8 +74,10 @@ function getSelectedLLMProvider(string $key): LlmProvider
 
 function AIChatFailed($result): string
 {
-    if (str_contains(strtolower($result), 'failed to get a successful response') ||
-        str_contains(strtolower($result), 'unknown error')) {
+    if (
+        str_contains(strtolower($result), 'failed to get a successful response') ||
+        str_contains(strtolower($result), 'unknown error')
+    ) {
         return "There was some problem. $result";
     }
 
@@ -204,7 +206,7 @@ function getMessages(array $messages): array
 
     // Format and filter unique messages
     foreach ($messages as $message) {
-        $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'YOU: ') . $message['content'];
+        $formattedMessage = ($message['role'] === 'user' ? 'USER: ' : 'AI: ') . $message['content'];
 
         if ($message['role'] === 'user') {
             $uniqueMessages[] = $formattedMessage; // allow all user messages
@@ -213,7 +215,6 @@ function getMessages(array $messages): array
                 $uniqueMessages[] = htmlToText($formattedMessage);
             }
         }
-
     }
 
     return array_slice($uniqueMessages, 0, Constants::NOTES_TOTAL_CONVERSATION_HISTORY);
@@ -232,8 +233,7 @@ function htmlToText($html, $removeWhiteSpace = true): string
 
     // Remove <related_question> tags including their contents
     $text = preg_replace('/<related_question>.*?<\/related_question>/is', '', $text);
-
-    $text = preg_replace('/Sources:.*(\n|$)/s', '', $text);
+    $text = preg_replace('/&lt;related_question&gt;.*?&lt;\/related_question&gt;/is', '', $text);
 
     // Replace <br> tags with newlines
     $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
@@ -277,8 +277,7 @@ function openWindow(
     int    $width = 1280,
     int    $height = 800,
     string $title = ''
-): PendingOpenWindow
-{
+): PendingOpenWindow {
     return Window::open($id)
         ->title(config('app.name') . ($title ? ' - ' . $title : ''))
         ->route($route, $routeParams)
@@ -369,7 +368,7 @@ function processMarkdownToHtml($markdownContent, $fixBroken = true): string
                 $bodyContent .= $doc->saveHTML($childNode);
             }
 
-            return $bodyContent !== false ? $bodyContent : $htmlContent;
+            return $bodyContent ?: $htmlContent;
         }
     }
 
@@ -429,4 +428,3 @@ function out($data): void
 
     info($data);
 }
-
