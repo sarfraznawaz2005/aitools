@@ -40,18 +40,8 @@ class NotesFolderSeeder extends Seeder
         ]);
 
         NoteFolder::query()->create([
-            'name' => 'Videos',
-            'color' => 'text-yellow-600',
-        ]);
-
-        NoteFolder::query()->create([
-            'name' => 'Images',
-            'color' => 'text-cyan-600',
-        ]);
-
-        NoteFolder::query()->create([
             'name' => 'Reminders',
-            'color' => 'text-orange-600',
+            'color' => 'text-cyan-600',
         ]);
 
         NoteFolder::query()->create([
