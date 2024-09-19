@@ -391,7 +391,7 @@ class TextNote extends Component
     }
 
     #[Renderless]
-    private function resetForm(): void
+    public function resetForm(): void
     {
         $this->reset(['title', 'content', 'reminder_datetime', 'is_recurring', 'recurring_frequency']);
 

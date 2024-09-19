@@ -80,7 +80,7 @@ class Sidebar extends Component
         $this->dispatch('folderDeleted')->to(NotesListing::class);
     }
 
-    private function resetForm(): void
+    public function resetForm(): void
     {
         $this->reset();
 

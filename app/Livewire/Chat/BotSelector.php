@@ -180,7 +180,7 @@ class BotSelector extends Component
         $this->dispatch('indexFiles', $this->model->id);
     }
 
-    private function resetForm(): void
+    public function resetForm(): void
     {
         $this->reset(['name', 'bio', 'prompt', 'icon', 'type', 'files']);
 
