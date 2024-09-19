@@ -213,8 +213,7 @@ class TipsNotifier extends Component
         }
     }
 
-    #[Renderless]
-    private function resetForm(): void
+    public function resetForm(): void
     {
         $this->reset();
 
