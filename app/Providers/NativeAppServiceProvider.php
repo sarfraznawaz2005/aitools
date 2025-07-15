@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-use App\Events\QuickChatClicked;
 use Illuminate\Support\Facades\Event;
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Events\App\ApplicationBooted;
+use Native\Laravel\Facades\Menu;
 use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Facades\Settings;
 use Native\Laravel\Facades\Window;
-use Native\Laravel\Menu\Menu;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
 {
@@ -23,7 +22,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         $height = Settings::get('settings.height', 750);
 
         // remove default menu
-        Menu::new()->register();
+        Menu::create();
 
         MenuBar::create()
             ->label(config('app.name'))
@@ -39,10 +38,11 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->maxHeight($height)
             ->minHeight(400)
             ->withContextMenu(
-                Menu::new()
-                    ->event(QuickChatClicked::class, 'Quick Chat')
-                    ->separator()
-                    ->quit()
+                Menu::make(
+                    Menu::label('Quick Chat'),
+                    Menu::separator(),
+                    Menu::quit(),
+                )
             );
 
         // fix for stoping app from closing when quick chat window is opened first and closed

@@ -4,10 +4,10 @@ namespace App\Providers;
 
 use App\Events\OnNoteNotificationShown;
 use App\Events\OnTipNotificationShown;
-use App\Events\QuickChatClicked;
 use Exception;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Native\Laravel\Events\Menu\MenuItemClicked;
 use Native\Laravel\Events\Notifications\NotificationClicked;
 use Native\Laravel\Events\Windows\WindowMinimized;
 use Native\Laravel\Facades\Settings;
@@ -21,11 +21,13 @@ class EventServiceProvider extends ServiceProvider
             //
         });
 
-        Event::listen(QuickChatClicked::class, function () {
-            openWindow(
-                'quick-chat', 'quick-chat', [], true, true,
-                true, false, 800, 700, 'Quick Disposable Chat'
-            );
+        Event::listen(MenuItemClicked::class, function (MenuItemClicked $event) {
+            if ($event->item['label'] === 'Quick Chat') {
+                openWindow(
+                    'quick-chat', 'quick-chat', [], true, true,
+                    true, false, 800, 700, 'Quick Disposable Chat'
+                );
+            }
         });
 
         Event::listen(OnTipNotificationShown::class, function ($event) {

@@ -19,3 +19,12 @@ Protect sensitive data and be mindful of security implications.
 11. Queue Worker: A single queue worker starts when your application boots up, ready to process background jobs.
 12. Migration Versioning: Migrations only run on the user’s machine if the current version differs from the installed version.
 13. NativePHP also starts a connection to broadcasting service if installed allowing realtime events to be broadcasted to the user.
+
+Changes Needed:
+    vendor/nativephp/laravel/src/Events/PowerMonitor/SpeedLimitChanged.php
+
+    Modified: public function __construct(string $limit) to public function __construct($limit)
+
+    vendor/nativephp/laravel/src/ChildProcess.php
+
+    Modified fromRuntimeProcess by adding if (isset($process['settings'])) before loop
