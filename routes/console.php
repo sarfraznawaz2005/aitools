@@ -78,24 +78,26 @@ Artisan::command('test', function () {
     dump($jsonResults);
 });
 
-function searchWithJsonFileVectorStore($query): array
-{
-    //@unlink(storage_path('app/data.json'));
+if (!function_exists('searchWithJsonFileVectorStore')) {
+    function searchWithJsonFileVectorStore($query): array
+    {
+        //@unlink(storage_path('app/data.json'));
 
-    $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
+        $llm = getSelectedLLMProvider(Constants::NOTES_SELECTED_LLM_KEY);
 //    $llm = new OpenAiProvider(
 //        xxxxxxxxxxxxxxxxxxxxxxxxxxxx,
 //        'gpt-4o-mini'
 //    );
 
-    $notes = Note::with('folder')->get()->map(function ($note) {
-        return [
-            'text' => $note->content,
-            'source' => "$note->title (" . $note->folder->name . ")",
-        ];
-    })->toArray();
+        $notes = Note::with('folder')->get()->map(function ($note) {
+            return [
+                'text' => $note->content,
+                'source' => "$note->title (" . $note->folder->name . ")",
+            ];
+        })->toArray();
 
-    $searchService = JsonFileVectorStore::getInstance($llm, 'test.json', 2000);
+        $searchService = JsonFileVectorStore::getInstance($llm, 'test.json', 2000);
 
-    return $searchService->searchTexts($notes, $query);
+        return $searchService->searchTexts($notes, $query);
+    }
 }

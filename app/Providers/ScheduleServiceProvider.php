@@ -29,7 +29,11 @@ class ScheduleServiceProvider extends ServiceProvider
 
     private function tipsNotifierReminders(Schedule $schedule): void
     {
-        if (!Schema::hasTable('tips')) {
+        try {
+            if (!Schema::hasTable('tips')) {
+                return;
+            }
+        } catch (Exception) {
             return;
         }
 

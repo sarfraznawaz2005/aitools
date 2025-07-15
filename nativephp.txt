@@ -25,7 +25,7 @@ Changes Needed:
     vendor/voku/portable-utf8/src/voku/helper/UTF8.php
     commented \mb_internal_encoding('UTF-8') and \mb_regex_encoding('UTF-8') on line 534
 
-    SEEMS  BELOW CHANGES ARE NO MORE NEEDED IN V1 OF NATIVEPHP
+    SEEMS BELOW CHANGES ARE NO MORE NEEDED IN V1 OF NATIVEPHP (NOT SURE, TRY WITHOUT THESE FIRST)
 
     vendor/nativephp/laravel/src/Events/PowerMonitor/SpeedLimitChanged.php
 
