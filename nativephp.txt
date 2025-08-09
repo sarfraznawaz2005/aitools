@@ -22,6 +22,8 @@ Protect sensitive data and be mindful of security implications.
 
 Changes Needed:
 
+    - In composer.json, nativephp/electron and nativephp/php-bin versions must be exactly the same.
+
     - vendor/voku/portable-utf8/src/voku/helper/UTF8.php
     commented \mb_internal_encoding('UTF-8') and \mb_regex_encoding('UTF-8') on line 534
 
@@ -45,5 +47,5 @@ Changes Needed:
                 echo $output;
             });
 
-        - If still fails, do "rm -rf vendor composer.lock", "rm -rf node_modules\ package-lock.json" and "npm i" and "composer install --no-dev --prefer-dist"
+        - If still fails, do: rm -rf vendor composer.lock && composer install --no-dev --prefer-dist
 
