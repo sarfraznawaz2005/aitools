@@ -22,15 +22,28 @@ Protect sensitive data and be mindful of security implications.
 
 Changes Needed:
 
-    vendor/voku/portable-utf8/src/voku/helper/UTF8.php
+    - vendor/voku/portable-utf8/src/voku/helper/UTF8.php
     commented \mb_internal_encoding('UTF-8') and \mb_regex_encoding('UTF-8') on line 534
 
     SEEMS BELOW CHANGES ARE NO MORE NEEDED IN V1 OF NATIVEPHP (NOT SURE, TRY WITHOUT THESE FIRST)
 
-    vendor/nativephp/laravel/src/Events/PowerMonitor/SpeedLimitChanged.php
+        vendor/nativephp/laravel/src/Events/PowerMonitor/SpeedLimitChanged.php
 
-    Modified: public function __construct(string $limit) to public function __construct($limit)
+        - Modified: public function __construct(string $limit) to public function __construct($limit)
 
-    vendor/nativephp/laravel/src/ChildProcess.php
+            vendor/nativephp/laravel/src/ChildProcess.php
 
-    Modified fromRuntimeProcess by adding if (isset($process['settings'])) before loop
+        - Modified fromRuntimeProcess by adding if (isset($process['settings'])) before loop
+
+        - If build fails due to composer timeout, modify D:\laragon\www\aitools\vendor\nativephp\electron\src\Traits\PrunesVendorDirectory.php:
+
+            set timeout to 2000 and add --prefer-dist e.g.
+
+            Process::path($this->buildPath())
+            ->timeout(2000)
+            ->run('composer install --no-dev --prefer-dist', function (string $type, string $output) {
+                echo $output;
+            });
+
+        - If still fails, do rm -rf vendor composer.lock, rm -rf node_modules\ package-lock.json and npm i and composer install
+
