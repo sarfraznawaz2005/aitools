@@ -22,6 +22,8 @@ Protect sensitive data and be mindful of security implications.
 
 Changes Needed:
 
+    - Run build.bat as admin
+
     - In composer.json, nativephp/electron and nativephp/php-bin versions must be exactly the same.
 
     - vendor/voku/portable-utf8/src/voku/helper/UTF8.php
