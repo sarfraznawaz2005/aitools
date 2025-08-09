@@ -45,5 +45,5 @@ Changes Needed:
                 echo $output;
             });
 
-        - If still fails, do rm -rf vendor composer.lock, rm -rf node_modules\ package-lock.json and npm i and composer install
+        - If still fails, do "rm -rf vendor composer.lock", "rm -rf node_modules\ package-lock.json" and "npm i" and "composer install --no-dev --prefer-dist"
 
