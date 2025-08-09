@@ -18,6 +18,7 @@
         "livewire/livewire": "^3.5",
         "lorisleiva/cron-translator": "^0.4.5",
         "nativephp/electron": "^1",
+        "nativephp/php-bin": "1.0.3",
         "pforret/pf-article-extractor": "^0.3.0",
         "smalot/pdfparser": "^2.11",
         "spatie/laravel-markdown": "^2.5",
@@ -53,12 +54,12 @@
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "@php artisan vendor:publish --tag=livewire:assets --ansi --force",
-            "cp ./public/assets/icon.png ./vendor/nativephp/electron/resources/js/resources/icon.png",
-            "cp ./public/assets/icon.png ./vendor/nativephp/electron/resources/js/build/icon.png"
+            "powershell -Command \"Copy-Item .\\public\\assets\\icon.png -Destination .\\vendor\\nativephp\\electron\\resources\\js\\resources\\icon.png\"",
+            "powershell -Command \"Copy-Item .\\public\\assets\\icon.png -Destination .\\vendor\\nativephp\\electron\\resources\\js\\build\\icon.png\""
         ],
         "post-install-cmd": [
-            "cp ./public/assets/icon.png ./vendor/nativephp/electron/resources/js/resources/icon.png",
-            "cp ./public/assets/icon.png ./vendor/nativephp/electron/resources/js/build/icon.png"
+            "powershell -Command \"Copy-Item .\\public\\assets\\icon.png -Destination .\\vendor\\nativephp\\electron\\resources\\js\\resources\\icon.png\"",
+            "powershell -Command \"Copy-Item .\\public\\assets\\icon.png -Destination .\\vendor\\nativephp\\electron\\resources\\js\\build\\icon.png\""
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -75,8 +76,12 @@
         }
     },
     "config": {
+        "process-timeout": 1200,
         "optimize-autoloader": true,
-        "preferred-install": "dist",
+        "preferred-install": {
+            "nativephp/php-bin": "source",
+            "*": "dist"
+        },
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,

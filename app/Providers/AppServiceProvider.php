@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Exception;
+use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\CronTranslator\CronTranslator;
@@ -23,6 +25,52 @@ class AppServiceProvider extends ServiceProvider
         config(['app.timezone' => System::timezone() ?? 'Asia/Karachi']); // via nativephp
 
         $this->registerCustomValidators();
+
+        // nativephp seems to copy php 8.4, so we are going to instead copy 8.3
+        // to "D:\laragon\www\aitools\vendor\nativephp\php-bin\bin\win\x64"
+        /*
+        Event::listen(CommandStarting::class, function (CommandStarting $event) {
+            if ($event->command !== 'native:serve') {
+                return;
+            }
+
+            // Only do this on Windows; adjust if you support mac/linux too
+            if (stripos(PHP_OS_FAMILY, 'Windows') === false) {
+                return;
+            }
+
+            $source = base_path('php-8.3.zip');
+            $dest = base_path('vendor/nativephp/php-bin/bin/win/x64/php-8.3.zip');
+
+            if (!is_file($source)) {
+                echo "[copy-php] Source missing: {$source}\n";
+                return;
+            }
+
+            // Ensure destination directory exists
+            $destDir = dirname($dest);
+            if (!is_dir($destDir)) {
+                @mkdir($destDir, 0777, true);
+            }
+
+            // Skip if sizes match
+            $doCopy = true;
+            if (is_file($dest) && filesize($source) === filesize($dest)) {
+                $doCopy = false;
+            }
+
+            if ($doCopy) {
+                if (!@copy($source, $dest)) {
+                    $err = error_get_last();
+                    echo "[copy-php] Failed to copy: {$err['message']}\n";
+                    return;
+                }
+                echo "[copy-php] Copied {$source} → {$dest}\n";
+            } else {
+                echo "[copy-php] Already up to date; skip\n";
+            }
+        });
+        */
     }
 
     /**
