@@ -6,7 +6,7 @@ return [
      * It is used to determine if the app needs to be updated.
      * Increment this value every time you release a new version of your app.
      */
-    'version' => env('NATIVEPHP_APP_VERSION', '1.2.1'),
+    'version' => env('NATIVEPHP_APP_VERSION', '1.2.2'),
 
     /**
      * The ID of your application. This should be a unique identifier
@@ -60,6 +60,7 @@ return [
      */
     'cleanup_env_keys' => [
         'AWS_*',
+        'AZURE_*',
         'GITHUB_*',
         'DO_SPACES_*',
         '*_SECRET',
@@ -68,6 +69,10 @@ return [
         'NATIVEPHP_APPLE_ID',
         'NATIVEPHP_APPLE_ID_PASS',
         'NATIVEPHP_APPLE_TEAM_ID',
+        'NATIVEPHP_AZURE_PUBLISHER_NAME',
+        'NATIVEPHP_AZURE_ENDPOINT',
+        'NATIVEPHP_AZURE_CERTIFICATE_PROFILE_NAME',
+        'NATIVEPHP_AZURE_CODE_SIGNING_ACCOUNT_NAME',
     ],
 
     /**
@@ -81,9 +86,6 @@ return [
         'content',
         'node_modules',
         '*/tests',
-        'content',
-        'storage/app/framework/{sessions,testing,cache}',
-        'storage/logs/laravel.log',
     ],
 
     /**
