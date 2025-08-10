@@ -1,4 +1,4 @@
-rem see cleanup command in routes\console.php
+rem Note: Run as Admin
 php artisan cleanup
 
 php artisan native:build win x64 -v --no-interaction
